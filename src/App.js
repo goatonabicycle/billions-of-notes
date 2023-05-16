@@ -1,9 +1,9 @@
-import { Scale } from "tonal";
+import { Scale, Mode } from "tonal";
+import Select from "./components/Select";
 
-import logo from "./logo.svg";
 import "./App.css";
 
-//h ttps://github.com/tonaljs/tonal
+// https://github.com/tonaljs/tonal
 
 function App() {
   const musicalNotes = [
@@ -29,22 +29,18 @@ function App() {
     value: noteName,
   }));
 
-  // Scales
-  let notes = Scale.get("C major").notes; // => ["C", "D", "E", "F", "G", "A", "B"];
+  // This is just a sample.
+  let notes = Scale.get("C major").notes;
+  let modes = Mode.names();
   console.log(notes);
 
   return (
     <div className="App">
-      <label htmlFor="noteSelect">Select a Note:</label>
-      <select id="noteSelect">
-        {musicalNotes.map((note) => (
-          <option
-            key={note.value}
-            value={note.value}>
-            {note.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        id="noteSelect"
+        label="Select a Note:"
+        options={musicalNotes}
+      />
     </div>
   );
 }
