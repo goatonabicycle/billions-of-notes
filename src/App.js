@@ -1,13 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Scale, Mode } from "tonal";
-
-import Guitar from "react-guitar";
-import dark from "react-guitar-theme-dark";
 
 import Select from "./components/Select";
 import "./App.css";
-
-// https://github.com/tonaljs/tonal
 
 const mapToSelectOptions = (items) => {
   return items.map((item) => ({
@@ -22,6 +17,9 @@ function App() {
   const [selectedScale, setSelectedScale] = useState("ionian");
   const [selectedTempo, setSelectedTempo] = useState(120);
   const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useState(4);
+  const [notesForKeyAndScale, setNotesForKeyAndScale] = useState([]);
+  const [randomNotes, setRandomNotes] = useState([]);
+  const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
 
   const keyOptions = useMemo(() => {
     const keys = [
@@ -40,21 +38,36 @@ function App() {
     ];
     return mapToSelectOptions(keys);
   }, []);
-  const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
+
+  useEffect(() => {
+    const defaultOctave = "4";
+    const notes = Scale.get(`${selectedKey} ${selectedScale}`).notes.map(
+      (note) => note + defaultOctave
+    );
+    setNotesForKeyAndScale(notes);
+  }, [selectedKey, selectedScale]);
 
   const numberOfNotesOptions = useMemo(() => {
     const notes = Array.from({ length: 29 }, (_, i) => i + 4);
     return mapToSelectOptions(notes);
   }, []);
 
-  const defaultOctave = "4";
-  const notesForKeyAndScale = Scale.get(
-    `${selectedKey} ${selectedScale}`
-  ).notes.map((note) => note + defaultOctave);
-
   const handleTempoChange = (e) => {
     setSelectedTempo(parseInt(e.target.value, 10));
   };
+
+  useEffect(() => {
+    let randomNotes = [];
+
+    for (let i = 0; i < selectedNumberOfNotes; i++) {
+      const randomIndex = Math.floor(
+        Math.random() * notesForKeyAndScale.length
+      );
+      randomNotes.push(notesForKeyAndScale[randomIndex]);
+    }
+
+    setRandomNotes(randomNotes);
+  }, [selectedKey, selectedScale, selectedNumberOfNotes, notesForKeyAndScale]);
 
   return (
     <div className="App">
@@ -99,11 +112,14 @@ function App() {
       selectedScale: {selectedScale}
       <br />
       notesForKeyAndScale: {notesForKeyAndScale}
-      <Guitar
-        theme={dark}
-        center={true}
-        strings={[0, 0, 0, 0, 0, 0]}
-      />
+      <br />
+      Random notes based on above number of notes:
+      <div>
+        <h1>Random Notes:</h1>
+        {randomNotes.map((note, index) => (
+          <span key={index}>{note} </span>
+        ))}
+      </div>
     </div>
   );
 }
