@@ -1,6 +1,5 @@
 import React from "react";
 import { Note } from "tonal";
-import NotePlayer from "./NotePlayer";
 
 const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
   Note.fromMidi(i + 60)
@@ -49,7 +48,6 @@ const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
               border: "1px solid black",
             }}>
             {note}
-            <NotePlayer noteName={note} />
           </div>
         ) : null;
       })}

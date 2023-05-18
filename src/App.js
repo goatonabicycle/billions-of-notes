@@ -106,13 +106,10 @@ function App() {
         <br />
         notesForKeyAndScale: {notesForKeyAndScale}
         <br />
-        Random notes based on above number of notes:
-        <div>
-          <h1>Random Notes:</h1>
-          {randomNotes.map((note, index) => (
-            <span key={index}>{note} </span>
-          ))}
-        </div>
+        Random Notes:
+        {randomNotes.map((note, index) => (
+          <span key={index}>{note} </span>
+        ))}
       </div>
     </div>
   );
