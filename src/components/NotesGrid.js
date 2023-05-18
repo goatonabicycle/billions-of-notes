@@ -5,7 +5,7 @@ const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
   Note.fromMidi(i + 60)
 );
 
-const NotesGrid = ({ notes, active }) => {
+const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
   const noteToGridRow = (note) => {
     const midi = Note.midi(note);
     return midi ? 12 - (midi % 12) : null;
@@ -22,7 +22,9 @@ const NotesGrid = ({ notes, active }) => {
           style={{
             gridColumn: 1,
             gridRow: POSSIBLE_NOTES.length - i,
-            backgroundColor: "lightgrey",
+            backgroundColor: relevantNotes?.includes(note)
+              ? "blue"
+              : "lightgrey",
             padding: "5px",
             border: "1px solid black",
             display: "flex",
@@ -42,7 +44,7 @@ const NotesGrid = ({ notes, active }) => {
               gridColumn: index + 2,
               gridRow: row,
               padding: "5px",
-              backgroundColor: active == note ? "red" : "blue",
+              backgroundColor: index === activeIndex ? "red" : "blue",
               border: "1px solid black",
             }}>
             {note}

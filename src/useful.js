@@ -6,17 +6,17 @@ export const DEFAULT_NUMBER_OF_NOTES = 4;
 
 export const KEYS = [
   "A",
-  "Bb",
+  "A#",
   "B",
   "C",
-  "Db",
+  "C#",
   "D",
-  "Eb",
+  "D#",
   "E",
   "F",
-  "Gb",
+  "F#",
   "G",
-  "Ab",
+  "G#",
 ];
 
 export const mapToSelectOptions = (items) => {

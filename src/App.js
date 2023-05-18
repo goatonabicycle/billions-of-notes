@@ -11,7 +11,7 @@ import {
 
 import Select from "./components/Select";
 import Slider from "./components/Slider";
-import NotesGrid from "./components/NotesGrid";
+
 import Loop from "./components/Loop";
 import "./App.css";
 
@@ -49,42 +49,50 @@ function App() {
 
   return (
     <div className="App">
-      <Select
-        id="keySelect"
-        label="Select a key:"
-        options={useMemo(() => {
-          return mapToSelectOptions(KEYS);
-        }, [])}
-        onChange={setSelectedKey}
-        selectedValue={selectedKey}
-      />
-      <Select
-        id="scaleSelect"
-        label="Select a scale:"
-        options={useMemo(() => mapToSelectOptions(scales), [scales])}
-        onChange={setSelectedScale}
-        selectedValue={selectedScale}
-      />
-      <Select
-        id="numOfNotesSelect"
-        label="Number of notes:"
-        options={useMemo(() => {
-          const notes = Array.from({ length: 29 }, (_, i) => i + 4);
-          return mapToSelectOptions(notes);
-        }, [])}
-        onChange={setSelectedNumberOfNotes}
-        selectedValue={selectedNumberOfNotes}
-      />
-      <Slider
-        id="tempoSlider"
-        label="Tempo"
-        min="10"
-        max="400"
-        step="10"
-        value={selectedTempo}
-        onChange={(e) => {
-          setSelectedTempo(parseInt(e.target.value, 10));
-        }}
+      <div className="App-inputs">
+        <Select
+          id="keySelect"
+          label="Select a key:"
+          options={useMemo(() => {
+            return mapToSelectOptions(KEYS);
+          }, [])}
+          onChange={setSelectedKey}
+          selectedValue={selectedKey}
+        />
+        <Select
+          id="scaleSelect"
+          label="Select a scale:"
+          options={useMemo(() => mapToSelectOptions(scales), [scales])}
+          onChange={setSelectedScale}
+          selectedValue={selectedScale}
+        />
+        <Select
+          id="numOfNotesSelect"
+          label="Number of notes:"
+          options={useMemo(() => {
+            const notes = Array.from({ length: 20 }, (_, i) => i);
+            return mapToSelectOptions(notes);
+          }, [])}
+          onChange={setSelectedNumberOfNotes}
+          selectedValue={selectedNumberOfNotes}
+        />
+        <Slider
+          id="tempoSlider"
+          label="Tempo"
+          min="10"
+          max="400"
+          step="10"
+          value={selectedTempo}
+          onChange={(e) => {
+            setSelectedTempo(parseInt(e.target.value, 10));
+          }}
+        />
+      </div>
+
+      <Loop
+        notes={randomNotes}
+        relevantNotes={notesForKeyAndScale}
+        bpm={selectedTempo}
       />
 
       <div id="debug">
@@ -106,15 +114,6 @@ function App() {
           ))}
         </div>
       </div>
-
-      <Loop
-        list={randomNotes}
-        bpm={selectedTempo}
-      />
-      <NotesGrid
-        notes={randomNotes}
-        active={"A4"}
-      />
     </div>
   );
 }

@@ -2,7 +2,6 @@
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: center;
@@ -10,12 +9,18 @@
   color: white;
 }
 
+.App-inputs{  
+  align-items: center;
+  padding:20px;
+  border-bottom: 1px solid white;
+  display: flex;
+}
 
 #debug
 {
   position: fixed;
-  top:0px;
-  left:0px;
+  bottom:0px;
+  right:0px;
   border:1px solid red;
   font-size:12px;
 }
