@@ -7548,7 +7548,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.8.1:
+prop-types@15.8.1, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7680,6 +7680,13 @@ react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
+
+react-grid-system@^8.1.9:
+  version "8.1.9"
+  resolved "https://registry.yarnpkg.com/react-grid-system/-/react-grid-system-8.1.9.tgz#d650695627509824df0efe500dda7b2ea9832ae0"
+  integrity sha512-EdyhAUkc1kJKNZpefIe8UwSJe1JFqKviyv6f2MBFopNYAZDHHYu+zyjQJ7tPJUtcGU1qA47WsCDiN8cSUGtfWA==
+  dependencies:
+    prop-types "15.8.1"
 
 react-is@^16.13.1:
   version "16.13.1"
