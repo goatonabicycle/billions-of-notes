@@ -12,6 +12,7 @@ import {
 import Select from "./components/Select";
 import Slider from "./components/Slider";
 import NotesGrid from "./components/NotesGrid";
+import Loop from "./components/Loop";
 import "./App.css";
 
 function App() {
@@ -105,7 +106,15 @@ function App() {
           ))}
         </div>
       </div>
-      <NotesGrid notes={randomNotes} />
+
+      <Loop
+        list={randomNotes}
+        bpm={selectedTempo}
+      />
+      <NotesGrid
+        notes={randomNotes}
+        active={"A4"}
+      />
     </div>
   );
 }
