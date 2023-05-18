@@ -85,22 +85,25 @@ function App() {
           setSelectedTempo(parseInt(e.target.value, 10));
         }}
       />
-      {selectedTempo} BPM
-      <br />
-      selectedNumberOfNotes: {selectedNumberOfNotes}
-      <br />
-      selectedKey: {selectedKey}
-      <br />
-      selectedScale: {selectedScale}
-      <br />
-      notesForKeyAndScale: {notesForKeyAndScale}
-      <br />
-      Random notes based on above number of notes:
-      <div>
-        <h1>Random Notes:</h1>
-        {randomNotes.map((note, index) => (
-          <span key={index}>{note} </span>
-        ))}
+
+      <div id="debug">
+        {selectedTempo} BPM
+        <br />
+        selectedNumberOfNotes: {selectedNumberOfNotes}
+        <br />
+        selectedKey: {selectedKey}
+        <br />
+        selectedScale: {selectedScale}
+        <br />
+        notesForKeyAndScale: {notesForKeyAndScale}
+        <br />
+        Random notes based on above number of notes:
+        <div>
+          <h1>Random Notes:</h1>
+          {randomNotes.map((note, index) => (
+            <span key={index}>{note} </span>
+          ))}
+        </div>
       </div>
       <NotesGrid notes={randomNotes} />
     </div>

@@ -1,12 +1,10 @@
 import React from "react";
 import { Note } from "tonal";
 
-// Define the possible notes within one octave
 const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
   Note.fromMidi(i + 60)
 );
 
-// The NotesGrid component
 const NotesGrid = ({ notes }) => {
   const noteToGridRow = (note) => {
     const midi = Note.midi(note);
@@ -17,10 +15,7 @@ const NotesGrid = ({ notes }) => {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: `50px repeat(${notes.length}, 1fr)`,
-        gridTemplateRows: `repeat(${POSSIBLE_NOTES.length}, 1fr)`,
       }}>
-      {/* Add note labels */}
       {POSSIBLE_NOTES.map((note, i) => (
         <div
           key={i}
@@ -28,6 +23,7 @@ const NotesGrid = ({ notes }) => {
             gridColumn: 1,
             gridRow: POSSIBLE_NOTES.length - i,
             backgroundColor: "lightgrey",
+            padding: "10px",
             border: "1px solid black",
             display: "flex",
             alignItems: "center",
@@ -36,16 +32,17 @@ const NotesGrid = ({ notes }) => {
           {note}
         </div>
       ))}
-      {/* Add note blocks */}
+
       {notes.map((note, index) => {
         const row = noteToGridRow(note);
         return row !== null ? (
           <div
             key={index}
             style={{
-              gridColumn: index + 2, // Adjust for the new column
+              gridColumn: index + 2,
               gridRow: row,
-              backgroundColor: "skyblue",
+              padding: "10px",
+              backgroundColor: "red",
               border: "1px solid black",
             }}>
             {note}
