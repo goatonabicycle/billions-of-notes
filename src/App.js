@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Scale, Mode } from "tonal";
+import { Scale, Mode, Note } from "tonal";
 import {
   DEFAULT_KEY,
   DEFAULT_SCALE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
+  DEFAULT_OCTAVE,
   KEYS,
   mapToSelectOptions,
 } from "./useful";
@@ -27,9 +28,8 @@ function App() {
   const [randomNotes, setRandomNotes] = useState([]);
 
   useEffect(() => {
-    const defaultOctave = "4";
     const notes = Scale.get(`${selectedKey} ${selectedScale}`).notes.map(
-      (note) => note + defaultOctave
+      (note) => Note.simplify(note) + DEFAULT_OCTAVE
     );
     setNotesForKeyAndScale(notes);
   }, [selectedKey, selectedScale]);
