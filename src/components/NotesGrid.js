@@ -1,9 +1,7 @@
 import React from "react";
 import { Note } from "tonal";
 
-const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
-  Note.fromMidi(i + 60)
-);
+import { KEYS } from "../useful";
 
 const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
   const noteToGridRow = (note) => {
@@ -16,12 +14,12 @@ const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
       style={{
         display: "grid",
       }}>
-      {POSSIBLE_NOTES.map((note, i) => (
+      {KEYS.map((note, i) => (
         <div
           key={i}
           style={{
             gridColumn: 1,
-            gridRow: POSSIBLE_NOTES.length - i,
+            gridRow: KEYS.length - i,
             backgroundColor: relevantNotes?.includes(note)
               ? "blue"
               : "lightgrey",
