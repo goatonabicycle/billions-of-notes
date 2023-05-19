@@ -17,7 +17,7 @@ import Loop from "./components/Loop";
 import "./App.css";
 
 function App() {
-  const scales = Mode.names();
+  const scales = Mode.names(); // Todo: rename "scales" to "modes"
   const [selectedKey, setSelectedKey] = useState(DEFAULT_KEY);
   const [selectedScale, setSelectedScale] = useState(DEFAULT_SCALE);
   const [selectedTempo, setSelectedTempo] = useState(DEFAULT_TEMPO);
@@ -28,9 +28,24 @@ function App() {
   const [randomNotes, setRandomNotes] = useState([]);
 
   useEffect(() => {
-    const notes = Scale.get(`${selectedKey} ${selectedScale}`).notes.map(
-      (note) => Note.simplify(note) + DEFAULT_OCTAVE
+    const FLAT_TO_SHARP = {
+      Cb: "B",
+      Db: "C#",
+      Eb: "D#",
+      Fb: "E",
+      Gb: "F#",
+      Ab: "G#",
+      Bb: "A#",
+    };
+    const flatToSharp = (note) => {
+      const { pc, oct } = Note.get(note); // pc is the pitch class (note without octave)
+      return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
+    };
+
+    let notes = Mode.notes(selectedScale, selectedKey).map(
+      (note) => flatToSharp(Note.simplify(note)) + DEFAULT_OCTAVE
     );
+
     setNotesForKeyAndScale(notes);
   }, [selectedKey, selectedScale]);
 

@@ -4,6 +4,10 @@ import { Note } from "tonal";
 import { KEYS } from "../useful";
 
 const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
+  const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
+    Note.fromMidiSharps(i + 48)
+  );
+
   const noteToGridRow = (note) => {
     const midi = Note.midi(note);
     return midi ? 12 - (midi % 12) : null;
@@ -14,12 +18,12 @@ const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
       style={{
         display: "grid",
       }}>
-      {KEYS.map((note, i) => (
+      {POSSIBLE_NOTES.map((note, i) => (
         <div
           key={i}
           style={{
             gridColumn: 1,
-            gridRow: KEYS.length - i,
+            gridRow: POSSIBLE_NOTES.length - i,
             backgroundColor: relevantNotes?.includes(note)
               ? "blue"
               : "lightgrey",
@@ -43,7 +47,6 @@ const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
               gridRow: row,
               padding: "5px",
               backgroundColor: index === activeIndex ? "red" : "blue",
-              border: "1px solid black",
             }}>
             {note}
           </div>

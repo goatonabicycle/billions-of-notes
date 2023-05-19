@@ -16,6 +16,12 @@
   display: flex;
 }
 
+.MIDISounds
+{
+  display: none;
+  visibility: hidden;
+}
+
 #debug
 {
   position: fixed;
