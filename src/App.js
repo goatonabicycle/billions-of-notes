@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Scale, Mode, Note } from "tonal";
+import { Mode, Note } from "tonal";
 import {
   DEFAULT_KEY,
   DEFAULT_SCALE,

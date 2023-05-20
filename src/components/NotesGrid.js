@@ -1,8 +1,6 @@
 import React from "react";
 import { Note } from "tonal";
 
-import { KEYS } from "../useful";
-
 const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
   const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
     Note.fromMidiSharps(i + 48)
