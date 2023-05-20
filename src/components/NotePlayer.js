@@ -30,14 +30,13 @@ const NotePlayer = ({ note }) => {
     }
 
     midiNumber += octave * 12;
-    midiSoundsRef.current.playChordNow(29, [midiNumber], 2.5); // 3 is for piano, 2.5 is the duration
+    midiSoundsRef.current.playChordNow(272, [midiNumber], 1.0); // 3 is for piano, 2.5 is the duration
   }, [note, midiSoundsRef]);
 
   return (
     <MIDISounds
       ref={midiSoundsRef}
       appElementName="root"
-      instruments={[6]}
     />
   );
 };
