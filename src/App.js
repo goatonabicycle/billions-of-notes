@@ -6,6 +6,7 @@ import {
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
   DEFAULT_OCTAVE,
+  DEFAULT_OCTAVE_RANGE,
   KEYS,
   mapToSelectOptions,
 } from "./useful";
@@ -26,6 +27,8 @@ function App() {
   );
   const [notesForKeyAndScale, setNotesForKeyAndScale] = useState([]);
   const [randomNotes, setRandomNotes] = useState([]);
+  const [selectedOctaveRange, setSelectedOctaveRange] =
+    useState(DEFAULT_OCTAVE_RANGE);
 
   useEffect(() => {
     const FLAT_TO_SHARP = {
@@ -43,11 +46,13 @@ function App() {
     };
 
     let notes = Mode.notes(selectedMode, selectedKey).map(
-      (note) => flatToSharp(Note.simplify(note)) + DEFAULT_OCTAVE
+      (note) =>
+        flatToSharp(Note.simplify(note)) +
+        Math.floor(Math.random() * selectedOctaveRange + DEFAULT_OCTAVE)
     );
 
     setNotesForKeyAndScale(notes);
-  }, [selectedKey, selectedMode]);
+  }, [selectedKey, selectedMode, selectedOctaveRange]);
 
   useEffect(() => {
     let randomNotes = [];
@@ -85,11 +90,21 @@ function App() {
           id="numOfNotesSelect"
           label="Number of notes:"
           options={useMemo(() => {
-            const notes = Array.from({ length: 20 }, (_, i) => i);
+            const notes = Array.from({ length: 16 }, (_, i) => i + 1);
             return mapToSelectOptions(notes);
           }, [])}
           onChange={setSelectedNumberOfNotes}
           selectedValue={selectedNumberOfNotes}
+        />
+        <Select
+          id="octaveRangeSelect"
+          label="Spread notes across this number of octaves:"
+          options={useMemo(() => {
+            const notes = Array.from({ length: 3 }, (_, i) => i + 1);
+            return mapToSelectOptions(notes);
+          }, [])}
+          onChange={setSelectedOctaveRange}
+          selectedValue={selectedOctaveRange}
         />
         <Slider
           id="tempoSlider"

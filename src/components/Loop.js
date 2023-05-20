@@ -23,7 +23,6 @@ const LoopComponent = ({ notes, relevantNotes, bpm }) => {
   return (
     <div>
       {notes[currentIndex]}
-      Notes: {relevantNotes}
       <NotePlayer note={notes[currentIndex] || "C3"} />
       <NotesGrid
         notes={notes}
