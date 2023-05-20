@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Mode, Note } from "tonal";
 import {
   DEFAULT_KEY,
-  DEFAULT_SCALE,
+  DEFAULT_MODE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
   DEFAULT_OCTAVE,
@@ -17,9 +17,9 @@ import Loop from "./components/Loop";
 import "./App.css";
 
 function App() {
-  const scales = Mode.names(); // Todo: rename "scales" to "modes"
+  const modes = Mode.names(); // Todo: rename "scales" to "modes"
   const [selectedKey, setSelectedKey] = useState(DEFAULT_KEY);
-  const [selectedScale, setSelectedScale] = useState(DEFAULT_SCALE);
+  const [selectedMode, setSelectedMode] = useState(DEFAULT_MODE);
   const [selectedTempo, setSelectedTempo] = useState(DEFAULT_TEMPO);
   const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useState(
     DEFAULT_NUMBER_OF_NOTES
@@ -42,12 +42,12 @@ function App() {
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
     };
 
-    let notes = Mode.notes(selectedScale, selectedKey).map(
+    let notes = Mode.notes(selectedMode, selectedKey).map(
       (note) => flatToSharp(Note.simplify(note)) + DEFAULT_OCTAVE
     );
 
     setNotesForKeyAndScale(notes);
-  }, [selectedKey, selectedScale]);
+  }, [selectedKey, selectedMode]);
 
   useEffect(() => {
     let randomNotes = [];
@@ -60,7 +60,7 @@ function App() {
     }
 
     setRandomNotes(randomNotes);
-  }, [selectedKey, selectedScale, selectedNumberOfNotes, notesForKeyAndScale]);
+  }, [selectedKey, selectedMode, selectedNumberOfNotes, notesForKeyAndScale]);
 
   return (
     <div className="App">
@@ -75,11 +75,11 @@ function App() {
           selectedValue={selectedKey}
         />
         <Select
-          id="scaleSelect"
-          label="Select a scale:"
-          options={useMemo(() => mapToSelectOptions(scales), [scales])}
-          onChange={setSelectedScale}
-          selectedValue={selectedScale}
+          id="modeSelect"
+          label="Select a mode:"
+          options={useMemo(() => mapToSelectOptions(modes), [modes])}
+          onChange={setSelectedMode}
+          selectedValue={selectedMode}
         />
         <Select
           id="numOfNotesSelect"
@@ -117,7 +117,7 @@ function App() {
         <br />
         selectedKey: {selectedKey}
         <br />
-        selectedScale: {selectedScale}
+        selectedScale: {selectedMode}
         <br />
         notesForKeyAndScale: {notesForKeyAndScale}
         <br />
