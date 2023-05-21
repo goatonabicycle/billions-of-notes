@@ -13,6 +13,7 @@ import {
 
 import Select from "./components/Select";
 import Slider from "./components/Slider";
+import OctaveSelector from "./components/OctaveSelector";
 
 import Loop from "./components/Loop";
 import "./App.css";
@@ -29,6 +30,7 @@ function App() {
   const [randomNotes, setRandomNotes] = useState([]);
   const [selectedOctaveRange, setSelectedOctaveRange] =
     useState(DEFAULT_OCTAVE_RANGE);
+  const [selectedOctaves, setSelectedOctaves] = useState(1);
 
   useEffect(() => {
     const FLAT_TO_SHARP = {
@@ -117,11 +119,15 @@ function App() {
             setSelectedTempo(parseInt(e.target.value, 10));
           }}
         />
+
+        <OctaveSelector
+          selectedOctaves={selectedOctaves}
+          setSelectedOctaves={setSelectedOctaves}
+        />
       </div>
 
       <Loop
         notes={randomNotes}
-        // octaveRange={selectedOctaveRange}
         octaveRange={[3, 4]}
         relevantNotes={notesForKeyAndScale}
         bpm={selectedTempo}
@@ -142,6 +148,8 @@ function App() {
         {randomNotes.map((note, index) => (
           <span key={index}>{note} </span>
         ))}
+        <br />
+        Octaves: {selectedOctaves}
       </div>
     </div>
   );
