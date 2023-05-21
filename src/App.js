@@ -121,6 +121,8 @@ function App() {
 
       <Loop
         notes={randomNotes}
+        // octaveRange={selectedOctaveRange}
+        octaveRange={[3, 4]}
         relevantNotes={notesForKeyAndScale}
         bpm={selectedTempo}
       />

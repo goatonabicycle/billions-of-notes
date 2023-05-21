@@ -1,10 +1,15 @@
 import React from "react";
 import { Note } from "tonal";
 
-const NotesGrid = ({ notes, relevantNotes, activeIndex }) => {
-  const POSSIBLE_NOTES = Array.from({ length: 12 }, (_, i) =>
-    Note.fromMidiSharps(i + 48)
-  );
+const NotesGrid = ({ notes, relevantNotes, activeIndex, octaveRange }) => {
+  const POSSIBLE_NOTES = [];
+
+  for (let octave = octaveRange[0]; octave <= octaveRange[1]; octave++) {
+    for (let noteIndex = 0; noteIndex < 12; noteIndex++) {
+      const note = Note.fromMidiSharps(noteIndex + 12 * octave);
+      POSSIBLE_NOTES.push(note);
+    }
+  }
 
   const noteToGridRow = (note) => {
     const midi = Note.midi(note);
