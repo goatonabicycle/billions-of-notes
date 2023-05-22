@@ -24,8 +24,9 @@
 
 #debug
 {
+  /* display: none; */
   position: fixed;
-  bottom:0px;
+  top:0px;
   right:0px;
   border:1px solid red;
   font-size:12px;
