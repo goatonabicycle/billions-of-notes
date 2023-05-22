@@ -6,7 +6,6 @@ import {
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
   DEFAULT_OCTAVE,
-  DEFAULT_OCTAVE_RANGE,
   KEYS,
   mapToSelectOptions,
 } from "./useful";
@@ -28,9 +27,7 @@ function App() {
   );
   const [notesForKeyAndScale, setNotesForKeyAndScale] = useState([]);
   const [randomNotes, setRandomNotes] = useState([]);
-  const [selectedOctaveRange, setSelectedOctaveRange] =
-    useState(DEFAULT_OCTAVE_RANGE);
-  const [selectedOctaves, setSelectedOctaves] = useState(1);
+  const [selectedOctaves, setSelectedOctaves] = useState(3);
 
   useEffect(() => {
     const FLAT_TO_SHARP = {
@@ -50,11 +47,12 @@ function App() {
     let notes = Mode.notes(selectedMode, selectedKey).map(
       (note) =>
         flatToSharp(Note.simplify(note)) +
-        Math.floor(Math.random() * selectedOctaveRange + DEFAULT_OCTAVE)
+        (Math.floor(Math.random() * (selectedOctaves - DEFAULT_OCTAVE + 1)) +
+          DEFAULT_OCTAVE)
     );
 
     setNotesForKeyAndScale(notes);
-  }, [selectedKey, selectedMode, selectedOctaveRange]);
+  }, [selectedKey, selectedMode, selectedOctaves]);
 
   useEffect(() => {
     let randomNotes = [];
@@ -67,7 +65,13 @@ function App() {
     }
 
     setRandomNotes(randomNotes);
-  }, [selectedKey, selectedMode, selectedNumberOfNotes, notesForKeyAndScale]);
+  }, [
+    selectedKey,
+    selectedMode,
+    selectedNumberOfNotes,
+    notesForKeyAndScale,
+    selectedOctaves,
+  ]);
 
   return (
     <div className="App">
@@ -97,16 +101,6 @@ function App() {
           }, [])}
           onChange={setSelectedNumberOfNotes}
           selectedValue={selectedNumberOfNotes}
-        />
-        <Select
-          id="octaveRangeSelect"
-          label="Spread notes across this number of octaves:"
-          options={useMemo(() => {
-            const notes = Array.from({ length: 3 }, (_, i) => i + 1);
-            return mapToSelectOptions(notes);
-          }, [])}
-          onChange={setSelectedOctaveRange}
-          selectedValue={selectedOctaveRange}
         />
         <Slider
           id="tempoSlider"

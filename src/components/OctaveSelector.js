@@ -7,11 +7,11 @@ const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
 
   return (
     <div className="octave-selector">
-      Octaves:
+      Octaves: 3
       <input
         type="range"
-        min="1"
-        max="8"
+        min="3"
+        max="5"
         value={selectedOctaves}
         onChange={handleChange}
       />
