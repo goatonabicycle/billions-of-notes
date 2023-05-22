@@ -13,6 +13,7 @@ import {
 import Select from "./components/Select";
 import Slider from "./components/Slider";
 import OctaveSelector from "./components/OctaveSelector";
+import RegenerateButton from "./components/RegenerateButton";
 
 import Loop from "./components/Loop";
 import "./App.css";
@@ -28,6 +29,7 @@ function App() {
   const [notesForKeyAndScale, setNotesForKeyAndScale] = useState([]);
   const [randomNotes, setRandomNotes] = useState([]);
   const [selectedOctaves, setSelectedOctaves] = useState(3);
+  const [triggerRegenerate, setTriggerRegenerate] = useState(false);
 
   useEffect(() => {
     const FLAT_TO_SHARP = {
@@ -52,7 +54,7 @@ function App() {
     );
 
     setNotesForKeyAndScale(notes);
-  }, [selectedKey, selectedMode, selectedOctaves]);
+  }, [selectedKey, selectedMode, selectedOctaves, triggerRegenerate]);
 
   useEffect(() => {
     let randomNotes = [];
@@ -71,6 +73,7 @@ function App() {
     selectedNumberOfNotes,
     notesForKeyAndScale,
     selectedOctaves,
+    triggerRegenerate,
   ]);
 
   return (
@@ -118,6 +121,11 @@ function App() {
           selectedOctaves={selectedOctaves}
           setSelectedOctaves={setSelectedOctaves}
         />
+
+        <RegenerateButton
+          onClick={() => {
+            setTriggerRegenerate(!triggerRegenerate);
+          }}></RegenerateButton>
       </div>
 
       <Loop
