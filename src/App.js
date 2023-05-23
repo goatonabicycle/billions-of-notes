@@ -26,9 +26,9 @@ function App() {
   const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useState(
     DEFAULT_NUMBER_OF_NOTES
   );
-  const [notesForKeyAndScale, setNotesForKeyAndScale] = useState([]);
+  const [notesToChooseFrom, setNotesToChooseFrom] = useState([]);
   const [randomNotes, setRandomNotes] = useState([]);
-  const [selectedOctaves, setSelectedOctaves] = useState(3);
+  const [selectedOctaves, setSelectedOctaves] = useState([3]);
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
 
   useEffect(() => {
@@ -49,21 +49,18 @@ function App() {
     let notes = Mode.notes(selectedMode, selectedKey).map(
       (note) =>
         flatToSharp(Note.simplify(note)) +
-        (Math.floor(Math.random() * (selectedOctaves - DEFAULT_OCTAVE + 1)) +
-          DEFAULT_OCTAVE)
+        (Math.floor(Math.random() * selectedOctaves.length) + DEFAULT_OCTAVE)
     );
 
-    setNotesForKeyAndScale(notes);
+    setNotesToChooseFrom(notes);
   }, [selectedKey, selectedMode, selectedOctaves, triggerRegenerate]);
 
   useEffect(() => {
     let randomNotes = [];
 
     for (let i = 0; i < selectedNumberOfNotes; i++) {
-      const randomIndex = Math.floor(
-        Math.random() * notesForKeyAndScale.length
-      );
-      randomNotes.push(notesForKeyAndScale[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * notesToChooseFrom.length);
+      randomNotes.push(notesToChooseFrom[randomIndex]);
     }
 
     setRandomNotes(randomNotes);
@@ -71,7 +68,7 @@ function App() {
     selectedKey,
     selectedMode,
     selectedNumberOfNotes,
-    notesForKeyAndScale,
+    notesToChooseFrom,
     selectedOctaves,
     triggerRegenerate,
   ]);
@@ -128,13 +125,6 @@ function App() {
           }}></RegenerateButton>
       </div>
 
-      <Loop
-        notes={randomNotes}
-        octaveRange={[3, 5]}
-        relevantNotes={notesForKeyAndScale}
-        bpm={selectedTempo}
-      />
-
       <div id="debug">
         {selectedTempo} BPM
         <br />
@@ -144,15 +134,18 @@ function App() {
         <br />
         selectedScale: {selectedMode}
         <br />
-        notesForKeyAndScale: {notesForKeyAndScale}
+        notesForKeyAndScale: {notesToChooseFrom.join(", ")}
         <br />
-        Random Notes:
-        {randomNotes.map((note, index) => (
-          <span key={index}>{note} </span>
-        ))}
+        Random Notes: {randomNotes.join(", ")}
         <br />
-        Octaves: {selectedOctaves}
+        Octaves: {selectedOctaves.join(", ")}
       </div>
+      <Loop
+        notes={randomNotes}
+        octaveRange={selectedOctaves}
+        notesInMode={notesToChooseFrom}
+        bpm={selectedTempo}
+      />
     </div>
   );
 }

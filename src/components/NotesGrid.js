@@ -1,60 +1,49 @@
 import React from "react";
-import { Note } from "tonal";
+import "./NotesGrid.css";
 
-const NotesGrid = ({ notes, relevantNotes, activeIndex, octaveRange }) => {
-  const POSSIBLE_NOTES = [];
-
-  for (let octave = octaveRange[0]; octave <= octaveRange[1]; octave++) {
-    for (let noteIndex = 0; noteIndex < 12; noteIndex++) {
-      const note = Note.fromMidiSharps(noteIndex + 12 * octave);
-      POSSIBLE_NOTES.push(note);
-    }
-  }
-
-  const noteToGridRow = (note) => {
-    const midi = Note.midi(note);
-    return midi ? 12 - (midi % 12) : null;
-  };
+const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
+  const notesInOctave = [
+    "C",
+    "C#",
+    "D",
+    "D#",
+    "E",
+    "F",
+    "F#",
+    "G",
+    "G#",
+    "A",
+    "A#",
+    "B",
+  ];
+  const allPossibleNotes = octaveRange.flatMap((octave) =>
+    notesInOctave.map((note) => `${note}${octave}`)
+  );
 
   return (
-    <div
-      style={{
-        display: "grid",
-      }}>
-      {POSSIBLE_NOTES.map((note, i) => (
+    <div className="notes-grid">
+      {allPossibleNotes.map((noteRow, rowIndex) => (
         <div
-          key={i}
-          style={{
-            gridColumn: 1,
-            gridRow: POSSIBLE_NOTES.length - i,
-            backgroundColor: relevantNotes?.includes(note)
-              ? "blue"
-              : "lightgrey",
-            padding: "5px",
-            border: "1px solid black",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}>
-          {note}
+          key={noteRow}
+          className={`note-row ${
+            notes.includes(noteRow) ? "chosen-note-row" : ""
+          } ${
+            notesInMode.some((note) => noteRow.startsWith(note))
+              ? "note-in-mode-row"
+              : ""
+          } ${notes[activeIndex] === noteRow ? "active-row" : ""}`}>
+          <div className="note-cell note-label">{noteRow}</div>
+          {notes.map((note, colIndex) => (
+            <div
+              key={`${note}-${colIndex}`}
+              className={`note-cell ${note === noteRow ? "note-present" : ""} ${
+                activeIndex === colIndex ? "active-note" : ""
+              }`}>
+              {note === noteRow ? note : ""}
+            </div>
+          ))}
         </div>
       ))}
-
-      {notes.map((note, index) => {
-        const row = noteToGridRow(note);
-        return row !== null ? (
-          <div
-            key={index}
-            style={{
-              gridColumn: index + 2,
-              gridRow: row,
-              padding: "5px",
-              backgroundColor: index === activeIndex ? "red" : "blue",
-            }}>
-            {note}
-          </div>
-        ) : null;
-      })}
     </div>
   );
 };

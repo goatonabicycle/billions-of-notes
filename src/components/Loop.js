@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NotesGrid from "./NotesGrid";
 import NotePlayer from "./NotePlayer";
 
-const LoopComponent = ({ notes, relevantNotes, bpm, octaveRange }) => {
+const LoopComponent = ({ notes, notesInMode, bpm, octaveRange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -21,12 +21,12 @@ const LoopComponent = ({ notes, relevantNotes, bpm, octaveRange }) => {
   };
 
   return (
-    <div>
-      {notes[currentIndex]}
+    <div className="loop-grid-contain">
+      <div className="currentNote">{notes[currentIndex]}</div>
       <NotePlayer note={notes[currentIndex] || "C3"} />
       <NotesGrid
         notes={notes}
-        relevantNotes={relevantNotes}
+        notesInMode={[]}
         octaveRange={octaveRange}
         activeIndex={currentIndex}
       />

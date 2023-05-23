@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+.notes-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  font-size: calc(1px + 1.5vmin);
+  background-color: #F8F8F8;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+}
+
+.loop-grid-contain {
+  flex-grow: 1; 
+  display: flex; 
+  overflow: hidden; 
+}
+
+.note-row {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;  
+  min-height: 0;
+  font-weight: 500;
+  color: #2B2B2B;
+}
+
+.note-cell {  
+  border: 1px solid #BBBBBB;
+  text-align: center;
+  flex: 1;
+  overflow: hidden; 
+  transition: background-color 0.2s ease;
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  color: #2B2B2B;
+}
+
+.note-label {
+  text-align: center;
+  background-color: #282c34;
+  color: #F8F8F8;
+  font-weight: 700;
+  align-items: center;
+  display: flex; 
+  justify-content: center;  
+}
+
+@media (max-width: 600px) { 
+  .note-label {
+    font-size: 1em; 
+  }
+}
+
+.note-present {
+  transition: background-color 0.7s ease;
+  background-color: #282c34;
+  color:white;
+}
+
+.active-note {
+  background-color: #e2e2e2;
+  transition: background-color 0.1s ease;
+}
+
+.active-row .active-note {  
+  background-color: #1b3a9e;  
+}
+
+.active-row {
+  
+  background-color: #e2e2e2 !important;
+}
+
+.chosen-note-row {  
+  background-color: #FFFFFF;  
+}
+
+.note-in-mode-row {
+  background-color: #6c757d;
+}

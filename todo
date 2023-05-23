@@ -1,6 +1,11 @@
-- Add octave range
+x Add octave range
+
 - Instrument list. Focus on guitar?
 - Show notes on an actual fretboard.
 - Add randomness for empty notes.
 - Fix the Select CSS module.
 - Aesthetic. Name and logo. About. Links to code.
+- Save/Share a configuration
+- Save multiple configurations you've liked.
+- Load someone's configuration
+- Export to actual midi
