@@ -30,8 +30,7 @@
   border: 1px solid #BBBBBB;
   text-align: center;
   flex: 1;
-  overflow: hidden; 
-  transition: background-color 0.2s ease;
+  overflow: hidden;   
   display: flex; 
   justify-content: center;
   align-items: center; 
@@ -54,15 +53,19 @@
   }
 }
 
+.note-in-mode-row {
+  /* background-color: #6c757d; */
+}
+
 .note-present {
-  transition: background-color 0.7s ease;
   background-color: #282c34;
   color:white;
 }
 
 .active-note {
-  background-color: #e2e2e2;
-  transition: background-color 0.1s ease;
+  background-color: #dee4fd;
+  border-right: 1px solid #dee4fd;
+  border-left: 1px solid #dee4fd;
 }
 
 .active-row .active-note {  
@@ -70,14 +73,11 @@
 }
 
 .active-row {
-  
-  background-color: #e2e2e2 !important;
+  background-color: #dee4fd;
 }
 
 .chosen-note-row {  
-  background-color: #FFFFFF;  
+  /* background-color: #6c757d; */
 }
 
-.note-in-mode-row {
-  background-color: #6c757d;
-}
+

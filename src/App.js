@@ -32,6 +32,8 @@ function App() {
   const [selectedOctaves, setSelectedOctaves] = useState([3]);
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
 
+  const [isPlaying, setIsPlaying] = useState(true);
+
   useEffect(() => {
     const FLAT_TO_SHARP = {
       Cb: "B",
@@ -124,28 +126,21 @@ function App() {
           onClick={() => {
             setTriggerRegenerate(!triggerRegenerate);
           }}></RegenerateButton>
+
+        <button
+          onClick={() => {
+            setIsPlaying(!isPlaying);
+          }}>
+          {isPlaying ? "Pause" : "Play"}
+        </button>
       </div>
 
-      <div id="debug">
-        {selectedTempo} BPM
-        <br />
-        selectedNumberOfNotes: {selectedNumberOfNotes}
-        <br />
-        selectedKey: {selectedKey}
-        <br />
-        selectedScale: {selectedMode}
-        <br />
-        notesForKeyAndScale: {notesToChooseFrom.join(", ")}
-        <br />
-        Random Notes: {randomNotes.join(", ")}
-        <br />
-        Octaves: {selectedOctaves.join(", ")}
-      </div>
       <Loop
         notes={randomNotes}
         octaveRange={selectedOctaves}
         notesInMode={notesToChooseFrom}
         bpm={selectedTempo}
+        isPlaying={isPlaying}
       />
       <ClickFirst onClick={() => {}} />
     </div>

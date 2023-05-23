@@ -2,18 +2,25 @@ import React, { useState, useEffect } from "react";
 import NotesGrid from "./NotesGrid";
 import NotePlayer from "./NotePlayer";
 
-const LoopComponent = ({ notes, notesInMode, bpm, octaveRange }) => {
+const LoopComponent = ({ notes, notesInMode, bpm, octaveRange, isPlaying }) => {
+  // Added `isPlaying` to props
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
-    }, calculateInterval(bpm));
+    let interval;
+
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
+      }, calculateInterval(bpm));
+    }
 
     return () => {
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
     };
-  }, [notes, bpm]);
+  }, [notes, bpm, isPlaying]);
 
   const calculateInterval = (bpm) => {
     const millisecondsPerBeat = 60000 / bpm;
@@ -26,7 +33,7 @@ const LoopComponent = ({ notes, notesInMode, bpm, octaveRange }) => {
       <NotePlayer note={notes[currentIndex] || "C3"} />
       <NotesGrid
         notes={notes}
-        notesInMode={[]}
+        notesInMode={notesInMode}
         octaveRange={octaveRange}
         activeIndex={currentIndex}
       />
