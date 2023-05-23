@@ -14,6 +14,7 @@ import Select from "./components/Select";
 import Slider from "./components/Slider";
 import OctaveSelector from "./components/OctaveSelector";
 import RegenerateButton from "./components/RegenerateButton";
+import ClickFirst from "./components/ClickFirst";
 
 import Loop from "./components/Loop";
 import "./App.css";
@@ -146,6 +147,7 @@ function App() {
         notesInMode={notesToChooseFrom}
         bpm={selectedTempo}
       />
+      <ClickFirst onClick={() => {}} />
     </div>
   );
 }
