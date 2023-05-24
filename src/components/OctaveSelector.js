@@ -17,7 +17,7 @@ const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
 
   return (
     <div className="octave-selector">
-      Octaves:
+      Octaves: <br />
       {[1, 2, 3, 4, 5, 6, 7, 8].map((octave) => (
         <span
           className="octave-selector-item"

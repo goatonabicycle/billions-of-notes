@@ -1,0 +1,35 @@
+/* Select.css */
+
+.selectContainer {
+  display: flex;
+  color: #f3f5f7;
+  padding:2px;
+  text-align: left;
+}
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;    
+}
+
+.selectLabel {  
+}
+
+.selectElement {
+  width: 130px;
+  text-transform: capitalize;
+  padding: 6px;
+  border: 2px solid #1b3a9e;    
+  background-color: #fff;    
+  transition: border-color 0.3s ease;
+}
+
+.selectElement:hover,
+.selectElement:focus {
+  border-color: #1b3a9e;
+  box-shadow: 0 0 5px rgba(66, 133, 244, 0.2);
+}
+
+.selectElement option {  
+  
+}

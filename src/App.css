@@ -1,28 +1,61 @@
 .App {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  background-color: #282c34;
+  text-align: left;
+  color:#f3f5f7; 
   min-height: 100vh;
   align-items: left;
   justify-content: flex-start;
   font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #282c34; 
 }
 
-.App-inputs{  
-  align-items: center;
-  padding:1em;
-  border-bottom: 1px solid white;
+.App-inputs {
   display: flex;
+  flex-wrap: wrap;   
+  flex-direction: row;
+  font-size:0.5em;
 }
 
-@media (max-width: 600px) { /* media query for screens less than 600px wide */
-  .App-inputs {
-    flex-direction: column; 
-    padding:0.5em; 
-  }
+.App-inputs .selects {
+  flex: 0 0 100px;   
+  flex-wrap: wrap;        
+  border: 1px solid #f3f5f7;
+  padding:5px;
 }
+
+.App-inputs .other {
+  flex: 1 0 250px;
+  padding:5px;  
+  font-size: 1em;
+  text-align: center;
+  border: 1px solid #f3f5f7;
+}
+
+.App-inputs .buttons {
+  flex: 1 0 100px;       
+  display: flex;  
+  flex-direction: column;
+}
+
+.App-inputs .title {
+  flex: 0 0 200px;  
+  border: 1px solid #f3f5f7;
+  font-size: 3em;
+  padding:10px;
+}
+
+.thanks {  
+  padding:4px;
+  font-size: 0.3em;
+  border: 1px solid #f3f5f7;
+  color: #f3f5f7;  
+}
+
+.thanks a{  
+  color: #f3f5f7;  
+}
+
 
 .MIDISounds
 {
@@ -37,19 +70,26 @@
   top:0px;
   right:0px;
   border:1px solid red;
-  font-size:12px;
-}
-
-.octave-selector
-{
-  margin-left: 20px;
+  font-size:0.5em;
 }
 
 .currentNote {
   position: fixed;
   top:0px;
   right: 0px;
-  border: 1px solid black;
-  background-color: grey;
+  padding:5px;
+  background-color: #1b3a9e;
   width: 50px;
+}
+
+
+h1{ 
+  display: block;
+  font-size: 1em;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: normal;
+  font-style: italic;  
 }

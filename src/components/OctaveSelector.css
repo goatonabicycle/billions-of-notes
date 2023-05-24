@@ -1,8 +1,5 @@
-.octave-selector {
-    border:1px solid white;
-    padding:5px;
-}
+.octave-selector {}
 
-.octave-selector-item {    
-    padding:6px;
+.octave-selector-item {
+    padding:1px;
 }

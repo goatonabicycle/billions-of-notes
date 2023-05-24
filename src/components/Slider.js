@@ -3,7 +3,11 @@ import React from "react";
 const Slider = ({ id, min, max, step, value, onChange, label }) => {
   return (
     <div>
-      <label htmlFor={id}>{label}:</label>
+      <label htmlFor={id}>
+        {label}: <br />
+        {value}
+      </label>
+      <br />
       <input
         type="range"
         id={id}
@@ -13,7 +17,6 @@ const Slider = ({ id, min, max, step, value, onChange, label }) => {
         value={value}
         onChange={onChange}
       />
-      {value}
     </div>
   );
 };

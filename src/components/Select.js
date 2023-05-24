@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Select.module.css";
+import "./Select.css";
 
 function Select(props) {
   const handleChange = (event) => {
@@ -7,18 +7,18 @@ function Select(props) {
   };
 
   return (
-    <div className={styles.selectContainer}>
+    <div className="selectContainer">
       <div
         key={props.id}
-        className={styles.selectWrapper}>
+        className="selectWrapper">
         <label
           htmlFor={props.id}
-          className={styles.selectLabel}>
+          className="selectLabel">
           {props.label}
         </label>
         <select
           id={props.id}
-          className={styles.selectElement}
+          className="selectElement"
           onChange={handleChange}
           value={props.selectedValue}>
           {props.options.map((option) => (

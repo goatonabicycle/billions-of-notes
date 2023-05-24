@@ -1,0 +1,16 @@
+button
+{  
+  padding: 20px;
+  border: 1px solid white;
+  background-color: #1b3a9e;
+  color: #f3f5f7;
+  font-size:1em;
+  cursor: pointer;  
+  min-width:25%;
+  transition: background-color 0.3s ease;
+}
+
+button:hover
+{
+  background-color: #5a95f5;
+}

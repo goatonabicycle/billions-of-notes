@@ -14,11 +14,12 @@ import {
 import Select from "./components/Select";
 import Slider from "./components/Slider";
 import OctaveSelector from "./components/OctaveSelector";
-import RegenerateButton from "./components/RegenerateButton";
 import ClickFirst from "./components/ClickFirst";
-
 import Loop from "./components/Loop";
+import RainbowText from "./components/RainbowText";
+
 import "./App.css";
+import "./Buttons.css";
 
 function App() {
   const modes = Mode.names(); // Todo: rename "scales" to "modes"
@@ -94,69 +95,100 @@ function App() {
   return (
     <div className="App">
       <div className="App-inputs">
-        <Select
-          id="keySelect"
-          label="Select a key:"
-          options={useMemo(() => {
-            return mapToSelectOptions(KEYS);
-          }, [])}
-          onChange={setSelectedKey}
-          selectedValue={selectedKey}
-        />
-        <Select
-          id="modeSelect"
-          label="Select a mode:"
-          options={useMemo(() => mapToSelectOptions(modes), [modes])}
-          onChange={setSelectedMode}
-          selectedValue={selectedMode}
-        />
-        <Select
-          id="numOfNotesSelect"
-          label="Number of notes:"
-          options={useMemo(() => {
-            const notes = Array.from({ length: 16 }, (_, i) => i + 1);
-            return mapToSelectOptions(notes);
-          }, [])}
-          onChange={setSelectedNumberOfNotes}
-          selectedValue={selectedNumberOfNotes}
-        />
-        <Slider
-          id="tempoSlider"
-          label="Tempo"
-          min="10"
-          max="400"
-          step="10"
-          value={selectedTempo}
-          onChange={(e) => {
-            setSelectedTempo(parseInt(e.target.value, 10));
-          }}
-        />
+        <div className="title">
+          <RainbowText text={"Billions of Notes!"} />
+        </div>
+        <div className="selects">
+          <Select
+            id="keySelect"
+            label="Select a key:"
+            options={useMemo(() => {
+              return mapToSelectOptions(KEYS);
+            }, [])}
+            onChange={setSelectedKey}
+            selectedValue={selectedKey}
+          />
+          <Select
+            id="modeSelect"
+            label="Select a mode:"
+            options={useMemo(() => mapToSelectOptions(modes), [modes])}
+            onChange={setSelectedMode}
+            selectedValue={selectedMode}
+          />
+          <Select
+            id="numOfNotesSelect"
+            label="Number of notes:"
+            options={useMemo(() => {
+              const notes = Array.from({ length: 16 }, (_, i) => i + 1);
+              return mapToSelectOptions(notes);
+            }, [])}
+            onChange={setSelectedNumberOfNotes}
+            selectedValue={selectedNumberOfNotes}
+          />
+        </div>
 
-        <OctaveSelector
-          selectedOctaves={selectedOctaves}
-          setSelectedOctaves={setSelectedOctaves}
-        />
+        <div className="other">
+          <Slider
+            id="tempoSlider"
+            label="Tempo"
+            min="10"
+            max="400"
+            step="10"
+            value={selectedTempo}
+            onChange={(e) => {
+              setSelectedTempo(parseInt(e.target.value, 10));
+            }}
+          />
+          <OctaveSelector
+            selectedOctaves={selectedOctaves}
+            setSelectedOctaves={setSelectedOctaves}
+          />
+        </div>
+        <div className="buttons">
+          <button
+            onClick={() => {
+              setTriggerRegenerate(!triggerRegenerate);
+            }}>
+            New notes
+          </button>
 
-        <RegenerateButton
-          onClick={() => {
-            setTriggerRegenerate(!triggerRegenerate);
-          }}></RegenerateButton>
+          <button
+            onClick={() => {
+              setIsPlaying(!isPlaying);
+            }}>
+            {isPlaying ? "Pause" : "Play"}
+          </button>
 
-        <button
-          onClick={() => {
-            setIsPlaying(!isPlaying);
-          }}>
-          {isPlaying ? "Pause" : "Play"}
-        </button>
-
-        <button
-          onClick={() => {
-            alert("Not implemented yet");
-          }}>
-          Reset inputs
-        </button>
+          <button
+            onClick={() => {
+              alert("Not implemented yet");
+            }}>
+            Reset inputs
+          </button>
+          <button
+            onClick={() => {
+              alert("Not implemented yet");
+            }}>
+            Share
+          </button>
+          <button
+            onClick={() => {
+              alert("Not implemented yet");
+            }}>
+            Save as MIDI
+          </button>
+        </div>
       </div>
-
+      <div className="thanks">
+        <a
+          href="https://github.com/goatonabicycle/billions-of-notes"
+          target="_blank"
+          rel="noreferrer">
+          Code here
+        </a>
+        <span> Sounds thanks to:</span>{" "}
+        <a href="midi-sounds-react">midi-sounds-react</a>
+      </div>
       <Loop
         notes={randomNotes}
         octaveRange={selectedOctaves}
