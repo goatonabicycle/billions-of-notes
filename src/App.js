@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { useLocalStorage } from "./useLocalStorage";
+
 import { Mode, Note } from "tonal";
 import {
   DEFAULT_KEY,
   DEFAULT_MODE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
-  DEFAULT_OCTAVE,
   KEYS,
   mapToSelectOptions,
 } from "./useful";
@@ -21,15 +22,29 @@ import "./App.css";
 
 function App() {
   const modes = Mode.names(); // Todo: rename "scales" to "modes"
-  const [selectedKey, setSelectedKey] = useState(DEFAULT_KEY);
-  const [selectedMode, setSelectedMode] = useState(DEFAULT_MODE);
-  const [selectedTempo, setSelectedTempo] = useState(DEFAULT_TEMPO);
-  const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useState(
+  const [selectedKey, setSelectedKey] = useLocalStorage(
+    "selectedKey",
+    DEFAULT_KEY
+  );
+  const [selectedMode, setSelectedMode] = useLocalStorage(
+    "selectedMode",
+    DEFAULT_MODE
+  );
+  const [selectedTempo, setSelectedTempo] = useLocalStorage(
+    "selectedTempo",
+    DEFAULT_TEMPO
+  );
+  const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useLocalStorage(
+    "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
   );
   const [notesToChooseFrom, setNotesToChooseFrom] = useState([]);
   const [randomNotes, setRandomNotes] = useState([]);
-  const [selectedOctaves, setSelectedOctaves] = useState([3]);
+  const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
+    "selectedOctaves",
+    [3]
+  );
+
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
 
   const [isPlaying, setIsPlaying] = useState(true);
@@ -52,7 +67,7 @@ function App() {
     let notes = Mode.notes(selectedMode, selectedKey).map(
       (note) =>
         flatToSharp(Note.simplify(note)) +
-        (Math.floor(Math.random() * selectedOctaves.length) + DEFAULT_OCTAVE)
+        selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)]
     );
 
     setNotesToChooseFrom(notes);
@@ -132,6 +147,13 @@ function App() {
             setIsPlaying(!isPlaying);
           }}>
           {isPlaying ? "Pause" : "Play"}
+        </button>
+
+        <button
+          onClick={() => {
+            alert("Not implemented yet");
+          }}>
+          Reset inputs
         </button>
       </div>
 

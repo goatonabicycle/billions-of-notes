@@ -20,6 +20,9 @@ const Overlay = ({ onClick }) => {
       <div className="overlay-content">
         <h1>Hello!</h1>
         <p>Let's click somewhere to get things going!</p>
+        <p className="smol">
+          (You have to interact with the page to start the sound engine)
+        </p>
       </div>
     </div>
   );

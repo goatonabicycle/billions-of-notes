@@ -8,7 +8,7 @@ function RegenerateButton({ onClick }) {
         border: "1px solid white",
         marginLeft: "20px",
       }}>
-      Reload
+      New notes
     </button>
   );
 }
