@@ -33,13 +33,13 @@
 }
 
 .App-inputs .buttons {
-  flex: 1 0 100px;       
+  flex: 1 0 300px;       
   display: flex;  
   flex-direction: column;
 }
 
 .App-inputs .title {
-  flex: 0 0 200px;  
+  flex: 0 0 500px;  
   border: 1px solid #f3f5f7;
   font-size: 3em;
   padding:10px;
@@ -73,16 +73,7 @@
   font-size:0.5em;
 }
 
-.currentNote {
-  position: fixed;
-  top:0px;
-  right: 0px;
-  padding:5px;
-  background-color: #1b3a9e;
-  width: 50px;
-}
-
-h1{ 
+h1 { 
   display: block;
   font-size: 1em;
   margin-block-start: 0em;

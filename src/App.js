@@ -43,6 +43,7 @@ function App() {
   );
   const [notesToChooseFrom, setNotesToChooseFrom] = useState([]);
   const [randomNotes, setRandomNotes] = useState([]);
+  const [currentNote, setCurrentNote] = useState("");
   const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
     "selectedOctaves",
     [3]
@@ -99,6 +100,7 @@ function App() {
       <div className="App-inputs">
         <div className="title">
           <RainbowText text={"Billions of Notes!"} />
+          {currentNote}
         </div>
         <div className="selects">
           <Select
@@ -201,6 +203,7 @@ function App() {
         notesInMode={notesToChooseFrom}
         bpm={selectedTempo}
         isPlaying={isPlaying}
+        setCurrentNote={setCurrentNote}
       />
       <ClickFirst onClick={() => {}} />
     </div>
