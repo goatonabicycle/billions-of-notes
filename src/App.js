@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useLocalStorage } from "./useLocalStorage";
-
 import { Mode, Note } from "tonal";
+
 import {
   DEFAULT_KEY,
   DEFAULT_MODE,
@@ -10,6 +9,7 @@ import {
   KEYS,
   mapToSelectOptions,
 } from "./useful";
+import { useLocalStorage } from "./useLocalStorage";
 
 import Select from "./components/Select";
 import Slider from "./components/Slider";
@@ -17,6 +17,7 @@ import OctaveSelector from "./components/OctaveSelector";
 import ClickFirst from "./components/ClickFirst";
 import Loop from "./components/Loop";
 import RainbowText from "./components/RainbowText";
+import SaveToMidi from "./components/SaveToMidi";
 
 import "./App.css";
 import "./Buttons.css";
@@ -101,7 +102,7 @@ function App() {
         <div className="selects">
           <Select
             id="keySelect"
-            label="Select a key:"
+            label="Key:"
             options={useMemo(() => {
               return mapToSelectOptions(KEYS);
             }, [])}
@@ -110,14 +111,14 @@ function App() {
           />
           <Select
             id="modeSelect"
-            label="Select a mode:"
+            label="Mode:"
             options={useMemo(() => mapToSelectOptions(modes), [modes])}
             onChange={setSelectedMode}
             selectedValue={selectedMode}
           />
           <Select
             id="numOfNotesSelect"
-            label="Number of notes:"
+            label="Notes:"
             options={useMemo(() => {
               const notes = Array.from({ length: 16 }, (_, i) => i + 1);
               return mapToSelectOptions(notes);
@@ -173,7 +174,7 @@ function App() {
           </button>
           <button
             onClick={() => {
-              alert("Not implemented yet");
+              SaveToMidi(randomNotes, selectedTempo);
             }}>
             Save as MIDI
           </button>

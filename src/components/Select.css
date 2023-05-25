@@ -4,7 +4,7 @@
   display: flex;
   color: #f3f5f7;
   padding:2px;
-  text-align: left;
+  text-align: center;
 }
 
 .selectWrapper {
@@ -16,7 +16,7 @@
 }
 
 .selectElement {
-  width: 130px;
+  width: 100px;
   text-transform: capitalize;
   padding: 6px;
   border: 2px solid #1b3a9e;    
