@@ -65,7 +65,7 @@
 
 #debug
 {
-  display: none;
+  
   position: fixed;
   top:0px;
   right:0px;
@@ -82,4 +82,22 @@ h1 {
   margin-inline-end: 0px;
   font-weight: normal;
   font-style: italic;  
+}
+
+.line-canvas {
+  width: 300px; 
+  height: 150px; 
+  /* border: 1px solid white; */
+  color: white;
+}
+
+.current-note {
+  width:80px;
+  /* border:1px solid white; */
+  padding:35px;
+}
+
+.fun-things {
+  display: flex;
+  flex-direction: row;
 }

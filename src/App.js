@@ -19,6 +19,7 @@ import ClickFirst from "./components/ClickFirst";
 import Loop from "./components/Loop";
 import RainbowText from "./components/RainbowText";
 import SaveToMidi from "./components/SaveToMidi";
+import LineRenderer from "./components/LineRenderer";
 
 import "./App.css";
 import "./Buttons.css";
@@ -100,7 +101,13 @@ function App() {
       <div className="App-inputs">
         <div className="title">
           <RainbowText text={"Billions of Notes!"} />
-          {currentNote}
+          <div className="fun-things">
+            <LineRenderer
+              notes={randomNotes}
+              tempo={selectedTempo}
+            />
+            <div className="current-note">{currentNote}</div>
+          </div>
         </div>
         <div className="selects">
           <Select
