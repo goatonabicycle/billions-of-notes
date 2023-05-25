@@ -8,6 +8,7 @@ import {
   DEFAULT_NUMBER_OF_NOTES,
   KEYS,
   mapToSelectOptions,
+  DEFAULT_OCTAVES,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 
@@ -162,7 +163,11 @@ function App() {
 
           <button
             onClick={() => {
-              alert("Not implemented yet");
+              setSelectedKey(DEFAULT_KEY);
+              setSelectedMode(DEFAULT_MODE);
+              setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
+              setSelectedOctaves(DEFAULT_OCTAVES);
+              setSelectedTempo(DEFAULT_TEMPO);
             }}>
             Reset inputs
           </button>
