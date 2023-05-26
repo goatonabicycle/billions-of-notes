@@ -43,15 +43,14 @@ function App() {
     DEFAULT_NUMBER_OF_NOTES
   );
   const [notesToChooseFrom, setNotesToChooseFrom] = useState([]);
+
   const [randomNotes, setRandomNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
   const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
     "selectedOctaves",
-    [3]
+    DEFAULT_OCTAVES
   );
-
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
-
   const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
@@ -100,13 +99,15 @@ function App() {
     <div className="App">
       <div className="App-inputs">
         <div className="title">
-          <RainbowText text={"Billions of Notes!"} />
+          <RainbowText
+            text={"Billions of Notes!"}
+            tempo={selectedTempo}
+          />
           <div className="fun-things">
             <LineRenderer
               notes={randomNotes}
               tempo={selectedTempo}
             />
-            <div className="current-note">{currentNote}</div>
           </div>
         </div>
         <div className="selects">
@@ -154,6 +155,7 @@ function App() {
             selectedOctaves={selectedOctaves}
             setSelectedOctaves={setSelectedOctaves}
           />
+          <div className="current-note">{currentNote}</div>
         </div>
         <div className="buttons">
           <button

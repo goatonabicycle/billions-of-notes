@@ -36,10 +36,15 @@
   flex: 1 0 300px;       
   display: flex;  
   flex-direction: column;
+  color:white
+}
+
+.App-inputs .buttons a {
+  color:white
 }
 
 .App-inputs .title {
-  flex: 0 0 500px;  
+  /* flex: 0 0 500px;   */
   border: 1px solid #f3f5f7;
   font-size: 3em;
   padding:10px;
@@ -84,17 +89,10 @@ h1 {
   font-style: italic;  
 }
 
-.line-canvas {
-  width: 300px; 
-  height: 150px; 
-  /* border: 1px solid white; */
-  color: white;
-}
-
 .current-note {
-  width:80px;
+  
   /* border:1px solid white; */
-  padding:35px;
+  
 }
 
 .fun-things {
