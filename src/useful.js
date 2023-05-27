@@ -20,6 +20,16 @@ export const KEYS = [
   "G#",
 ];
 
+export const FLAT_TO_SHARP = {
+  Cb: "B",
+  Db: "C#",
+  Eb: "D#",
+  Fb: "E",
+  Gb: "F#",
+  Ab: "G#",
+  Bb: "A#",
+};
+
 export const mapToSelectOptions = (items) => {
   return items.map((item) => ({
     label: item,

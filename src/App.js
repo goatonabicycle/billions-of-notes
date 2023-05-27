@@ -9,6 +9,7 @@ import {
   KEYS,
   mapToSelectOptions,
   DEFAULT_OCTAVES,
+  FLAT_TO_SHARP,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 
@@ -42,7 +43,7 @@ function App() {
     "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
   );
-  const [notesToChooseFrom, setNotesToChooseFrom] = useState([]);
+  const [notesInMode, setNotesInMode] = useState([]);
 
   const [randomNotes, setRandomNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
@@ -54,35 +55,24 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
-    const FLAT_TO_SHARP = {
-      Cb: "B",
-      Db: "C#",
-      Eb: "D#",
-      Fb: "E",
-      Gb: "F#",
-      Ab: "G#",
-      Bb: "A#",
-    };
     const flatToSharp = (note) => {
       const { pc, oct } = Note.get(note); // pc is the pitch class (note without octave)
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
     };
 
-    let notes = Mode.notes(selectedMode, selectedKey).map(
+    let notesInMode = Mode.notes(selectedMode, selectedKey).map(
       (note) =>
         flatToSharp(Note.simplify(note)) +
         selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)]
     );
 
-    setNotesToChooseFrom(notes);
-  }, [selectedKey, selectedMode, selectedOctaves, triggerRegenerate]);
+    setNotesInMode(notesInMode);
 
-  useEffect(() => {
     let randomNotes = [];
 
     for (let i = 0; i < selectedNumberOfNotes; i++) {
-      const randomIndex = Math.floor(Math.random() * notesToChooseFrom.length);
-      randomNotes.push(notesToChooseFrom[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * notesInMode.length);
+      randomNotes.push(notesInMode[randomIndex]);
     }
 
     setRandomNotes(randomNotes);
@@ -90,7 +80,6 @@ function App() {
     selectedKey,
     selectedMode,
     selectedNumberOfNotes,
-    notesToChooseFrom,
     selectedOctaves,
     triggerRegenerate,
   ]);
@@ -209,7 +198,7 @@ function App() {
       <Loop
         notes={randomNotes}
         octaveRange={selectedOctaves}
-        notesInMode={notesToChooseFrom}
+        notesInMode={notesInMode}
         bpm={selectedTempo}
         isPlaying={isPlaying}
         setCurrentNote={setCurrentNote}
