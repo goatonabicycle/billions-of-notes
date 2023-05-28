@@ -7,8 +7,10 @@
     "file-saver": "^2.0.5",
     "midi-sounds-react": "^1.2.54",
     "midi-writer-js": "^2.1.4",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "tonal": "^4.14.1",
     "web-vitals": "^3.0.4"

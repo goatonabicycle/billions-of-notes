@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Mode, Note } from "tonal";
+import queryString from "query-string";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   DEFAULT_KEY,
@@ -53,8 +55,17 @@ function App() {
   );
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [loadedFromUrl, setLoadedFromUrl] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (loadedFromUrl) {
+      setLoadedFromUrl(false);
+      navigate(".", { replace: true });
+      return;
+    }
+
     const flatToSharp = (note) => {
       const { pc, oct } = Note.get(note); // pc is the pitch class (note without octave)
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
@@ -83,6 +94,33 @@ function App() {
     selectedOctaves,
     triggerRegenerate,
   ]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const parsedQuery = queryString.parse(location.search);
+
+    if (parsedQuery.inputs) {
+      const { key, mode, number, tempo } = JSON.parse(parsedQuery.inputs);
+      setSelectedKey(key);
+      setSelectedMode(mode);
+      setSelectedNumberOfNotes(number);
+      setSelectedTempo(tempo);
+    }
+
+    if (parsedQuery.octaves) {
+      setSelectedOctaves(JSON.parse(parsedQuery.octaves));
+    }
+
+    if (parsedQuery.notes) {
+      setRandomNotes(JSON.parse(parsedQuery.notes));
+      setLoadedFromUrl(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    // code to generate notes goes here
+  }, [selectedOctaves]);
 
   return (
     <div className="App">
@@ -173,7 +211,22 @@ function App() {
           </button>
           <button
             onClick={() => {
-              alert("Not implemented yet");
+              const url = queryString.stringifyUrl({
+                url: window.location.href,
+                query: {
+                  inputs: JSON.stringify({
+                    key: selectedKey,
+                    mode: selectedMode,
+                    number: selectedNumberOfNotes,
+                    tempo: selectedTempo,
+                  }),
+                  octaves: JSON.stringify(selectedOctaves),
+                  notes: JSON.stringify(randomNotes),
+                },
+              });
+
+              navigator.clipboard.writeText(url);
+              alert("Link copied to clipboard!");
             }}>
             Share
           </button>
