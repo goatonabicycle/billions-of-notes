@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Mode, Note } from "tonal";
-import queryString from "query-string";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -98,22 +97,25 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const parsedQuery = queryString.parse(location.search);
+    const parsedQuery = new URLSearchParams(location.search);
 
-    if (parsedQuery.inputs) {
-      const { key, mode, number, tempo } = JSON.parse(parsedQuery.inputs);
-      setSelectedKey(key);
-      setSelectedMode(mode);
-      setSelectedNumberOfNotes(number);
-      setSelectedTempo(tempo);
+    const urlInputs = parsedQuery.get("inputs");
+    if (urlInputs) {
+      const [key, mode, number, tempo] = urlInputs.split(",");
+      setSelectedKey(key || DEFAULT_KEY);
+      setSelectedMode(mode || DEFAULT_MODE);
+      setSelectedNumberOfNotes(number || DEFAULT_NUMBER_OF_NOTES);
+      setSelectedTempo(tempo || DEFAULT_TEMPO);
     }
 
-    if (parsedQuery.octaves) {
-      setSelectedOctaves(JSON.parse(parsedQuery.octaves));
+    const urlOctaves = parsedQuery.get("octaves");
+    if (urlOctaves) {
+      setSelectedOctaves(urlOctaves.split(",").map(Number));
     }
 
-    if (parsedQuery.notes) {
-      setRandomNotes(JSON.parse(parsedQuery.notes));
+    const urlNotes = parsedQuery.get("notes");
+    if (urlNotes) {
+      setRandomNotes(decodeURIComponent(urlNotes).split(","));
       setLoadedFromUrl(true);
     }
   }, []);
@@ -211,22 +213,22 @@ function App() {
           </button>
           <button
             onClick={() => {
-              const url = queryString.stringifyUrl({
-                url: window.location.href,
-                query: {
-                  inputs: JSON.stringify({
-                    key: selectedKey,
-                    mode: selectedMode,
-                    number: selectedNumberOfNotes,
-                    tempo: selectedTempo,
-                  }),
-                  octaves: JSON.stringify(selectedOctaves),
-                  notes: JSON.stringify(randomNotes),
-                },
-              });
+              const url = new URL(window.location.href);
+              const inputs = [
+                selectedKey,
+                selectedMode,
+                selectedNumberOfNotes,
+                selectedTempo,
+              ].join(",");
+              url.searchParams.set("inputs", inputs);
+              url.searchParams.set("octaves", selectedOctaves.join(","));
+              url.searchParams.set(
+                "notes",
+                encodeURIComponent(randomNotes.join(","))
+              );
 
-              navigator.clipboard.writeText(url);
-              alert("Link copied to clipboard!");
+              navigator.clipboard.writeText(url.toString());
+              alert("Link copied to clipboard");
             }}>
             Share
           </button>
