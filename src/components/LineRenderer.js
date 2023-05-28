@@ -66,7 +66,7 @@ const LineRenderer = ({ notes, tempo }) => {
     requestRef.current = requestAnimationFrame(animate);
     return () => {
       cancelAnimationFrame(requestRef.current);
-      previousTimeRef.current = null; // Reset previous time on unmount
+      previousTimeRef.current = null;
     };
   }, [notes]);
 

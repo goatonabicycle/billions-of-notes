@@ -1,36 +1,23 @@
 import React, { useEffect } from "react";
 import MIDISounds from "midi-sounds-react";
 
+import { Keys } from "../useful";
+
 const NotePlayer = ({ note }) => {
   const midiSoundsRef = React.createRef();
 
   useEffect(() => {
-    // Map note letters to MIDI note numbers
-    const notes = [
-      "C",
-      "C#",
-      "D",
-      "D#",
-      "E",
-      "F",
-      "F#",
-      "G",
-      "G#",
-      "A",
-      "A#",
-      "B",
-    ];
-    const keyNumber = note.slice(0, -1);
+    const keyNumber = Keys.slice(0, -1);
     const octave = note.slice(-1);
 
-    let midiNumber = notes.indexOf(keyNumber);
+    let midiNumber = Keys.indexOf(keyNumber);
     if (midiNumber === -1) {
       console.error("Invalid note:", note);
       return;
     }
 
     midiNumber += octave * 12;
-    midiSoundsRef.current.playChordNow(272, [midiNumber], 1.0); // 3 is for piano, 2.5 is the duration
+    midiSoundsRef.current.playChordNow(272, [midiNumber], 1.0);
   }, [note, midiSoundsRef]);
 
   return (

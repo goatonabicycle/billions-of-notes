@@ -3,7 +3,7 @@ import "./RainbowText.css";
 
 const RainbowText = ({ text, tempo }) => {
   const animationDuration = 61 / tempo;
-  const animationDelayConstant = 0.5; // You might want to adjust this constant for the best visual effect
+  const animationDelayConstant = 0.5;
 
   return (
     <h1>

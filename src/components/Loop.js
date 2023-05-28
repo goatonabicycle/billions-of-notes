@@ -10,7 +10,6 @@ const LoopComponent = ({
   isPlaying,
   setCurrentNote,
 }) => {
-  // Added `isPlaying` to props
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
