@@ -1,9 +1,15 @@
-- Instrument list. Focus on guitar?
-- Show notes on an actual fretboard.
+Before going live:
+
+- Aesthetic. Name and logo.
+- Readme.
+- Get a proper favicon
+- Instrument selection.
+- A less intrusive UI that allows for more space for the notes.
 - Add randomness for empty notes.
-- Fix the Select CSS module.
-- Aesthetic. Name and logo. About. Links to code.
-- Save/Share a configuration
+- Save/Share/Load App state.
+
+Ideas to explore:
+
+- Show notes on an actual fretboard.
+- Rhythms mode vs Lead mode.
 - Save multiple configurations you've liked.
-- Load someone's configuration
-- Export to actual midi
