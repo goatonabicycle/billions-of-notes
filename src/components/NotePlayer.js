@@ -7,7 +7,7 @@ const NotePlayer = ({ note }) => {
   const midiSoundsRef = React.createRef();
 
   useEffect(() => {
-    const keyNumber = KEYS.slice(0, -1);
+    const keyNumber = note.slice(0, -1);
     const octave = note.slice(-1);
 
     let midiNumber = KEYS.indexOf(keyNumber);
