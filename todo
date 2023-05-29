@@ -2,8 +2,6 @@ Before going live:
 
 - Save/Share/Load App state.
   - Have a better message about the link being copied.
-- Analytics
-  - https://vercel.com/goatonabicycle/billions-of-notes/analytics
 - Bugs
   - All notes seem to play at once when starting the sound engine.
   - I shouldn't show the "Hey please click" message if the player is already available.
