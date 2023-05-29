@@ -6,9 +6,6 @@ export const DEFAULT_NUMBER_OF_NOTES = 8;
 export const DEFAULT_OCTAVES = [3, 4];
 
 export const KEYS = [
-  "A",
-  "A#",
-  "B",
   "C",
   "C#",
   "D",
@@ -18,6 +15,9 @@ export const KEYS = [
   "F#",
   "G",
   "G#",
+  "A",
+  "A#",
+  "B",
 ];
 
 export const FLAT_TO_SHARP = {

@@ -27,7 +27,7 @@ import "./App.css";
 import "./Buttons.css";
 
 function App() {
-  const modes = Mode.names(); // Todo: rename "scales" to "modes"
+  const modes = Mode.names();
   const [selectedKey, setSelectedKey] = useLocalStorage(
     "selectedKey",
     DEFAULT_KEY
@@ -45,7 +45,7 @@ function App() {
     DEFAULT_NUMBER_OF_NOTES
   );
   const [notesInMode, setNotesInMode] = useState([]);
-
+  const [shareButtonText, setShareButtonText] = useState("Share");
   const [randomNotes, setRandomNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
   const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
@@ -66,14 +66,12 @@ function App() {
     }
 
     const flatToSharp = (note) => {
-      const { pc, oct } = Note.get(note); // pc is the pitch class (note without octave)
+      const { pc, oct } = Note.get(note);
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
     };
 
-    let notesInMode = Mode.notes(selectedMode, selectedKey).map(
-      (note) =>
-        flatToSharp(Note.simplify(note)) +
-        selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)]
+    let notesInMode = Mode.notes(selectedMode, selectedKey).map((note) =>
+      flatToSharp(Note.simplify(note))
     );
 
     setNotesInMode(notesInMode);
@@ -81,8 +79,11 @@ function App() {
     let randomNotes = [];
 
     for (let i = 0; i < selectedNumberOfNotes; i++) {
-      const randomIndex = Math.floor(Math.random() * notesInMode.length);
-      randomNotes.push(notesInMode[randomIndex]);
+      const randomNote =
+        notesInMode[Math.floor(Math.random() * notesInMode.length)];
+      const randomOctave =
+        selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)];
+      randomNotes.push(`${randomNote}${randomOctave}`);
     }
 
     setRandomNotes(randomNotes);
@@ -96,6 +97,7 @@ function App() {
 
   const location = useLocation();
 
+  // This useEffect is used to load the application's state from the URL.
   useEffect(() => {
     const parsedQuery = new URLSearchParams(location.search);
 
@@ -119,10 +121,6 @@ function App() {
       setLoadedFromUrl(true);
     }
   }, []);
-
-  useEffect(() => {
-    // code to generate notes goes here
-  }, [selectedOctaves]);
 
   return (
     <div className="App">
@@ -185,9 +183,11 @@ function App() {
             setSelectedOctaves={setSelectedOctaves}
           />
           <div className="current-note">{currentNote}</div>
+          <div className="current-note">{notesInMode.join(", ")}</div>
         </div>
         <div className="buttons">
           <button
+            className="btn--stripe"
             onClick={() => {
               setTriggerRegenerate(!triggerRegenerate);
             }}>
@@ -228,9 +228,13 @@ function App() {
               );
 
               navigator.clipboard.writeText(url.toString());
-              alert("Link copied to clipboard");
+              setShareButtonText("Link copied!");
+
+              setTimeout(() => {
+                setShareButtonText("Share");
+              }, 2000);
             }}>
-            Share
+            {shareButtonText}
           </button>
           <button
             onClick={() => {
@@ -247,8 +251,6 @@ function App() {
           rel="noreferrer">
           Code here
         </a>
-        <span> Sounds thanks to:</span>{" "}
-        <a href="midi-sounds-react">midi-sounds-react</a>
       </div>
       <Loop
         notes={randomNotes}

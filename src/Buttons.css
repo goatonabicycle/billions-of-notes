@@ -1,16 +1,70 @@
-button
-{  
-  padding: 10px;
-  border: 1px solid white;
-  background-color: #1b3a9e;
-  color: #f3f5f7;
-  font-size:1em;
-  cursor: pointer;  
-  min-width:25%;
-  transition: background-color 0.3s ease;
+@-webkit-keyframes stripe-slide {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+@keyframes stripe-slide {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
 
-button:hover
-{
-  background-color: #5a95f5;
+button {  
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: normal;
+  cursor: pointer;
+  -moz-user-select: text;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  background-color: #fff;
+  color: #666;
+  border: 2px solid #666;  
+  font-weight: 700;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+button:-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+button:after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 100%;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(45deg, #666, #666 1px, transparent 2px, transparent 5px);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-top: 1px solid #666;
+  position: absolute;
+  left: 0;
+  left: 0;
+  bottom: 0;
+  background-size: 7px 7px;
+}
+button:hover {
+  background-color: #666;
+  color: #fff;
+  border-color: #282c34;
+}
+button:hover:after {
+  background-image: repeating-linear-gradient(45deg, #fff, #fff 1px, transparent 2px, transparent 5px);
+  border-top: 1px solid #000;
+  -webkit-animation: stripe-slide 12s infinite linear forwards;
+          animation: stripe-slide 12s infinite linear forwards;
 }

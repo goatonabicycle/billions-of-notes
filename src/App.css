@@ -1,5 +1,6 @@
 .App {
   display: flex;
+  font-family: sans-serif;
   flex-direction: column;
   text-align: left;
   color:#f3f5f7; 
@@ -21,6 +22,7 @@
   flex: 0 0 100px;   
   flex-wrap: wrap;        
   border: 1px solid #f3f5f7;
+  border-radius: 20px;
   padding:5px;  
 }
 
@@ -29,12 +31,13 @@
   padding:5px;  
   font-size: 1em;
   text-align: center;
+  border-radius: 20px;
   border: 1px solid #f3f5f7;
 }
 
 .App-inputs .buttons {
-  flex: 1 0 300px;       
-  display: flex;  
+  flex: 1 0 100px;    
+  display: grid;    
   flex-direction: column;
   color:white
 }
@@ -45,6 +48,7 @@
 
 .App-inputs .title {
   /* flex: 0 0 500px;   */
+  border-radius: 20px;
   border: 1px solid #f3f5f7;
   font-size: 3em;
   padding:10px;
@@ -52,15 +56,13 @@
 
 .thanks {  
   padding:4px;
-  font-size: 0.3em;
-  border: 1px solid #f3f5f7;
+  font-size: 0.3em;  
   color: #f3f5f7;  
 }
 
 .thanks a{  
   color: #f3f5f7;  
 }
-
 
 .MIDISounds
 {

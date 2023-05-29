@@ -6,13 +6,14 @@
   width: 100%;
   flex-grow: 1;
   font-size: calc(1px + 1.5vmin);
-  background-color: #F8F8F8;
+  font-weight: 700;
+  background-color: #f0f8ff;
   overflow: hidden;
   font-family: 'Roboto', sans-serif;
 }
 
 .loop-grid-contain {
-  flex-grow: 1; 
+  flex-grow: 1;   
   display: flex; 
   overflow: hidden; 
 }
@@ -20,10 +21,7 @@
 .note-row {
   display: flex;
   width: 100%;
-  flex-grow: 1;  
-  min-height: 0;
-  font-weight: 500;
-  color: #2B2B2B;
+  flex-grow: 1;      
 }
 
 .note-cell {  
@@ -31,20 +29,14 @@
   text-align: center;
   flex: 1;
   overflow: hidden;   
-  display: flex; 
+  display: flex;   
   justify-content: center;
-  align-items: center; 
-  color: #2B2B2B;
+  align-items: center;   
 }
 
-.note-label {
-  text-align: center;
-  background-color: #282c34;
-  color: #F8F8F8;
-  font-weight: 700;
-  align-items: center;
-  display: flex; 
-  justify-content: center;  
+.note-label {  
+  color: #282c34;    
+  display: flex;   
 }
 
 @media (max-width: 600px) { 
@@ -53,23 +45,21 @@
   }
 }
 
-.note-in-mode-row {
-  /* background-color: #6c757d; */
-}
+.note-in-mode-row {}
 
 .note-present {
   background-color: #282c34;
   color:white;
+  border-radius: 20px;
 }
 
-.active-note {
-  background-color: #dee4fd;
-  border-right: 1px solid #dee4fd;
-  border-left: 1px solid #dee4fd;
+.active-note {  
+  background-color: #dee4fd;  
 }
 
 .active-row .active-note {  
   background-color: #1b3a9e;  
+  border-radius: 20px;
 }
 
 .active-row {
@@ -80,4 +70,8 @@
   /* background-color: #6c757d; */
 }
 
-
+.note-in-mode {
+  font-weight: 1000;
+  background-color: #282c34; 
+  color: #dee4fd;
+}

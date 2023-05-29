@@ -1,23 +1,14 @@
 import React from "react";
 import "./NotesGrid.css";
+import { KEYS } from "../useful";
 
 const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
-  const notesInOctave = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
   const allPossibleNotes = octaveRange.flatMap((octave) =>
-    notesInOctave.map((note) => `${note}${octave}`)
+    KEYS.map((note) => `${note}${octave}`)
+  );
+
+  const allNotesInMode = octaveRange.flatMap((octave) =>
+    notesInMode.map((note) => `${note}${octave}`)
   );
 
   return (
@@ -27,12 +18,15 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
           key={noteRow}
           className={`note-row ${
             notes.includes(noteRow) ? "chosen-note-row" : ""
-          } ${
-            notesInMode.some((note) => noteRow.startsWith(note))
-              ? "note-in-mode-row"
-              : ""
-          } ${notes[activeIndex] === noteRow ? "active-row" : ""}`}>
-          <div className="note-cell note-label">{noteRow}</div>
+          } ${allNotesInMode.includes(noteRow) ? "note-in-mode-row" : ""} ${
+            notes[activeIndex] === noteRow ? "active-row" : ""
+          }`}>
+          <div
+            className={`note-cell note-label ${
+              notesInMode.includes(noteRow.slice(0, -1)) ? "note-in-mode" : ""
+            }`}>
+            {noteRow}
+          </div>
           {notes.map((note, colIndex) => (
             <div
               key={`${note}-${colIndex}`}

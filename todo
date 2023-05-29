@@ -1,13 +1,12 @@
 Before going live:
 
-- Save/Share/Load App state.
-  - Have a better message about the link being copied.
 - Bugs
   - All notes seem to play at once when starting the sound engine.
   - I shouldn't show the "Hey please click" message if the player is already available.
+  - Line rendering is sometimes off. E3 -> A3 -> E4 for example shows a line that starts high and ends low.
 - Style:
   - Aesthetic. Name and logo. Readme. Favicon
-  - Have some sort of indication of the notes that are in the current selected Key and Mode.
+    x Have some sort of indication of the notes that are in the current selected Key and Mode.
   - When octaves have a gap, represent it in the NotesGrid somehow.
   - A less intrusive UI that allows for more space for the notes.
 - Functionality:
@@ -18,6 +17,8 @@ Ideas to explore:
 
 - Animate the line with a dot or something could be fun.
 - Useful keyboard shortcuts.
-- Show notes on an actual fretboard.
+- Octaves could be grouped meaningfully. That would mean not needing to render the notes being played with their octave numbers
+- Show notes on a guitar fretboard. Switch between the two modes.
 - Rhythms mode vs Lead mode.
+- The user can drag notes into other slots that fit the scale.
 - Save multiple configurations you've liked.
