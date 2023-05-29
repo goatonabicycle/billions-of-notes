@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch');
+
+
 .App {
   display: flex;
-  font-family: sans-serif;
+  font-family: 'Cabin Sketch', cursive;
   flex-direction: column;
   text-align: left;
   color:#f3f5f7; 
