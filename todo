@@ -4,8 +4,6 @@ Before going live:
   - All notes seem to play at once when starting the sound engine.
   - I shouldn't show the "Hey please click" message if the player is already available.
   - Line rendering is sometimes off. E3 -> A3 -> E4 for example shows a line that starts high and ends low.
-- Style:
-  - Aesthetic. Name and logo. Readme. Favicon. Consistency.
   - When octaves have a gap, represent it in the NotesGrid somehow.
   - A less intrusive UI that allows for more space for the notes.
 - Functionality:

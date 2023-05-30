@@ -1,16 +1,26 @@
-# Create React App
+# Billions of Notes!
 
-This directory is a brief example of a [Create React App](https://github.com/facebook/create-react-app) site that can be deployed to Vercel with zero configuration.
+This is a website! Amazing!
 
-## Deploy Your Own
+This website allows you to come up with melodies. Riffs even!
 
-Deploy your own Create React App project with Vercel.
+It allows you to select some pertinent attributes of the melody you want and then gives it to you.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/create-react-app&template=create-react-app)
+I hope you find it helpful for your music endeavours!
 
-_Live Example: https://create-react-template.vercel.app/_
+## Where can I see it?
 
-## Available Scripts
+https://billions-of-notes.vercel.app/
+
+## Why did you make this?
+
+It's a crazy amount of fun and it's super useful as an [inspiration mechanism](https://theswayofmountains.bandcamp.com/)
+
+## Something is wrong!
+
+Oh snap. Please let me know about it [here](https://github.com/goatonabicycle/billions-of-notes/issues)!
+
+## How can I run this on my machine?
 
 In the project directory, you can run:
 
@@ -19,10 +29,6 @@ In the project directory, you can run:
 Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes. You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
