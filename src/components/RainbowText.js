@@ -1,24 +1,29 @@
 import React from "react";
 import "./RainbowText.css";
 
-const RainbowText = ({ text, tempo }) => {
-  const animationDuration = 61 / tempo;
+const RainbowText = ({ text, tempo, shadow }) => {
+  if (!text) return null;
+
+  if (tempo === 0) tempo = 100000;
+  const animationDuration = 1000 / tempo;
   const animationDelayConstant = 0.5;
 
   return (
-    <h1>
+    <span>
       {text.split("").map((char, index) => (
         <span
           key={index}
           style={{
             animationDuration: `${animationDuration}s`,
             animationDelay: `${index * animationDelayConstant}s`,
+            textShadow:
+              "-1px 0 #d8fcfc98, 0 1px #d8fcfc98, 1px 0 #d8fcfc98, 0 -1px #d8fcfc98;",
           }}
           className="rainbow-text">
           {char === " " ? "\u00A0" : char}
         </span>
       ))}
-    </h1>
+    </span>
   );
 };
 

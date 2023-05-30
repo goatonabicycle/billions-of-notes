@@ -22,6 +22,7 @@ import Loop from "./components/Loop";
 import RainbowText from "./components/RainbowText";
 import SaveToMidi from "./components/SaveToMidi";
 import LineRenderer from "./components/LineRenderer";
+import MessageBox from "./components/MessageBox";
 
 import "./App.css";
 import "./Buttons.css";
@@ -46,7 +47,7 @@ function App() {
     DEFAULT_NUMBER_OF_NOTES
   );
   const [notesInMode, setNotesInMode] = useState([]);
-  const [shareButtonText, setShareButtonText] = useState("Share");
+  const [shareButtonText, setShareButtonText] = useState("Share these notes");
   const [randomNotes, setRandomNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
   const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
@@ -121,16 +122,26 @@ function App() {
       setRandomNotes(decodeURIComponent(urlNotes).split(","));
       setLoadedFromUrl(true);
     }
-  }, []);
+  });
 
   return (
     <div className="App">
       <div className="App-inputs">
         <div className="title doodle-border">
-          <RainbowText
-            text={"Billions of Notes!"}
-            tempo={selectedTempo}
-          />
+          <h1>
+            <RainbowText
+              text={"Billions"}
+              tempo={selectedTempo}
+            />
+            <RainbowText
+              text={" of "}
+              tempo={selectedTempo}
+            />
+            <RainbowText
+              text={"Notes!"}
+              tempo={selectedTempo}
+            />
+          </h1>
           <div className="fun-things">
             <LineRenderer
               notes={randomNotes}
@@ -159,20 +170,17 @@ function App() {
             id="numOfNotesSelect"
             label="Notes:"
             options={useMemo(() => {
-              const notes = Array.from({ length: 16 }, (_, i) => i + 1);
+              const notes = Array.from({ length: 200 }, (_, i) => i + 1);
               return mapToSelectOptions(notes);
             }, [])}
             onChange={setSelectedNumberOfNotes}
             selectedValue={selectedNumberOfNotes}
           />
-        </div>
-
-        <div className="other doodle-border">
           <Slider
             id="tempoSlider"
             label="Tempo"
-            min="10"
-            max="400"
+            min="0"
+            max="1000"
             step="10"
             value={selectedTempo}
             onChange={(e) => {
@@ -183,12 +191,77 @@ function App() {
             selectedOctaves={selectedOctaves}
             setSelectedOctaves={setSelectedOctaves}
           />
-          <div className="current-note">{currentNote}</div>
-          <div className="current-note">{notesInMode.join(", ")}</div>
+        </div>
+
+        <div className="other doodle-border">
+          <div class="info-block">
+            <div className="doodle-border">
+              Notes used: {notesInMode.join(", ")}
+            </div>
+            <div className="doodle-border">
+              <span className="rainbow-background">{currentNote}</span>
+            </div>
+
+            <MessageBox
+              showWhen={selectedTempo === 0}
+              message={
+                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
+              }
+            />
+            <MessageBox
+              showWhen={selectedNumberOfNotes === "1"}
+              message={"Uhm... Yes. That's a note. Amazing!"}
+            />
+            <MessageBox
+              showWhen={selectedNumberOfNotes === "69"}
+              message={"Nice!"}
+            />
+          </div>
         </div>
         <div className="buttons doodle-border">
           <button
-            className="btn--stripe"
+            onClick={() => {
+              const url = new URL(window.location.href);
+              const inputs = [
+                selectedKey,
+                selectedMode,
+                selectedNumberOfNotes,
+                selectedTempo,
+              ].join(",");
+              url.searchParams.set("inputs", inputs);
+              url.searchParams.set("octaves", selectedOctaves.join(","));
+              url.searchParams.set(
+                "notes",
+                encodeURIComponent(randomNotes.join(","))
+              );
+
+              navigator.clipboard.writeText(url.toString());
+              setShareButtonText("Link copied!");
+
+              setTimeout(() => {
+                setShareButtonText("Share these notes");
+              }, 2000);
+            }}>
+            {shareButtonText}
+          </button>
+          <button
+            onClick={() => {
+              SaveToMidi(randomNotes, selectedTempo);
+            }}>
+            Save as MIDI
+          </button>
+
+          <button>
+            <a
+              className="rainbow-button"
+              href="https://github.com/goatonabicycle/billions-of-notes"
+              target="_blank"
+              rel="noreferrer">
+              Code here
+            </a>
+          </button>
+
+          <button
             onClick={() => {
               setTriggerRegenerate(!triggerRegenerate);
             }}>
@@ -212,47 +285,9 @@ function App() {
             }}>
             Reset inputs
           </button>
-          <button
-            onClick={() => {
-              const url = new URL(window.location.href);
-              const inputs = [
-                selectedKey,
-                selectedMode,
-                selectedNumberOfNotes,
-                selectedTempo,
-              ].join(",");
-              url.searchParams.set("inputs", inputs);
-              url.searchParams.set("octaves", selectedOctaves.join(","));
-              url.searchParams.set(
-                "notes",
-                encodeURIComponent(randomNotes.join(","))
-              );
-
-              navigator.clipboard.writeText(url.toString());
-              setShareButtonText("Link copied!");
-
-              setTimeout(() => {
-                setShareButtonText("Share");
-              }, 2000);
-            }}>
-            {shareButtonText}
-          </button>
-          <button
-            onClick={() => {
-              SaveToMidi(randomNotes, selectedTempo);
-            }}>
-            Save as MIDI
-          </button>
         </div>
       </div>
-      <div className="thanks">
-        <a
-          href="https://github.com/goatonabicycle/billions-of-notes"
-          target="_blank"
-          rel="noreferrer">
-          Code here
-        </a>
-      </div>
+
       <Loop
         notes={randomNotes}
         octaveRange={selectedOctaves}
