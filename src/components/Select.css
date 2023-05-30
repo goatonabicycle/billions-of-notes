@@ -2,7 +2,7 @@
 
 .selectContainer {
   display: flex;
-  color: #f3f5f7;
+  color:#ffffff; 
   padding:2px;
   text-align: center;
 }
@@ -15,18 +15,15 @@
 .selectLabel {}
 
 .selectElement {
-  width: 100px;
+  width: 150px;
   text-transform: capitalize;
   padding: 6px;
   border: 2px solid #1b3a9e;    
-  background-color: #fff;    
+  background-color: #3c3c3c;    
   transition: border-color 0.3s ease;
 }
 
-.selectElement:hover,
-.selectElement:focus {
-  border-color: #1b3a9e;
-  box-shadow: 0 0 5px rgba(66, 133, 244, 0.2);
+.selectElement option {
+  background-color: #3c3c3c;    
+  color:#ffffff; 
 }
-
-.selectElement option {}

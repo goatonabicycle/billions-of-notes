@@ -25,6 +25,7 @@ import LineRenderer from "./components/LineRenderer";
 
 import "./App.css";
 import "./Buttons.css";
+import "./Doodle/doodle.css";
 
 function App() {
   const modes = Mode.names();
@@ -125,7 +126,7 @@ function App() {
   return (
     <div className="App">
       <div className="App-inputs">
-        <div className="title">
+        <div className="title doodle-border">
           <RainbowText
             text={"Billions of Notes!"}
             tempo={selectedTempo}
@@ -137,7 +138,7 @@ function App() {
             />
           </div>
         </div>
-        <div className="selects">
+        <div className="selects doodle-border">
           <Select
             id="keySelect"
             label="Key:"
@@ -166,7 +167,7 @@ function App() {
           />
         </div>
 
-        <div className="other">
+        <div className="other doodle-border">
           <Slider
             id="tempoSlider"
             label="Tempo"
@@ -185,7 +186,7 @@ function App() {
           <div className="current-note">{currentNote}</div>
           <div className="current-note">{notesInMode.join(", ")}</div>
         </div>
-        <div className="buttons">
+        <div className="buttons doodle-border">
           <button
             className="btn--stripe"
             onClick={() => {

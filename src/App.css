@@ -1,12 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch');
-
-
 .App {
   display: flex;
-  font-family: 'Cabin Sketch', cursive;
   flex-direction: column;
   text-align: left;
-  color:#f3f5f7; 
+  color:#282c34; 
   min-height: 100vh;
   align-items: left;
   justify-content: flex-start;
@@ -19,52 +15,44 @@
   flex-wrap: wrap;   
   flex-direction: row;
   font-size:0.5em;
+  color:#f3f5f7;
 }
 
 .App-inputs .selects {
-  flex: 0 0 100px;   
-  flex-wrap: wrap;        
-  border: 1px solid #f3f5f7;
-  border-radius: 20px;
+  flex: 0 0 150px;   
+  flex-wrap: wrap;          
   padding:5px;  
+  color:#f3f5f7;
 }
 
 .App-inputs .other {
   flex: 1 0 250px;
   padding:5px;  
   font-size: 1em;
-  text-align: center;
-  border-radius: 20px;
-  border: 1px solid #f3f5f7;
+  text-align: center;  
 }
 
 .App-inputs .buttons {
   flex: 1 0 100px;    
   display: grid;    
   flex-direction: column;
-  color:white
+  color:#f3f5f7
 }
 
 .App-inputs .buttons a {
-  color:white
+  color:#f3f5f7
 }
 
 .App-inputs .title {
-  /* flex: 0 0 500px;   */
-  border-radius: 20px;
-  border: 1px solid #f3f5f7;
+  /* flex: 0 0 500px;   */  
+  color:#f3f5f7;
   font-size: 3em;
   padding:10px;
 }
 
 .thanks {  
   padding:4px;
-  font-size: 0.3em;  
-  color: #f3f5f7;  
-}
-
-.thanks a{  
-  color: #f3f5f7;  
+  font-size: 0.3em;    
 }
 
 .MIDISounds
