@@ -1,23 +1,38 @@
-Before going live:
+## Before going live:
 
 - Bugs
+
   - All notes seem to play at once when starting the sound engine.
   - I shouldn't show the "Hey please click" message if the player is already available.
-  - Line rendering is sometimes off. E3 -> A3 -> E4 for example shows a line that starts high and ends low.
   - When octaves have a gap, represent it in the NotesGrid somehow.
   - A less intrusive UI that allows for more space for the notes.
-  - Compatability with various browsers. Looks like Firefox doesn't support class nesting. Ugh.
+
 - Functionality:
-  - Instrument selection.
-  - Add randomness for empty notes.
+  - Instrument selection based on the items available in the midi player.
+  - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
+  - Clicking on "New Notes" should set the grid back to index 0 before playing the notes.
+  - "Buy me a coffee" link. ko.fi?
 
-Ideas to explore:
+---
 
-- "Buy me a coffee" link. ko.fi?
+## Ideas to explore:
+
 - Animate the line with a dot or something could be fun.
+- Add a very small representation of the note names to the drawn title line.
 - Useful keyboard shortcuts.
-- Octaves could be grouped meaningfully. That would mean not needing to render the notes being played with their octave numbers
-- Show notes on a guitar fretboard. Switch between the two modes.
-- Rhythms mode vs Lead mode.
-- The user can drag notes into other slots that fit the scale.
-- Save multiple configurations you've liked.
+  - [Space] for play/pause.
+  - [N] = new notes.
+  - [R] = Reset.
+  - [S] = Save as midi.
+  - [1 -> 8] could toggle the selected octaves?
+- Octaves could be grouped meaningfully. Maybe some sort of indication left of the current row title.
+- Show notes on a guitar fretboard. Make it possible to switch between piano roll and fretboard mode.
+  - Rhythms/chord mode vs Lead mode?
+- The user should be able to drag notes into other slots that fit the scale by literally clicking and dragging a given note.
+- Save multiple configurations you've enjoyed. Be able to load them up later.
+- Allow single note items to be played as if they're tremolo'd.
+  - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
+- Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
+- "Stop" button that resets the notes being played back to the 0 index?
+- More interesting visualizations of the generated notes.
+- Increase possible number of generated notes.
