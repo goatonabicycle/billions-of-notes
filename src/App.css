@@ -18,16 +18,18 @@
 }
 
 .App-inputs .title {    
-  flex: 1 0 25%;
+  flex: 1 0 5%;
   font-size: 3em;
 }
 
-.App-inputs .selects {
-  flex: 1 1 25%;
+.App-inputs .selects {  
+  flex: 1 0 20%;
+}
+
+.App-inputs .selects .select-grid {
   display: grid;
   grid-template-columns: 0.5fr 0.5fr;
   align-content: space-around;    
-  color:#f3f5f7;
 }
 
 .App-inputs .other {

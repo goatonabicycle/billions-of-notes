@@ -1,5 +1,6 @@
 .octave-selector {}
 
 .octave-selector-item {
-    padding:1px;
+    padding:5px;
+    font-size: 1.2em;
 }

@@ -150,49 +150,50 @@ function App() {
           </div>
         </div>
         <div className="selects doodle-border">
-          <Select
-            id="keySelect"
-            label="Key:"
-            options={useMemo(() => {
-              return mapToSelectOptions(KEYS);
-            }, [])}
-            onChange={setSelectedKey}
-            selectedValue={selectedKey}
-          />
-          <Select
-            id="modeSelect"
-            label="Mode:"
-            options={useMemo(() => mapToSelectOptions(modes), [modes])}
-            onChange={setSelectedMode}
-            selectedValue={selectedMode}
-          />
-          <Select
-            id="numOfNotesSelect"
-            label="Notes:"
-            options={useMemo(() => {
-              const notes = Array.from({ length: 200 }, (_, i) => i + 1);
-              return mapToSelectOptions(notes);
-            }, [])}
-            onChange={setSelectedNumberOfNotes}
-            selectedValue={selectedNumberOfNotes}
-          />
-          <Slider
-            id="tempoSlider"
-            label="Tempo"
-            min="0"
-            max="1000"
-            step="10"
-            value={selectedTempo}
-            onChange={(e) => {
-              setSelectedTempo(parseInt(e.target.value, 10));
-            }}
-          />
+          <div className="select-grid">
+            <Select
+              id="keySelect"
+              label="Key:"
+              options={useMemo(() => {
+                return mapToSelectOptions(KEYS);
+              }, [])}
+              onChange={setSelectedKey}
+              selectedValue={selectedKey}
+            />
+            <Select
+              id="modeSelect"
+              label="Mode:"
+              options={useMemo(() => mapToSelectOptions(modes), [modes])}
+              onChange={setSelectedMode}
+              selectedValue={selectedMode}
+            />
+            <Select
+              id="numOfNotesSelect"
+              label="Notes:"
+              options={useMemo(() => {
+                const notes = Array.from({ length: 200 }, (_, i) => i + 1);
+                return mapToSelectOptions(notes);
+              }, [])}
+              onChange={setSelectedNumberOfNotes}
+              selectedValue={selectedNumberOfNotes}
+            />
+            <Slider
+              id="tempoSlider"
+              label="Tempo"
+              min="0"
+              max="1000"
+              step="10"
+              value={selectedTempo}
+              onChange={(e) => {
+                setSelectedTempo(parseInt(e.target.value, 10));
+              }}
+            />
+          </div>
           <OctaveSelector
             selectedOctaves={selectedOctaves}
             setSelectedOctaves={setSelectedOctaves}
           />
         </div>
-
         <div className="other doodle-border">
           <div className="info-block">
             <div className="doodle-border">
