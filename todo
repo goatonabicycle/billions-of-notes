@@ -1,13 +1,13 @@
 ## Before going live:
 
-- Bugs
+- Bugs:
 
   - All notes seem to play at once when starting the sound engine.
   - I shouldn't show the "Hey please click" message if the player is already available.
-  - When octaves have a gap, represent it in the NotesGrid somehow.
-  - A less intrusive UI that allows for more space for the notes.
 
 - Functionality:
+  - When octaves have a gap, represent it in the NotesGrid somehow.
+  - A less intrusive UI that allows for more space for the notes.
   - Instrument selection based on the items available in the midi player.
   - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - Clicking on "New Notes" should set the grid back to index 0 before playing the notes.
@@ -36,3 +36,4 @@
 - "Stop" button that resets the notes being played back to the 0 index?
 - More interesting visualizations of the generated notes.
 - Increase possible number of generated notes.
+- A zooming mechanism to navigate the notes that have been generated.

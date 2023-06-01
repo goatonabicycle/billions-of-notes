@@ -1,43 +1,128 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./NotesGrid.css";
 import { KEYS } from "../useful";
 
+const computeRowClasses = (props) =>
+  [
+    "note-row",
+    props.isFillingNote && "filling-note-row",
+    props.notes.includes(props.noteRow) && "chosen-note-row",
+    props.allNotesInMode.includes(props.noteRow) && "note-in-mode-row",
+    props.notes[props.activeIndex] === props.noteRow && "active-row",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+const computeNoteClasses = (props) =>
+  [
+    "note-cell",
+    "note-label",
+    props.notesInMode.includes(props.noteWithoutOctave) && "note-in-mode",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+const computeCellClasses = (props, note, colIndex) =>
+  [
+    "note-cell",
+    note === props.noteRow && "note-present",
+    props.activeIndex === colIndex && "active-note",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+const NoteRow = (props) => {
+  const rowClasses = computeRowClasses(props);
+  const noteClasses = computeNoteClasses(props);
+
+  return (
+    <div className={rowClasses}>
+      <div className={noteClasses}>{props.noteRow}</div>
+      {props.notes.map((note, colIndex) => {
+        const cellClasses = computeCellClasses(props, note, colIndex);
+
+        return (
+          <div
+            key={`${note}-${colIndex}`}
+            className={cellClasses}>
+            {note === props.noteRow ? note : ""}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
-  const allPossibleNotes = octaveRange.flatMap((octave) =>
-    KEYS.map((note) => `${note}${octave}`)
+  const allPossibleNotes = useMemo(
+    () =>
+      octaveRange.flatMap((octave) => KEYS.map((note) => `${note}${octave}`)),
+    [octaveRange]
   );
 
-  const allNotesInMode = octaveRange.flatMap((octave) =>
-    notesInMode.map((note) => `${note}${octave}`)
+  const allNotesInMode = useMemo(
+    () =>
+      octaveRange.flatMap((octave) =>
+        notesInMode.map((note) => `${note}${octave}`)
+      ),
+    [octaveRange, notesInMode]
   );
 
   return (
     <div className="notes-grid">
-      {allPossibleNotes.map((noteRow, rowIndex) => (
-        <div
-          key={noteRow}
-          className={`note-row ${
-            notes.includes(noteRow) ? "chosen-note-row" : ""
-          } ${allNotesInMode.includes(noteRow) ? "note-in-mode-row" : ""} ${
-            notes[activeIndex] === noteRow ? "active-row" : ""
-          }`}>
-          <div
-            className={`note-cell note-label ${
-              notesInMode.includes(noteRow.slice(0, -1)) ? "note-in-mode" : ""
-            }`}>
-            {noteRow}
-          </div>
-          {notes.map((note, colIndex) => (
-            <div
-              key={`${note}-${colIndex}`}
-              className={`note-cell ${note === noteRow ? "note-present" : ""} ${
-                activeIndex === colIndex ? "active-note" : ""
-              }`}>
-              {note === noteRow ? note : ""}
-            </div>
-          ))}
-        </div>
-      ))}
+      {allPossibleNotes.map((noteRow, rowIndex) => {
+        const octave = parseInt(noteRow.slice(-1));
+        const nextOctave = parseInt(allPossibleNotes[rowIndex + 1]?.slice(-1));
+        const noteWithoutOctave = noteRow.slice(0, -1); // Extract note without octave
+        const isSameOrNextOctave = nextOctave - octave <= 1;
+        const isLastNote = rowIndex === allPossibleNotes.length - 1;
+
+        if (isLastNote || isSameOrNextOctave) {
+          return (
+            <NoteRow
+              key={noteRow}
+              noteRow={noteRow}
+              isFillingNote={false}
+              notes={notes}
+              allNotesInMode={allNotesInMode}
+              activeIndex={activeIndex}
+              notesInMode={notesInMode}
+              noteWithoutOctave={noteWithoutOctave}
+            />
+          );
+        }
+
+        const spacerRowsCount = nextOctave - octave - 1;
+        const spacerRows = Array(spacerRowsCount)
+          .fill()
+          .map((_, i) => (
+            <NoteRow
+              key={`${noteWithoutOctave}${octave + i + 1}`}
+              noteRow={`${noteWithoutOctave}${octave + i + 1}`}
+              isFillingNote={true}
+              notes={notes}
+              allNotesInMode={allNotesInMode}
+              activeIndex={activeIndex}
+              notesInMode={notesInMode}
+              noteWithoutOctave={noteWithoutOctave}
+            />
+          ));
+
+        return (
+          <React.Fragment key={noteRow}>
+            <NoteRow
+              noteRow={noteRow}
+              isFillingNote={false}
+              notes={notes}
+              allNotesInMode={allNotesInMode}
+              activeIndex={activeIndex}
+              notesInMode={notesInMode}
+              noteWithoutOctave={noteWithoutOctave}
+            />
+            {spacerRows}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };
