@@ -18,7 +18,7 @@
 }
 
 .App-inputs .title {    
-  flex: 1 0 5%;
+  flex: 1 0 10%;
   font-size: 3em;
 }
 
@@ -101,4 +101,8 @@ input[type="range"] {
   color: #ffffff;
   padding: 2px;
   text-align: center;   
+}
+
+.current-note{
+  font-size: 1.8em;
 }

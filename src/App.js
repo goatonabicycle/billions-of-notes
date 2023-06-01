@@ -200,7 +200,9 @@ function App() {
               Notes used: {notesInMode.join(", ")}
             </div>
             <div className="doodle-border">
-              <span className="rainbow-background">{currentNote}</span>
+              <span className="rainbow-background current-note">
+                {currentNote}
+              </span>
             </div>
 
             <MessageBox
