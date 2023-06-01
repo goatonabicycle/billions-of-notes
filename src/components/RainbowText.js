@@ -17,7 +17,7 @@ const RainbowText = ({ text, tempo, shadow }) => {
             animationDuration: `${animationDuration}s`,
             animationDelay: `${index * animationDelayConstant}s`,
             textShadow:
-              "-1px 0 #d8fcfc98, 0 1px #d8fcfc98, 1px 0 #d8fcfc98, 0 -1px #d8fcfc98;",
+              "-1px 0 #d8fcfc98, 0 1px #d8fcfc98, 1px 0 #d8fcfc98, 0 -1px #d8fcfc98",
           }}
           className="rainbow-text">
           {char === " " ? "\u00A0" : char}

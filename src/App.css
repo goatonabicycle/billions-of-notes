@@ -97,6 +97,10 @@ input[type="range"] {
   padding:0px;
 }
 
-.center {
-  text-align: center;
+.sliderWrapper
+{
+  display: flex;
+  color: #ffffff;
+  padding: 2px;
+  text-align: center;   
 }

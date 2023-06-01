@@ -194,7 +194,7 @@ function App() {
         </div>
 
         <div className="other doodle-border">
-          <div class="info-block">
+          <div className="info-block">
             <div className="doodle-border">
               Notes used: {notesInMode.join(", ")}
             </div>

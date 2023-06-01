@@ -6,6 +6,7 @@ Before going live:
   - Line rendering is sometimes off. E3 -> A3 -> E4 for example shows a line that starts high and ends low.
   - When octaves have a gap, represent it in the NotesGrid somehow.
   - A less intrusive UI that allows for more space for the notes.
+  - Compatability with various browsers. Looks like Firefox doesn't support class nesting. Ugh.
 - Functionality:
   - Instrument selection.
   - Add randomness for empty notes.
