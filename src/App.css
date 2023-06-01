@@ -14,39 +14,39 @@
   display: flex;
   flex-wrap: wrap;     
   font-size:0.5em;
+  color:#f3f5f7; 
+}
+
+.App-inputs .title {    
+  flex: 1 0 25%;
+  font-size: 3em;
+}
+
+.App-inputs .selects {
+  flex: 1 1 25%;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  align-content: space-around;    
   color:#f3f5f7;
+}
 
-  .title {    
-    flex: 1 0 25%;
-    font-size: 3em;
-  }
+.App-inputs .other {
+  flex: 1 0 10%;
+  padding:5px;  
+  font-size: 1em;
+  text-align: center;  
+}
 
-  .selects {
-    flex: 1 1 25%;
-    display: grid;
-    grid-template-columns: 0.5fr 0.5fr;
-    align-content: space-around;    
-    color:#f3f5f7;
-  }
+.App-inputs .other .info-block {      
+  grid-template-columns: 0.5fr 0.5fr;
+  display: grid;
+}   
 
-  .other {
-    flex: 1 0 10%;
-    padding:5px;  
-    font-size: 1em;
-    text-align: center;  
-    
-    .info-block {      
-      grid-template-columns: 0.5fr 0.5fr;
-      display: grid;
-    }   
-  }
-
-  .buttons {    
-    display: grid;
-    grid-template-columns: 0.5fr 0.5fr;
-    flex: 1 0 20%;
-    font-size: 1em;
-  }
+.App-inputs .buttons {    
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  flex: 1 0 20%;
+  font-size: 1em;
 }
 
 .MIDISounds
@@ -73,10 +73,6 @@ h1 {
   margin-inline-end: 0px;
   font-weight: normal;
   font-style: italic;  
-}
-
-.current-note {  
-  /* border:1px solid white; */  
 }
 
 .fun-things {
