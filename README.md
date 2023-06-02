@@ -8,6 +8,8 @@ It allows you to select some pertinent attributes of the melody you want and the
 
 I hope you find it helpful for your music endeavours!
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B1LV8D9)
+
 ## Where can I see it?
 
 https://billions-of-notes.vercel.app/
