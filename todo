@@ -6,7 +6,6 @@
   - I shouldn't show the "Hey please click" message if the player is already available.
 
 - Functionality:
-  x When octaves have a gap, represent it in the NotesGrid somehow.
   - A less intrusive UI that allows for more space for the notes.
     - Some sort of hide/show mechanism.
   - Instrument selection based on the items available in the midi player.
