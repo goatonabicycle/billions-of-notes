@@ -58,6 +58,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [loadedFromUrl, setLoadedFromUrl] = useState(false);
 
+  const [isInputHidden, setIsInputHidden] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -126,7 +127,12 @@ function App() {
 
   return (
     <div className="App">
-      <div className="App-inputs">
+      <button
+        style={{ fontSize: "12px" }}
+        onClick={() => setIsInputHidden(!isInputHidden)}>
+        {isInputHidden ? "Show Inputs" : "Hide Inputs"}
+      </button>
+      <div className={`App-inputs ${isInputHidden ? "hidden" : ""}`}>
         <div className="title doodle-border">
           <h1>
             <RainbowText

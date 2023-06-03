@@ -15,6 +15,16 @@
   flex-wrap: wrap;     
   font-size:0.5em;
   color:#f3f5f7; 
+  max-height: 1000px;
+  overflow: hidden;
+  transition: opacity 0.3s, transform 0.3s, max-height 0.3s ease-in-out;
+}
+
+.App-inputs.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  max-height: 0;
+  transition: opacity 0.3s, transform 0.3s, max-height 0.3s ease-in-out;
 }
 
 .App-inputs .title {    
