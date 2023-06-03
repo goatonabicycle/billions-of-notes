@@ -6,13 +6,10 @@
   - I shouldn't show the "Hey please click" message if the player is already available.
 
 - Functionality:
-  - A less intrusive UI that allows for more space for the notes.
-    - Some sort of hide/show mechanism.
   - Instrument selection based on the items available in the midi player.
   - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - Clicking on "New Notes" should set the grid back to index 0 before playing the notes.
   - Analytics.
-  - "Buy me a coffee" link. ko.fi?
   - Aesthetic. Blue is meh in this context. Purple? Orange?
 
 ---

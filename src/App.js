@@ -294,6 +294,16 @@ function App() {
             }}>
             Reset inputs
           </button>
+
+          <button>
+            <a
+              className="rainbow-button"
+              href="https://ko-fi.com/B0B1LV8D9"
+              target="_blank"
+              rel="noreferrer">
+              Buy me a coffee
+            </a>
+          </button>
         </div>
       </div>
 
