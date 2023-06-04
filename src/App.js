@@ -26,6 +26,7 @@ import MessageBox from "./components/MessageBox";
 
 import "./App.css";
 import "./Buttons.css";
+import "./Range.css";
 import "./Doodle/doodle.css";
 
 function App() {
@@ -210,22 +211,19 @@ function App() {
                 {currentNote}
               </span>
             </div>
-
-            <MessageBox
-              showWhen={selectedTempo === 0}
-              message={
-                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
-              }
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "1"}
-              message={"Uhm... Yes. That's a note. Amazing!"}
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "69"}
-              message={"Nice!"}
-            />
           </div>
+          <MessageBox
+            showWhen={selectedTempo === 0}
+            message={"Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"}
+          />
+          <MessageBox
+            showWhen={selectedNumberOfNotes === "1"}
+            message={"Uhm... Yes. That's a note. Amazing!"}
+          />
+          <MessageBox
+            showWhen={selectedNumberOfNotes === "69"}
+            message={"Nice!"}
+          />
         </div>
         <div className="buttons doodle-border">
           <button
@@ -295,15 +293,7 @@ function App() {
             Reset inputs
           </button>
 
-          <button>
-            <a
-              className="rainbow-button"
-              href="https://ko-fi.com/B0B1LV8D9"
-              target="_blank"
-              rel="noreferrer">
-              Buy me a coffee
-            </a>
-          </button>
+          <button></button>
         </div>
       </div>
 

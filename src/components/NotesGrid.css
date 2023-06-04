@@ -54,15 +54,15 @@
 }
 
 .active-note {
-  background-color: #dee4fd;
+  background-color: #f3e8ff;
 }
 
 .active-row .active-note {
-  background-color: #1b3a9e;
+  background-color: #794bc4;
 }
 
 .active-row {
-  background-color: #dee4fd;
+  background-color: #f3e8ff;
 }
 
 .chosen-note-row {}
@@ -70,9 +70,9 @@
 .note-in-mode {
   font-weight: 1000;
   background-color: #282c34;
-  color: #dee4fd;
+  color: #f3e8ff;
 }
 
 .filling-note-row .note-cell {
-  background-color: #1b3a9e;   
+  background-color: #794bc4;   
 }

@@ -94,16 +94,11 @@ h1 {
 
 .slider {
   width: 150px;  
-  border: 2px solid #1b3a9e;    
+  color: #794bc4;    
   transition: border-color 0.3s ease;
   height:49px;  
 }
 
-input[type="range"] {
-  min-height: 1.5em;  
-  margin:0px;
-  padding:0px;
-}
 
 .sliderWrapper
 {
@@ -116,3 +111,6 @@ input[type="range"] {
 .current-note{
   font-size: 1.8em;
 }
+
+
+

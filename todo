@@ -36,6 +36,4 @@
 - More interesting visualizations of the generated notes.
 - Increase possible number of generated notes.
 - A zooming mechanism to navigate the notes that have been generated.
-- Tests for all the components.
-- Cypress.
--
+- Cypress for integration level tests.
