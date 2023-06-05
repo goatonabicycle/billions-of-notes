@@ -13,6 +13,7 @@ import {
   FLAT_TO_SHARP,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
+import { useCount } from "./useCount";
 
 import Select from "./components/Select";
 import Slider from "./components/Slider";
@@ -28,8 +29,10 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
+import Counter from "./components/Counter";
 
 function App() {
+  const { count, incrementCount } = useCount();
   const modes = Mode.names();
   const [selectedKey, setSelectedKey] = useLocalStorage(
     "selectedKey",
@@ -91,6 +94,7 @@ function App() {
     }
 
     setRandomNotes(randomNotes);
+    incrementCount(selectedNumberOfNotes);
   }, [
     selectedKey,
     selectedMode,
@@ -210,6 +214,9 @@ function App() {
               <span className="rainbow-background current-note">
                 {currentNote}
               </span>
+            </div>
+            <div className="doodle-border">
+              <Counter count={count} />
             </div>
           </div>
           <MessageBox

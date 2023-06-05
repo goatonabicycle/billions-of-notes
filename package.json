@@ -5,6 +5,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@vercel/analytics": "^1.0.1",
+    "@vercel/postgres": "^0.3.0",
     "file-saver": "^2.0.5",
     "midi-sounds-react": "^1.2.54",
     "midi-writer-js": "^2.1.4",
