@@ -1,5 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import "./LineRenderer.css";
+import { KEYS } from "../useful";
+
+const LINE_COLOR = "white";
+const DOT_COLOR = "#794bc4";
+const DOT_RADIUS = 2;
+
+const getNoteNumber = (note) => {
+  const octave = parseInt(note.slice(-1)) + 1;
+  const noteName = note.slice(0, -1);
+  return octave * 12 + KEYS.indexOf(noteName);
+};
 
 const LineRenderer = ({ notes, tempo }) => {
   const canvasRef = useRef(null);
@@ -7,63 +18,57 @@ const LineRenderer = ({ notes, tempo }) => {
   const requestRef = useRef(null);
   const previousTimeRef = useRef(null);
 
-  const animate = (time) => {
+  const renderNotesOnCanvas = (time) => {
     if (previousTimeRef.current !== undefined) {
       const canvas = canvasRef.current;
-      const dot = dotRef.current;
       const ctx = canvas.getContext("2d");
-      const elapsedTime = time - previousTimeRef.current;
-      const progress = (elapsedTime / ((60 * 1000) / tempo)) % 1;
 
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-      let minNote = Infinity;
-      let maxNote = -Infinity;
-
-      for (const note of notes) {
-        const noteNumber = noteToNumber(note);
-        minNote = Math.min(minNote, noteNumber);
-        maxNote = Math.max(maxNote, noteNumber);
-      }
-
+      const noteNumbers = notes.map((note) => getNoteNumber(note));
+      const minNote = Math.min(...noteNumbers);
+      const maxNote = Math.max(...noteNumbers);
       const noteRange = maxNote - minNote;
-      const linePath = [];
 
-      for (let i = 0; i < notes.length; i++) {
-        const note = notes[i];
-        const noteNumber = noteToNumber(note);
-
+      const linePath = noteNumbers.map((noteNumber, i) => {
         const y = ((noteNumber - minNote) / noteRange) * canvas.height;
         const x = (i / (notes.length - 1)) * canvas.width;
-
-        linePath.push({ x, y });
-      }
+        return { x, y };
+      });
 
       ctx.beginPath();
       ctx.moveTo(linePath[0].x, linePath[0].y);
 
+      let previousPoint = linePath[0];
       for (let i = 1; i < linePath.length; i++) {
-        const { x, y } = linePath[i];
-        ctx.lineTo(x, y);
+        const currentPoint = linePath[i];
+        ctx.lineTo(currentPoint.x, currentPoint.y);
+
+        if (i < linePath.length - 1) {
+          const nextPoint = linePath[i + 1];
+          const directionChange =
+            (currentPoint.y - previousPoint.y) * (nextPoint.y - currentPoint.y);
+          if (directionChange < 0) {
+            // if direction changed, draw a circle
+            ctx.arc(currentPoint.x, currentPoint.y, DOT_RADIUS, 0, 2 * Math.PI);
+            ctx.fillStyle = DOT_COLOR;
+            ctx.fill();
+          }
+        }
+
+        previousPoint = currentPoint;
       }
 
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = LINE_COLOR;
       ctx.stroke();
-
-      const dotPosition =
-        linePath[Math.floor(progress * (linePath.length - 1))];
-      const dotX = dotPosition.x;
-      const dotY = dotPosition.y;
-
-      dot.style.transform = `translate(${dotX}px, ${dotY}px)`;
     }
 
     previousTimeRef.current = time;
-    requestRef.current = requestAnimationFrame(animate);
+    requestRef.current = requestAnimationFrame(renderNotesOnCanvas);
   };
 
   useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
+    requestRef.current = requestAnimationFrame(renderNotesOnCanvas);
     return () => {
       cancelAnimationFrame(requestRef.current);
       previousTimeRef.current = null;
@@ -85,23 +90,3 @@ const LineRenderer = ({ notes, tempo }) => {
 };
 
 export default LineRenderer;
-
-function noteToNumber(note) {
-  const scale = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
-  const octave = parseInt(note.slice(-1)) + 1;
-  const noteName = note.slice(0, -1);
-  return octave * 12 + scale.indexOf(noteName);
-}
