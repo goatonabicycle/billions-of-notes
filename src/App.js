@@ -30,6 +30,7 @@ import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
 import Counter from "./components/Counter";
+import KofiButton from "./components/KofiButton";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -300,7 +301,7 @@ function App() {
             Reset inputs
           </button>
 
-          <button></button>
+          <KofiButton />
         </div>
       </div>
 
