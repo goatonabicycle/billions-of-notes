@@ -11,7 +11,7 @@
   }
   
   .modalContent {
-    width: 80%;
+    width:400px;        
     height: 80%;
     background-color: transparent;
   }
