@@ -4,7 +4,7 @@ import { KEYS } from "../useful";
 
 const LINE_COLOR = "white";
 const DOT_COLOR = "#794bc4";
-const DOT_RADIUS = 2;
+const DOT_RADIUS = 0;
 
 const getNoteNumber = (note) => {
   const octave = parseInt(note.slice(-1)) + 1;
@@ -14,7 +14,6 @@ const getNoteNumber = (note) => {
 
 const LineRenderer = ({ notes, tempo }) => {
   const canvasRef = useRef(null);
-  const dotRef = useRef(null);
   const requestRef = useRef(null);
   const previousTimeRef = useRef(null);
 
@@ -31,7 +30,7 @@ const LineRenderer = ({ notes, tempo }) => {
       const noteRange = maxNote - minNote;
 
       const linePath = noteNumbers.map((noteNumber, i) => {
-        const y = ((noteNumber - minNote) / noteRange) * canvas.height;
+        const y = ((noteNumber - minNote) / noteRange) * canvas.height; // Adding the plus 4 to not cut off the dots
         const x = (i / (notes.length - 1)) * canvas.width;
         return { x, y };
       });
@@ -39,24 +38,15 @@ const LineRenderer = ({ notes, tempo }) => {
       ctx.beginPath();
       ctx.moveTo(linePath[0].x, linePath[0].y);
 
-      let previousPoint = linePath[0];
       for (let i = 1; i < linePath.length; i++) {
         const currentPoint = linePath[i];
         ctx.lineTo(currentPoint.x, currentPoint.y);
 
         if (i < linePath.length - 1) {
-          const nextPoint = linePath[i + 1];
-          const directionChange =
-            (currentPoint.y - previousPoint.y) * (nextPoint.y - currentPoint.y);
-          if (directionChange < 0) {
-            // if direction changed, draw a circle
-            ctx.arc(currentPoint.x, currentPoint.y, DOT_RADIUS, 0, 2 * Math.PI);
-            ctx.fillStyle = DOT_COLOR;
-            ctx.fill();
-          }
+          ctx.arc(currentPoint.x, currentPoint.y, DOT_RADIUS, 0, 2 * Math.PI);
+          ctx.fillStyle = DOT_COLOR;
+          ctx.fill();
         }
-
-        previousPoint = currentPoint;
       }
 
       ctx.strokeStyle = LINE_COLOR;
@@ -80,10 +70,6 @@ const LineRenderer = ({ notes, tempo }) => {
       <canvas
         ref={canvasRef}
         className="line-canvas"
-      />
-      <div
-        ref={dotRef}
-        className="line-dot"
       />
     </div>
   );
