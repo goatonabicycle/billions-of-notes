@@ -156,6 +156,9 @@ function App() {
           </h1>
           <div className="fun-things">
             <LineRenderer
+              onClick={() => {
+                setTriggerRegenerate(!triggerRegenerate);
+              }}
               notes={randomNotes}
               tempo={selectedTempo}
             />

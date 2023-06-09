@@ -12,12 +12,21 @@ const getNoteNumber = (note) => {
   return octave * 12 + KEYS.indexOf(noteName);
 };
 
-const LineRenderer = ({ notes, tempo }) => {
+const LineRenderer = ({ notes, tempo, onClick }) => {
   const canvasRef = useRef(null);
   const requestRef = useRef(null);
   const previousTimeRef = useRef(null);
 
   const renderNotesOnCanvas = (time) => {
+    if (!previousTimeRef.current) {
+      previousTimeRef.current = time;
+    }
+
+    if (time - previousTimeRef.current < 100) {
+      requestRef.current = requestAnimationFrame(renderNotesOnCanvas);
+      return;
+    }
+
     if (previousTimeRef.current !== undefined) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
@@ -74,7 +83,9 @@ const LineRenderer = ({ notes, tempo }) => {
   }, [notes]);
 
   return (
-    <div className="line-container">
+    <div
+      onClick={onClick}
+      className="line-container">
       <canvas
         ref={canvasRef}
         className="line-canvas"
