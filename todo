@@ -10,7 +10,6 @@
   - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - Clicking on "New Notes" should set the grid back to index 0 before playing the notes.
   - Analytics.
-  - Aesthetic. Blue is meh in this context. Purple? Orange?
 
 ---
 
