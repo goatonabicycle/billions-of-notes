@@ -3,7 +3,7 @@ import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
 const LINE_COLOR = "white";
-const FILL_COLOR = "#794bc4";
+const FILL_COLOR = "rgba(121, 75, 196, 0.5)"; // "#794bc4"
 const DOT_RADIUS = 0;
 
 const getNoteNumber = (note) => {
