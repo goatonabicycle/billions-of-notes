@@ -3,7 +3,7 @@ import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
 const LINE_COLOR = "white";
-const DOT_COLOR = "#794bc4";
+const FILL_COLOR = "#794bc4";
 const DOT_RADIUS = 0;
 
 const getNoteNumber = (note) => {
@@ -30,7 +30,7 @@ const LineRenderer = ({ notes, tempo }) => {
       const noteRange = maxNote - minNote;
 
       const linePath = noteNumbers.map((noteNumber, i) => {
-        const y = ((noteNumber - minNote) / noteRange) * canvas.height; // Adding the plus 4 to not cut off the dots
+        const y = ((noteNumber - minNote) / noteRange) * canvas.height;
         const x = (i / (notes.length - 1)) * canvas.width;
         return { x, y };
       });
@@ -42,15 +42,23 @@ const LineRenderer = ({ notes, tempo }) => {
         const currentPoint = linePath[i];
         ctx.lineTo(currentPoint.x, currentPoint.y);
 
-        if (i < linePath.length - 1) {
-          ctx.arc(currentPoint.x, currentPoint.y, DOT_RADIUS, 0, 2 * Math.PI);
-          ctx.fillStyle = DOT_COLOR;
-          ctx.fill();
-        }
+        ctx.arc(currentPoint.x, currentPoint.y, DOT_RADIUS, 0, 2 * Math.PI);
+        ctx.fillStyle = FILL_COLOR;
+        ctx.fill();
       }
 
       ctx.strokeStyle = LINE_COLOR;
       ctx.stroke();
+
+      // Draw lines from the first point to all other points
+      for (let i = 1; i < linePath.length; i++) {
+        const currentPoint = linePath[i];
+        ctx.beginPath();
+        ctx.moveTo(linePath[0].x, linePath[0].y);
+        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.strokeStyle = LINE_COLOR;
+        ctx.stroke();
+      }
     }
 
     previousTimeRef.current = time;
