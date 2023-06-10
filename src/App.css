@@ -49,11 +49,6 @@
   text-align: center;  
 }
 
-.App-inputs .other .info-block {      
-  grid-template-columns: 0.5fr 0.5fr;
-  display: grid;
-}   
-
 .App-inputs .buttons {    
   display: grid;
   grid-template-columns: 0.5fr 0.5fr;
@@ -77,6 +72,7 @@
 }
 
 h1 { 
+  text-align: center;
   display: block;
   font-size: 1em;
   margin-block-start: 0em;
@@ -88,8 +84,8 @@ h1 {
 }
 
 .fun-things {
-  display: flex;
   flex-direction: row;
+  font-size: 0.4em;
 }
 
 .slider {
@@ -108,8 +104,17 @@ h1 {
   text-align: center;   
 }
 
-.current-note{
-  font-size: 1.8em;
+.fun-info
+{
+  
+  display: flex;
+}
+
+.current-note {
+  
+  
+  width: 50px;
+  height: 50px;
 }
 
 

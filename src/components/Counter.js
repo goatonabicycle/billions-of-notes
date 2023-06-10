@@ -1,7 +1,11 @@
 import React from "react";
 
 function Counter({ count }) {
-  return <p>Total notes: {count || "Loading..."}</p>;
+  return (
+    <React.Fragment>
+      Total notes generated: {count || "Loading..."}
+    </React.Fragment>
+  );
 }
 
 export default Counter;

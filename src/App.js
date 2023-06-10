@@ -155,12 +155,39 @@ function App() {
             />
           </h1>
           <div className="fun-things">
-            <LineRenderer
-              onClick={() => {
-                setTriggerRegenerate(!triggerRegenerate);
-              }}
-              notes={randomNotes}
-              tempo={selectedTempo}
+            <div>
+              <LineRenderer
+                onClick={() => {
+                  setTriggerRegenerate(!triggerRegenerate);
+                }}
+                notes={randomNotes}
+                tempo={selectedTempo}
+              />
+            </div>
+            <div className="fun-info">
+              <div className="doodle-border current-note">
+                <span className="rainbow-background ">{currentNote}</span>
+              </div>
+              <div className="doodle-border">
+                Notes used: {notesInMode.join(", ")}
+              </div>
+              <div className="doodle-border">
+                <Counter count={count} />
+              </div>
+            </div>
+            <MessageBox
+              showWhen={selectedTempo === 0}
+              message={
+                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
+              }
+            />
+            <MessageBox
+              showWhen={selectedNumberOfNotes === "1"}
+              message={"Uhm... Yes. That's a note. Amazing!"}
+            />
+            <MessageBox
+              showWhen={selectedNumberOfNotes === "69"}
+              message={"Nice!"}
             />
           </div>
         </div>
@@ -209,33 +236,7 @@ function App() {
             setSelectedOctaves={setSelectedOctaves}
           />
         </div>
-        <div className="other doodle-border">
-          <div className="info-block">
-            <div className="doodle-border">
-              Notes used: {notesInMode.join(", ")}
-            </div>
-            <div className="doodle-border">
-              <span className="rainbow-background current-note">
-                {currentNote}
-              </span>
-            </div>
-            <div className="doodle-border">
-              <Counter count={count} />
-            </div>
-          </div>
-          <MessageBox
-            showWhen={selectedTempo === 0}
-            message={"Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"}
-          />
-          <MessageBox
-            showWhen={selectedNumberOfNotes === "1"}
-            message={"Uhm... Yes. That's a note. Amazing!"}
-          />
-          <MessageBox
-            showWhen={selectedNumberOfNotes === "69"}
-            message={"Nice!"}
-          />
-        </div>
+
         <div className="buttons doodle-border">
           <button
             onClick={() => {
@@ -262,6 +263,7 @@ function App() {
             }}>
             {shareButtonText}
           </button>
+
           <button
             onClick={() => {
               SaveToMidi(randomNotes, selectedTempo);
