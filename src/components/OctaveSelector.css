@@ -1,6 +1,8 @@
-.octave-selector {}
+.octave-selector {
+    text-align: center;
+}
 
 .octave-selector-item {
     padding:2px;
-    font-size: 1.1em;
+
 }

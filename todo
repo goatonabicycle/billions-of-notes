@@ -9,12 +9,13 @@
   - Instrument selection based on the items available in the midi player.
   - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - Clicking on "New Notes" should set the grid back to index 0 before playing the notes.
-  - Analytics.
+    x Analytics.
 
 ---
 
 ## Ideas to explore:
 
+- Add a circle of 5ths.
 - Animate the line with a dot or something could be fun.
 - Add a very small representation of the note names to the drawn title line.
 - Useful keyboard shortcuts.

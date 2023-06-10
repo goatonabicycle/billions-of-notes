@@ -2,9 +2,9 @@ import React from "react";
 
 function Counter({ count }) {
   return (
-    <React.Fragment>
+    <div className="total-notes">
       Total notes generated: {count || "Loading..."}
-    </React.Fragment>
+    </div>
   );
 }
 

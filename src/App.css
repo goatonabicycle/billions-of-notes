@@ -32,28 +32,38 @@
   font-size: 3em;
 }
 
+.App-inputs .tiny-info {    
+  display: grid;
+  font-size: 1em;
+}
+
+
 .App-inputs .selects {  
-  flex: 1 0 20%;
+  flex: 1 0 50%;   
+  flex-wrap: wrap;  
 }
 
 .App-inputs .selects .select-grid {
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
+  display: flex;
+  align-items: center;    
+  justify-content: center;
+  flex-wrap: wrap;  
   align-content: space-around;    
 }
 
-.App-inputs .other {
-  flex: 1 0 10%;
-  padding:5px;  
-  font-size: 1em;
-  text-align: center;  
+.App-inputs .buttons {    
+  padding-top:20px;
+  display: flex;  
+  flex-wrap: wrap;  
+  align-items: center;    
+  justify-content: center;
 }
 
-.App-inputs .buttons {    
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  flex: 1 0 20%;
-  font-size: 1em;
+@media (max-width: 600px) {
+  .App-inputs .buttons {    
+    display: flex;
+    flex-wrap: wrap;
+  }  
 }
 
 .MIDISounds
@@ -83,8 +93,7 @@ h1 {
   font-style: italic;  
 }
 
-.fun-things {
-  flex-direction: row;
+.fun-things {  
   font-size: 0.4em;
 }
 
@@ -94,7 +103,6 @@ h1 {
   transition: border-color 0.3s ease;
   height:49px;  
 }
-
 
 .sliderWrapper
 {
@@ -106,16 +114,29 @@ h1 {
 
 .fun-info
 {
-  
   display: flex;
 }
 
-.current-note {
-  
-  
+.current-note {   
   width: 50px;
-  height: 50px;
+  text-align: center;  
+  font-size: 1em;
 }
 
+.total-notes {
+  text-align: center;
+  font-size: 0.6em;
+}
 
+.notes-used {  
+  font-size: 0.9em;
+}
+
+.notes-used .index{  
+  width: 20px;
+}
+
+.notes-used .flex{  
+  display: flex;
+}
 

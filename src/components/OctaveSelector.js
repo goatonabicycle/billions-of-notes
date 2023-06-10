@@ -17,20 +17,22 @@ const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
 
   return (
     <div className="octave-selector">
-      Octaves: <br />
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((octave) => (
-        <span
-          className="octave-selector-item"
-          key={octave}>
-          <input
-            type="checkbox"
-            value={octave}
-            checked={selectedOctaves.includes(octave)}
-            onChange={handleChange}
-          />
-          {octave}
-        </span>
-      ))}
+      <label>Octaves:</label>
+      <div className="doodle-border">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((octave) => (
+          <span
+            className="octave-selector-item"
+            key={octave}>
+            <input
+              type="checkbox"
+              value={octave}
+              checked={selectedOctaves.includes(octave)}
+              onChange={handleChange}
+            />
+            {octave}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

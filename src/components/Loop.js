@@ -9,10 +9,12 @@ const LoopComponent = ({
   octaveRange,
   isPlaying,
   setCurrentNote,
+  currentIndex,
+  setCurrentIndex,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   useEffect(() => {
+    if (!setCurrentIndex || notes.length === 0) return;
+
     let interval;
 
     if (isPlaying) {

@@ -32,4 +32,7 @@ button:hover, .rainbow-button:hover {
 }
 
 
-
+.icon-button
+{
+  font-size: 1em;
+}

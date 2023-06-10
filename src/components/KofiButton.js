@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./KofiButton.css";
 
+import IconButton from "./IconButton";
+import { BuyCoffeeIcon } from "./Icons";
+
 const KofiButton = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -14,7 +17,11 @@ const KofiButton = () => {
 
   return (
     <>
-      <button onClick={openModal}>Buy me a coffee</button>
+      <IconButton
+        onClick={openModal}
+        text="Buy me a coffee"
+        icon={BuyCoffeeIcon}
+      />
       {modalIsOpen && (
         <div
           className="modalOverlay"

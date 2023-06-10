@@ -24,13 +24,25 @@ import RainbowText from "./components/RainbowText";
 import SaveToMidi from "./components/SaveToMidi";
 import LineRenderer from "./components/LineRenderer";
 import MessageBox from "./components/MessageBox";
+import Counter from "./components/Counter";
+import KofiButton from "./components/KofiButton";
+import IconButton from "./components/IconButton";
+import NotesUsed from "./components/NotesUsed";
+
+import {
+  ShareIcon,
+  SaveIcon,
+  CodeIcon,
+  NewNotesIcon,
+  PauseIcon,
+  PlayIcon,
+  ResetIcon,
+} from "./components/Icons";
 
 import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import Counter from "./components/Counter";
-import KofiButton from "./components/KofiButton";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -51,6 +63,7 @@ function App() {
     "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
   );
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [notesInMode, setNotesInMode] = useState([]);
   const [shareButtonText, setShareButtonText] = useState("Share these notes");
   const [randomNotes, setRandomNotes] = useState([]);
@@ -95,6 +108,7 @@ function App() {
     }
 
     setRandomNotes(randomNotes);
+    setCurrentIndex(0);
     incrementCount(selectedNumberOfNotes);
   }, [
     selectedKey,
@@ -155,158 +169,166 @@ function App() {
             />
           </h1>
           <div className="fun-things">
-            <div>
-              <LineRenderer
-                onClick={() => {
-                  setTriggerRegenerate(!triggerRegenerate);
+            <LineRenderer
+              onClick={() => {
+                setTriggerRegenerate(!triggerRegenerate);
+              }}
+              notes={randomNotes}
+              tempo={selectedTempo}
+            />
+            <Counter count={count} />
+          </div>
+        </div>
+        <div className="tiny-info doodle-border">
+          <NotesUsed notesUsed={notesInMode} />
+
+          <div className="current-note">
+            <span className="rainbow-background ">{currentNote}</span>
+          </div>
+        </div>
+        <div className="selects ">
+          <div className="doodle-border">
+            <div className="select-grid">
+              <Select
+                id="keySelect"
+                label="Key:"
+                options={useMemo(() => {
+                  return mapToSelectOptions(KEYS);
+                }, [])}
+                onChange={setSelectedKey}
+                selectedValue={selectedKey}
+              />
+              <Select
+                id="modeSelect"
+                label="Mode:"
+                options={useMemo(() => mapToSelectOptions(modes), [modes])}
+                onChange={setSelectedMode}
+                selectedValue={selectedMode}
+              />
+              <Select
+                id="numOfNotesSelect"
+                label="Notes:"
+                options={useMemo(() => {
+                  const notes = Array.from({ length: 200 }, (_, i) => i + 1);
+                  return mapToSelectOptions(notes);
+                }, [])}
+                onChange={setSelectedNumberOfNotes}
+                selectedValue={selectedNumberOfNotes}
+              />
+              <Slider
+                id="tempoSlider"
+                label="Tempo"
+                min="0"
+                max="1000"
+                step="10"
+                value={selectedTempo}
+                onChange={(e) => {
+                  setSelectedTempo(parseInt(e.target.value, 10));
                 }}
-                notes={randomNotes}
-                tempo={selectedTempo}
+              />
+              <OctaveSelector
+                selectedOctaves={selectedOctaves}
+                setSelectedOctaves={setSelectedOctaves}
               />
             </div>
-            <div className="fun-info">
-              <div className="doodle-border current-note">
-                <span className="rainbow-background ">{currentNote}</span>
-              </div>
-              <div className="doodle-border">
-                Notes used: {notesInMode.join(", ")}
-              </div>
-              <div className="doodle-border">
-                <Counter count={count} />
-              </div>
+
+            <div>
+              <div className="fun-info"></div>
+              <MessageBox
+                showWhen={selectedTempo === 0}
+                message={
+                  "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
+                }
+              />
+              <MessageBox
+                showWhen={selectedNumberOfNotes === "1"}
+                message={"Uhm... Yes. That's a note. Amazing!"}
+              />
+              <MessageBox
+                showWhen={selectedNumberOfNotes === "69"}
+                message={"Nice!"}
+              />
             </div>
-            <MessageBox
-              showWhen={selectedTempo === 0}
-              message={
-                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
-              }
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "1"}
-              message={"Uhm... Yes. That's a note. Amazing!"}
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "69"}
-              message={"Nice!"}
-            />
           </div>
-        </div>
-        <div className="selects doodle-border">
-          <div className="select-grid">
-            <Select
-              id="keySelect"
-              label="Key:"
-              options={useMemo(() => {
-                return mapToSelectOptions(KEYS);
-              }, [])}
-              onChange={setSelectedKey}
-              selectedValue={selectedKey}
+
+          <div className="buttons">
+            <IconButton
+              icon={NewNotesIcon}
+              onClick={() => {
+                setTriggerRegenerate(!triggerRegenerate);
+              }}
+              text="New notes"
             />
-            <Select
-              id="modeSelect"
-              label="Mode:"
-              options={useMemo(() => mapToSelectOptions(modes), [modes])}
-              onChange={setSelectedMode}
-              selectedValue={selectedMode}
-            />
-            <Select
-              id="numOfNotesSelect"
-              label="Notes:"
-              options={useMemo(() => {
-                const notes = Array.from({ length: 200 }, (_, i) => i + 1);
-                return mapToSelectOptions(notes);
-              }, [])}
-              onChange={setSelectedNumberOfNotes}
-              selectedValue={selectedNumberOfNotes}
-            />
-            <Slider
-              id="tempoSlider"
-              label="Tempo"
-              min="0"
-              max="1000"
-              step="10"
-              value={selectedTempo}
-              onChange={(e) => {
-                setSelectedTempo(parseInt(e.target.value, 10));
+
+            <IconButton
+              text={isPlaying ? "Pause" : "Play"}
+              icon={isPlaying ? PauseIcon : PlayIcon}
+              onClick={() => {
+                setIsPlaying(!isPlaying);
               }}
             />
-          </div>
-          <OctaveSelector
-            selectedOctaves={selectedOctaves}
-            setSelectedOctaves={setSelectedOctaves}
-          />
-        </div>
 
-        <div className="buttons doodle-border">
-          <button
-            onClick={() => {
-              const url = new URL(window.location.href);
-              const inputs = [
-                selectedKey,
-                selectedMode,
-                selectedNumberOfNotes,
-                selectedTempo,
-              ].join(",");
-              url.searchParams.set("inputs", inputs);
-              url.searchParams.set("octaves", selectedOctaves.join(","));
-              url.searchParams.set(
-                "notes",
-                encodeURIComponent(randomNotes.join(","))
-              );
+            <IconButton
+              onClick={() => {
+                setCurrentIndex(0);
+                setSelectedKey(DEFAULT_KEY);
+                setSelectedMode(DEFAULT_MODE);
+                setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
+                setSelectedOctaves(DEFAULT_OCTAVES);
+                setSelectedTempo(DEFAULT_TEMPO);
+              }}
+              icon={ResetIcon}
+              text="Reset inputs"
+            />
 
-              navigator.clipboard.writeText(url.toString());
-              setShareButtonText("Link copied!");
+            <IconButton
+              onClick={() => {
+                const url = new URL(window.location.href);
+                const inputs = [
+                  selectedKey,
+                  selectedMode,
+                  selectedNumberOfNotes,
+                  selectedTempo,
+                ].join(",");
+                url.searchParams.set("inputs", inputs);
+                url.searchParams.set("octaves", selectedOctaves.join(","));
+                url.searchParams.set(
+                  "notes",
+                  encodeURIComponent(randomNotes.join(","))
+                );
 
-              setTimeout(() => {
-                setShareButtonText("Share these notes");
-              }, 2000);
-            }}>
-            {shareButtonText}
-          </button>
+                navigator.clipboard.writeText(url.toString());
+                setShareButtonText("Link copied!");
 
-          <button
-            onClick={() => {
-              SaveToMidi(randomNotes, selectedTempo);
-            }}>
-            Save as MIDI
-          </button>
+                setTimeout(() => {
+                  setShareButtonText("Share these notes");
+                }, 2000);
+              }}
+              text={shareButtonText}
+              icon={ShareIcon}
+            />
 
-          <button>
+            <IconButton
+              onClick={() => {
+                SaveToMidi(randomNotes, selectedTempo);
+              }}
+              icon={SaveIcon}
+              text="Save as MIDI"
+            />
+
             <a
               className="rainbow-button"
               href="https://github.com/goatonabicycle/billions-of-notes"
               target="_blank"
               rel="noreferrer">
-              Code here
+              <IconButton
+                icon={CodeIcon}
+                text="Source code"
+              />
             </a>
-          </button>
 
-          <button
-            onClick={() => {
-              setTriggerRegenerate(!triggerRegenerate);
-            }}>
-            New notes
-          </button>
-
-          <button
-            onClick={() => {
-              setIsPlaying(!isPlaying);
-            }}>
-            {isPlaying ? "Pause" : "Play"}
-          </button>
-
-          <button
-            onClick={() => {
-              setSelectedKey(DEFAULT_KEY);
-              setSelectedMode(DEFAULT_MODE);
-              setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
-              setSelectedOctaves(DEFAULT_OCTAVES);
-              setSelectedTempo(DEFAULT_TEMPO);
-            }}>
-            Reset inputs
-          </button>
-
-          <KofiButton />
+            <KofiButton />
+          </div>
         </div>
       </div>
 
@@ -317,6 +339,8 @@ function App() {
         bpm={selectedTempo}
         isPlaying={isPlaying}
         setCurrentNote={setCurrentNote}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
       />
       <ClickFirst onClick={() => {}} />
     </div>
