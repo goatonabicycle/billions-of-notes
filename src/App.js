@@ -43,7 +43,6 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import GuitarString from "./components/GuitarString";
 import Fretboard from "./components/Fretboard";
 
 function App() {
@@ -181,13 +180,6 @@ function App() {
             <Counter count={count} />
           </div>
         </div>
-        <div className="tiny-info doodle-border">
-          <NotesUsed notesUsed={notesInMode} />
-
-          <div className="current-note">
-            <span className="rainbow-background ">{currentNote}</span>
-          </div>
-        </div>
         <div className="selects ">
           <div className="select-grid">
             <Select
@@ -230,23 +222,6 @@ function App() {
             <OctaveSelector
               selectedOctaves={selectedOctaves}
               setSelectedOctaves={setSelectedOctaves}
-            />
-          </div>
-
-          <div>
-            <MessageBox
-              showWhen={selectedTempo === 0}
-              message={
-                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
-              }
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "1"}
-              message={"Uhm... Yes. That's a note. Amazing!"}
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "69"}
-              message={"Nice!"}
             />
           </div>
 
@@ -327,6 +302,28 @@ function App() {
             </a>
 
             <KofiButton />
+          </div>
+
+          <div className="messages">
+            <NotesUsed notesUsed={notesInMode} />
+
+            <div className="current-note">
+              <span className="rainbow-background ">{currentNote}</span>
+            </div>
+            <MessageBox
+              showWhen={selectedTempo === 0}
+              message={
+                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
+              }
+            />
+            <MessageBox
+              showWhen={selectedNumberOfNotes === "1"}
+              message={"Uhm... Yes. That's a note. Amazing!"}
+            />
+            <MessageBox
+              showWhen={selectedNumberOfNotes === "69"}
+              message={"Nice!"}
+            />
           </div>
         </div>
       </div>

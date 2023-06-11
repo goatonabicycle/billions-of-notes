@@ -58,6 +58,12 @@
   justify-content: center;
 }
 
+.App-inputs .messages {    
+  padding-top:20px;  
+  align-items: center;    
+  justify-content: center;
+}
+
 @media (max-width: 600px) {
   .App-inputs .buttons {    
     display: flex;
@@ -116,8 +122,8 @@ h1 {
   display: flex;  
 }
 
-.current-note {   
-  width: 50px;
+.current-note {
+  padding: 10px 0px 10px 0px;
   text-align: center;  
   font-size: 1.5em;
 }
@@ -129,14 +135,10 @@ h1 {
 
 .notes-used {  
   font-size: 0.9em;
+  text-align: center;
 }
 
-.notes-used .index{  
-  width: 20px;
+.message-box
+{
+  text-align: center;
 }
-
-.notes-used .flex{  
-  display: flex;
-  justify-content: center;
-}
-

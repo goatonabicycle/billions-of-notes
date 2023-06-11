@@ -1,37 +1,62 @@
 .guitar-string {
-    display: flex;  
-    justify-content: space-between;
-    font-size: 0.5em;
-  }
+  display: flex;    
+  font-size: 0.5em;
+}
   
-  .guitar-string__note {
-    display: flex;
-    width: 100%;
-    height: 30px;
-    border: 1px solid black;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ccc;
-    color: #ffffff;
-  }
-  
-  .guitar-string__note--active {    
-    transition: border-color 0.3s ease;
+.guitar-string__note {    
+  display: flex;
+  width: 100%;
+  min-width: 20px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 5px;    
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;    
+}
 
-    background-color:#794bc4 !important;    
-    color: #ffffff !important;
+.guitar-string__note--active {    
+  transition: border-color 0.3s ease;
+  background-color:#794bc4 !important;        
+}
+
+.guitar-string__note--selected {    
+  font-weight: 900;
+  font-size:1.2em;
+  text-decoration: underline;
+  color: #ffffff !important;
+}
+
+.guitar-string__note--scale {
+  background-color: #794bc421;    
+  color: #a3a3a3;
+}
+
+.fretboard {}
+
+.fret-numbers {
+  display: flex;  
+}
+
+.fret-number {
+  display: flex;
+  width: 100%;    
+  justify-content: center;    
+  font-size: 0.6em;
+  color: #ccc;     
+}
+
+@media (max-width: 600px) {
+  .guitar-string__note {    
+    font-size: 0.9em;
   }
   
-
   .guitar-string__note--selected {    
     font-weight: 900;
-    font-size:1.2em;
-    text-decoration: underline;
+    font-size:0.9em;    
   }
 
-  .guitar-string__note--scale {
-    background-color: #794bc421;    
-    color: #a3a3a3;
+  .fret-number {    
+    font-size: 0.5em;    
   }
+}

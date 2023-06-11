@@ -35,11 +35,21 @@ const Fretboard = ({ currentNote, selectedNotes, scaleNotes }) => {
           key={index}
           baseNote={baseNote}
           currentNote={currentNote}
-          position={position}
           selectedNotes={selectedNotes}
           scaleNotes={scaleNotes}
+          position={position}
         />
       ))}
+
+      <div className="fret-numbers">
+        {Array.from({ length: 22 }, (_, i) => i).map((_, i) => (
+          <div
+            key={i + 1}
+            className="fret-number">
+            {i + 1}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
