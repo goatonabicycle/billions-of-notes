@@ -1,3 +1,5 @@
+import { transpose } from "tonal-distance";
+
 // utils.js
 export const DEFAULT_KEY = "C";
 export const DEFAULT_MODE = "ionian";
@@ -35,4 +37,23 @@ export const mapToSelectOptions = (items) => {
     label: item,
     value: item,
   }));
+};
+
+export const generateFrets = (baseNote) => {
+  const baseIndex = KEYS.indexOf(baseNote.slice(0, -1));
+  let currentOctave = parseInt(baseNote.slice(-1));
+
+  let notes = [...Array(25).keys()].map((fret) => {
+    let noteIndex = (baseIndex + fret) % 12;
+    let noteName = KEYS[noteIndex];
+
+    // When we reach a new C note, we know we've moved up an octave
+    if (noteName === "C" && fret > 0) {
+      currentOctave += 1;
+    }
+
+    return noteName + currentOctave;
+  });
+
+  return notes;
 };

@@ -43,6 +43,8 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
+import GuitarString from "./components/GuitarString";
+import Fretboard from "./components/Fretboard";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -329,6 +331,11 @@ function App() {
         </div>
       </div>
 
+      <Fretboard
+        currentNote={currentNote}
+        selectedNotes={randomNotes}
+        scaleNotes={notesInMode}
+      />
       <Loop
         notes={randomNotes}
         octaveRange={selectedOctaves}

@@ -37,3 +37,5 @@
 - Increase possible number of generated notes.
 - A zooming mechanism to navigate the notes that have been generated.
 - Cypress for integration level tests.
+- 7 String guitar mode.
+- Different guitar tunings
