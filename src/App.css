@@ -33,13 +33,12 @@
 }
 
 .App-inputs .tiny-info {    
-  display: grid;
+  display: grid; 
   font-size: 1em;
 }
 
-
 .App-inputs .selects {  
-  flex: 1 0 50%;   
+  flex: 1 0 50%;    
   flex-wrap: wrap;  
 }
 
@@ -114,13 +113,13 @@ h1 {
 
 .fun-info
 {
-  display: flex;
+  display: flex;  
 }
 
 .current-note {   
   width: 50px;
   text-align: center;  
-  font-size: 1em;
+  font-size: 2em;
 }
 
 .total-notes {
@@ -138,5 +137,6 @@ h1 {
 
 .notes-used .flex{  
   display: flex;
+  justify-content: center;
 }
 
