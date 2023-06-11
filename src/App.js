@@ -28,6 +28,7 @@ import Counter from "./components/Counter";
 import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
+import NotesGrid from "./components/NotesGrid";
 
 import {
   ShareIcon,
@@ -149,7 +150,7 @@ function App() {
   return (
     <div className="App">
       <button
-        style={{ fontSize: "12px" }}
+        style={{ fontSize: "11px" }}
         onClick={() => setIsInputHidden(!isInputHidden)}>
         {isInputHidden ? "Show Inputs" : "Hide Inputs"}
       </button>
@@ -332,6 +333,12 @@ function App() {
         currentNote={currentNote}
         selectedNotes={randomNotes}
         scaleNotes={notesInMode}
+      />
+      <NotesGrid
+        notes={randomNotes}
+        notesInMode={notesInMode}
+        octaveRange={selectedOctaves}
+        activeIndex={currentIndex}
       />
       <Loop
         notes={randomNotes}

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import NotesGrid from "./NotesGrid";
 import NotePlayer from "./NotePlayer";
 
 const LoopComponent = ({
@@ -37,17 +36,7 @@ const LoopComponent = ({
 
   setCurrentNote(notes[currentIndex]);
 
-  return (
-    <div className="loop-grid-contain">
-      <NotePlayer note={notes[currentIndex] || "C3"} />
-      <NotesGrid
-        notes={notes}
-        notesInMode={notesInMode}
-        octaveRange={octaveRange}
-        activeIndex={currentIndex}
-      />
-    </div>
-  );
+  return <NotePlayer note={notes[currentIndex] || "C3"} />;
 };
 
 export default LoopComponent;

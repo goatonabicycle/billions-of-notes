@@ -10,12 +10,6 @@
   /* font-family: 'Roboto', sans-serif; */
 }
 
-.loop-grid-contain {
-  flex-grow: 1;
-  display: flex;
-  overflow: hidden;
-}
-
 .note-row {
   display: flex;
   width: 100%;

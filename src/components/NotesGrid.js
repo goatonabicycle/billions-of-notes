@@ -69,7 +69,7 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
   );
 
   return (
-    <div className="notes-grid">
+    <div className="notes-grid ">
       {allPossibleNotes.map((noteRow, rowIndex) => {
         const octave = parseInt(noteRow.slice(-1));
         const nextOctave = parseInt(allPossibleNotes[rowIndex + 1]?.slice(-1));

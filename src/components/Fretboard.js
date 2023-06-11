@@ -1,10 +1,9 @@
-// Fretboard.jsx
 import React, { useState, useEffect } from "react";
 import { generateFrets } from "../useful";
 import GuitarString from "./GuitarString";
 
 const Fretboard = ({ currentNote, selectedNotes, scaleNotes }) => {
-  const guitarTuning = ["B1", "E2", "A2", "D3", "G3", "B3", "E4"];
+  const guitarTuning = ["E4", "B3", "G3", "D3", "A2", "E2", "B1"];
   const [position, setPosition] = useState(1);
 
   useEffect(() => {
@@ -22,15 +21,19 @@ const Fretboard = ({ currentNote, selectedNotes, scaleNotes }) => {
     });
 
     if (maxPosition !== -Infinity && minPosition !== Infinity) {
-      if (position < minPosition + 2 || position > maxPosition - 2) {
-        setPosition(minPosition + 2);
+      const limitingRange = 2;
+      if (
+        position < minPosition + limitingRange ||
+        position > maxPosition - limitingRange
+      ) {
+        setPosition(minPosition + limitingRange);
       }
     }
   }, [currentNote]);
 
   return (
     <div className="fretboard">
-      {guitarTuning.reverse().map((baseNote, index) => (
+      {guitarTuning.map((baseNote, index) => (
         <GuitarString
           key={index}
           baseNote={baseNote}
