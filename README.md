@@ -12,7 +12,7 @@ I hope you find it helpful for your music endeavours!
 
 ## Where can I see it?
 
-https://billions-of-notes.vercel.app/
+https://www.billionsofnotes.com
 
 ## Why did you make this?
 
