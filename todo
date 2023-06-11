@@ -1,12 +1,24 @@
 ## Before going live:
 
-- Bugs:
-
-  - All notes seem to play at once when starting the sound engine.
-  - I shouldn't show the "Hey please click" message if the player is already available.
-
 - Functionality:
+
   - Instrument selection based on the items available in the midi player.
+
+    - I should consider adding duration properties to each of these manually
+    - 5 - Acoustic Grand Piano
+    - 15 - Bright Accoustic Piano
+    - 26 - Electric Grand Piano
+    - 32 - Honky Tonk Piano
+    - 43 - Electric Piano
+    - 73 - Harpsicord
+    - 84 - Clavinet
+    - 91 - Celesta
+    - 102 - Glockenspiel
+    - 111 - Music box
+    - 121 - Vibraphone
+    - 125 - Marimba
+    - 137 - Xylophone
+
   - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
 
 ---
@@ -37,5 +49,5 @@
 - A zooming mechanism to navigate the notes that have been generated.
 - Cypress for integration level tests.
 - 7 String guitar mode.
-
-- Add a circle of 5ths.
+- The fretboard would be cool with a hover effect that highlights all the other places where that note is.
+- Add a circle of 5ths

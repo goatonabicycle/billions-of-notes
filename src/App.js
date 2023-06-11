@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Mode, Note } from "tonal";
+import MIDISounds from "midi-sounds-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -11,6 +12,7 @@ import {
   mapToSelectOptions,
   DEFAULT_OCTAVES,
   FLAT_TO_SHARP,
+  mapToSelectOptionsWithValues,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -18,7 +20,6 @@ import { useCount } from "./useCount";
 import Select from "./components/Select";
 import Slider from "./components/Slider";
 import OctaveSelector from "./components/OctaveSelector";
-import ClickFirst from "./components/ClickFirst";
 import Loop from "./components/Loop";
 import RainbowText from "./components/RainbowText";
 import SaveToMidi from "./components/SaveToMidi";
@@ -80,6 +81,7 @@ function App() {
 
   const [isInputHidden, setIsInputHidden] = useState(false);
   const navigate = useNavigate();
+  const midiSoundsRef = React.createRef();
 
   useEffect(() => {
     if (loadedFromUrl) {
@@ -147,6 +149,10 @@ function App() {
     }
   });
 
+  const getInstruments = () => {
+    return ["Coming soon!"];
+  };
+
   return (
     <div className="App">
       <button
@@ -209,6 +215,16 @@ function App() {
               onChange={setSelectedNumberOfNotes}
               selectedValue={selectedNumberOfNotes}
             />
+            <Select
+              id="instrumentSelect"
+              label="Instrument:"
+              options={useMemo(() => {
+                return mapToSelectOptionsWithValues(getInstruments());
+              }, [])}
+              onChange={() => {}}
+              selectedValue={() => {}}
+            />
+
             <Slider
               id="tempoSlider"
               label="Tempo"
@@ -340,17 +356,22 @@ function App() {
         octaveRange={selectedOctaves}
         activeIndex={currentIndex}
       />
+
+      <MIDISounds
+        ref={midiSoundsRef}
+        appElementName="root"
+        instruments={[]} // Add all the chosen instruments here once I know what I want.
+      />
+
       <Loop
+        midiSoundsRef={midiSoundsRef}
         notes={randomNotes}
-        octaveRange={selectedOctaves}
-        notesInMode={notesInMode}
         bpm={selectedTempo}
         isPlaying={isPlaying}
         setCurrentNote={setCurrentNote}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
-      <ClickFirst onClick={() => {}} />
     </div>
   );
 }

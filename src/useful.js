@@ -36,6 +36,13 @@ export const mapToSelectOptions = (items) => {
   }));
 };
 
+export const mapToSelectOptionsWithValues = (items) => {
+  return items.map((item, value) => ({
+    label: item,
+    value: value,
+  }));
+};
+
 export const generateFrets = (baseNote) => {
   const baseIndex = KEYS.indexOf(baseNote.slice(0, -1));
   let currentOctave = parseInt(baseNote.slice(-1));
