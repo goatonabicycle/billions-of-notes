@@ -209,7 +209,7 @@ function App() {
               id="numOfNotesSelect"
               label="Notes:"
               options={useMemo(() => {
-                const notes = Array.from({ length: 200 }, (_, i) => i + 1);
+                const notes = Array.from({ length: 500 }, (_, i) => i + 1);
                 return mapToSelectOptions(notes);
               }, [])}
               onChange={setSelectedNumberOfNotes}
@@ -341,6 +341,10 @@ function App() {
               showWhen={selectedNumberOfNotes === "69"}
               message={"Nice!"}
             />
+            <MessageBox
+              showWhen={selectedNumberOfNotes > 200}
+              message={"That... is a lot of notes!"}
+            />
           </div>
         </div>
       </div>
@@ -350,6 +354,7 @@ function App() {
         selectedNotes={randomNotes}
         scaleNotes={notesInMode}
       />
+
       <NotesGrid
         notes={randomNotes}
         notesInMode={notesInMode}
