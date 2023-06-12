@@ -111,7 +111,7 @@
   .doodle select {
     -webkit-appearance: none;
     appearance: none;
-    padding-right: 1.5em;
+    padding-right: 30px;
     background: url(caret.svg) no-repeat right transparent;
     background-position-x: calc(100% - 10px);
   }

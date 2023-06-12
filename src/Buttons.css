@@ -1,10 +1,11 @@
 button, .rainbow-button {  
   background: transparent;
   cursor: pointer;
-  -moz-user-select: text;
-  display: block; 
+  -moz-user-select: text;  
   text-decoration:none;
-  text-transform: uppercase;      
+  text-transform: uppercase;    
+  display: flex;  
+  align-items: center;  
   transition: all 0.5s ease;  
 }
 
@@ -35,4 +36,8 @@ button:hover, .rainbow-button:hover {
 .icon-button
 {
   font-size: 1em;
+}
+
+.icon-button-text {
+  padding:5px;
 }

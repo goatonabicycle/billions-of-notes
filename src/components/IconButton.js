@@ -2,7 +2,7 @@ function IconButton({ icon, onClick, text }) {
   return (
     <span className="icon-button">
       <button onClick={onClick}>
-        {icon} {text}
+        {icon} <span className="icon-button-text">{text}</span>
       </button>
     </span>
   );

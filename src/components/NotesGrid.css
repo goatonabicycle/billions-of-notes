@@ -6,8 +6,7 @@
   font-size: calc(1px + 1.5vmin);
   font-weight: 700;
   background-color: #FDF7F1;
-  overflow: hidden;
-  /* font-family: 'Roboto', sans-serif; */
+  overflow: hidden;  
 }
 
 .note-row {
@@ -28,8 +27,11 @@
 }
 
 .note-label {
-  color: #282c34;
+  /* color: #282c34; */
+  color: #a3a3a3;
+  font-weight: normal;
   display: flex;
+  border-right:1px solid #282c34;
   min-width: 40px;
 }
 
