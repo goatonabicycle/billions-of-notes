@@ -6,7 +6,7 @@
 .guitar-string__note {    
   display: flex;
   width: 100%;
-  min-width: 20px;
+  min-width: 10px;
   height: 30px;
   border: 1px solid black;
   border-radius: 5px;    
