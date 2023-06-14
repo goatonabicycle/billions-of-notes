@@ -4,6 +4,7 @@
 }
   
 .guitar-string__note {    
+  cursor: pointer;
   display: flex;
   width: 100%;
   min-width: 10px;
@@ -60,3 +61,13 @@
     font-size: 0.5em;    
   }
 }
+
+.guitar-string__note--highlight-same { 
+  border:1px solid  white !important;  
+ }
+
+.guitar-string__note--highlight-contains { 
+   background-color: #073b3b98;
+   border:1px solid  white !important;
+   color: white;
+ }

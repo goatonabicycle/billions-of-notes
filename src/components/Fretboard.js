@@ -5,6 +5,7 @@ import GuitarString from "./GuitarString";
 const Fretboard = ({ currentNote, selectedNotes, scaleNotes }) => {
   const guitarTuning = ["E4", "B3", "G3", "D3", "A2", "E2", "B1"];
   const [position, setPosition] = useState(1);
+  const [hoveredNote, setHoveredNote] = useState(null);
 
   useEffect(() => {
     let minPosition = Infinity;
@@ -41,6 +42,8 @@ const Fretboard = ({ currentNote, selectedNotes, scaleNotes }) => {
           selectedNotes={selectedNotes}
           scaleNotes={scaleNotes}
           position={position}
+          hoveredNote={hoveredNote}
+          setHoveredNote={setHoveredNote}
         />
       ))}
 
