@@ -24,8 +24,8 @@
   - Fretboard improvements. Right now it only really works when playing in the 3rd and 4th octaves.
   - Once the above is better, add different guitar tunings
   - Fretboard markings at 3,5,7,9, 12, 15, 17,19
-  - More tempo accuracy.
-  - Palm mute!
+  - More tempo accuracy. Steps of 1. Lower max number.
+  - Palm mute mode.
 
 ---
 
