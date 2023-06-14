@@ -50,9 +50,9 @@ const Fretboard = ({ currentNote, selectedNotes, scaleNotes }) => {
       <div className="fret-numbers">
         {Array.from({ length: 22 }, (_, i) => i).map((_, i) => (
           <div
-            key={i + 1}
+            key={i}
             className="fret-number">
-            {i + 1}
+            {i}
           </div>
         ))}
       </div>
