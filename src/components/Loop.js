@@ -58,7 +58,7 @@ const LoopComponent = ({
   setCurrentNote(notes[currentIndex]);
 
   if (audioContext.state !== "running")
-    return <ClickFirst onClick={() => audioContext.resume()} />;
+    return <ClickFirst onClick={() => {}} />;
   else return null;
 };
 
