@@ -1,9 +1,6 @@
-## Before going live:
+## Todo
 
-- Functionality:
-
-  - Instrument selection based on the items available in the midi player.
-
+  - Add different instruments that will alter the sound played. Instrument selection based on the items available in the midi player.
     - I should consider adding duration properties to each of these manually
     - 5 - Acoustic Grand Piano
     - 15 - Bright Accoustic Piano
@@ -19,36 +16,35 @@
     - 125 - Marimba
     - 137 - Xylophone
 
-  - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
-  - A popup explaining the idea and wtf this is.
-  - Fretboard improvements. Right now it only really works when playing in the 3rd and 4th octaves.
-  - Once the above is better, add different guitar tunings
-  - Fretboard markings at 3,5,7,9, 12, 15, 17,19
   - More tempo accuracy. Steps of 1. Lower max number.
   - Palm mute mode.
-
----
-
-## Ideas to explore:
-
-- Animate the line with a dot or something could be fun.
-- Add a very small representation of the note names to the drawn title line.
-- Useful keyboard shortcuts.
-  - [Space] for play/pause.
-  - [N] = new notes.
-  - [R] = Reset.
-  - [S] = Save as midi.
-  - [1 -> 8] could toggle the selected octaves?
-- Octaves could be grouped meaningfully. Maybe some sort of indication left of the current row title.
-- Make playing chords a possibility?
-- The user should be able to drag notes into other slots that fit the scale by literally clicking and dragging a given note.
-- Save multiple configurations you've enjoyed. Be able to load them up later.
-- Allow single note items to be played as if they're tremolo'd.
-  - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
-- Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
-- More interesting visualizations of the generated notes.
-- Increase possible number of generated notes.
-- A zooming mechanism to navigate the notes that have been generated.
-- Cypress for integration level tests.
-- 7 String guitar mode.
-- Add a circle of 5ths
+  - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
+    - These notes should not be played.
+  - Fretboard markings at 3,5,7,9, 12, 15, 17, 19
+  - A popup explaining the idea and wtf this is.
+  - Fretboard improvements. Right now it only really works when playing in the 3rd and 4th octaves. The mechanism for determining the position is a little screwy.
+  - Once the above is better, add different guitar tunings
+    - Either by having a bunch of predetermined ones or simply allow the user to "tune" the strings?
+  - The ability to dynamically add and remove strings.
+  - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
+  - Animate the line with a dot or something could be fun.
+  - Add a very small representation of the note names to the drawn title line.
+  - Useful keyboard shortcuts.
+    - [Space] for play/pause.
+    - [N] = new notes.
+    - [R] = Reset.
+    - [S] = Save as midi.
+    - [1 -> 8] could toggle the selected octaves?
+  - Octaves could be grouped meaningfully. Maybe some sort of indication left of the current row title.
+  - Make playing chords a possibility?
+  - The user should be able to drag notes into other slots that fit the scale by literally clicking and dragging a given note.
+  - Save multiple configurations you've enjoyed. Be able to load them up later.
+  - Allow single note items to be played as if they're tremolo'd.
+    - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
+  - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
+  - More interesting visualizations of the generated notes.
+  - Increase possible number of generated notes.
+  - A zooming mechanism to navigate the notes that have been generated.
+  - Cypress for integration level tests.
+  - 7 String guitar mode.
+  - Add a circle of 5ths
