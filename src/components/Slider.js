@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const Slider = ({ id, min, max, step, value, onChange, label }) => {
+  const mirrorRef = useRef(null);
+  const [inputWidth, setInputWidth] = useState("0px");
+
+  useEffect(() => {
+    if (mirrorRef.current) {
+      setInputWidth(`${mirrorRef.current.offsetWidth}px`);
+    }
+  }, [value]);
+
   return (
     <div className="selectContainer">
       <div
@@ -9,7 +18,23 @@ const Slider = ({ id, min, max, step, value, onChange, label }) => {
         <label
           htmlFor={id}
           className="selectLabel">
-          {label}: {value}
+          {label}:{" "}
+          <input
+            style={{ width: inputWidth }}
+            className="tempo-input"
+            value={value}
+            onChange={onChange}
+          />
+          <div
+            ref={mirrorRef}
+            style={{
+              position: "absolute",
+              top: "-9999px",
+              left: "-9999px",
+              whiteSpace: "nowrap",
+            }}>
+            {value}
+          </div>
         </label>
         <div className="slider">
           <input

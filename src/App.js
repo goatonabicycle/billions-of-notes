@@ -229,8 +229,8 @@ function App() {
               id="tempoSlider"
               label="Tempo"
               min="0"
-              max="1000"
-              step="10"
+              max="700"
+              step="5"
               value={selectedTempo}
               onChange={(e) => {
                 setSelectedTempo(parseInt(e.target.value, 10));
@@ -344,6 +344,11 @@ function App() {
             <MessageBox
               showWhen={selectedNumberOfNotes > 200}
               message={"That... is a lot of notes!"}
+            />
+
+            <MessageBox
+              showWhen={selectedTempo > "700"}
+              message={"That's an insane amount of tempo!?! Can you handle it?"}
             />
           </div>
         </div>

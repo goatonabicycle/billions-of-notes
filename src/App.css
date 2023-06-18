@@ -142,3 +142,13 @@ h1 {
 {
   text-align: center;
 }
+
+.tempo-input {
+  width:1ch;
+  border:none !important;
+  padding: 0px;
+  margin: 0px;
+  background-color: #282c34;
+  color:#f3f5f7;   
+  font-family: 'Short Stack', cursive, sans-serif;  
+}
