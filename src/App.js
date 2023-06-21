@@ -222,7 +222,7 @@ function App() {
                 return mapToSelectOptionsWithValues(getInstruments());
               }, [])}
               onChange={() => {}}
-              selectedValue={() => {}}
+              selectedValue={""}
             />
 
             <Slider

@@ -20,7 +20,7 @@ function Select(props) {
           id={props.id}
           className="selectElement"
           onChange={handleChange}
-          value={props.selectedValue}>
+          value={props.selectedValue || ""}>
           {props.options.map((option) => (
             <option
               key={option.value}

@@ -13,6 +13,11 @@ const LoopComponent = ({
   midiSoundsRef,
 }) => {
   let audioContext = new AudioContext();
+
+  useEffect(() => {
+    setCurrentNote(notes[currentIndex]);
+  }, [notes, currentIndex]);
+
   useEffect(() => {
     if (!setCurrentIndex || notes.length === 0) return;
 
@@ -54,8 +59,6 @@ const LoopComponent = ({
     const millisecondsPerBeat = 60000 / bpm;
     return millisecondsPerBeat;
   };
-
-  setCurrentNote(notes[currentIndex]);
 
   if (audioContext.state !== "running")
     return <ClickFirst onClick={() => {}} />;
