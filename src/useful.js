@@ -2,6 +2,7 @@ export const DEFAULT_KEY = "C";
 export const DEFAULT_MODE = "ionian";
 export const DEFAULT_TEMPO = 220;
 export const DEFAULT_NUMBER_OF_NOTES = 8;
+export const DEFAULT_INSTRUMENT = 5;
 export const DEFAULT_OCTAVES = [3, 4];
 
 export const KEYS = [
@@ -29,10 +30,33 @@ export const FLAT_TO_SHARP = {
   Bb: "A#",
 };
 
+export const INSTRUMENTS = {
+  5: "Acoustic Grand Piano",
+  15: "Bright Accoustic Piano",
+  26: "Electric Grand Piano",
+  32: "Honky Tonk Piano",
+  43: "Electric Piano",
+  73: "Harpsicord",
+  84: "Clavinet",
+  91: "Celesta",
+  102: "Glockenspiel",
+  111: "Music box",
+  121: "Vibraphone",
+  125: "Marimba",
+  137: "Xylophone",
+};
+
 export const mapToSelectOptions = (items) => {
   return items.map((item) => ({
     label: item,
     value: item,
+  }));
+};
+
+export const mapObjectToSelectOptionsWithValues = (items) => {
+  return Object.entries(items).map(([value, label]) => ({
+    label,
+    value,
   }));
 };
 

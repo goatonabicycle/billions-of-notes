@@ -11,6 +11,7 @@ const LoopComponent = ({
   currentIndex,
   setCurrentIndex,
   midiSoundsRef,
+  instrument,
 }) => {
   let audioContext = new AudioContext();
 
@@ -52,7 +53,7 @@ const LoopComponent = ({
     midiNumber += octave * 12;
 
     if (audioContext.state === "running")
-      midiSoundsRef.current.playChordNow(5, [midiNumber], 1); // Turn this last item into a "palm mute" option?
+      midiSoundsRef.current.playChordNow(instrument, [midiNumber], 1); // Turn this last item into a "palm mute" option?
   }, [notes, currentIndex, midiSoundsRef]);
 
   const calculateInterval = (bpm) => {

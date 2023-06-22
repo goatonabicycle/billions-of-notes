@@ -12,7 +12,9 @@ import {
   mapToSelectOptions,
   DEFAULT_OCTAVES,
   FLAT_TO_SHARP,
-  mapToSelectOptionsWithValues,
+  DEFAULT_INSTRUMENT,
+  mapObjectToSelectOptionsWithValues,
+  INSTRUMENTS,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -62,6 +64,12 @@ function App() {
     "selectedTempo",
     DEFAULT_TEMPO
   );
+
+  const [selectedInstrument, setSelectedInstrument] = useLocalStorage(
+    "selectedInstrument",
+    DEFAULT_INSTRUMENT
+  );
+
   const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useLocalStorage(
     "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
@@ -130,11 +138,12 @@ function App() {
 
     const urlInputs = parsedQuery.get("inputs");
     if (urlInputs) {
-      const [key, mode, number, tempo] = urlInputs.split(",");
+      const [key, mode, number, tempo, instrument] = urlInputs.split(",");
       setSelectedKey(key || DEFAULT_KEY);
       setSelectedMode(mode || DEFAULT_MODE);
       setSelectedNumberOfNotes(number || DEFAULT_NUMBER_OF_NOTES);
       setSelectedTempo(tempo || DEFAULT_TEMPO);
+      setSelectedInstrument(instrument || DEFAULT_INSTRUMENT);
     }
 
     const urlOctaves = parsedQuery.get("octaves");
@@ -150,7 +159,7 @@ function App() {
   });
 
   const getInstruments = () => {
-    return ["Coming soon!"];
+    return INSTRUMENTS;
   };
 
   return (
@@ -219,10 +228,10 @@ function App() {
               id="instrumentSelect"
               label="Instrument:"
               options={useMemo(() => {
-                return mapToSelectOptionsWithValues(getInstruments());
+                return mapObjectToSelectOptionsWithValues(getInstruments());
               }, [])}
-              onChange={() => {}}
-              selectedValue={""}
+              onChange={setSelectedInstrument}
+              selectedValue={selectedInstrument}
             />
 
             <Slider
@@ -267,6 +276,7 @@ function App() {
                 setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
                 setSelectedOctaves(DEFAULT_OCTAVES);
                 setSelectedTempo(DEFAULT_TEMPO);
+                setSelectedInstrument(DEFAULT_INSTRUMENT);
               }}
               icon={ResetIcon}
               text="Reset inputs"
@@ -280,6 +290,7 @@ function App() {
                   selectedMode,
                   selectedNumberOfNotes,
                   selectedTempo,
+                  selectedInstrument,
                 ].join(",");
                 url.searchParams.set("inputs", inputs);
                 url.searchParams.set("octaves", selectedOctaves.join(","));
@@ -370,7 +381,7 @@ function App() {
       <MIDISounds
         ref={midiSoundsRef}
         appElementName="root"
-        instruments={[]} // Add all the chosen instruments here once I know what I want.
+        instruments={[selectedInstrument]} // Add all the chosen instruments here once I know what I want.
       />
 
       <Loop
@@ -381,6 +392,7 @@ function App() {
         setCurrentNote={setCurrentNote}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
+        instrument={selectedInstrument}
       />
     </div>
   );
