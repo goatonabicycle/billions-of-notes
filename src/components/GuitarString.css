@@ -21,6 +21,14 @@
   background-color:#794bc4 !important;        
 }
 
+.guitar-string__note--first {    
+  border-right:10px solid #794bc4;
+  border-radius: 0px;
+  margin-top:2px;
+  height:25px;
+  
+}
+
 .guitar-string__note--selected {    
   font-weight: 900;
   font-size:1.2em;
@@ -31,20 +39,6 @@
 .guitar-string__note--scale {
   background-color: #794bc421;    
   color: #a3a3a3;
-}
-
-.fretboard {}
-
-.fret-numbers {
-  display: flex;  
-}
-
-.fret-number {
-  display: flex;
-  width: 100%;    
-  justify-content: center;    
-  font-size: 0.6em;
-  color: #ccc;     
 }
 
 @media (max-width: 600px) {
@@ -63,11 +57,11 @@
 }
 
 .guitar-string__note--highlight-same { 
-  border:1px solid  white !important;  
+  background-color: #073b3b98 !important;   
+  color: white;
  }
 
 .guitar-string__note--highlight-contains { 
-   background-color: #073b3b98;
-   border:1px solid  white !important;
+   background-color: #073b3b98 !important;   
    color: white;
  }

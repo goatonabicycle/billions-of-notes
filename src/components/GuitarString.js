@@ -24,6 +24,7 @@ const GuitarString = ({
           <div
             key={fret}
             className={`guitar-string__note 
+              ${fret === 0 ? "guitar-string__note--first" : ""}
               ${
                 currentNote === note && fret >= position && fret < position + 5
                   ? "guitar-string__note--active"

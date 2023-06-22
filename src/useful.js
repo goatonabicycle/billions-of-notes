@@ -71,7 +71,7 @@ export const generateFrets = (baseNote) => {
   const baseIndex = KEYS.indexOf(baseNote.slice(0, -1));
   let currentOctave = parseInt(baseNote.slice(-1));
 
-  let notes = [...Array(22).keys()].map((fret) => {
+  let notes = [...Array(25).keys()].map((fret) => {
     let noteIndex = (baseIndex + fret) % 12;
     let noteName = KEYS[noteIndex];
 

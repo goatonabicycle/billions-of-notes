@@ -4,21 +4,7 @@
 - A popup explaining the idea and wtf this is.
 - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - These notes should not be played.
-- Add different instruments that will alter the sound played. Instrument selection based on the items available in the midi player.
-  - I should consider adding duration properties to each of these manually
-  - 5 - Acoustic Grand Piano
-  - 15 - Bright Accoustic Piano
-  - 26 - Electric Grand Piano
-  - 32 - Honky Tonk Piano
-  - 43 - Electric Piano
-  - 73 - Harpsicord
-  - 84 - Clavinet
-  - 91 - Celesta
-  - 102 - Glockenspiel
-  - 111 - Music box
-  - 121 - Vibraphone
-  - 125 - Marimba
-  - 137 - Xylophone
+
 - Useful keyboard shortcuts.
   - [Space] for play/pause.
   - [N] = new notes.
@@ -29,6 +15,8 @@
 - Save multiple configurations you've enjoyed. Be able to load them up later.
 - Add many more random interactive messages.
 - Palm mute mode.
+- Add more instruments.
+  - I should consider adding duration properties to each of these manually
 - Fretboard improvements. Right now it only really works when playing in the 3rd and 4th octaves. The mechanism for determining the position is a little screwy.
   - Once the above is better, add different guitar tunings
   - Either by having a bunch of predetermined ones or simply allow the user to "tune" the strings?
