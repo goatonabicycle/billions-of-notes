@@ -233,6 +233,19 @@ function App() {
               onChange={setSelectedInstrument}
               selectedValue={selectedInstrument}
             />
+            <Select
+              id="mixEmptySelect"
+              label="Empty notes:"
+              options={useMemo(() => {
+                const notes = Array.from(
+                  { length: selectedNumberOfNotes },
+                  (_, i) => i
+                );
+                return mapToSelectOptions(notes);
+              }, [])}
+              onChange={() => {}}
+              selectedValue={0}
+            />
 
             <Slider
               id="tempoSlider"

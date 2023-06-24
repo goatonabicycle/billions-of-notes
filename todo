@@ -1,10 +1,8 @@
 ## Todo
 
-- Fretboard markings at 3, 5, 7, 9, 12, 15, 17, 19
-- A popup explaining the idea and wtf this is.
 - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - These notes should not be played.
-
+- A popup explaining the idea and wtf this is.
 - Useful keyboard shortcuts.
   - [Space] for play/pause.
   - [N] = new notes.
