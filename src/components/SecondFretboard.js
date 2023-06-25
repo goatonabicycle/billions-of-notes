@@ -31,6 +31,10 @@ const SecondFretboard = ({
     "B",
   ];
 
+  const updateCurrentPosition = (newPosition) => {
+    setCurrentPosition(newPosition);
+  };
+
   const getPreferredFretRange = () => {
     const startFret = preferredPosition;
     const endFret = preferredPosition + (fingerRange - 1);
@@ -107,17 +111,11 @@ const SecondFretboard = ({
         });
     }
 
-    setCurrentPosition({
+    updateCurrentPosition({
       stringIndex: closestNote.stringIndex,
       fret: closestNote.fret,
     });
-  }, [
-    fretboard,
-    notesToPlay,
-    playbackIndex,
-    currentPosition,
-    preferredPosition,
-  ]);
+  }, [fretboard, notesToPlay, playbackIndex, preferredPosition]);
   return (
     <div className="fretboard">
       {fretboard.map((string, i) => (

@@ -96,7 +96,6 @@ function App() {
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [loadedFromUrl, setLoadedFromUrl] = useState(false);
-
   const [isInputHidden, setIsInputHidden] = useState(false);
   const navigate = useNavigate();
   const midiSoundsRef = React.createRef();
