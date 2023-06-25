@@ -48,6 +48,7 @@ import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
 import Fretboard from "./components/Fretboard";
+import SecondFretboard from "./components/SecondFretboard";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -378,6 +379,11 @@ function App() {
         </div>
       </div>
 
+      {/*       
+      <SecondFretboard
+        playbackIndex={currentIndex}
+        notesToPlay={randomNotes}
+      /> */}
       <Fretboard
         currentNote={currentNote}
         selectedNotes={randomNotes}

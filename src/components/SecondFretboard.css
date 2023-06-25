@@ -1,0 +1,25 @@
+.fretboard {
+    display: flex;
+    color:white;
+    flex-direction: column;
+  }
+  
+  .string {
+    display: flex;
+    margin-bottom: 5px;
+  }
+  
+  .note, .fret {
+    width: 100%;
+    height: 35px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+    font-size: 0.6em; /* Adjust as necessary to fit text inside the frets */
+  }
+  
+  .highlight {
+    background-color: yellow; /* Change this to any color you prefer */
+  }
