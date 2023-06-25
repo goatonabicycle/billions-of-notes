@@ -1,5 +1,6 @@
 ## Todo
 
+- Finish styling the new, improved fretboard.
 - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - These notes should not be played.
 - A popup explaining the idea and wtf this is.
@@ -15,9 +16,7 @@
 - Palm mute mode.
 - Add more instruments.
   - I should consider adding duration properties to each of these manually
-- Fretboard improvements. Right now it only really works when playing in the 3rd and 4th octaves. The mechanism for determining the position is a little screwy.
-  - Once the above is better, add different guitar tunings
-  - Either by having a bunch of predetermined ones or simply allow the user to "tune" the strings?
+- Support different tunings.
 - The ability to dynamically add and remove strings.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
 - Animate the line with a dot or something could be fun.
