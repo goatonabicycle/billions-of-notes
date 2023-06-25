@@ -19,7 +19,7 @@ const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
     <div className="octave-selector">
       <label>Octaves:</label>
       <div className="doodle-border">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((octave) => (
+        {[2, 3, 4, 5].map((octave) => (
           <span
             className="octave-selector-item"
             key={octave}>

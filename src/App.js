@@ -8,6 +8,8 @@ import {
   DEFAULT_MODE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
+  DEFAULT_POSITION,
+  DEFAULT_FINGER_RANGE,
   KEYS,
   mapToSelectOptions,
   DEFAULT_OCTAVES,
@@ -65,25 +67,32 @@ function App() {
     "selectedTempo",
     DEFAULT_TEMPO
   );
-
+  const [selectedPosition, setSelectedPosition] = useLocalStorage(
+    "selectedPosition",
+    DEFAULT_POSITION
+  );
+  const [selectedFingerRange, setSelectedFingerRange] = useLocalStorage(
+    "selectedFingerRange",
+    DEFAULT_FINGER_RANGE
+  );
   const [selectedInstrument, setSelectedInstrument] = useLocalStorage(
     "selectedInstrument",
     DEFAULT_INSTRUMENT
   );
-
   const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useLocalStorage(
     "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
   );
+  const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
+    "selectedOctaves",
+    DEFAULT_OCTAVES
+  );
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [notesInMode, setNotesInMode] = useState([]);
   const [shareButtonText, setShareButtonText] = useState("Share these notes");
   const [randomNotes, setRandomNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
-  const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
-    "selectedOctaves",
-    DEFAULT_OCTAVES
-  );
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [loadedFromUrl, setLoadedFromUrl] = useState(false);
@@ -208,6 +217,7 @@ function App() {
               onChange={setSelectedKey}
               selectedValue={selectedKey}
             />
+
             <Select
               id="modeSelect"
               label="Mode:"
@@ -215,6 +225,7 @@ function App() {
               onChange={setSelectedMode}
               selectedValue={selectedMode}
             />
+
             <Select
               id="numOfNotesSelect"
               label="Notes:"
@@ -225,6 +236,7 @@ function App() {
               onChange={setSelectedNumberOfNotes}
               selectedValue={selectedNumberOfNotes}
             />
+
             <Select
               id="instrumentSelect"
               label="Instrument:"
@@ -234,6 +246,7 @@ function App() {
               onChange={setSelectedInstrument}
               selectedValue={selectedInstrument}
             />
+
             <Select
               id="mixEmptySelect"
               label="Empty notes:"
@@ -259,9 +272,34 @@ function App() {
                 setSelectedTempo(parseInt(e.target.value, 10));
               }}
             />
+
             <OctaveSelector
               selectedOctaves={selectedOctaves}
               setSelectedOctaves={setSelectedOctaves}
+            />
+
+            <Slider
+              id="positionSlider"
+              label="Preferred position"
+              min="0"
+              max="24"
+              step="1"
+              value={selectedPosition}
+              onChange={(e) => {
+                setSelectedPosition(parseInt(e.target.value, 10));
+              }}
+            />
+
+            <Slider
+              id="fingerRangeSlider"
+              label="Finger Range"
+              min="4"
+              max="7"
+              step="1"
+              value={selectedFingerRange}
+              onChange={(e) => {
+                setSelectedFingerRange(parseInt(e.target.value, 10));
+              }}
             />
           </div>
 
@@ -379,11 +417,12 @@ function App() {
         </div>
       </div>
 
-      {/*       
       <SecondFretboard
         playbackIndex={currentIndex}
         notesToPlay={randomNotes}
-      /> */}
+        preferredPosition={selectedPosition}
+        fingerRange={selectedFingerRange}
+      />
       <Fretboard
         currentNote={currentNote}
         selectedNotes={randomNotes}

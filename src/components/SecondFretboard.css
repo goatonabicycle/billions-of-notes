@@ -17,9 +17,15 @@
     align-items: center;
     justify-content: center;
     margin-left: 2px;
-    font-size: 0.6em; /* Adjust as necessary to fit text inside the frets */
+    font-size: 0.6em;     
   }
   
   .highlight {
-    background-color: yellow; /* Change this to any color you prefer */
+    background-color: yellow;
+  }
+
+  .fret.preferred-fret {
+    color:white;
+    font-weight: bold;
+    border:1px solid rgb(196, 47, 47);
   }
