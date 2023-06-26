@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./SecondFretboard.css"; // Import a CSS file to style your component
+import "./SecondFretboard.css";
+import { KEYS } from "../useful";
 
 const SecondFretboard = ({
   notesToPlay,
   playbackIndex,
   preferredPosition,
   fingerRange,
+  scaleNotes,
 }) => {
   const strings = [
     { note: "E", octave: 4 },
@@ -16,20 +18,10 @@ const SecondFretboard = ({
     { note: "E", octave: 2 },
     { note: "B", octave: 1 },
   ];
-  const chroma = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
+
+  const specialFrets = [3, 5, 7, 9, 15, 17, 19, 21];
+  const doubleDotsFrets = [12, 24];
+  // Todo: Add these dots
 
   const updateCurrentPosition = (newPosition) => {
     setCurrentPosition(newPosition);
@@ -48,12 +40,12 @@ const SecondFretboard = ({
   });
 
   const getNote = (stringNote, stringOctave, fret) => {
-    let noteIndex = (chroma.indexOf(stringNote) + fret) % chroma.length;
+    let noteIndex = (KEYS.indexOf(stringNote) + fret) % KEYS.length;
     let octave =
       stringOctave +
-      Math.floor((chroma.indexOf(stringNote) + fret) / chroma.length);
+      Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
 
-    return `${chroma[noteIndex]}${octave}`;
+    return `${KEYS[noteIndex]}${octave}`;
   };
 
   useEffect(() => {
@@ -116,33 +108,55 @@ const SecondFretboard = ({
       fret: closestNote.fret,
     });
   }, [fretboard, notesToPlay, playbackIndex, preferredPosition]);
-  return (
-    <div className="fretboard">
-      {fretboard.map((string, i) => (
-        <div
-          key={i}
-          className="string">
-          {string.map((note, j) => {
-            const { startFret, endFret } = getPreferredFretRange();
-            const isInPreferredRange = j >= startFret && j <= endFret;
-            const isCurrentNote =
-              note.note === notesToPlay[playbackIndex] &&
-              note.stringIndex === currentPosition.stringIndex &&
-              note.fret === currentPosition.fret;
-            let className = "fret";
-            if (isInPreferredRange) className += " preferred-fret";
-            if (isCurrentNote) className += " highlight";
 
-            return (
-              <div
-                key={j}
-                className={className}>
-                {note.note}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+  return (
+    <div className="fretboard-container">
+      <div className="fretboard">
+        {fretboard.map((string, i) => (
+          <div
+            key={i}
+            className="string">
+            {string.map((note, j) => {
+              const { startFret, endFret } = getPreferredFretRange();
+              const isInPreferredRange = j >= startFret && j <= endFret;
+              const isCurrentNote =
+                note.note === notesToPlay[playbackIndex] &&
+                note.stringIndex === currentPosition.stringIndex &&
+                note.fret === currentPosition.fret;
+
+              const isScaleNote = scaleNotes.includes(note.note.slice(0, -1));
+              const isNoteToPlay = notesToPlay.includes(note.note);
+              const isSpecialFret = specialFrets.includes(j);
+              const isDoubleDotFret = doubleDotsFrets.includes(j);
+
+              let className = "fret";
+              if (isInPreferredRange) className += " preferred-fret";
+              if (isCurrentNote) className += " highlight";
+              if (isScaleNote) className += " scale-note";
+              if (isNoteToPlay) className += " note-to-play";
+              if (isSpecialFret) className += " special-fret";
+              if (isDoubleDotFret) className += " double-dot-fret";
+
+              return (
+                <div
+                  key={j}
+                  className={className}>
+                  {note.note}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+      <div className="fret-numbers">
+        {[...Array(25)].map((_, i) => (
+          <div
+            key={i}
+            className="fret-number">
+            {i}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

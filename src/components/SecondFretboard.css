@@ -1,34 +1,65 @@
-.fretboard {    
-    color:white;    
-  }
-  
-  .string {
-    display: flex;    
-  }
-  
-  .note, .fret {
-    display: flex;
-    align-items: center;
-    justify-content: center;    
+.fretboard-container {
+  align-items: center;
+}
 
-    font-size: 0.6em;     
-    cursor: pointer;      
+.fretboard {
+  color: white;
+  font-size: 0.8em;
+}
 
-    margin:0px;
-    min-width: 10px;    
-    width: 100%;
-    height: 30px;
-            
-    border: 1px solid black;    
-    border-radius: 5px;    
-  }
-  
-  .highlight {
-    background-color: #794bc4;
-  }
+.string {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .fret.preferred-fret {
-    color:white;
-    font-weight: bold;
-    border:1px solid #a3a3a3;
-  }
+.note,
+.fret {
+  background-color: #ccc;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.6em;
+  font-weight: normal;
+  cursor: pointer;
+
+  margin: 0px;
+  min-width: 10px;
+  width: 100%;
+  height: 30px;
+
+  border: 1px solid #282c34;
+  border-radius: 5px;
+}
+
+.highlight {
+  background-color: #794bc4 !important;
+}
+
+.fret.preferred-fret {
+  border: 1px solid #794bc4;
+}
+
+.scale-note {
+  background-color: #794bc421;
+  color: #a3a3a3;
+}
+
+.note-to-play {
+  font-weight: 900;
+  text-decoration: underline;
+  color: #ffffff !important;
+}
+
+.fret-numbers {
+  display: flex;
+  margin-top: 10px;
+}
+
+.fret-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10px; /* adjust as needed */
+}

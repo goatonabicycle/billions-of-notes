@@ -421,12 +421,14 @@ function App() {
         notesToPlay={randomNotes}
         preferredPosition={selectedPosition}
         fingerRange={selectedFingerRange}
+        scaleNotes={notesInMode}
       />
-      <Fretboard
+
+      {/* <Fretboard
         currentNote={currentNote}
         selectedNotes={randomNotes}
         scaleNotes={notesInMode}
-      />
+      /> */}
 
       <NotesGrid
         notes={randomNotes}
