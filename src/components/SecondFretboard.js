@@ -111,14 +111,27 @@ const SecondFretboard = ({
 
   return (
     <div className="fretboard-container">
-      <div className="fretboard">
+      <div
+        className="fretboard"
+        style={{
+          "--preferred-start": getPreferredFretRange().startFret,
+          "--preferred-range":
+            getPreferredFretRange().endFret -
+            getPreferredFretRange().startFret +
+            1,
+        }}>
         {fretboard.map((string, i) => (
           <div
             key={i}
-            className="string">
+            className="string"
+            style={{
+              "--preferred-start": getPreferredFretRange().startFret,
+              "--preferred-range":
+                getPreferredFretRange().endFret -
+                getPreferredFretRange().startFret +
+                1,
+            }}>
             {string.map((note, j) => {
-              const { startFret, endFret } = getPreferredFretRange();
-              const isInPreferredRange = j >= startFret && j <= endFret;
               const isCurrentNote =
                 note.note === notesToPlay[playbackIndex] &&
                 note.stringIndex === currentPosition.stringIndex &&
@@ -130,7 +143,6 @@ const SecondFretboard = ({
               const isDoubleDotFret = doubleDotsFrets.includes(j);
 
               let className = "fret";
-              if (isInPreferredRange) className += " preferred-fret";
               if (isCurrentNote) className += " highlight";
               if (isScaleNote) className += " scale-note";
               if (isNoteToPlay) className += " note-to-play";
