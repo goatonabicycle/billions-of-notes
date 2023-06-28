@@ -6,6 +6,7 @@ export const DEFAULT_INSTRUMENT = 5;
 export const DEFAULT_OCTAVES = [3, 4];
 export const DEFAULT_POSITION = 2;
 export const DEFAULT_FINGER_RANGE = 6;
+export const DEFAULT_VOLUME = 1;
 
 export const KEYS = [
   "C",

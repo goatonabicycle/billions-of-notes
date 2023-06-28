@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const Slider = ({ id, min, max, step, value, onChange, label }) => {
+const Slider = ({ id, min, max, step, value, onChange, label, editable }) => {
   const mirrorRef = useRef(null);
   const [inputWidth, setInputWidth] = useState("0px");
 
@@ -22,6 +22,7 @@ const Slider = ({ id, min, max, step, value, onChange, label }) => {
           <input
             style={{ width: inputWidth }}
             className="tempo-input"
+            disabled={!editable}
             value={value}
             onChange={onChange}
           />

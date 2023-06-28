@@ -17,6 +17,7 @@ import {
   DEFAULT_INSTRUMENT,
   mapObjectToSelectOptionsWithValues,
   INSTRUMENTS,
+  DEFAULT_VOLUME,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -70,6 +71,10 @@ function App() {
   const [selectedPosition, setSelectedPosition] = useLocalStorage(
     "selectedPosition",
     DEFAULT_POSITION
+  );
+  const [selectedVolume, setSelectedVolume] = useLocalStorage(
+    "selectedVolume",
+    DEFAULT_VOLUME
   );
   const [selectedFingerRange, setSelectedFingerRange] = useLocalStorage(
     "selectedFingerRange",
@@ -266,6 +271,7 @@ function App() {
               min="0"
               max="700"
               step="5"
+              editable={true}
               value={selectedTempo}
               onChange={(e) => {
                 setSelectedTempo(parseInt(e.target.value, 10));
@@ -276,13 +282,15 @@ function App() {
               selectedOctaves={selectedOctaves}
               setSelectedOctaves={setSelectedOctaves}
             />
-
+          </div>
+          <div className="select-grid">
             <Slider
               id="positionSlider"
               label="Preferred position"
               min="0"
               max="24"
               step="1"
+              editable={false}
               value={selectedPosition}
               onChange={(e) => {
                 setSelectedPosition(parseInt(e.target.value, 10));
@@ -295,9 +303,23 @@ function App() {
               min="4"
               max="7"
               step="1"
+              editable={false}
               value={selectedFingerRange}
               onChange={(e) => {
                 setSelectedFingerRange(parseInt(e.target.value, 10));
+              }}
+            />
+
+            <Slider
+              id="volumeSlider"
+              label="Volume"
+              min="0"
+              max="100"
+              step="1"
+              editable={false}
+              value={selectedVolume}
+              onChange={(e) => {
+                setSelectedVolume(parseInt(e.target.value, 10));
               }}
             />
           </div>
@@ -452,7 +474,7 @@ function App() {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
         instrument={selectedInstrument}
-        volume={0.1}
+        volume={selectedVolume / 500}
       />
     </div>
   );
