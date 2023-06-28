@@ -1,43 +1,68 @@
-button, .rainbow-button {  
+button,
+.rainbow-button {
   background: transparent;
   cursor: pointer;
-  -moz-user-select: text;  
-  text-decoration:none;
-  text-transform: uppercase;    
-  display: flex;  
-  align-items: center;  
-  transition: all 0.5s ease;  
+  -moz-user-select: text;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  transition: all 0.5s ease;
 }
 
-button:hover, .rainbow-button:hover {  
+button:hover,
+.rainbow-button:hover {
   border-color: #282c34;
   border-radius: 12px;
   animation-name: rainbow-buttons;
-  animation-duration: 2s;    
+  animation-duration: 2s;
   animation-iteration-count: infinite;
-  animation-timing-function: linear;      
+  animation-timing-function: linear;
+  box-shadow: rgba(121, 75, 196, 0.4) 0px 5px, rgba(121, 75, 196, 0.3) 0px 10px,
+    rgba(121, 75, 196, 0.2) 0px 15px, rgba(121, 75, 196, 0.1) 0px 20px,
+    rgba(121, 75, 196, 0.05) 0px 25px;
 }
 
 @keyframes rainbow-buttons {
-  0% {color: #ff000096;}
-  10% {color: #ff800096;}
-  20% {color: #ffff0097;}
-  30% {color: #00ff0090;}
-  40% {color: #00ffff98;}
-  50% {color: #0000ff8f;}
-  60% {color: #892be286;}
-  70% {color: #8000ff83;}
-  80% {color: #7f007f86;}
-  90% {color: #ff00ff7c;}
-  100% {color: #ff00007f;}
+  0% {
+    color: #ff000096;
+  }
+  10% {
+    color: #ff800096;
+  }
+  20% {
+    color: #ffff0097;
+  }
+  30% {
+    color: #00ff0090;
+  }
+  40% {
+    color: #00ffff98;
+  }
+  50% {
+    color: #0000ff8f;
+  }
+  60% {
+    color: #892be286;
+  }
+  70% {
+    color: #8000ff83;
+  }
+  80% {
+    color: #7f007f86;
+  }
+  90% {
+    color: #ff00ff7c;
+  }
+  100% {
+    color: #ff00007f;
+  }
 }
 
-
-.icon-button
-{
+.icon-button {
   font-size: 1em;
 }
 
 .icon-button-text {
-  padding:5px;
+  padding: 5px;
 }
