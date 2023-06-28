@@ -1,6 +1,7 @@
 ## Todo
 
 - Finish styling the new, improved fretboard.
+- Control volume of the app.
 - Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
   - These notes should not be played.
 - A popup explaining the idea and wtf this is.

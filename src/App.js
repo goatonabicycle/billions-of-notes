@@ -452,6 +452,7 @@ function App() {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
         instrument={selectedInstrument}
+        volume={0.1}
       />
     </div>
   );
