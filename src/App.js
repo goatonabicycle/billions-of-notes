@@ -210,7 +210,7 @@ function App() {
             <Counter count={count} />
           </div>
         </div>
-        <div className="selects ">
+        <div className="selects">
           <div className="select-grid">
             <Select
               id="keySelect"
