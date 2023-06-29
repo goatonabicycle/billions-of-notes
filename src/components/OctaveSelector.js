@@ -10,7 +10,9 @@ const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
       setSelectedOctaves((prevOctaves) => [...prevOctaves, value].sort());
     } else {
       setSelectedOctaves((prevOctaves) =>
-        prevOctaves.filter((octave) => octave !== value)
+        prevOctaves.length > 1
+          ? prevOctaves.filter((octave) => octave !== value)
+          : prevOctaves
       );
     }
   };
