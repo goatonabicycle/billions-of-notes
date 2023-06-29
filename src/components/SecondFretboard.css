@@ -1,5 +1,7 @@
 .fretboard-container {
   align-items: center;
+  overflow: hidden;
+  /* color: #ccc; */
 }
 
 .fretboard {

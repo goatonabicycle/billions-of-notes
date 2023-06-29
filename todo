@@ -33,4 +33,8 @@
 - A zooming mechanism to navigate the notes that have been generated.
 - Cypress for integration level tests.
 - Add a circle of 5ths
-- Add a vertical piano roll with the notes comingdown from the top.
+- Add a vertical piano roll with the notes coming down from the top.
+
+Make the distinction between the fretboard and the pianoroll more clear. 
+Sheet music stuff? 
+Make the generated notes more obvious.

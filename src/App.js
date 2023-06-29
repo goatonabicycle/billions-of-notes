@@ -265,19 +265,6 @@ function App() {
               selectedValue={0}
             />
 
-            <Slider
-              id="tempoSlider"
-              label="Tempo"
-              min="0"
-              max="700"
-              step="5"
-              editable={true}
-              value={selectedTempo}
-              onChange={(e) => {
-                setSelectedTempo(parseInt(e.target.value, 10));
-              }}
-            />
-
             <OctaveSelector
               selectedOctaves={selectedOctaves}
               setSelectedOctaves={setSelectedOctaves}
@@ -307,6 +294,19 @@ function App() {
               value={selectedFingerRange}
               onChange={(e) => {
                 setSelectedFingerRange(parseInt(e.target.value, 10));
+              }}
+            />
+
+            <Slider
+              id="tempoSlider"
+              label="Tempo"
+              min="0"
+              max="700"
+              step="5"
+              editable={true}
+              value={selectedTempo}
+              onChange={(e) => {
+                setSelectedTempo(parseInt(e.target.value, 10));
               }}
             />
 
