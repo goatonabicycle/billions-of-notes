@@ -18,6 +18,7 @@ import {
   mapObjectToSelectOptionsWithValues,
   INSTRUMENTS,
   DEFAULT_VOLUME,
+  shuffleArray,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -91,6 +92,10 @@ function App() {
     "selectedOctaves",
     DEFAULT_OCTAVES
   );
+  const [selectedEmptyNotes, setSelectedEmptyNotes] = useLocalStorage(
+    "selectedEmptyNotes",
+    0
+  );
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [notesInMode, setNotesInMode] = useState([]);
@@ -123,13 +128,29 @@ function App() {
     setNotesInMode(notesInMode);
 
     let randomNotes = [];
+    let totalNotes = parseInt(selectedNumberOfNotes);
+    let emptyNotes = parseInt(selectedEmptyNotes);
 
-    for (let i = 0; i < selectedNumberOfNotes; i++) {
+    for (let i = 0; i < totalNotes - emptyNotes; i++) {
       const randomNote =
         notesInMode[Math.floor(Math.random() * notesInMode.length)];
       const randomOctave =
         selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)];
       randomNotes.push(`${randomNote}${randomOctave}`);
+    }
+
+    for (let i = 0; i < emptyNotes; i++) {
+      randomNotes.push("");
+    }
+
+    randomNotes = shuffleArray(randomNotes);
+
+    let firstNonEmptyNoteIndex = randomNotes.findIndex((note) => note !== "");
+    if (firstNonEmptyNoteIndex !== -1) {
+      [randomNotes[0], randomNotes[firstNonEmptyNoteIndex]] = [
+        randomNotes[firstNonEmptyNoteIndex],
+        randomNotes[0],
+      ];
     }
 
     setRandomNotes(randomNotes);
@@ -141,7 +162,15 @@ function App() {
     selectedNumberOfNotes,
     selectedOctaves,
     triggerRegenerate,
+    selectedEmptyNotes,
   ]);
+
+  useEffect(() => {
+    const maxEmptyNotes = Math.max(0, parseInt(selectedNumberOfNotes) - 3);
+    if (parseInt(selectedEmptyNotes) > maxEmptyNotes) {
+      setSelectedEmptyNotes(maxEmptyNotes);
+    }
+  }, [selectedNumberOfNotes, selectedEmptyNotes, setSelectedEmptyNotes]);
 
   const location = useLocation();
 
@@ -255,14 +284,18 @@ function App() {
               id="mixEmptySelect"
               label="Empty notes:"
               options={useMemo(() => {
-                const notes = Array.from(
-                  { length: selectedNumberOfNotes },
+                const maxEmptyNotes = Math.max(
+                  0,
+                  parseInt(selectedNumberOfNotes) - 3
+                );
+                const emptyNotesOptions = Array.from(
+                  { length: maxEmptyNotes + 1 },
                   (_, i) => i
                 );
-                return mapToSelectOptions(notes);
-              }, [])}
-              onChange={() => {}}
-              selectedValue={0}
+                return mapToSelectOptions(emptyNotesOptions);
+              }, [selectedNumberOfNotes])}
+              onChange={setSelectedEmptyNotes}
+              selectedValue={selectedEmptyNotes}
             />
 
             <OctaveSelector
