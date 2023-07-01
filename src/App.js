@@ -131,7 +131,7 @@ function App() {
         selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)];
       randomNotes.push(`${randomNote}${randomOctave}`);
     }
-    randomNotes.push("");
+
     setRandomNotes(randomNotes);
     setCurrentIndex(0);
     incrementCount(selectedNumberOfNotes);
