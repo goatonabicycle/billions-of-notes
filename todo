@@ -6,38 +6,36 @@ Feedback
 - Make the actually generated notes more obvious. Not just on the PianoRoll
 - Create a better sense of [Input] -> [Generated Output]
 - Quarter notes of half notes. 
-- Guitar Tuning. 
 - Guitar mode vs Piano mode. 
 - Invert the colors for the fretboard. Make the playing notes bright and non playable notes dark. To make things more obvious
 
+
+- Group the guitar stuff. Group the input stuff. 
+  - Some mechanism to show/hide these elements.
 - Finish styling the new, improved fretboard.
-- Add randomness for empty notes. "Empty note chance".
-  - These notes should not be played.
+- The ability to dynamically add and remove strings.
+- Support different guitar tunings.
 - A popup explaining the idea and wtf this is.
 - Useful keyboard shortcuts.
   - [Space] for play/pause.
   - [N] = new notes.
   - [R] = Reset.
-  - [S] = Save as midi.
-  - [1 -> 8] could toggle the selected octaves?
+  - [S] = Save as midi.  
 - Generally improve accessibility
 - Save multiple configurations you've enjoyed. Be able to load them up later.
 - Add many more random interactive messages.
 - Palm mute mode.
 - Add more instruments.
   - I should consider adding duration properties to each of these manually
-- Support different tunings.
-- The ability to dynamically add and remove strings.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
 - Add a very small representation of the note names to the drawn title line.
-- Octaves could be grouped meaningfully. Maybe some sort of indication left of the current row title.
 - Make playing chords a possibility?
 - The user should be able to drag notes into other slots that fit the scale by literally clicking and dragging a given note.
 - Allow single note items to be played as if they're tremolo'd.
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
 - More interesting visualizations of the generated notes.
-- Increase possible number of generated notes.
+- Increase possible number of generated notes. (Performance)
 - A zooming mechanism to navigate the notes that have been generated.
 - Cypress for integration level tests.
 - Add a circle of 5ths
