@@ -268,16 +268,6 @@ function App() {
             />
 
             <Select
-              id="instrumentSelect"
-              label="Sounds:"
-              options={useMemo(() => {
-                return mapObjectToSelectOptionsWithValues(getInstruments());
-              }, [])}
-              onChange={setSelectedInstrument}
-              selectedValue={selectedInstrument}
-            />
-
-            <Select
               id="mixEmptySelect"
               label="Empty notes:"
               options={useMemo(() => {
@@ -295,17 +285,17 @@ function App() {
               selectedValue={selectedEmptyNotes}
             />
 
-            <ShowMeSelector
-              selectedPanelsToShow={selectedPanelsToShow}
-              setSelectedPanelsToShow={setSelectedPanelsToShow}
-            />
-
             <OctaveSelector
               selectedOctaves={selectedOctaves}
               setSelectedOctaves={setSelectedOctaves}
             />
           </div>
           <div className="select-grid">
+            <ShowMeSelector
+              selectedPanelsToShow={selectedPanelsToShow}
+              setSelectedPanelsToShow={setSelectedPanelsToShow}
+            />
+
             <Slider
               id="tempoSlider"
               label="Tempo"
@@ -330,6 +320,16 @@ function App() {
               onChange={(e) => {
                 setSelectedVolume(parseInt(e.target.value, 10));
               }}
+            />
+
+            <Select
+              id="instrumentSelect"
+              label="Sounds:"
+              options={useMemo(() => {
+                return mapObjectToSelectOptionsWithValues(getInstruments());
+              }, [])}
+              onChange={setSelectedInstrument}
+              selectedValue={selectedInstrument}
             />
           </div>
 
