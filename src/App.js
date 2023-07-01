@@ -35,6 +35,7 @@ import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesGrid from "./components/NotesGrid";
+import SecondFretboard from "./components/SecondFretboard";
 
 import {
   ShareIcon,
@@ -50,8 +51,6 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import Fretboard from "./components/Fretboard";
-import SecondFretboard from "./components/SecondFretboard";
 
 function App() {
   const { count, incrementCount } = useCount();
