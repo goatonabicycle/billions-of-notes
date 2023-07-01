@@ -7,7 +7,7 @@ const LoopComponent = ({
   notes,
   bpm,
   isPlaying,
-  setCurrentNote,
+
   currentIndex,
   setCurrentIndex,
   midiSoundsRef,
@@ -15,10 +15,6 @@ const LoopComponent = ({
   volume,
 }) => {
   let audioContext = new AudioContext();
-
-  useEffect(() => {
-    setCurrentNote(notes[currentIndex]);
-  }, [notes, currentIndex]);
 
   useEffect(() => {
     if (!setCurrentIndex || notes.length === 0) return;

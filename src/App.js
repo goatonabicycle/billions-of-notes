@@ -8,7 +8,6 @@ import {
   DEFAULT_MODE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
-  DEFAULT_POSITION,
   DEFAULT_FINGER_RANGE,
   KEYS,
   mapToSelectOptions,
@@ -36,7 +35,6 @@ import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesGrid from "./components/NotesGrid";
-import Fretboard from "./components/Fretboard";
 
 import {
   ShareIcon,
@@ -52,6 +50,7 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
+import Guitar from "./components/Guitar";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -68,18 +67,12 @@ function App() {
     "selectedTempo",
     DEFAULT_TEMPO
   );
-  const [selectedPosition, setSelectedPosition] = useLocalStorage(
-    "selectedPosition",
-    DEFAULT_POSITION
-  );
+
   const [selectedVolume, setSelectedVolume] = useLocalStorage(
     "selectedVolume",
     DEFAULT_VOLUME
   );
-  const [selectedFingerRange, setSelectedFingerRange] = useLocalStorage(
-    "selectedFingerRange",
-    DEFAULT_FINGER_RANGE
-  );
+
   const [selectedInstrument, setSelectedInstrument] = useLocalStorage(
     "selectedInstrument",
     DEFAULT_INSTRUMENT
@@ -101,7 +94,6 @@ function App() {
   const [notesInMode, setNotesInMode] = useState([]);
   const [shareButtonText, setShareButtonText] = useState("Share these notes");
   const [randomNotes, setRandomNotes] = useState([]);
-  const [currentNote, setCurrentNote] = useState("");
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [loadedFromUrl, setLoadedFromUrl] = useState(false);
@@ -305,32 +297,6 @@ function App() {
           </div>
           <div className="select-grid">
             <Slider
-              id="positionSlider"
-              label="Preferred position"
-              min="0"
-              max="24"
-              step="1"
-              editable={false}
-              value={selectedPosition}
-              onChange={(e) => {
-                setSelectedPosition(parseInt(e.target.value, 10));
-              }}
-            />
-
-            <Slider
-              id="fingerRangeSlider"
-              label="Finger Range"
-              min="4"
-              max="7"
-              step="1"
-              editable={false}
-              value={selectedFingerRange}
-              onChange={(e) => {
-                setSelectedFingerRange(parseInt(e.target.value, 10));
-              }}
-            />
-
-            <Slider
               id="tempoSlider"
               label="Tempo"
               min="0"
@@ -472,11 +438,9 @@ function App() {
         </div>
       </div>
 
-      <Fretboard
+      <Guitar
         playbackIndex={currentIndex}
         notesToPlay={randomNotes}
-        preferredPosition={selectedPosition}
-        fingerRange={selectedFingerRange}
         scaleNotes={notesInMode}
       />
 
@@ -492,13 +456,11 @@ function App() {
         appElementName="root"
         instruments={[selectedInstrument]} // Add all the chosen instruments here once I know what I want.
       />
-
       <Loop
         midiSoundsRef={midiSoundsRef}
         notes={randomNotes}
         bpm={selectedTempo}
         isPlaying={isPlaying}
-        setCurrentNote={setCurrentNote}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
         instrument={selectedInstrument}

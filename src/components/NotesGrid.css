@@ -5,8 +5,8 @@
   flex-grow: 1;
   font-size: calc(1px + 1.5vmin);
   font-weight: 700;
-  background-color: #FDF7F1;
-  overflow: hidden;  
+  background-color: #fdf7f1;
+  overflow: hidden;
 }
 
 .note-row {
@@ -16,8 +16,8 @@
 }
 
 .note-cell {
-  border-top: 1px solid #BBBBBB;
-  border-bottom: 1px solid #BBBBBB;
+  border-top: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
   text-align: center;
   flex: 1;
   overflow: hidden;
@@ -31,7 +31,7 @@
   color: #a3a3a3;
   font-weight: normal;
   display: flex;
-  border-right:1px solid #282c34;
+  border-right: 1px solid #282c34;
   min-width: 40px;
 }
 
@@ -41,7 +41,8 @@
   }
 }
 
-.note-in-mode-row {}
+.note-in-mode-row {
+}
 
 .note-present {
   background-color: #282c34;
@@ -61,7 +62,8 @@
   background-color: #f3e8ff;
 }
 
-.chosen-note-row {}
+.chosen-note-row {
+}
 
 .note-in-mode {
   font-weight: 1000;
@@ -70,5 +72,5 @@
 }
 
 .filling-note-row .note-cell {
-  background-color: #794bc4;   
+  background-color: #794bc4;
 }

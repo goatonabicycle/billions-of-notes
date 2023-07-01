@@ -2,23 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Fretboard.css";
 import { KEYS } from "../useful";
 
-const SecondFretboard = ({
+const Fretboard = ({
   notesToPlay,
   playbackIndex,
   preferredPosition,
   fingerRange,
   scaleNotes,
+  strings,
 }) => {
-  const strings = [
-    { note: "E", octave: 4 },
-    { note: "B", octave: 3 },
-    { note: "G", octave: 3 },
-    { note: "D", octave: 3 },
-    { note: "A", octave: 2 },
-    { note: "E", octave: 2 },
-    { note: "B", octave: 1 },
-  ];
-
   const specialFrets = [3, 5, 7, 9, 15, 17, 19, 21];
   const doubleDotsFrets = [12, 24];
   // Todo: Add these dots
@@ -173,4 +164,4 @@ const SecondFretboard = ({
   );
 };
 
-export default SecondFretboard;
+export default Fretboard;
