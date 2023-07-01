@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SecondFretboard.css";
+import "./Fretboard.css";
 import { KEYS } from "../useful";
 
 const SecondFretboard = ({

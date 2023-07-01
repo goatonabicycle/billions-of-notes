@@ -35,7 +35,7 @@ import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesGrid from "./components/NotesGrid";
-import SecondFretboard from "./components/SecondFretboard";
+import Fretboard from "./components/Fretboard";
 
 import {
   ShareIcon,
@@ -438,19 +438,13 @@ function App() {
         </div>
       </div>
 
-      <SecondFretboard
+      <Fretboard
         playbackIndex={currentIndex}
         notesToPlay={randomNotes}
         preferredPosition={selectedPosition}
         fingerRange={selectedFingerRange}
         scaleNotes={notesInMode}
       />
-
-      {/* <Fretboard
-        currentNote={currentNote}
-        selectedNotes={randomNotes}
-        scaleNotes={notesInMode}
-      /> */}
 
       <NotesGrid
         notes={randomNotes}
