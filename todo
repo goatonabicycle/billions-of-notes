@@ -1,7 +1,17 @@
 ## Todo
 
+Feedback 
+- Make the distinction between the fretboard and the pianoroll more clear. 
+- Could I add sheet music stuff? 
+- Make the actually generated notes more obvious. Not just on the PianoRoll
+- Create a better sense of [Input] -> [Generated Output]
+- Quarter notes of half notes. 
+- Guitar Tuning. 
+- Guitar mode vs Piano mode. 
+- Invert the colors for the fretboard. Make the playing notes bright and non playable notes dark. To make things more obvious
+
 - Finish styling the new, improved fretboard.
-- Add randomness for empty notes. "Empty note chance" -> [None][Some][Many]
+- Add randomness for empty notes. "Empty note chance".
   - These notes should not be played.
 - A popup explaining the idea and wtf this is.
 - Useful keyboard shortcuts.
@@ -19,7 +29,6 @@
 - Support different tunings.
 - The ability to dynamically add and remove strings.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
-- Animate the line with a dot or something could be fun.
 - Add a very small representation of the note names to the drawn title line.
 - Octaves could be grouped meaningfully. Maybe some sort of indication left of the current row title.
 - Make playing chords a possibility?
@@ -33,16 +42,4 @@
 - Cypress for integration level tests.
 - Add a circle of 5ths
 - Add a vertical piano roll with the notes coming down from the top.
-
-Feedback 
-- Make the distinction between the fretboard and the pianoroll more clear. 
-- Could I add sheet music stuff? 
-- Make the actually generated notes more obvious. Not just on the PianoRoll
-- Create a better sense of Input -> [Generated Output]
-- Quarter notes of half notes. 
-- Guitar Tuning. 
-- Guitar mode vs Piano mode. 
-- Invert the colors for the fretboard. Make the playing notes bright and non playable notes dark. To make things more obvious
-
-  
 

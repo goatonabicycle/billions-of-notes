@@ -2,9 +2,12 @@ import React, { useEffect, useRef } from "react";
 import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
-const LINE_COLOR = "white";
-const FILL_COLOR = "rgba(121, 75, 196, 0.5)"; // "#794bc4"
-const DOT_RADIUS = 0;
+const FILL_COLOUR = "rgba(121, 75, 196, 0.5)";
+const DOT_RADIUS = 5;
+const EDGE_DOT_RADIUS = 0;
+const ANIMATION_DOT_COLOUR = "white";
+const LINE_COLOUR = "white";
+const SECONDARY_LINE_COLOUR = "rgba(121, 75, 196, 0.5)";
 
 const getNoteNumber = (note) => {
   const octave = parseInt(note.slice(-1)) + 1;
@@ -12,76 +15,80 @@ const getNoteNumber = (note) => {
   return octave * 12 + KEYS.indexOf(noteName);
 };
 
-const LineRenderer = ({ notes, tempo, onClick }) => {
+const LineRenderer = ({ notes, onClick, activeNote }) => {
   const canvasRef = useRef(null);
-  const requestRef = useRef(null);
-  const previousTimeRef = useRef(null);
 
-  const renderNotesOnCanvas = (time) => {
-    if (!previousTimeRef.current) {
-      previousTimeRef.current = time;
-    }
+  const calculateLinePath = () => {
+    const noteNumbers = notes.map(getNoteNumber);
+    const minNote = Math.min(...noteNumbers);
+    const maxNote = Math.max(...noteNumbers);
+    const noteRange = maxNote - minNote;
+    const canvas = canvasRef.current;
 
-    if (time - previousTimeRef.current < 100) {
-      requestRef.current = requestAnimationFrame(renderNotesOnCanvas);
-      return;
-    }
+    return noteNumbers.map((noteNumber, i) => ({
+      x:
+        (i / (notes.length - 1)) * (canvas.width - 2 * DOT_RADIUS) + DOT_RADIUS,
+      y:
+        ((noteNumber - minNote) / noteRange) *
+          (canvas.height - 2 * DOT_RADIUS) +
+        DOT_RADIUS,
+    }));
+  };
 
-    if (previousTimeRef.current !== undefined) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
+  const drawLine = (linePath, ctx) => {
+    ctx.beginPath();
+    linePath.forEach((point, i) => {
+      if (i === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
 
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.arc(point.x, point.y, EDGE_DOT_RADIUS, 0, 2 * Math.PI);
+      ctx.fillStyle = FILL_COLOUR;
+      ctx.fill();
+    });
 
-      const noteNumbers = notes.map((note) => getNoteNumber(note));
-      const minNote = Math.min(...noteNumbers);
-      const maxNote = Math.max(...noteNumbers);
-      const noteRange = maxNote - minNote;
+    // Go back to the first point
+    ctx.lineTo(linePath[0].x, linePath[0].y);
+    ctx.strokeStyle = LINE_COLOUR;
+    ctx.stroke();
+  };
 
-      const linePath = noteNumbers.map((noteNumber, i) => {
-        const y = ((noteNumber - minNote) / noteRange) * canvas.height;
-        const x = (i / (notes.length - 1)) * canvas.width;
-        return { x, y };
-      });
-
+  const drawSecondaryLines = (linePath, ctx) => {
+    ctx.strokeStyle = SECONDARY_LINE_COLOUR;
+    linePath.slice(1).forEach((point) => {
       ctx.beginPath();
       ctx.moveTo(linePath[0].x, linePath[0].y);
-
-      for (let i = 1; i < linePath.length; i++) {
-        const currentPoint = linePath[i];
-        ctx.lineTo(currentPoint.x, currentPoint.y);
-
-        ctx.arc(currentPoint.x, currentPoint.y, DOT_RADIUS, 0, 2 * Math.PI);
-        ctx.fillStyle = FILL_COLOR;
-        ctx.fill();
-      }
-
-      ctx.strokeStyle = LINE_COLOR;
+      ctx.lineTo(point.x, point.y);
       ctx.stroke();
+    });
+  };
 
-      // Draw lines from the first point to all other points
-      for (let i = 1; i < linePath.length; i++) {
-        const currentPoint = linePath[i];
-        ctx.beginPath();
-        ctx.moveTo(linePath[0].x, linePath[0].y);
-        ctx.lineTo(currentPoint.x, currentPoint.y);
-        ctx.strokeStyle = LINE_COLOR;
-        ctx.stroke();
-      }
+  const drawAnimationDot = (dotPosition, ctx) => {
+    if (dotPosition) {
+      ctx.beginPath();
+      ctx.arc(dotPosition.x, dotPosition.y, DOT_RADIUS, 0, 2 * Math.PI);
+      ctx.fillStyle = ANIMATION_DOT_COLOUR;
+      ctx.fill();
+    }
+  };
+
+  const animate = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const linePath = calculateLinePath();
+    if (linePath.length > 0) {
+      drawLine(linePath, ctx);
+      drawSecondaryLines(linePath, ctx);
+      drawAnimationDot(linePath[activeNote], ctx);
     }
 
-    previousTimeRef.current = time;
-    requestRef.current = requestAnimationFrame(renderNotesOnCanvas);
+    requestAnimationFrame(animate);
   };
 
   useEffect(() => {
-    requestRef.current = requestAnimationFrame(renderNotesOnCanvas);
-    return () => {
-      cancelAnimationFrame(requestRef.current);
-      previousTimeRef.current = null;
-    };
-  }, [notes]);
-
+    animate();
+  }, [notes, activeNote]);
   return (
     <div
       onClick={onClick}

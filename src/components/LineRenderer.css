@@ -1,6 +1,8 @@
 .line-container {
-  text-align: center;    
-  padding:10px;             
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
 }
-  
-.line-canvas {}
+
+.line-canvas {
+}

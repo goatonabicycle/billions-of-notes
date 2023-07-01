@@ -206,6 +206,7 @@ function App() {
               }}
               notes={randomNotes}
               tempo={selectedTempo}
+              activeNote={currentIndex}
             />
             <Counter count={count} />
           </div>
