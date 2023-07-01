@@ -36,6 +36,7 @@ import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesGrid from "./components/NotesGrid";
 import Guitar from "./components/Guitar";
+import BassGuitar from "./components/BassGuitar";
 import ShowMeSelector from "./components/ShowMeSelector";
 
 import {
@@ -473,7 +474,11 @@ function App() {
         )}
 
         {selectedPanelsToShow.includes("Bass Guitar") && (
-          <div>The Bass Guitar is coming soon!</div>
+          <BassGuitar
+            playbackIndex={currentIndex}
+            notesToPlay={randomNotes}
+            scaleNotes={notesInMode}
+          />
         )}
       </div>
       <MIDISounds

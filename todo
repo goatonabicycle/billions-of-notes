@@ -1,17 +1,18 @@
 ## Todo
 
 Feedback 
-- Make the distinction between the fretboard and the pianoroll more clear. 
+x Make the distinction between the fretboard and the pianoroll more clear. 
 - Could I add sheet music stuff? 
 x Make the actually generated notes more obvious. Not just on the PianoRoll
-- Create a better sense of [Input] -> [Generated Output]
-- Quarter notes of half notes. 
-- Guitar mode vs Piano mode. 
+x Create a better sense of [Input] -> [Generated Output]
+? Quarter notes of half notes. 
+x Guitar mode vs Piano mode. 
 - Invert the colors for the fretboard. Make the playing notes bright and non playable notes dark. To make things more obvious
 
 
-- Group the guitar stuff. Group the input stuff. 
-  - Some mechanism to show/hide these elements.
+x Group the guitar stuff. Group the input stuff. 
+  x Some mechanism to show/hide these elements.
+  
 - Finish styling the new, improved fretboard.
 - The ability to dynamically add and remove strings.
 - Support different guitar tunings.
