@@ -47,7 +47,7 @@ const LineRenderer = ({ notes, onClick, activeNote }) => {
     });
 
     // Go back to the first point
-    ctx.lineTo(linePath[0].x, linePath[0].y);
+    if (notes.length <= 6) ctx.lineTo(linePath[0].x, linePath[0].y);
     ctx.strokeStyle = LINE_COLOUR;
     ctx.stroke();
   };
