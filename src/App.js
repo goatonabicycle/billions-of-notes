@@ -8,7 +8,6 @@ import {
   DEFAULT_MODE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
-  DEFAULT_FINGER_RANGE,
   KEYS,
   mapToSelectOptions,
   DEFAULT_OCTAVES,
@@ -18,6 +17,7 @@ import {
   INSTRUMENTS,
   DEFAULT_VOLUME,
   shuffleArray,
+  DEFAULT_PANELS_TO_SHOW,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -35,6 +35,8 @@ import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesGrid from "./components/NotesGrid";
+import Guitar from "./components/Guitar";
+import ShowMeSelector from "./components/ShowMeSelector";
 
 import {
   ShareIcon,
@@ -50,7 +52,6 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import Guitar from "./components/Guitar";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -84,6 +85,10 @@ function App() {
   const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
     "selectedOctaves",
     DEFAULT_OCTAVES
+  );
+  const [selectedPanelsToShow, setSelectedPanelsToShow] = useLocalStorage(
+    "selectedPanelsToShow",
+    DEFAULT_PANELS_TO_SHOW
   );
   const [selectedEmptyNotes, setSelectedEmptyNotes] = useLocalStorage(
     "selectedEmptyNotes",
@@ -290,6 +295,11 @@ function App() {
               selectedValue={selectedEmptyNotes}
             />
 
+            <ShowMeSelector
+              selectedPanelsToShow={selectedPanelsToShow}
+              setSelectedPanelsToShow={setSelectedPanelsToShow}
+            />
+
             <OctaveSelector
               selectedOctaves={selectedOctaves}
               setSelectedOctaves={setSelectedOctaves}
@@ -438,19 +448,34 @@ function App() {
         </div>
       </div>
 
-      <Guitar
-        playbackIndex={currentIndex}
-        notesToPlay={randomNotes}
-        scaleNotes={notesInMode}
-      />
+      <div className="show-me-panels">
+        {selectedPanelsToShow.includes("Guitar") && (
+          <Guitar
+            playbackIndex={currentIndex}
+            notesToPlay={randomNotes}
+            scaleNotes={notesInMode}
+          />
+        )}
+        {selectedPanelsToShow.includes("Piano Roll") && (
+          <div className="doodle-border center">
+            <>{"Piano Roll"}</>
+            <NotesGrid
+              notes={randomNotes}
+              notesInMode={notesInMode}
+              octaveRange={selectedOctaves}
+              activeIndex={currentIndex}
+            />
+          </div>
+        )}
 
-      <NotesGrid
-        notes={randomNotes}
-        notesInMode={notesInMode}
-        octaveRange={selectedOctaves}
-        activeIndex={currentIndex}
-      />
+        {selectedPanelsToShow.includes("Piano") && (
+          <div>The Piano is coming soon!</div>
+        )}
 
+        {selectedPanelsToShow.includes("Bass Guitar") && (
+          <div>The Bass Guitar is coming soon!</div>
+        )}
+      </div>
       <MIDISounds
         ref={midiSoundsRef}
         appElementName="root"

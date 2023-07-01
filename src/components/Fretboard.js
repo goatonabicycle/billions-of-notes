@@ -80,10 +80,12 @@ const Fretboard = ({
         return currDistance < prevDistance ? curr : prev;
       });
     } else {
-      closestNote = fretboard
+      let potentialNotes = fretboard
         .flat()
-        .filter((note) => note.note === currentNote)
-        .reduce((prev, curr) => {
+        .filter((note) => note.note === currentNote);
+
+      if (potentialNotes.length > 0) {
+        closestNote = potentialNotes.reduce((prev, curr) => {
           const prevDistance =
             Math.abs(prev.stringIndex - currentPosition.stringIndex) +
             Math.abs(prev.fret - currentPosition.fret);
@@ -92,11 +94,12 @@ const Fretboard = ({
             Math.abs(curr.fret - currentPosition.fret);
           return currDistance < prevDistance ? curr : prev;
         });
+      }
     }
 
     updateCurrentPosition({
-      stringIndex: closestNote.stringIndex,
-      fret: closestNote.fret,
+      stringIndex: closestNote && closestNote.stringIndex,
+      fret: closestNote && closestNote.fret,
     });
   }, [fretboard, notesToPlay, playbackIndex, preferredPosition]);
 
