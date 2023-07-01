@@ -2,19 +2,19 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  color:#282c34; 
+  color: #282c34;
   min-height: 100vh;
   align-items: left;
   justify-content: flex-start;
   font-size: calc(10px + 2vmin);
-  background-color: #282c34; 
+  background-color: #282c34;
 }
 
 .App-inputs {
   display: flex;
-  flex-wrap: wrap;     
-  font-size:0.5em;
-  color:#f3f5f7; 
+  flex-wrap: wrap;
+  font-size: 0.5em;
+  color: #f3f5f7;
   max-height: 1000px;
   overflow: hidden;
   transition: opacity 1s, transform 1s, max-height 1s ease-in-out;
@@ -27,66 +27,64 @@
   transition: opacity 1s, transform 1s, max-height 1s ease-in-out;
 }
 
-.App-inputs .title {    
+.App-inputs .title {
   flex: 1 0 10%;
   font-size: 3em;
 }
 
-.App-inputs .tiny-info {    
-  display: grid; 
+.App-inputs .tiny-info {
+  display: grid;
   font-size: 1em;
 }
 
-.App-inputs .selects {  
-  flex: 1 0 50%;    
-  flex-wrap: wrap;  
+.App-inputs .selects {
+  flex: 1 0 50%;
+  flex-wrap: wrap;
 }
 
 .App-inputs .selects .select-grid {
   display: flex;
-  align-items: center;    
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;  
-  align-content: space-around;    
+  flex-wrap: wrap;
+  align-content: space-around;
 }
 
-.App-inputs .buttons {    
-  padding-top:20px;
-  display: flex;  
-  flex-wrap: wrap;  
-  align-items: center;    
+.App-inputs .buttons {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
 }
 
-.App-inputs .messages {    
-  padding-top:20px;  
-  align-items: center;    
+.App-inputs .messages {
+  padding-top: 20px;
+  align-items: center;
   justify-content: center;
 }
 
 @media (max-width: 600px) {
-  .App-inputs .buttons {    
+  .App-inputs .buttons {
     display: flex;
     flex-wrap: wrap;
-  }  
+  }
 }
 
-.MIDISounds
-{
+.MIDISounds {
   display: none;
   visibility: hidden;
 }
 
-#debug
-{
+#debug {
   position: fixed;
-  top:0px;
-  right:0px;
-  border:1px solid red;
-  font-size:0.5em;
+  top: 0px;
+  right: 0px;
+  border: 1px solid red;
+  font-size: 0.5em;
 }
 
-h1 { 
+h1 {
   text-align: center;
   display: block;
   font-size: 1em;
@@ -95,37 +93,29 @@ h1 {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: normal;
-  font-style: italic;  
+  font-style: italic;
 }
 
-.fun-things {  
+.fun-things {
   font-size: 0.4em;
 }
 
 .slider {
-  width: 150px;  
-  color: #794bc4;    
+  width: 150px;
+  color: #794bc4;
   transition: border-color 0.3s ease;
-  height:49px;  
+  height: 49px;
 }
 
-.sliderWrapper
-{
+.sliderWrapper {
   display: flex;
   color: #ffffff;
   padding: 2px;
-  text-align: center;   
+  text-align: center;
 }
 
-.fun-info
-{
-  display: flex;  
-}
-
-.current-note {
-  padding: 10px 0px 10px 0px;
-  text-align: center;  
-  font-size: 1.5em;
+.fun-info {
+  display: flex;
 }
 
 .total-notes {
@@ -133,22 +123,16 @@ h1 {
   font-size: 0.6em;
 }
 
-.notes-used {  
-  font-size: 0.9em;
-  text-align: center;
-}
-
-.message-box
-{
+.message-box {
   text-align: center;
 }
 
 .tempo-input {
-  width:1ch;
-  border:none !important;
+  width: 1ch;
+  border: none !important;
   padding: 0px;
   margin: 0px;
   background-color: #282c34;
-  color:#f3f5f7;   
-  font-family: 'Short Stack', cursive, sans-serif;  
+  color: #f3f5f7;
+  font-family: "Short Stack", cursive, sans-serif;
 }

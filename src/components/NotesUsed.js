@@ -1,11 +1,19 @@
 import React from "react";
+import "./NotesUsed.css";
 
-const NotesUsed = ({ notesUsed }) => {
+const NotesUsed = ({ randomNotes, currentIndex }) => {
   return (
     <div className="notes-used">
-      {notesUsed.map((note, i) => (
-        <span key={i}>{note} </span>
-      ))}
+      {randomNotes.map((note, i) => {
+        const isCurrentNote = i === currentIndex;
+        return (
+          <span
+            key={i}
+            className={isCurrentNote ? "note active" : "note"}>
+            {note}
+          </span>
+        );
+      })}
     </div>
   );
 };

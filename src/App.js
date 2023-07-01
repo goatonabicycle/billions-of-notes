@@ -272,7 +272,7 @@ function App() {
 
             <Select
               id="instrumentSelect"
-              label="Instrument:"
+              label="Sounds:"
               options={useMemo(() => {
                 return mapObjectToSelectOptionsWithValues(getInstruments());
               }, [])}
@@ -439,11 +439,6 @@ function App() {
           </div>
 
           <div className="messages">
-            <NotesUsed notesUsed={notesInMode} />
-
-            <div className="current-note">
-              <span className="rainbow-background ">{currentNote}</span>
-            </div>
             <MessageBox
               showWhen={selectedTempo === 0}
               message={
@@ -468,6 +463,12 @@ function App() {
               message={"That's an insane amount of tempo!?! Can you handle it?"}
             />
           </div>
+
+          <NotesUsed
+            notesInMode={notesInMode}
+            randomNotes={randomNotes}
+            currentIndex={currentIndex}
+          />
         </div>
       </div>
 

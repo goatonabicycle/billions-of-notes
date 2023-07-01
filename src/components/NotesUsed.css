@@ -1,0 +1,21 @@
+.notes-used {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1em;
+  align-content: space-around;
+  text-align: center;
+  justify-content: center;
+  padding: 0px 0px 0px 0px;
+}
+
+.notes-used .note {
+  border: 1px solid #794bc4;
+  padding: 5px;
+  width: 50px;
+}
+
+.notes-used .active {
+  font-weight: bold;
+  box-shadow: rgba(121, 75, 196, 0.56) 0px 0px 20px 10px;
+  text-decoration: underline;
+}
