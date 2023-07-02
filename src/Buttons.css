@@ -1,5 +1,4 @@
-button,
-.rainbow-button {
+button.rainbow-button {
   background: transparent;
   cursor: pointer;
   -moz-user-select: text;
@@ -10,8 +9,7 @@ button,
   transition: all 0.5s ease;
 }
 
-button:hover,
-.rainbow-button:hover {
+button.rainbow-button:hover {
   border-color: #282c34;
   border-radius: 12px;
   animation-name: rainbow-buttons;
@@ -65,4 +63,17 @@ button:hover,
 
 .icon-button-text {
   padding: 5px;
+}
+
+.source-code {
+  font-size: 0.6em;
+}
+
+.buy-a-coffee {
+  border-style: none !important;
+  border: none;
+  font-size: 0.6em !important;
+  text-decoration: underline;
+  background: none;
+  padding: 0px;
 }

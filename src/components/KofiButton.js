@@ -18,11 +18,11 @@ const KofiButton = () => {
 
   return (
     <>
-      <IconButton
-        onClick={openModal}
-        text="Buy me a coffee"
-        icon={BuyCoffeeIcon}
-      />
+      <button
+        className="buy-a-coffee"
+        onClick={openModal}>
+        Buy me a coffee
+      </button>
       {modalIsOpen && (
         <div
           className="modalOverlay"

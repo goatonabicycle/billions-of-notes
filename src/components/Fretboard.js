@@ -119,7 +119,7 @@ const Fretboard = ({
     <div className="fretboard-container">
       {hasTuningChanged && (
         <button
-          className="reset-button"
+          className="rainbow-button reset-button"
           onClick={() =>
             setSelectedTuning(JSON.parse(JSON.stringify(initialTuning)))
           }>

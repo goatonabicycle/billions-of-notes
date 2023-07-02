@@ -206,6 +206,7 @@ function App() {
     <div className="App">
       <button
         style={{ fontSize: "11px" }}
+        className="rainbow-button"
         onClick={() => setIsInputHidden(!isInputHidden)}>
         {isInputHidden ? "Show Inputs" : "Hide Inputs"}
       </button>
@@ -235,6 +236,18 @@ function App() {
               activeNote={currentIndex}
             />
             <Counter count={count} />
+
+            <div className="tiny-links">
+              <a
+                href="https://github.com/goatonabicycle/billions-of-notes"
+                target="_blank"
+                className="source-code"
+                rel="noreferrer">
+                Source code
+              </a>
+              {"|"}
+              <KofiButton />
+            </div>
           </div>
         </div>
         <div className="selects">
@@ -400,19 +413,6 @@ function App() {
               icon={SaveIcon}
               text="Save as MIDI"
             />
-
-            <a
-              className="rainbow-button"
-              href="https://github.com/goatonabicycle/billions-of-notes"
-              target="_blank"
-              rel="noreferrer">
-              <IconButton
-                icon={CodeIcon}
-                text="Source code"
-              />
-            </a>
-
-            <KofiButton />
           </div>
 
           <div className="messages">
@@ -444,6 +444,7 @@ function App() {
           <NotesUsed
             notesInMode={notesInMode}
             randomNotes={randomNotes}
+            setRandomNotes={setRandomNotes}
             currentIndex={currentIndex}
           />
         </div>

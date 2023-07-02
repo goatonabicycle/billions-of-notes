@@ -1,7 +1,7 @@
 import React from "react";
 import "./NotesUsed.css";
 
-const NotesUsed = ({ randomNotes, currentIndex }) => {
+const NotesUsed = ({ randomNotes, currentIndex, setRandomNotes }) => {
   return (
     <div className="notes-used">
       {randomNotes.map((note, i) => {

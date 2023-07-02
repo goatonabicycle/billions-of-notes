@@ -123,6 +123,10 @@ h1 {
   font-size: 0.6em;
 }
 
+.total-notes .number {
+  font-size: 1.4em;
+}
+
 .message-box {
   text-align: center;
 }
@@ -139,4 +143,11 @@ h1 {
 
 .show-me-panels {
   text-align: center;
+}
+
+.tiny-links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
 }
