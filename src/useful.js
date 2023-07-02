@@ -65,6 +65,15 @@ export const INITIAL_GUITAR_TUNING = [
   { note: "F#", octave: 1 },
 ];
 
+export const INITIAL_BASS_TUNING = [
+  { note: "G", octave: 2 },
+  { note: "D", octave: 2 },
+  { note: "A", octave: 1 },
+  { note: "E", octave: 1 },
+  { note: "B", octave: 0 },
+  { note: "C", octave: 0 },
+];
+
 export const mapToSelectOptions = (items) => {
   return items.map((item) => ({
     label: item,

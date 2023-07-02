@@ -5,6 +5,7 @@ import {
   DEFAULT_POSITION,
   DEFAULT_FINGER_RANGE,
   DEFAULT_NUMBER_OF_BASS_STRINGS,
+  INITIAL_BASS_TUNING,
 } from "../useful";
 
 import Slider from "../components/Slider";
@@ -28,14 +29,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
   const [selectedBassTuning, setSelectedBassTuning] = useLocalStorage(
     "selectedBassTuning",
-    [
-      { note: "G", octave: 2 },
-      { note: "D", octave: 2 },
-      { note: "A", octave: 1 },
-      { note: "E", octave: 1 },
-      { note: "B", octave: 0 },
-      { note: "C", octave: 0 },
-    ]
+    INITIAL_BASS_TUNING
   );
 
   let strings = selectedBassTuning.slice(0, selectedNumberOfBassStrings);
@@ -93,6 +87,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
         strings={strings}
         selectedTuning={selectedBassTuning}
         setSelectedTuning={setSelectedBassTuning}
+        initialTuning={INITIAL_BASS_TUNING}
       />
     </div>
   );

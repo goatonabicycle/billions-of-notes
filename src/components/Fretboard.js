@@ -17,9 +17,13 @@ const Fretboard = ({
   strings,
   selectedTuning,
   setSelectedTuning,
+  initialTuning,
 }) => {
   const specialFrets = [3, 5, 7, 9, 15, 17, 19, 21];
   const doubleDotsFrets = [12, 24];
+
+  const hasTuningChanged =
+    JSON.stringify(selectedTuning) !== JSON.stringify(initialTuning);
 
   const updateCurrentPosition = (newPosition) => {
     setCurrentPosition(newPosition);
@@ -55,7 +59,7 @@ const Fretboard = ({
       }))
     );
     setFretboard(newFretboard);
-  }, [strings]);
+  }, [strings, selectedTuning]);
 
   useEffect(() => {
     const currentNote = notesToPlay[playbackIndex];
@@ -115,6 +119,15 @@ const Fretboard = ({
 
   return (
     <div className="fretboard-container">
+      {hasTuningChanged && (
+        <button
+          className="reset-button"
+          onClick={() =>
+            setSelectedTuning(JSON.parse(JSON.stringify(initialTuning)))
+          }>
+          Reset
+        </button>
+      )}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}>

@@ -5,6 +5,7 @@ import {
   DEFAULT_POSITION,
   DEFAULT_FINGER_RANGE,
   DEFAULT_NUMBER_OF_GUITAR_STRINGS,
+  INITIAL_GUITAR_TUNING,
 } from "../useful";
 
 import Slider from "../components/Slider";
@@ -28,16 +29,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
   const [selectedTuning, setSelectedTuning] = useLocalStorage(
     "selectedTuning",
-    [
-      { note: "E", octave: 4 },
-      { note: "B", octave: 3 },
-      { note: "G", octave: 3 },
-      { note: "D", octave: 3 },
-      { note: "A", octave: 2 },
-      { note: "E", octave: 2 },
-      { note: "B", octave: 1 },
-      { note: "F#", octave: 1 },
-    ]
+    INITIAL_GUITAR_TUNING
   );
 
   let strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
@@ -95,6 +87,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
         strings={strings}
         selectedTuning={selectedTuning}
         setSelectedTuning={setSelectedTuning}
+        initialTuning={INITIAL_GUITAR_TUNING}
       />
     </div>
   );
