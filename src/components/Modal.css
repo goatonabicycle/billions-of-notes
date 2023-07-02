@@ -14,5 +14,10 @@
 .modal-content {
   background-color: #282c34;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   border-radius: 8px;
 }
