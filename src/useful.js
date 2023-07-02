@@ -9,6 +9,7 @@ export const DEFAULT_FINGER_RANGE = 6;
 export const DEFAULT_VOLUME = 1;
 export const DEFAULT_PANELS_TO_SHOW = ["Guitar"];
 export const DEFAULT_NUMBER_OF_GUITAR_STRINGS = 6;
+export const DEFAULT_NUMBER_OF_BASS_STRINGS = 4;
 
 export const KEYS = [
   "C",

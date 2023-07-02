@@ -6,8 +6,10 @@ import {
   DEFAULT_FINGER_RANGE,
   DEFAULT_NUMBER_OF_GUITAR_STRINGS,
 } from "../useful";
+
 import Slider from "../components/Slider";
 import Fretboard from "./Fretboard";
+
 import "./Guitar.css";
 
 const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
