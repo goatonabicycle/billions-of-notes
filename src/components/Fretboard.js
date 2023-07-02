@@ -48,7 +48,7 @@ const Fretboard = ({
       }))
     );
     setFretboard(newFretboard);
-  }, []);
+  }, [strings]);
 
   useEffect(() => {
     const currentNote = notesToPlay[playbackIndex];

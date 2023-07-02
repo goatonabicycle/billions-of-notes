@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import { useLocalStorage } from "../useLocalStorage";
-import { DEFAULT_POSITION, DEFAULT_FINGER_RANGE } from "../useful";
+import {
+  DEFAULT_POSITION,
+  DEFAULT_FINGER_RANGE,
+  DEFAULT_NUMBER_OF_GUITAR_STRINGS,
+} from "../useful";
 import Slider from "../components/Slider";
 import Fretboard from "./Fretboard";
 import "./Guitar.css";
@@ -17,7 +21,10 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
     DEFAULT_FINGER_RANGE
   );
 
-  const strings = [
+  const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] =
+    useLocalStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
+
+  let strings = [
     { note: "E", octave: 4 },
     { note: "B", octave: 3 },
     { note: "G", octave: 3 },
@@ -25,7 +32,10 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
     { note: "A", octave: 2 },
     { note: "E", octave: 2 },
     { note: "B", octave: 1 },
+    { note: "F#", octave: 1 },
   ];
+
+  strings = strings.slice(0, selectedNumberOfGuitarStrings);
 
   return (
     <div className="guitar-container doodle-border">
@@ -55,6 +65,19 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           value={selectedFingerRange}
           onChange={(e) => {
             setSelectedFingerRange(parseInt(e.target.value, 10));
+          }}
+        />
+
+        <Slider
+          id="numberOfGuitarStringsSlider"
+          label="Number of Strings"
+          min="6"
+          max="8"
+          step="1"
+          editable={false}
+          value={selectedNumberOfGuitarStrings}
+          onChange={(e) => {
+            setSelectedNumberOfGuitarStrings(parseInt(e.target.value, 10));
           }}
         />
       </div>
