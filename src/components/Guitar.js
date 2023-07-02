@@ -49,7 +49,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
       <div className="guitar-inputs">
         <Slider
           id="positionSlider"
-          label="Preferred position"
+          label="Play from"
           min="0"
           max="24"
           step="1"
