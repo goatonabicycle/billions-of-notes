@@ -26,18 +26,21 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
   const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] =
     useLocalStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
 
-  let strings = [
-    { note: "E", octave: 4 },
-    { note: "B", octave: 3 },
-    { note: "G", octave: 3 },
-    { note: "D", octave: 3 },
-    { note: "A", octave: 2 },
-    { note: "E", octave: 2 },
-    { note: "B", octave: 1 },
-    { note: "F#", octave: 1 },
-  ];
+  const [selectedTuning, setSelectedTuning] = useLocalStorage(
+    "selectedTuning",
+    [
+      { note: "E", octave: 4 },
+      { note: "B", octave: 3 },
+      { note: "G", octave: 3 },
+      { note: "D", octave: 3 },
+      { note: "A", octave: 2 },
+      { note: "E", octave: 2 },
+      { note: "B", octave: 1 },
+      { note: "F#", octave: 1 },
+    ]
+  );
 
-  strings = strings.slice(0, selectedNumberOfGuitarStrings);
+  let strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
 
   return (
     <div className="guitar-container doodle-border">
@@ -90,6 +93,8 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
         fingerRange={selectedFingerRange}
         scaleNotes={scaleNotes}
         strings={strings}
+        selectedTuning={selectedTuning}
+        setSelectedTuning={setSelectedTuning}
       />
     </div>
   );

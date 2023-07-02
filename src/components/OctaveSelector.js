@@ -2,6 +2,8 @@ import React from "react";
 
 import "./OctaveSelector.css";
 
+import { OCTAVES } from "../useful";
+
 const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
   const handleChange = (event) => {
     const value = parseInt(event.target.value);
@@ -21,7 +23,7 @@ const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
     <div className="octave-selector">
       <label>Octaves:</label>
       <div className="doodle-border">
-        {[0, 1, 2, 3, 4, 5].map((octave) => (
+        {OCTAVES.map((octave) => (
           <span
             className="octave-selector-item"
             key={octave}>

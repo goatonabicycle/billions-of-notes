@@ -6,13 +6,21 @@
 
 .fretboard {
   position: relative;
-  font-size: 0.8em;
+  font-size: calc(4px + 2vmin);
+  display: flex;
+  flex-direction: column;
 }
 
 .string {
   display: flex;
   justify-content: space-between;
   position: relative;
+}
+
+.tuning-adjuster {
+  border: 1px solid #794bc4 !important;
+  cursor: pointer;
+  box-shadow: rgba(121, 75, 196, 1) 0px 0px 5px 0px;
 }
 
 .fretboard .note,
@@ -25,7 +33,6 @@
 
   font-size: 0.6em;
   font-weight: normal;
-  cursor: pointer;
 
   margin: 0px;
   min-width: 10px;

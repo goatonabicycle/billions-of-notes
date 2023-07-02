@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
+
+import { KEYS, OCTAVES } from "../useful";
+
+import Modal from "./Modal.js";
+import Select from "./Select";
+import { ChangeTuningIcon } from "./Icons";
+
 import "./Fretboard.css";
-import { KEYS } from "../useful";
 
 const Fretboard = ({
   notesToPlay,
@@ -9,10 +15,11 @@ const Fretboard = ({
   fingerRange,
   scaleNotes,
   strings,
+  selectedTuning,
+  setSelectedTuning,
 }) => {
   const specialFrets = [3, 5, 7, 9, 15, 17, 19, 21];
   const doubleDotsFrets = [12, 24];
-  // Todo: Add these dots
 
   const updateCurrentPosition = (newPosition) => {
     setCurrentPosition(newPosition);
@@ -103,8 +110,45 @@ const Fretboard = ({
     });
   }, [fretboard, notesToPlay, playbackIndex, preferredPosition]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalStringIndex, setModalStringIndex] = useState(null);
+
   return (
     <div className="fretboard-container">
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}>
+        <Select
+          id="noteSelect"
+          label="Note"
+          options={KEYS.map((key) => ({ value: key, label: key }))}
+          selectedValue={selectedTuning[modalStringIndex]?.note || ""}
+          onChange={(newNote) => {
+            setSelectedTuning((prevTuning) => {
+              const newTuning = [...prevTuning];
+              newTuning[modalStringIndex].note = newNote;
+              return newTuning;
+            });
+          }}
+        />
+        <Select
+          id="octaveSelect"
+          label="Octave"
+          options={OCTAVES.map((octave) => ({
+            value: octave,
+            label: octave.toString(),
+          }))}
+          selectedValue={selectedTuning[modalStringIndex]?.octave || ""}
+          onChange={(newOctave) => {
+            setSelectedTuning((prevTuning) => {
+              const newTuning = [...prevTuning];
+              newTuning[modalStringIndex].octave = parseInt(newOctave, 10);
+              return newTuning;
+            });
+          }}
+        />
+      </Modal>
+
       <div
         className="fretboard"
         style={{
@@ -114,9 +158,9 @@ const Fretboard = ({
             getPreferredFretRange().startFret +
             1,
         }}>
-        {fretboard.map((string, i) => (
+        {fretboard.map((string, stringIndex) => (
           <div
-            key={i}
+            key={stringIndex}
             className="string"
             style={{
               "--preferred-start": getPreferredFretRange().startFret,
@@ -146,7 +190,14 @@ const Fretboard = ({
               return (
                 <div
                   key={j}
-                  className={className}>
+                  className={className + (j === 0 ? " tuning-adjuster" : "")}
+                  onClick={() => {
+                    if (j === 0) {
+                      setModalStringIndex(stringIndex);
+                      setIsModalOpen(true);
+                    }
+                  }}>
+                  {j === 0 && ChangeTuningIcon}
                   {note.note}
                 </div>
               );

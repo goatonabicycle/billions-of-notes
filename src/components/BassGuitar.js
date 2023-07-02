@@ -26,15 +26,19 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
   const [selectedNumberOfBassStrings, setSelectedNumberOfBassStrings] =
     useLocalStorage("selectedBassStrings", DEFAULT_NUMBER_OF_BASS_STRINGS);
 
-  let strings = [
-    { note: "G", octave: 2 },
-    { note: "D", octave: 2 },
-    { note: "A", octave: 1 },
-    { note: "E", octave: 1 },
-    { note: "B", octave: 0 },
-  ];
+  const [selectedBassTuning, setSelectedBassTuning] = useLocalStorage(
+    "selectedBassTuning",
+    [
+      { note: "G", octave: 2 },
+      { note: "D", octave: 2 },
+      { note: "A", octave: 1 },
+      { note: "E", octave: 1 },
+      { note: "B", octave: 0 },
+      { note: "C", octave: 0 },
+    ]
+  );
 
-  strings = strings.slice(0, selectedNumberOfBassStrings);
+  let strings = selectedBassTuning.slice(0, selectedNumberOfBassStrings);
 
   return (
     <div className="guitar-container doodle-border">
@@ -71,7 +75,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           id="numberOfBassStringsSlider"
           label="Number of Strings"
           min="4"
-          max="5" // This could be 6. But bass guitars are tuned weirdly. They don't just simply get an extra low note. I'll need to support custom tunings first.
+          max="6" // This could be 6. But bass guitars are tuned weirdly. They don't just simply get an extra low note. I'll need to support custom tunings first.
           step="1"
           editable={false}
           value={selectedNumberOfBassStrings}
@@ -87,6 +91,8 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
         fingerRange={selectedFingerRange}
         scaleNotes={scaleNotes}
         strings={strings}
+        selectedTuning={selectedBassTuning}
+        setSelectedTuning={setSelectedBassTuning}
       />
     </div>
   );

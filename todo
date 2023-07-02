@@ -7,14 +7,16 @@ x Make the actually generated notes more obvious. Not just on the PianoRoll
 x Create a better sense of [Input] -> [Generated Output]
 ? Quarter notes of half notes. 
 x Guitar mode vs Piano mode. 
-- Invert the colors for the fretboard. Make the playing notes bright and non playable notes dark. To make things more obvious
-
-
-x Group the guitar stuff. Group the input stuff. 
-  x Some mechanism to show/hide these elements.
-  
+- Add more modes.
 - Finish styling the new, improved fretboard.
-- The ability to dynamically add and remove strings.
+  - Invert the colors for the fretboard maybe? Make the playing notes bright and non playable notes dark. To make things more obvious
+  
+Guitar component: Make it possible to change the number of frets you care about.
+Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.
+
+- There's definitely some sort of audio rendering bug at play. 
+- Fix the sharing mechanism. 
+x The ability to dynamically add and remove strings.
 - Support different guitar tunings.
 - A popup explaining the idea and wtf this is.
 - Useful keyboard shortcuts.

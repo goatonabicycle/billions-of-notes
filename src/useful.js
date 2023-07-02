@@ -26,6 +26,8 @@ export const KEYS = [
   "B",
 ];
 
+export const OCTAVES = [1, 2, 3, 4, 5];
+
 export const FLAT_TO_SHARP = {
   Cb: "B",
   Db: "C#",
