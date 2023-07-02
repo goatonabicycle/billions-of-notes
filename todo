@@ -1,44 +1,32 @@
 ## Todo
 
-Feedback 
-x Make the distinction between the fretboard and the pianoroll more clear. 
-- Could I add sheet music stuff? 
-x Make the actually generated notes more obvious. Not just on the PianoRoll
-x Create a better sense of [Input] -> [Generated Output]
-? Quarter notes of half notes. 
-x Guitar mode vs Piano mode. 
+# Do mode:
+- Fretboard items: Make it possible to change the number of frets you care about.
+- Move the code and kofi stuff to the footer.
+- A button with a modal explaining the idea and wtf this is.
+  - Write a bunch of words for this.
+- Fix the sharing mechanism. 
 - Add more modes.
+- Add more instruments.
+  - Does it make sense for the individual elements to have custom duration properties?
+- Generally improve accessibility. Tab through the elements should be clearly visible and flow well.
+- Palm mute mode. The audio engine can create this effect. See the Loop Component. It's the last variable in `playChordNow`
+- The notes generated should be editable. Perhaps you could drag them in the "What has been generated" set of blocks?
+- Add many more random interactive messages. Make this more prominent and obvious.
+- For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
+- Add keyboard shortcuts.   - [Space] for play/pause.   - [N] = new notes.   - [R] = Reset.  - [S] = Save as midi.  
+
+# Think about it mode: 
+- Could I add sheet music stuff? 
 - Finish styling the new, improved fretboard.
   - Invert the colors for the fretboard maybe? Make the playing notes bright and non playable notes dark. To make things more obvious
-  
-Guitar component: Make it possible to change the number of frets you care about.
-Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.
-
-- There's definitely some sort of audio rendering bug at play. 
-- Fix the sharing mechanism. 
-x The ability to dynamically add and remove strings.
-- Support different guitar tunings.
-- A popup explaining the idea and wtf this is.
-- Useful keyboard shortcuts.
-  - [Space] for play/pause.
-  - [N] = new notes.
-  - [R] = Reset.
-  - [S] = Save as midi.  
-- Generally improve accessibility
+- Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
 - Save multiple configurations you've enjoyed. Be able to load them up later.
-- Add many more random interactive messages.
-- Palm mute mode.
-- Add more instruments.
-  - I should consider adding duration properties to each of these manually
-- For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
-- Add a very small representation of the note names to the drawn title line.
 - Make playing chords a possibility?
-- The user should be able to drag notes into other slots that fit the scale by literally clicking and dragging a given note.
 - Allow single note items to be played as if they're tremolo'd.
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
-- More interesting visualizations of the generated notes.
-- Increase possible number of generated notes. (Performance)
+- More interesting visualizations of the generated notes. Perhaps the pattern followed on the current fretboard?
 - A zooming mechanism to navigate the notes that have been generated.
 - Cypress for integration level tests.
 - Add a circle of 5ths

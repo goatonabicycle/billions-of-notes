@@ -18,10 +18,8 @@ const Fretboard = ({
   selectedTuning,
   setSelectedTuning,
   initialTuning,
+  numberOfFrets,
 }) => {
-  const specialFrets = [3, 5, 7, 9, 15, 17, 19, 21];
-  const doubleDotsFrets = [12, 24];
-
   const hasTuningChanged =
     JSON.stringify(selectedTuning) !== JSON.stringify(initialTuning);
 
@@ -52,14 +50,14 @@ const Fretboard = ({
 
   useEffect(() => {
     let newFretboard = strings.map(({ note, octave }, stringIndex) =>
-      [...Array(25)].map((e, fret) => ({
+      [...Array(numberOfFrets + 1)].map((e, fret) => ({
         note: getNote(note, octave, fret),
         stringIndex,
         fret,
       }))
     );
     setFretboard(newFretboard);
-  }, [strings, selectedTuning]);
+  }, [strings, selectedTuning, numberOfFrets]);
 
   useEffect(() => {
     const currentNote = notesToPlay[playbackIndex];
@@ -165,6 +163,7 @@ const Fretboard = ({
       <div
         className="fretboard"
         style={{
+          "--number-of-frets": numberOfFrets + 1,
           "--preferred-start": getPreferredFretRange().startFret,
           "--preferred-range":
             getPreferredFretRange().endFret -
@@ -174,14 +173,7 @@ const Fretboard = ({
         {fretboard.map((string, stringIndex) => (
           <div
             key={stringIndex}
-            className="string"
-            style={{
-              "--preferred-start": getPreferredFretRange().startFret,
-              "--preferred-range":
-                getPreferredFretRange().endFret -
-                getPreferredFretRange().startFret +
-                1,
-            }}>
+            className="string">
             {string.map((note, j) => {
               const isCurrentNote =
                 note.note === notesToPlay[playbackIndex] &&
@@ -190,15 +182,10 @@ const Fretboard = ({
 
               const isScaleNote = scaleNotes.includes(note.note.slice(0, -1));
               const isNoteToPlay = notesToPlay.includes(note.note);
-              const isSpecialFret = specialFrets.includes(j);
-              const isDoubleDotFret = doubleDotsFrets.includes(j);
-
               let className = "fret";
               if (isCurrentNote) className += " highlight";
               if (isScaleNote) className += " scale-note";
               if (isNoteToPlay) className += " note-to-play";
-              if (isSpecialFret) className += " special-fret";
-              if (isDoubleDotFret) className += " double-dot-fret";
 
               return (
                 <div
@@ -219,7 +206,7 @@ const Fretboard = ({
         ))}
       </div>
       <div className="fret-numbers">
-        {[...Array(25)].map((_, i) => (
+        {[...Array(numberOfFrets + 1)].map((_, i) => (
           <div
             key={i}
             className="fret-number">

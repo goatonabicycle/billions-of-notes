@@ -9,7 +9,9 @@ export const DEFAULT_FINGER_RANGE = 6;
 export const DEFAULT_VOLUME = 10;
 export const DEFAULT_PANELS_TO_SHOW = ["Guitar"];
 export const DEFAULT_NUMBER_OF_GUITAR_STRINGS = 6;
+export const DEFAULT_NUMBER_OF_GUITAR_FRETS = 24;
 export const DEFAULT_NUMBER_OF_BASS_STRINGS = 4;
+export const DEFAULT_NUMBER_OF_BASS_FRETS = 24;
 
 export const KEYS = [
   "C",
@@ -93,25 +95,6 @@ export const mapToSelectOptionsWithValues = (items) => {
     label: item,
     value: value,
   }));
-};
-
-export const generateFrets = (baseNote) => {
-  const baseIndex = KEYS.indexOf(baseNote.slice(0, -1));
-  let currentOctave = parseInt(baseNote.slice(-1));
-
-  let notes = [...Array(25).keys()].map((fret) => {
-    let noteIndex = (baseIndex + fret) % 12;
-    let noteName = KEYS[noteIndex];
-
-    // When we reach a new C note, we know we've moved up an octave
-    if (noteName === "C" && fret > 0) {
-      currentOctave += 1;
-    }
-
-    return noteName + currentOctave;
-  });
-
-  return notes;
 };
 
 export const shuffleArray = (array) => {

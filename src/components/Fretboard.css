@@ -85,8 +85,8 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc((100% / 25) * var(--preferred-start));
-  width: calc((100% / 25) * var(--preferred-range));
+  left: calc((100% / var(--number-of-frets)) * var(--preferred-start));
+  width: calc((100% / var(--number-of-frets)) * var(--preferred-range));
   border: 3px solid #794bc4;
   box-sizing: border-box;
   z-index: 1;

@@ -6,6 +6,7 @@ import {
   DEFAULT_FINGER_RANGE,
   DEFAULT_NUMBER_OF_BASS_STRINGS,
   INITIAL_BASS_TUNING,
+  DEFAULT_NUMBER_OF_BASS_FRETS,
 } from "../useful";
 
 import Slider from "../components/Slider";
@@ -32,6 +33,11 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
     INITIAL_BASS_TUNING
   );
 
+  const [numberOfBassFrets, setNumberOfBassFrets] = useLocalStorage(
+    "numberOfBassFrets",
+    DEFAULT_NUMBER_OF_BASS_FRETS
+  );
+
   let strings = selectedBassTuning.slice(0, selectedNumberOfBassStrings);
 
   return (
@@ -43,7 +49,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           id="positionSlider"
           label="Play from"
           min="0"
-          max="24"
+          max={numberOfBassFrets}
           step="1"
           editable={false}
           value={selectedPosition}
@@ -77,6 +83,19 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
             setSelectedNumberOfBassStrings(parseInt(e.target.value, 10));
           }}
         />
+
+        <Slider
+          id="numberOfBassFretsSlider"
+          label="Number of Frets"
+          min="12"
+          max="24"
+          step="1"
+          editable={false}
+          value={numberOfBassFrets}
+          onChange={(e) => {
+            setNumberOfBassFrets(parseInt(e.target.value, 10));
+          }}
+        />
       </div>
       <Fretboard
         playbackIndex={playbackIndex}
@@ -88,6 +107,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
         selectedTuning={selectedBassTuning}
         setSelectedTuning={setSelectedBassTuning}
         initialTuning={INITIAL_BASS_TUNING}
+        numberOfFrets={numberOfBassFrets}
       />
     </div>
   );

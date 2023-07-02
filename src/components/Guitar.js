@@ -6,6 +6,7 @@ import {
   DEFAULT_FINGER_RANGE,
   DEFAULT_NUMBER_OF_GUITAR_STRINGS,
   INITIAL_GUITAR_TUNING,
+  DEFAULT_NUMBER_OF_GUITAR_FRETS,
 } from "../useful";
 
 import Slider from "../components/Slider";
@@ -27,6 +28,11 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
   const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] =
     useLocalStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
 
+  const [numberOfGuitarFrets, setNumberOfGuitarFrets] = useLocalStorage(
+    "numberOfGuitarFrets",
+    DEFAULT_NUMBER_OF_GUITAR_FRETS
+  );
+
   const [selectedTuning, setSelectedTuning] = useLocalStorage(
     "selectedTuning",
     INITIAL_GUITAR_TUNING
@@ -43,7 +49,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           id="positionSlider"
           label="Play from"
           min="0"
-          max="24"
+          max={numberOfGuitarFrets}
           step="1"
           editable={false}
           value={selectedPosition}
@@ -77,6 +83,19 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
             setSelectedNumberOfGuitarStrings(parseInt(e.target.value, 10));
           }}
         />
+
+        <Slider
+          id="numberOfGuitarFretsSlider"
+          label="Number of Frets"
+          min="12"
+          max="24"
+          step="1"
+          editable={false}
+          value={numberOfGuitarFrets}
+          onChange={(e) => {
+            setNumberOfGuitarFrets(parseInt(e.target.value, 10));
+          }}
+        />
       </div>
       <Fretboard
         playbackIndex={playbackIndex}
@@ -88,6 +107,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
         selectedTuning={selectedTuning}
         setSelectedTuning={setSelectedTuning}
         initialTuning={INITIAL_GUITAR_TUNING}
+        numberOfFrets={numberOfGuitarFrets}
       />
     </div>
   );

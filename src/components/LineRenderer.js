@@ -7,7 +7,7 @@ const DOT_RADIUS = 5;
 const EDGE_DOT_RADIUS = 0;
 const ANIMATION_DOT_COLOUR = "white";
 const LINE_COLOUR = "white";
-const SECONDARY_LINE_COLOUR = "rgba(121, 75, 196, 0.5)";
+const SECONDARY_LINE_COLOUR = "rgba(121, 75, 196, 0.2)";
 
 const getNoteNumber = (note) => {
   if (note === "") return null;
