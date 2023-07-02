@@ -54,6 +54,17 @@ export const INSTRUMENTS = {
   137: "Xylophone",
 };
 
+export const INITIAL_GUITAR_TUNING = [
+  { note: "E", octave: 4 },
+  { note: "B", octave: 3 },
+  { note: "G", octave: 3 },
+  { note: "D", octave: 3 },
+  { note: "A", octave: 2 },
+  { note: "E", octave: 2 },
+  { note: "B", octave: 1 },
+  { note: "F#", octave: 1 },
+];
+
 export const mapToSelectOptions = (items) => {
   return items.map((item) => ({
     label: item,
@@ -101,3 +112,18 @@ export const shuffleArray = (array) => {
   }
   return array;
 };
+
+export function noteToMidiNumber(note) {
+  const keyNumber = note.slice(0, -1);
+  const octave = note.slice(-1);
+
+  let midiNumber = KEYS.indexOf(keyNumber);
+  if (midiNumber === -1) {
+    console.error("Invalid note:", note);
+    return;
+  }
+
+  midiNumber += octave * 12;
+
+  return midiNumber;
+}
