@@ -1,8 +1,8 @@
 ## Todo
 
 # Do mode:
-- Fretboard items: Make it possible to change the number of frets you care about.
-- Move the code and kofi stuff to the footer.
+x Fretboard items: Make it possible to change the number of frets you care about.
+- Move the code and kofi stuff to the footer/elsewhere.
 - A button with a modal explaining the idea and wtf this is.
   - Write a bunch of words for this.
 - Fix the sharing mechanism. 
