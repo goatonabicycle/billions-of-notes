@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import "./KofiButton.css";
 
-import IconButton from "./IconButton";
-import { BuyCoffeeIcon } from "./Icons";
-
 // This component is special because it is a button that also opens a modal.
 const KofiButton = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

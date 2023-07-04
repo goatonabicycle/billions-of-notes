@@ -42,7 +42,6 @@ import ShowMeSelector from "./components/ShowMeSelector";
 import {
   ShareIcon,
   SaveIcon,
-  CodeIcon,
   NewNotesIcon,
   PauseIcon,
   PlayIcon,
@@ -446,6 +445,7 @@ function App() {
             randomNotes={randomNotes}
             setRandomNotes={setRandomNotes}
             currentIndex={currentIndex}
+            selectedOctaves={selectedOctaves}
           />
         </div>
       </div>
