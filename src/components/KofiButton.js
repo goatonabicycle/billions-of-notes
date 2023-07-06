@@ -22,10 +22,10 @@ const KofiButton = () => {
       </button>
       {modalIsOpen && (
         <div
-          className="modalOverlay"
+          className="kofi-modal-overlay"
           onClick={closeModal}>
           <div
-            className="modalContent"
+            className="kofi-modal-content"
             onClick={(e) => e.stopPropagation()}>
             <iframe
               id="kofiframe"

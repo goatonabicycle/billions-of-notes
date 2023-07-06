@@ -52,6 +52,7 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
+import ExplainButton from "./components/ExplainButton";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -244,6 +245,8 @@ function App() {
                 rel="noreferrer">
                 Source code
               </a>
+              {"|"}
+              <ExplainButton />
               {"|"}
               <KofiButton />
             </div>

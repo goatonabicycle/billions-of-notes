@@ -1,4 +1,4 @@
-.kofi-modal-overlay {
+.explain-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,9 +11,11 @@
   z-index: 9999;
 }
 
-.kofi-modal-content {
+.explain-modal-content {
   width: 400px;
   height: 80%;
-  background-color: transparent;
+  padding: 10px;
+  color: #282c34;
+  background-color: #f3f5f7;
   z-index: 9999;
 }

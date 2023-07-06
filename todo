@@ -16,6 +16,7 @@
 - Add many more random interactive messages. Make this more prominent and obvious.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
 - Add keyboard shortcuts.   - [Space] for play/pause.   - [N] = new notes.   - [R] = Reset.  - [S] = Save as midi.  
+- Add a light/dark mode. Use something like this: https://uiverse.io/andrew-demchenk0/nasty-frog-73
 
 # Think about it mode: 
 - Could I add sheet music stuff? 
@@ -23,7 +24,7 @@
   - Invert the colors for the fretboard maybe? Make the playing notes bright and non playable notes dark. To make things more obvious
 - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
 - Save multiple configurations you've enjoyed. Be able to load them up later.
-- Make playing chords a possibility?
+- Chords. Chords that make sense in the context of the current notes.
 - Allow single note items to be played as if they're tremolo'd.
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.

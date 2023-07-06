@@ -182,6 +182,7 @@ const Fretboard = ({
 
               const isScaleNote = scaleNotes.includes(note.note.slice(0, -1));
               const isNoteToPlay = notesToPlay.includes(note.note);
+
               let className = "fret";
               if (isCurrentNote) className += " highlight";
               if (isScaleNote) className += " scale-note";
