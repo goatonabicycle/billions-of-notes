@@ -28,18 +28,16 @@ const ExplainButton = () => {
             onClick={(e) => e.stopPropagation()}>
             Hi! <br />
             <br />
-            What is this? <br />
-            This is a website
-            <br />
-            <br />
-            Does it use AI? <br />
-            Not at all.
-            <br />
-            <br />
-            Does it use Bitcoins? <br />
-            Not at all.
-            <br />
-            <br />
+            <div className="question">What is this?</div>
+            <div className="answer">This is a website.</div>
+            <div className="question">Does it use AI? </div>
+            <div className="answer">Not even a little bit</div>
+            <div className="question">What about bitcoins?</div>
+            <div className="answer">Even less so</div>
+            <div className="question">What's the point?</div>
+            <div className="answer">
+              This website randomly generates notes for you.
+            </div>
           </div>
         </div>
       )}
