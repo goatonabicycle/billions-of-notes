@@ -6,7 +6,7 @@ const Slider = ({ id, min, max, step, value, onChange, label, editable }) => {
 
   useEffect(() => {
     if (mirrorRef.current) {
-      setInputWidth(`${mirrorRef.current.offsetWidth}px`);
+      setInputWidth(`${mirrorRef.current.offsetWidth + 3}px`);
     }
   }, [value]);
 
