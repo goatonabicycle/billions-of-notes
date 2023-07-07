@@ -12,10 +12,14 @@
 - The notes generated should be editable. Perhaps you could drag them in the "What has been generated" set of blocks?
   - Finish this idea. Fix the styling. How should empty notes be dealt with? 
 - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
+- A mode in depth "These are the notes in this scale" mode. Show the whole and half steps.
 - Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
 - Add many more random interactive messages. Make this more prominent and obvious.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
 - Add keyboard shortcuts.   - [Space] for play/pause.   - [N] = new notes.   - [R] = Reset.  - [S] = Save as midi.  
+- Flat vs sharp mode. Make it an option. Options page, generally?
+- Number of frets -> Make this a two way slider. 
+- A metronome that plays more percussive notes? 
 - Add a light/dark mode. Use something like this: https://uiverse.io/andrew-demchenk0/nasty-frog-73
 
 # Think about it mode: 
@@ -29,8 +33,6 @@
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
 - More interesting visualizations of the generated notes. Perhaps the pattern followed on the current fretboard?
-- A zooming mechanism to navigate the notes that have been generated.
-- Cypress for integration level tests.
 - Add a circle of 5ths
 - Add a vertical piano roll with the notes coming down from the top.
 
