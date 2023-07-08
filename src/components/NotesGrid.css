@@ -41,7 +41,7 @@
   }
 }
 
-.note-in-mode-row {
+.note-in-scale-row {
 }
 
 .note-present {
@@ -65,7 +65,7 @@
 .chosen-note-row {
 }
 
-.note-in-mode {
+.note-in-scale {
   font-weight: 1000;
   background-color: #282c34;
   color: #f3e8ff;

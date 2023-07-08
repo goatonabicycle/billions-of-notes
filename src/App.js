@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Mode, Note } from "tonal";
+import { Note, Scale } from "tonal";
 import MIDISounds from "midi-sounds-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   DEFAULT_KEY,
-  DEFAULT_MODE,
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
   KEYS,
@@ -18,6 +17,7 @@ import {
   DEFAULT_VOLUME,
   shuffleArray,
   DEFAULT_PANELS_TO_SHOW,
+  DEFAULT_SCALE,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -56,15 +56,18 @@ import ExplainButton from "./components/ExplainButton";
 
 function App() {
   const { count, incrementCount } = useCount();
-  const modes = Mode.names();
+  const scales = Scale.names();
+
   const [selectedKey, setSelectedKey] = useLocalStorage(
     "selectedKey",
     DEFAULT_KEY
   );
-  const [selectedMode, setSelectedMode] = useLocalStorage(
-    "selectedMode",
-    DEFAULT_MODE
+
+  const [selectedScale, setSelectedScale] = useLocalStorage(
+    "selectedScale",
+    DEFAULT_SCALE
   );
+
   const [selectedTempo, setSelectedTempo] = useLocalStorage(
     "selectedTempo",
     DEFAULT_TEMPO
@@ -97,7 +100,7 @@ function App() {
   );
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [notesInMode, setNotesInMode] = useState([]);
+  const [notesInScale, setNotesInScale] = useState([]);
   const [shareButtonText, setShareButtonText] = useState("Share these notes");
   const [randomNotes, setRandomNotes] = useState([]);
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
@@ -119,11 +122,12 @@ function App() {
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
     };
 
-    let notesInMode = Mode.notes(selectedMode, selectedKey).map((note) =>
-      flatToSharp(Note.simplify(note))
+    let notesInScale = Scale.get(`${selectedKey} ${selectedScale}`).notes.map(
+      (note) => flatToSharp(Note.simplify(note))
     );
 
-    setNotesInMode(notesInMode);
+    // Todo, get more interesting information about the scale here.
+    setNotesInScale(notesInScale);
 
     let randomNotes = [];
     let totalNotes = parseInt(selectedNumberOfNotes);
@@ -131,7 +135,7 @@ function App() {
 
     for (let i = 0; i < totalNotes - emptyNotes; i++) {
       const randomNote =
-        notesInMode[Math.floor(Math.random() * notesInMode.length)];
+        notesInScale[Math.floor(Math.random() * notesInScale.length)];
       const randomOctave =
         selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)];
       randomNotes.push(`${randomNote}${randomOctave}`);
@@ -156,7 +160,7 @@ function App() {
     incrementCount(selectedNumberOfNotes);
   }, [
     selectedKey,
-    selectedMode,
+    selectedScale,
     selectedNumberOfNotes,
     selectedOctaves,
     triggerRegenerate,
@@ -178,9 +182,9 @@ function App() {
 
     const urlInputs = parsedQuery.get("inputs");
     if (urlInputs) {
-      const [key, mode, number, tempo, instrument] = urlInputs.split(",");
+      const [key, scale, number, tempo, instrument] = urlInputs.split(",");
       setSelectedKey(key || DEFAULT_KEY);
-      setSelectedMode(mode || DEFAULT_MODE);
+      setSelectedScale(scale || DEFAULT_SCALE);
       setSelectedNumberOfNotes(number || DEFAULT_NUMBER_OF_NOTES);
       setSelectedTempo(tempo || DEFAULT_TEMPO);
       setSelectedInstrument(instrument || DEFAULT_INSTRUMENT);
@@ -265,11 +269,11 @@ function App() {
             />
 
             <Select
-              id="modeSelect"
-              label="Mode:"
-              options={useMemo(() => mapToSelectOptions(modes), [modes])}
-              onChange={setSelectedMode}
-              selectedValue={selectedMode}
+              id="ScaleSelect"
+              label="Scale:"
+              options={useMemo(() => mapToSelectOptions(scales), [scales])}
+              onChange={setSelectedScale}
+              selectedValue={selectedScale}
             />
 
             <Select
@@ -370,7 +374,7 @@ function App() {
               onClick={() => {
                 setCurrentIndex(0);
                 setSelectedKey(DEFAULT_KEY);
-                setSelectedMode(DEFAULT_MODE);
+                setSelectedScale(DEFAULT_SCALE);
                 setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
                 setSelectedOctaves(DEFAULT_OCTAVES);
                 setSelectedTempo(DEFAULT_TEMPO);
@@ -385,7 +389,7 @@ function App() {
                 const url = new URL(window.location.href);
                 const inputs = [
                   selectedKey,
-                  selectedMode,
+                  selectedScale,
                   selectedNumberOfNotes,
                   selectedTempo,
                   selectedInstrument,
@@ -444,7 +448,7 @@ function App() {
           </div>
 
           <NotesUsed
-            notesInMode={notesInMode}
+            notesInScale={notesInScale}
             randomNotes={randomNotes}
             setRandomNotes={setRandomNotes}
             currentIndex={currentIndex}
@@ -458,7 +462,7 @@ function App() {
           <Guitar
             playbackIndex={currentIndex}
             notesToPlay={randomNotes}
-            scaleNotes={notesInMode}
+            scaleNotes={notesInScale}
           />
         )}
         {selectedPanelsToShow.includes("Piano Roll") && (
@@ -466,7 +470,7 @@ function App() {
             <>{"Piano Roll"}</>
             <NotesGrid
               notes={randomNotes}
-              notesInMode={notesInMode}
+              notesInScale={notesInScale}
               octaveRange={selectedOctaves}
               activeIndex={currentIndex}
             />
@@ -481,7 +485,7 @@ function App() {
           <BassGuitar
             playbackIndex={currentIndex}
             notesToPlay={randomNotes}
-            scaleNotes={notesInMode}
+            scaleNotes={notesInScale}
           />
         )}
       </div>

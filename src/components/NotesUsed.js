@@ -5,12 +5,12 @@ const NotesUsed = ({
   randomNotes,
   currentIndex,
   setRandomNotes,
-  notesInMode,
+  notesInScale,
   selectedOctaves,
 }) => {
   const [selectedNoteForEditing, setSelectedNoteForEditing] = useState(null);
 
-  const allPossibleNotes = notesInMode.flatMap((note) =>
+  const allPossibleNotes = notesInScale.flatMap((note) =>
     selectedOctaves.map((octave) => `${note}${octave}`)
   );
 

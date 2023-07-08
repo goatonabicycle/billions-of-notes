@@ -4,7 +4,8 @@
 - A button with a modal explaining the idea and wtf this is.
   - Write a bunch of words for this.
 - Fix the sharing mechanism. 
-- Add more modes.
+- Add more modes? 
+  Replacing with scales. 
 - Add more instruments.
   - Does it make sense for the individual elements to have custom duration properties?
 - Generally improve accessibility. Tab through the elements should be clearly visible and flow well.
@@ -12,7 +13,7 @@
 - The notes generated should be editable. Perhaps you could drag them in the "What has been generated" set of blocks?
   - Finish this idea. Fix the styling. How should empty notes be dealt with? 
 - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
-- A mode in depth "These are the notes in this scale" mode. Show the whole and half steps.
+- A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
 - Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
 - Add many more random interactive messages. Make this more prominent and obvious.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)

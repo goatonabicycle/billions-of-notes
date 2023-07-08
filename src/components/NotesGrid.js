@@ -7,7 +7,7 @@ const computeRowClasses = (props) =>
     "note-row",
     props.isFillingNote && "filling-note-row",
     props.notes.includes(props.noteRow) && "chosen-note-row",
-    props.allNotesInMode.includes(props.noteRow) && "note-in-mode-row",
+    props.allNotesInScale.includes(props.noteRow) && "note-in-scale-row",
     props.notes[props.activeIndex] === props.noteRow && "active-row",
   ]
     .filter(Boolean)
@@ -17,7 +17,7 @@ const computeNoteClasses = (props) =>
   [
     "note-cell",
     "note-label",
-    props.notesInMode.includes(props.noteWithoutOctave) && "note-in-mode",
+    props.notesInScale.includes(props.noteWithoutOctave) && "note-in-scale",
   ]
     .filter(Boolean)
     .join(" ");
@@ -53,19 +53,19 @@ const NoteRow = (props) => {
   );
 };
 
-const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
+const NotesGrid = ({ octaveRange, notes, activeIndex, notesInScale }) => {
   const allPossibleNotes = useMemo(
     () =>
       octaveRange.flatMap((octave) => KEYS.map((note) => `${note}${octave}`)),
     [octaveRange]
   );
 
-  const allNotesInMode = useMemo(
+  const allNotesInScale = useMemo(
     () =>
       octaveRange.flatMap((octave) =>
-        notesInMode.map((note) => `${note}${octave}`)
+        notesInScale.map((note) => `${note}${octave}`)
       ),
-    [octaveRange, notesInMode]
+    [octaveRange, notesInScale]
   );
 
   return (
@@ -84,9 +84,9 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
               noteRow={noteRow}
               isFillingNote={false}
               notes={notes}
-              allNotesInMode={allNotesInMode}
+              allNotesInScale={allNotesInScale}
               activeIndex={activeIndex}
-              notesInMode={notesInMode}
+              notesInScale={notesInScale}
               noteWithoutOctave={noteWithoutOctave}
             />
           );
@@ -101,9 +101,9 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
               noteRow={`${noteWithoutOctave}${octave + i + 1}`}
               isFillingNote={true}
               notes={notes}
-              allNotesInMode={allNotesInMode}
+              allNotesInScale={allNotesInScale}
               activeIndex={activeIndex}
-              notesInMode={notesInMode}
+              notesInScale={notesInScale}
               noteWithoutOctave={noteWithoutOctave}
             />
           ));
@@ -114,9 +114,9 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInMode }) => {
               noteRow={noteRow}
               isFillingNote={false}
               notes={notes}
-              allNotesInMode={allNotesInMode}
+              allNotesInScale={allNotesInScale}
               activeIndex={activeIndex}
-              notesInMode={notesInMode}
+              notesInScale={notesInScale}
               noteWithoutOctave={noteWithoutOctave}
             />
             {spacerRows}
