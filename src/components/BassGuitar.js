@@ -73,7 +73,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
         <Slider
           id="numberOfBassStringsSlider"
-          label="Number of Strings"
+          label="Strings"
           min="4"
           max="6" // This could be 6. But bass guitars are tuned weirdly. They don't just simply get an extra low note. I'll need to support custom tunings first.
           step="1"
@@ -86,7 +86,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
         <Slider
           id="numberOfBassFretsSlider"
-          label="Number of Frets"
+          label="Frets"
           min="12"
           max="24"
           step="1"

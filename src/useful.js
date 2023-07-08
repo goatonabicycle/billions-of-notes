@@ -54,6 +54,12 @@ export const INSTRUMENTS = {
   121: "Vibraphone",
   125: "Marimba",
   137: "Xylophone",
+  184: "Rock Organ",
+  279: "Jazz Guitar",
+  296: "Clean Electric Guitar",
+  306: "Muted Electric Guitar",
+  322: "Overdriven Guitar",
+  341: "Distorted Guitar",
 };
 
 export const INITIAL_GUITAR_TUNING = [

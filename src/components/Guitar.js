@@ -73,7 +73,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
         <Slider
           id="numberOfGuitarStringsSlider"
-          label="Number of Strings"
+          label="Strings"
           min="6"
           max="8"
           step="1"
@@ -86,7 +86,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
         <Slider
           id="numberOfGuitarFretsSlider"
-          label="Number of Frets"
+          label="Frets"
           min="12"
           max="24"
           step="1"
