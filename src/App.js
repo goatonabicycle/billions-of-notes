@@ -200,7 +200,7 @@ function App() {
       setRandomNotes(decodeURIComponent(urlNotes).split(","));
       setLoadedFromUrl(true);
     }
-  });
+  }, [location.search]);
 
   const getInstruments = () => {
     return INSTRUMENTS;
