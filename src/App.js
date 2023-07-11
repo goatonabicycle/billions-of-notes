@@ -240,6 +240,10 @@ function App() {
     };
   });
 
+  const toggleLightMode = () => {
+    document.body.classList.toggle("light-mode");
+  };
+
   const getInstruments = () => {
     return INSTRUMENTS;
   };
@@ -291,6 +295,13 @@ function App() {
               <ExplainButton />
               {"|"}
               <KofiButton />
+
+              {"|"}
+              <button
+                className="link-looking-button"
+                onClick={toggleLightMode}>
+                Toggle theme
+              </button>
             </div>
           </div>
         </div>

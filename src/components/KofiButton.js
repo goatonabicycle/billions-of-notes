@@ -16,7 +16,7 @@ const KofiButton = () => {
   return (
     <>
       <button
-        className="buy-a-coffee"
+        className="link-looking-button"
         onClick={openModal}>
         Buy me a coffee
       </button>

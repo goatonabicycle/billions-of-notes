@@ -69,11 +69,12 @@ button.rainbow-button:hover {
   font-size: 0.6em;
 }
 
-.buy-a-coffee {
+.link-looking-button {
   border-style: none !important;
   border: none;
   font-size: 0.6em !important;
   text-decoration: underline;
   background: none;
   padding: 0px;
+  color: var(--text-color) !important;
 }

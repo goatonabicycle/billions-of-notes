@@ -15,7 +15,7 @@ const ExplainButton = () => {
   return (
     <>
       <button
-        className="buy-a-coffee"
+        className="link-looking-button"
         onClick={openModal}>
         Wtf is this?
       </button>
