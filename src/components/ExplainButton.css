@@ -14,20 +14,20 @@
 .explain-modal-content {
   width: 400px;
   height: 80%;
-  padding: 10px;
+  padding: 20px;
   color: #282c34;
   background-color: #f3f5f7;
   z-index: 9999;
-  text-align: center;
 }
 
 .explain-modal-content .question {
   font-weight: 900;
   font-size: 0.7em;
+  text-decoration: underline;
 }
 
 .explain-modal-content .answer {
   font-weight: 300;
   font-size: 0.6em;
-  margin: 5px 0px 10px 10px;
+  margin: 5px 10px 10px 10px;
 }

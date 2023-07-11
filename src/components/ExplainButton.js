@@ -38,6 +38,14 @@ const ExplainButton = () => {
             <div className="answer">
               This website randomly generates notes for you.
             </div>
+            <div className="question">Got any cool keyboard shortcuts?</div>
+            <div className="answer">
+              Sure do! <br />
+              <div>Space = Pause</div>
+              <div>r = Reset</div>
+              <div>n = New Notes</div>
+              <div>s = Save to MIDI</div>
+            </div>
           </div>
         </div>
       )}

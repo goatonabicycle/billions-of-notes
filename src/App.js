@@ -110,6 +110,16 @@ function App() {
   const navigate = useNavigate();
   const midiSoundsRef = React.createRef();
 
+  const resetInputs = () => {
+    setCurrentIndex(0);
+    setSelectedKey(DEFAULT_KEY);
+    setSelectedScale(DEFAULT_SCALE);
+    setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
+    setSelectedOctaves(DEFAULT_OCTAVES);
+    setSelectedTempo(DEFAULT_TEMPO);
+    setSelectedInstrument(DEFAULT_INSTRUMENT);
+  };
+
   useEffect(() => {
     if (loadedFromUrl) {
       setLoadedFromUrl(false);
@@ -201,6 +211,34 @@ function App() {
       setLoadedFromUrl(true);
     }
   }, [location.search]);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      switch (event.key.toLowerCase()) {
+        case " ": // Space bar for play/pause
+          event.preventDefault();
+          setIsPlaying((prevIsPlaying) => !prevIsPlaying);
+          break;
+        case "n": // N for new notes
+          setTriggerRegenerate((prevTrigger) => !prevTrigger);
+          break;
+        case "r": // R for reset inputs
+          resetInputs();
+          break;
+        case "s": // S for save as MIDI
+          SaveToMidi(randomNotes, selectedTempo);
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  });
 
   const getInstruments = () => {
     return INSTRUMENTS;
@@ -371,15 +409,7 @@ function App() {
             />
 
             <IconButton
-              onClick={() => {
-                setCurrentIndex(0);
-                setSelectedKey(DEFAULT_KEY);
-                setSelectedScale(DEFAULT_SCALE);
-                setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
-                setSelectedOctaves(DEFAULT_OCTAVES);
-                setSelectedTempo(DEFAULT_TEMPO);
-                setSelectedInstrument(DEFAULT_INSTRUMENT);
-              }}
+              onClick={resetInputs}
               icon={ResetIcon}
               text="Reset inputs"
             />
