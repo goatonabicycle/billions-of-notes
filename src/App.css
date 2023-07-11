@@ -1,3 +1,8 @@
+:focus {
+  outline: 3px solid #794bc4 !important;
+  border-radius: 4px;
+}
+
 #debug {
   position: fixed;
   top: 0px;

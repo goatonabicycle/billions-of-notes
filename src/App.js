@@ -215,7 +215,7 @@ function App() {
   useEffect(() => {
     const handleKeyPress = (event) => {
       switch (event.key.toLowerCase()) {
-        case " ": // Space bar for play/pause
+        case "p": // P for play/pause. Space is important for accessibility of the page.
           event.preventDefault();
           setIsPlaying((prevIsPlaying) => !prevIsPlaying);
           break;

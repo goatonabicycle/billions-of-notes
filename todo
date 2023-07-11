@@ -1,12 +1,7 @@
 ## Todo
 
 # Do mode:
-- A button with a modal explaining the idea and wtf this is.
-  - Write a bunch of words for this.
-- Add more instruments.
-  - Does it make sense for the individual elements to have custom duration properties?
-  - Get all of these programmatically? ( this.midiSounds.player.loader.instrumentKeys()?)
-- Generally improve accessibility. Tab through the elements should be clearly visible and flow well.
+
 - Palm mute mode. The audio engine can create this effect. See the Loop Component. It's the last variable in `playChordNow`
 - The notes generated should be editable. Perhaps you could drag them in the "What has been generated" set of blocks?
   - Finish this idea. Improve the styling. How should empty notes be dealt with? 
@@ -18,6 +13,7 @@
 - Flat vs sharp mode. Make it an option. Options page, generally?
 - Number of frets -> Make this a two way slider. 
 - Add a light/dark mode. Use something like this: https://uiverse.io/andrew-demchenk0/nasty-frog-73
+- Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
 
 # Think about it mode: 
 - Could I add sheet music stuff? 
