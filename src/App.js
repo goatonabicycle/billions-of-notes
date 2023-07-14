@@ -99,6 +99,16 @@ function App() {
     0
   );
 
+  const random_rgba = () => {
+    const randomBetween = (min, max) =>
+      min + Math.floor(Math.random() * (max - min + 1));
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    return `rgba(${r}, ${g}, ${b}, 0.5)`;
+  };
+
+  const [currentColour, setCurrentColour] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [notesInScale, setNotesInScale] = useState([]);
   const [shareButtonText, setShareButtonText] = useState("Share these notes");
@@ -168,6 +178,10 @@ function App() {
     setRandomNotes(randomNotes);
     setCurrentIndex(0);
     incrementCount(selectedNumberOfNotes);
+
+    const randomColour = random_rgba();
+    console.log("setting the current colour to ", randomColour);
+    setCurrentColour(randomColour);
   }, [
     selectedKey,
     selectedScale,
@@ -277,6 +291,7 @@ function App() {
               onClick={() => {
                 setTriggerRegenerate(!triggerRegenerate);
               }}
+              colour={currentColour}
               notes={randomNotes}
               tempo={selectedTempo}
               activeNote={currentIndex}

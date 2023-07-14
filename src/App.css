@@ -1,28 +1,24 @@
 :root {
   --text-color: #f3f5f7;
+  --text-color-muted: #a3a3a3;
   --background-color: #282c34;
-  --focus-color: #794bc4;
+  --main-accent: #794bc4;
+  --main-accent-box-shadow: rgba(121, 75, 196, 0.56);
+  --main-accent-secondary: #794bc421;
 }
 
 body.light-mode {
   --text-color: #000;
+  --text-color-muted: #a3a3a3;
   --background-color: #fff;
-  --focus-color: #000;
+  --main-accent: #000;
+  --main-accent-box-shadow: rgba(121, 75, 196, 0.56);
+  --main-accent-secondary: #794bc421;
 }
 
 :focus {
-  outline: 3px solid #794bc4 !important;
+  outline: 3px solid var(--main-accent) !important;
   border-radius: 4px;
-}
-
-#debug {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  border: 1px solid red;
-  padding: 10px;
-  font-size: 0.4em !important;
-  background-color: #282c34;
 }
 
 .App {
@@ -103,14 +99,6 @@ body.light-mode {
   visibility: hidden;
 }
 
-#debug {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  border: 1px solid red;
-  font-size: 0.5em;
-}
-
 h1 {
   text-align: center;
   display: block;
@@ -125,24 +113,6 @@ h1 {
 
 .fun-things {
   font-size: 0.4em;
-}
-
-.slider {
-  width: 150px;
-  color: #794bc4;
-  transition: border-color 0.3s ease;
-  height: 49px;
-}
-
-.sliderWrapper {
-  display: flex;
-  color: #ffffff;
-  padding: 2px;
-  text-align: center;
-}
-
-.fun-info {
-  display: flex;
 }
 
 .total-notes {
@@ -163,8 +133,8 @@ h1 {
   border: none !important;
   padding: 0px;
   margin: 0px;
-  background-color: #282c34;
-  color: #f3f5f7;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: "Short Stack", cursive, sans-serif;
 }
 

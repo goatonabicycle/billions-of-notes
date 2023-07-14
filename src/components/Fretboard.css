@@ -2,7 +2,6 @@
   align-items: center;
   overflow: hidden;
   padding: 15px 0px 0px 0px;
-  /* color: #ccc; */
 }
 
 .fretboard {
@@ -19,15 +18,15 @@
 }
 
 .tuning-adjuster {
-  border: 1px solid #794bc4 !important;
+  border: 1px solid var(--main-accent) !important;
   cursor: pointer;
-  box-shadow: rgba(121, 75, 196, 1) 0px 0px 5px 0px;
+  box-shadow: var(--main-accent) 0px 0px 5px 0px;
   z-index: 500;
 }
 
 .fretboard .note,
 .fret {
-  background-color: #ccc;
+  background-color: var(--text-color-muted);
 
   display: flex;
   align-items: center;
@@ -42,22 +41,22 @@
   height: 30px;
 
   border-radius: 5px;
-  border: 1px solid #282c34;
+  border: 1px solid var(--background-color);
 }
 
 .highlight {
-  background-color: #794bc4 !important;
+  background-color: var(--main-accent) !important;
 }
 
 .scale-note {
-  background-color: #794bc421;
-  color: #a3a3a3;
+  background-color: var(--main-accent-secondary);
+  color: var(--text-color-muted);
 }
 
 .note-to-play {
   font-weight: 900;
   text-decoration: underline;
-  color: #ffffff !important;
+  color: var(--text-color) !important;
 }
 
 .fret-numbers {
@@ -70,7 +69,7 @@
   width: 100%;
   justify-content: center;
   font-size: 0.6em;
-  color: #ccc;
+  color: var(--text-color);
 }
 
 .fret-indicator {
@@ -87,10 +86,10 @@
   bottom: 0;
   left: calc((100% / var(--number-of-frets)) * var(--preferred-start));
   width: calc((100% / var(--number-of-frets)) * var(--preferred-range));
-  border: 3px solid #794bc4;
+  border: 3px solid var(--main-accent);
   box-sizing: border-box;
   z-index: 1;
-  box-shadow: rgba(121, 75, 196, 0.56) 0px 0px 10px 10px;
+  box-shadow: var(--main-accent-box-shadow) 0px 0px 10px 10px;
 }
 
 .reset-button {

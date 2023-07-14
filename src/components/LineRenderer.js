@@ -2,12 +2,11 @@ import React, { useEffect, useRef } from "react";
 import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
-const FILL_COLOUR = "rgba(121, 75, 196, 0.5)";
 const DOT_RADIUS = 5;
 const EDGE_DOT_RADIUS = 0;
 const ANIMATION_DOT_COLOUR = "white";
 const LINE_COLOUR = "white";
-const SECONDARY_LINE_COLOUR = "rgba(121, 75, 196, 0.2)";
+const SECONDARY_LINE_COLOUR = "rgba(255, 255, 255, 0.2)";
 
 const getNoteNumber = (note) => {
   if (note === "") return null;
@@ -17,7 +16,7 @@ const getNoteNumber = (note) => {
   return octave * 12 + KEYS.indexOf(noteName);
 };
 
-const LineRenderer = ({ notes, onClick, activeNote }) => {
+const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
   const canvasRef = useRef(null);
 
   const calculateLinePath = () => {
@@ -49,7 +48,7 @@ const LineRenderer = ({ notes, onClick, activeNote }) => {
         else ctx.lineTo(point.x, point.y);
 
         ctx.arc(point.x, point.y, EDGE_DOT_RADIUS, 0, 2 * Math.PI);
-        ctx.fillStyle = FILL_COLOUR;
+        ctx.fillStyle = colour;
         ctx.fill();
       }
     });
