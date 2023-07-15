@@ -559,6 +559,7 @@ function App() {
         setCurrentIndex={setCurrentIndex}
         instrument={selectedInstrument}
         volume={selectedVolume / 500}
+        notePlayLength={0.2}
       />
     </div>
   );

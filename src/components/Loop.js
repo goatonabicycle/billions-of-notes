@@ -16,6 +16,7 @@ const LoopComponent = ({
   midiSoundsRef,
   instrument,
   volume,
+  notePlayLength,
 }) => {
   const [audioContext, setAudioContext] = useState(null);
 
@@ -41,7 +42,11 @@ const LoopComponent = ({
     const midiNumber = noteToMidiNumber(note);
 
     if (audioContext && audioContext.state === "running") {
-      midiSoundsRef.current.playChordNow(instrument, [midiNumber], 1);
+      midiSoundsRef.current.playChordNow(
+        instrument,
+        [midiNumber],
+        notePlayLength
+      );
     }
   }, [notes, currentIndex, midiSoundsRef]);
 
