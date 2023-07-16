@@ -2,7 +2,7 @@
 
 # Do mode:
 
-- Palm mute mode. The audio engine can create this effect. See the Loop Component. It's the last variable in `playChordNow`
+x Palm mute mode. The audio engine can create this effect. See the Loop Component. It's the last variable in `playChordNow`
 - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
 - Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
   - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
@@ -11,8 +11,7 @@
 - Flat vs sharp mode. Make it an option. Options page, generally?
 - Number of frets -> Make this a two way slider. 
 - Add a light/dark mode. Use something like this: https://uiverse.io/andrew-demchenk0/nasty-frog-73
-- The notes generated should be editable. Perhaps you could drag them in the "What has been generated" set of blocks?
-  - Finish this idea. Improve the styling. How should empty notes be dealt with? 
+  - This is added but it sucks right now. I can/should make this way nicer.
 - Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
 
 # Think about it mode: 

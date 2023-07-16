@@ -16,44 +16,12 @@ button.rainbow-button:hover {
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  box-shadow: rgba(121, 75, 196, 0.4) 0px 5px, rgba(121, 75, 196, 0.3) 0px 10px,
-    rgba(121, 75, 196, 0.2) 0px 15px, rgba(121, 75, 196, 0.1) 0px 20px,
-    rgba(121, 75, 196, 0.05) 0px 25px;
+  box-shadow: rgba(121, 75, 196, 0.4) 0px 5px;
 }
 
 @keyframes rainbow-buttons {
-  0% {
-    color: #ff000096;
-  }
-  10% {
-    color: #ff800096;
-  }
-  20% {
-    color: #ffff0097;
-  }
-  30% {
-    color: #00ff0090;
-  }
-  40% {
-    color: #00ffff98;
-  }
   50% {
-    color: #0000ff8f;
-  }
-  60% {
-    color: #892be286;
-  }
-  70% {
-    color: #8000ff83;
-  }
-  80% {
-    color: #7f007f86;
-  }
-  90% {
-    color: #ff00ff7c;
-  }
-  100% {
-    color: #ff00007f;
+    color: rgb(121, 75, 196);
   }
 }
 

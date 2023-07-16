@@ -55,7 +55,7 @@
 }
 
 .active-row .active-note {
-  background-color: #794bc4;
+  background-color: var(--main-accent);
 }
 
 .active-row {
@@ -72,5 +72,5 @@
 }
 
 .filling-note-row .note-cell {
-  background-color: #794bc4;
+  background-color: var(--main-accent);
 }
