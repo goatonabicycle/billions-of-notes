@@ -2,27 +2,28 @@
 
 .selectContainer {
   display: flex;
-  color:#ffffff; 
-  padding:2px;
+  color: var(--text-color);
+  padding: 2px;
   text-align: center;
 }
 
 .selectWrapper {
   display: flex;
-  flex-direction: column;    
+  flex-direction: column;
 }
 
-.selectLabel {}
+.selectLabel {
+}
 
-.selectElement {  
+.selectElement {
   text-transform: capitalize;
   padding: 6px;
-  border: 2px solid #1b3a9e;    
-  background-color: #3c3c3c;    
+  border: 2px solid #1b3a9e;
+  background-color: var(--background-color);
   transition: border-color 0.3s ease;
 }
 
 .selectElement option {
-  background-color: #3c3c3c;    
-  color:#ffffff; 
+  background-color: var(--background-color);
+  color: var(--text-color);
 }

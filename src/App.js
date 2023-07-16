@@ -18,6 +18,8 @@ import {
   shuffleArray,
   DEFAULT_PANELS_TO_SHOW,
   DEFAULT_SCALE,
+  DEFAULT_EMPTY_NOTES,
+  DEFAULT_NOTE_LENGTH,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -96,7 +98,11 @@ function App() {
   );
   const [selectedEmptyNotes, setSelectedEmptyNotes] = useLocalStorage(
     "selectedEmptyNotes",
-    0
+    DEFAULT_EMPTY_NOTES
+  );
+  const [selectedNoteLength, setSelectedNoteLength] = useLocalStorage(
+    "selectedNoteLength",
+    DEFAULT_NOTE_LENGTH
   );
 
   const random_rgba = () => {
@@ -406,6 +412,19 @@ function App() {
               }}
             />
 
+            <Slider
+              id="noteLengthSlider"
+              label="Note Length"
+              min="1"
+              max="10"
+              step="1"
+              editable={false}
+              value={selectedNoteLength}
+              onChange={(e) => {
+                setSelectedNoteLength(parseInt(e.target.value, 10));
+              }}
+            />
+
             <Select
               id="instrumentSelect"
               label="Sounds:"
@@ -559,7 +578,7 @@ function App() {
         setCurrentIndex={setCurrentIndex}
         instrument={selectedInstrument}
         volume={selectedVolume / 500}
-        notePlayLength={0.2}
+        notePlayLength={selectedNoteLength / 10}
       />
     </div>
   );
