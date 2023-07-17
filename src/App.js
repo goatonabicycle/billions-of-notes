@@ -36,6 +36,7 @@ import Counter from "./components/Counter";
 import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
+import NotesInScale from "./components/NotesInScale";
 import NotesGrid from "./components/NotesGrid";
 import Guitar from "./components/Guitar";
 import BassGuitar from "./components/BassGuitar";
@@ -521,6 +522,12 @@ function App() {
               message={"That's an insane amount of tempo!?! Can you handle it?"}
             />
           </div>
+
+          <NotesInScale
+            notesInScale={notesInScale}
+            randomNotes={randomNotes}
+            currentIndex={currentIndex}
+          />
 
           <NotesUsed
             notesInScale={notesInScale}
