@@ -2,11 +2,10 @@
 
 # Do mode:
 
-x Palm mute mode. The audio engine can create this effect. See the Loop Component. It's the last variable in `playChordNow`
 - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
+- Add many more random interactive messages. Make this more prominent and obvious.
 - Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
   - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
-- Add many more random interactive messages. Make this more prominent and obvious.
 - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
 - Flat vs sharp mode. Make it an option. Options page, generally?
 - Number of frets -> Make this a two way slider. 
