@@ -127,3 +127,12 @@ export function noteToMidiNumber(note) {
 
   return midiNumber;
 }
+
+export const randomRGBA = () => {
+  const randomBetween = (min, max) =>
+    min + Math.floor(Math.random() * (max - min + 1));
+  const r = randomBetween(0, 255);
+  const g = randomBetween(0, 255);
+  const b = randomBetween(0, 255);
+  return `rgba(${r}, ${g}, ${b}, 0.5)`;
+};

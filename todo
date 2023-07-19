@@ -12,6 +12,9 @@
 - Add a light/dark mode. Use something like this: https://uiverse.io/andrew-demchenk0/nasty-frog-73
   - This is added but it sucks right now. I can/should make this way nicer.
 - Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
+- Allow single note items to be played as if they're tremolo'd.
+  - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
+- Record and save to mp3. 
 
 # Think about it mode: 
 - Could I add sheet music stuff? 
@@ -21,8 +24,7 @@
 - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
 - Save multiple configurations you've enjoyed. Be able to load them up later.
 - Chords. Chords that make sense in the context of the current notes.
-- Allow single note items to be played as if they're tremolo'd.
-  - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
+
 - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
 - More interesting visualizations of the generated notes. Perhaps the pattern followed on the current fretboard?
 - Add a circle of 5ths

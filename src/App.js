@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Note, Scale } from "tonal";
 import MIDISounds from "midi-sounds-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ import {
   DEFAULT_SCALE,
   DEFAULT_EMPTY_NOTES,
   DEFAULT_NOTE_LENGTH,
+  randomRGBA,
 } from "./useful";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -85,35 +86,31 @@ function App() {
     "selectedInstrument",
     DEFAULT_INSTRUMENT
   );
+
   const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useLocalStorage(
     "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
   );
+
   const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
     "selectedOctaves",
     DEFAULT_OCTAVES
   );
+
   const [selectedPanelsToShow, setSelectedPanelsToShow] = useLocalStorage(
     "selectedPanelsToShow",
     DEFAULT_PANELS_TO_SHOW
   );
+
   const [selectedEmptyNotes, setSelectedEmptyNotes] = useLocalStorage(
     "selectedEmptyNotes",
     DEFAULT_EMPTY_NOTES
   );
+
   const [selectedNoteLength, setSelectedNoteLength] = useLocalStorage(
     "selectedNoteLength",
     DEFAULT_NOTE_LENGTH
   );
-
-  const random_rgba = () => {
-    const randomBetween = (min, max) =>
-      min + Math.floor(Math.random() * (max - min + 1));
-    const r = randomBetween(0, 255);
-    const g = randomBetween(0, 255);
-    const b = randomBetween(0, 255);
-    return `rgba(${r}, ${g}, ${b}, 0.5)`;
-  };
 
   const [currentColour, setCurrentColour] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -127,15 +124,25 @@ function App() {
   const navigate = useNavigate();
   const midiSoundsRef = React.createRef();
 
-  const resetInputs = () => {
+  const resetInputs = useCallback(() => {
     setCurrentIndex(0);
     setSelectedKey(DEFAULT_KEY);
     setSelectedScale(DEFAULT_SCALE);
     setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
     setSelectedOctaves(DEFAULT_OCTAVES);
     setSelectedTempo(DEFAULT_TEMPO);
+    setSelectedEmptyNotes(DEFAULT_EMPTY_NOTES);
     setSelectedInstrument(DEFAULT_INSTRUMENT);
-  };
+  }, [
+    setCurrentIndex,
+    setSelectedKey,
+    setSelectedScale,
+    setSelectedNumberOfNotes,
+    setSelectedOctaves,
+    setSelectedTempo,
+    setSelectedInstrument,
+    setSelectedEmptyNotes,
+  ]);
 
   useEffect(() => {
     if (loadedFromUrl) {
@@ -186,7 +193,7 @@ function App() {
     setCurrentIndex(0);
     incrementCount(selectedNumberOfNotes);
 
-    const randomColour = random_rgba();
+    const randomColour = randomRGBA();
     console.log("setting the current colour to ", randomColour);
     setCurrentColour(randomColour);
   }, [
@@ -261,10 +268,6 @@ function App() {
     };
   });
 
-  const toggleLightMode = () => {
-    document.body.classList.toggle("light-mode");
-  };
-
   const getInstruments = () => {
     return INSTRUMENTS;
   };
@@ -272,8 +275,7 @@ function App() {
   return (
     <div className="App">
       <button
-        style={{ fontSize: "11px" }}
-        className="rainbow-button"
+        className="rainbow-button hide-inputs-button"
         onClick={() => setIsInputHidden(!isInputHidden)}>
         {isInputHidden ? "Show Inputs" : "Hide Inputs"}
       </button>
@@ -321,7 +323,9 @@ function App() {
               {"|"}
               <button
                 className="link-looking-button"
-                onClick={toggleLightMode}>
+                onClick={() => {
+                  document.body.classList.toggle("light-mode");
+                }}>
                 Toggle theme
               </button>
             </div>

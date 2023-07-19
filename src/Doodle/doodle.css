@@ -57,8 +57,7 @@
 .doodle button,
 .doodle input,
 .doodle select,
-.doodle input[type="file"]::file-selector-button,
-.doodle {
+.doodle input[type="file"]::file-selector-button {
   border-style: solid;
   border-width: 10px 10px 10px 10px;
   border-image: url(button.svg) 10 10 10 10 stretch stretch;
@@ -136,7 +135,7 @@
 .doodle select {
   font-family: "Short Stack", cursive;
   font-size: 1em;
-  color: #ffffff;
+  color: var(----text-color);
   cursor: pointer;
 }
 
@@ -173,7 +172,7 @@
 .doodle input[type="checkbox"]:disabled:after,
 .doodle input[type="radio"]:disabled:after {
   content: "-";
-  color: FDF7F1;
+  color: #fdf7f1;
 }
 
 .doodle input[type="checkbox"]:checked:after,

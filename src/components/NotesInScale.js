@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./NotesInScale.css";
 
 const NotesInScale = ({ randomNotes, currentIndex, notesInScale }) => {
   return (
     <div className="notes-in-scale">
+      Notes in this scale:
       {notesInScale.map((note, i) => {
         const isCurrentNote = notesInScale[i] === randomNotes[currentIndex];
         return (

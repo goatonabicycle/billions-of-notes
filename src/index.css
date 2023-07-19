@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Short+Stack&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Short Stack', cursive, sans-serif;  
+  font-family: "Short Stack", cursive, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
