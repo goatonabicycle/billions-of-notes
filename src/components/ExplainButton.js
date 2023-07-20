@@ -38,10 +38,24 @@ const ExplainButton = () => {
             <div className="answer">
               This website randomly generates notes for you.
             </div>
+            <div className="question">
+              Very cool... You should add this cool feature where...{" "}
+            </div>
+            <div className="answer">
+              Please add your ideas{" "}
+              <a
+                className="dark-link-looking-button"
+                href="https://github.com/goatonabicycle/billions-of-notes/issues/new"
+                target="_blank"
+                rel="noreferrer">
+                here
+              </a>
+              .
+            </div>
             <div className="question">Got any cool keyboard shortcuts?</div>
             <div className="answer">
               Sure do! <br />
-              <div>Space = Pause</div>
+              <div>p = Pause</div>
               <div>r = Reset</div>
               <div>n = New Notes</div>
               <div>s = Save to MIDI</div>

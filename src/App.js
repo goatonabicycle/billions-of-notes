@@ -42,6 +42,7 @@ import NotesGrid from "./components/NotesGrid";
 import Guitar from "./components/Guitar";
 import BassGuitar from "./components/BassGuitar";
 import ShowMeSelector from "./components/ShowMeSelector";
+import ExplainButton from "./components/ExplainButton";
 
 import {
   ShareIcon,
@@ -56,7 +57,6 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import ExplainButton from "./components/ExplainButton";
 
 function App() {
   const { count, incrementCount } = useCount();

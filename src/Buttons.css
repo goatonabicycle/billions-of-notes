@@ -51,3 +51,12 @@ button.rainbow-button:hover {
   padding: 0px;
   color: var(--text-color) !important;
 }
+
+.dark-link-looking-button {
+  border-style: none !important;
+  border: none;
+  text-decoration: underline;
+  background: none;
+  padding: 0px;
+  color: var(--background-color) !important;
+}
