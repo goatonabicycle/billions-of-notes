@@ -156,9 +156,13 @@ function App() {
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
     };
 
-    let notesInScale = Scale.get(`${selectedKey} ${selectedScale}`).notes.map(
-      (note) => flatToSharp(Note.simplify(note))
+    const scale = Scale.get(`${selectedKey} ${selectedScale}`);
+    const notesInScale = scale.notes.map((note) =>
+      flatToSharp(Note.simplify(note))
     );
+
+    const intervals = scale.intervals;
+    console.log("intervals", intervals);
 
     // Todo, get more interesting information about the scale here.
     setNotesInScale(notesInScale);
