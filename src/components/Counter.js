@@ -4,7 +4,7 @@ function Counter({ count }) {
   return (
     <div className="total-notes">
       Total notes generated:{" "}
-      {<span className="number">{count}</span> || "Loading..."}
+      {<span className="number">{count || "Loading..."}</span>}
     </div>
   );
 }
