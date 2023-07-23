@@ -43,6 +43,7 @@ import Guitar from "./components/Guitar";
 import BassGuitar from "./components/BassGuitar";
 import ShowMeSelector from "./components/ShowMeSelector";
 import ExplainButton from "./components/ExplainButton";
+import Piano from "./components/Piano";
 
 import {
   ShareIcon,
@@ -568,7 +569,11 @@ function App() {
         )}
 
         {selectedPanelsToShow.includes("Piano") && (
-          <div>The Piano is coming soon!</div>
+          <Piano
+            playbackIndex={currentIndex}
+            notesToPlay={randomNotes}
+            scaleNotes={notesInScale}
+          />
         )}
 
         {selectedPanelsToShow.includes("Bass Guitar") && (
