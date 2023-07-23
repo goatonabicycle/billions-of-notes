@@ -3403,6 +3403,11 @@ cjs-module-lexer@^1.0.0:
   resolved "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-1.2.2.tgz"
   integrity sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==
 
+classnames@^2.2.6:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
+  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
+
 clean-css@^5.2.2:
   version "5.3.2"
   resolved "https://registry.npmjs.org/clean-css/-/clean-css-5.3.2.tgz"
@@ -6662,6 +6667,11 @@ jsprim@^2.0.2:
     array-includes "^3.1.5"
     object.assign "^4.1.3"
 
+just-range@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/just-range/-/just-range-2.2.0.tgz#75c858f79b474ecf9ac463d2cad0320ea86a2472"
+  integrity sha512-JKHygNvIu+tX/+oOI+zNznQE0M8jM241fsjuac2i9OBlIXD7w4CGGuakXYc6Dne5vv9pEXgmCv8+WEFKwiGFTg==
+
 kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
@@ -6792,6 +6802,11 @@ lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
+lodash.difference@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
+  integrity sha512-dS2j+W26TQ7taQBGN8Lbbq04ssV3emRw4NY58WErlTO29pIqS0HmoT5aJ9+TUQ1N3G+JOZSji4eugsWwGp9yPA==
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -8324,6 +8339,16 @@ react-modal@^3.1.10:
     prop-types "^15.7.2"
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
+
+react-piano@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/react-piano/-/react-piano-3.1.3.tgz#b4b679747afbb88e5047721bcdffc54397f5f25b"
+  integrity sha512-5SDFzprP+ICEMOJRkB0iqHo1qGcZpinRJ0ZW4HZu0pT6NftK+MpVN19VhXzd+MMN9C7QyGNB0nO4nd/cpGko/Q==
+  dependencies:
+    classnames "^2.2.6"
+    just-range "^2.1.0"
+    lodash.difference "^4.5.0"
+    prop-types "^15.6.2"
 
 react-refresh@^0.11.0:
   version "0.11.0"

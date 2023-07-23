@@ -1,17 +1,31 @@
 import React from "react";
 
+import { Piano as ReactPiano, MidiNumbers } from "react-piano";
+import "react-piano/dist/styles.css";
+
 import "./Piano.css";
 
 const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
+  const currentNote = notesToPlay[playbackIndex];
+
+  if (!currentNote) return;
+
+  let activeNote = MidiNumbers.fromNote(currentNote);
+
   return (
-    <div className="piano-container doodle-border">
-      {"Piano"} <br />
-      notesToPlay: {notesToPlay.join(" ")}
-      <br />
-      playbackIndex: {playbackIndex}
-      <br />
-      scaleNotes: {scaleNotes.join(" ")}
-      <br />
+    <div className="doodle-border">
+      {"Piano"}
+      <div className="piano-container">
+        <ReactPiano
+          noteRange={{
+            first: MidiNumbers.fromNote("c1"),
+            last: MidiNumbers.fromNote("c6"),
+          }}
+          playNote={() => {}}
+          stopNote={() => {}}
+          activeNotes={[activeNote]}
+        />
+      </div>
     </div>
   );
 };
