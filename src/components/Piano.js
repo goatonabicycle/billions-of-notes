@@ -8,9 +8,10 @@ import "./Piano.css";
 const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
   const currentNote = notesToPlay[playbackIndex];
 
-  if (!currentNote) return;
-
-  let activeNote = MidiNumbers.fromNote(currentNote);
+  let activeNote;
+  if (currentNote) {
+    activeNote = MidiNumbers.fromNote(currentNote);
+  }
 
   return (
     <div className="doodle-border">
