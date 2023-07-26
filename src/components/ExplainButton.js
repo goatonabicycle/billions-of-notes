@@ -38,6 +38,10 @@ const ExplainButton = () => {
             <div className="answer">
               This website randomly generates notes for you.
             </div>
+            <div className="question">Why can't I make the tempo 151?</div>
+            <div className="answer">
+              You can! There's a text box! Click on the number.
+            </div>
             <div className="question">
               Very cool... You should add this cool feature where...{" "}
             </div>
