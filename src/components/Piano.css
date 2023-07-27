@@ -3,3 +3,7 @@
   justify-content: center;
   height: 300px;
 }
+
+.ReactPiano__Key--active {
+  background: var(--main-accent);
+}
