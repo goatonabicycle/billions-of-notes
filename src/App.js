@@ -208,6 +208,8 @@ function App() {
     selectedOctaves,
     triggerRegenerate,
     selectedEmptyNotes,
+    loadedFromUrl,
+    navigate,
   ]);
 
   useEffect(() => {
