@@ -29,7 +29,6 @@ import Select from "./components/Select";
 import Slider from "./components/Slider";
 import OctaveSelector from "./components/OctaveSelector";
 import Loop from "./components/Loop";
-import RainbowText from "./components/RainbowText";
 import SaveToMidi from "./components/SaveToMidi";
 import LineRenderer from "./components/LineRenderer";
 import MessageBox from "./components/MessageBox";
@@ -58,6 +57,7 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
+import Title from "./components/Title";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -289,18 +289,7 @@ function App() {
       <div className={`App-inputs ${isInputHidden ? "hidden" : ""}`}>
         <div className="title doodle-border">
           <h1>
-            <RainbowText
-              text={"Billions"}
-              tempo={selectedTempo}
-            />
-            <RainbowText
-              text={" of "}
-              tempo={selectedTempo}
-            />
-            <RainbowText
-              text={"Notes!"}
-              tempo={selectedTempo}
-            />
+            <Title selectedTempo={selectedTempo} />
           </h1>
           <div className="fun-things">
             <LineRenderer
