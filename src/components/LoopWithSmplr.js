@@ -39,14 +39,16 @@ const LoopComponent = ({
   // This is what's actually playing the note.
   useEffect(() => {
     const note = notes[currentIndex];
+    console.log("smplr note: ", note);
     if (!note) return;
 
     const midiNumber = noteToMidiNumber(note);
 
     if (audioContext && audioContext.state === "running") {
-      const context = new AudioContext();
-      const piano = new SplendidGrandPiano(context);
+      audioContext.resume();
+      const piano = new SplendidGrandPiano(audioContext);
 
+      console.log("smplr piano: ", piano);
       piano.start({ note: "C4" });
 
       // midiSoundsRef.current.playChordNow(
