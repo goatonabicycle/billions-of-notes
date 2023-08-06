@@ -40,6 +40,7 @@ button.rainbow-button:hover {
 
 .source-code {
   font-size: 0.6em;
+  color: var(--text-color) !important;
 }
 
 .link-looking-button {
