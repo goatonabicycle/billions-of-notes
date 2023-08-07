@@ -10,7 +10,7 @@
 body.light-mode {
   --text-color: #000;
   --text-color-muted: #a3a3a3;
-  --background-color: #fff;
+  --background-color: #8f8f8fbb;
   --main-accent: #000;
   --main-accent-box-shadow: rgba(121, 75, 196, 0.56);
   --main-accent-secondary: #794bc421;
