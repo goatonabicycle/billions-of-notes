@@ -15,6 +15,7 @@
 - Allow single note items to be played as if they're tremolo'd.
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Record and save to mp3. 
+- Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. 
 - See about replacing the sound player with: https://github.com/danigb/smplr
 
 # Think about it mode: 
