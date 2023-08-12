@@ -19,14 +19,11 @@
 - See about replacing the sound player with: https://github.com/danigb/smplr
 
 # Think about it mode: 
-- Could I add sheet music stuff? 
-- A metronome that plays more percussive notes? 
 - Finish styling the new, improved fretboard.
   - Invert the colors for the fretboard maybe? Make the playing notes bright and non playable notes dark. To make things more obvious
 - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
 - Save multiple configurations you've enjoyed. Be able to load them up later.
 - Chords. Chords that make sense in the context of the current notes.
-
 - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
 - More interesting visualizations of the generated notes. Perhaps the pattern followed on the current fretboard?
 - Add a circle of 5ths
