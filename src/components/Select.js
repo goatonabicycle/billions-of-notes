@@ -1,27 +1,30 @@
-import React from "react";
+import React, { memo } from "react";
+
 import "./Select.css";
 
-function Select(props) {
-  const handleChange = (event) => {
-    props.onChange(event.target.value);
-  };
-
+const Select = memo(function Select({
+  id,
+  label,
+  onChange,
+  selectedValue,
+  options,
+}) {
   return (
     <div className="selectContainer">
       <div
-        key={props.id}
+        key={id}
         className="selectWrapper">
         <label
-          htmlFor={props.id}
+          htmlFor={id}
           className="selectLabel">
-          {props.label}
+          {label}
         </label>
         <select
-          id={props.id}
+          id={id}
           className="selectElement"
-          onChange={handleChange}
-          value={props.selectedValue || ""}>
-          {props.options.map((option) => (
+          onChange={(event) => onChange(event.target.value)}
+          value={selectedValue}>
+          {options.map((option) => (
             <option
               key={option.value}
               value={option.value}>
@@ -32,6 +35,6 @@ function Select(props) {
       </div>
     </div>
   );
-}
+});
 
 export default Select;
