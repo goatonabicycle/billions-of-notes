@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import { KEYS, OCTAVES } from "../useful";
 
@@ -20,18 +20,22 @@ const Fretboard = ({
   initialTuning,
   numberOfFrets,
 }) => {
-  const hasTuningChanged =
-    JSON.stringify(selectedTuning) !== JSON.stringify(initialTuning);
+  const hasTuningChanged = selectedTuning.some((tune, index) => {
+    return (
+      tune.note !== initialTuning[index].note ||
+      tune.octave !== initialTuning[index].octave
+    );
+  });
 
   const updateCurrentPosition = (newPosition) => {
     setCurrentPosition(newPosition);
   };
 
-  const getPreferredFretRange = () => {
+  const getPreferredFretRange = useCallback(() => {
     const startFret = preferredPosition;
     const endFret = preferredPosition + (fingerRange - 1);
     return { startFret, endFret };
-  };
+  }, [preferredPosition, fingerRange]);
 
   const [fretboard, setFretboard] = useState([]);
   const [currentPosition, setCurrentPosition] = useState({
@@ -39,14 +43,13 @@ const Fretboard = ({
     fret: 0,
   });
 
-  const getNote = (stringNote, stringOctave, fret) => {
+  const getNote = useCallback((stringNote, stringOctave, fret) => {
     let noteIndex = (KEYS.indexOf(stringNote) + fret) % KEYS.length;
     let octave =
       stringOctave +
       Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
-
     return `${KEYS[noteIndex]}${octave}`;
-  };
+  }, []);
 
   useEffect(() => {
     let newFretboard = strings.map(({ note, octave }, stringIndex) =>
@@ -66,44 +69,37 @@ const Fretboard = ({
     }
 
     const { startFret, endFret } = getPreferredFretRange();
-
-    let notesInRange = fretboard
-      .flat()
-      .filter(
-        (note) =>
-          note.note === currentNote &&
-          note.fret >= startFret &&
-          note.fret <= endFret
-      );
-
+    let minDistance = Infinity;
     let closestNote;
 
-    if (notesInRange.length > 0) {
-      closestNote = notesInRange.reduce((prev, curr) => {
-        const prevDistance =
-          Math.abs(prev.stringIndex - currentPosition.stringIndex) +
-          Math.abs(prev.fret - currentPosition.fret);
-        const currDistance =
-          Math.abs(curr.stringIndex - currentPosition.stringIndex) +
-          Math.abs(curr.fret - currentPosition.fret);
-        return currDistance < prevDistance ? curr : prev;
-      });
-    } else {
-      let potentialNotes = fretboard
-        .flat()
-        .filter((note) => note.note === currentNote);
-
-      if (potentialNotes.length > 0) {
-        closestNote = potentialNotes.reduce((prev, curr) => {
-          const prevDistance =
-            Math.abs(prev.stringIndex - currentPosition.stringIndex) +
-            Math.abs(prev.fret - currentPosition.fret);
-          const currDistance =
-            Math.abs(curr.stringIndex - currentPosition.stringIndex) +
-            Math.abs(curr.fret - currentPosition.fret);
-          return currDistance < prevDistance ? curr : prev;
-        });
+    fretboard.flat().forEach((note) => {
+      if (
+        note.note === currentNote &&
+        note.fret >= startFret &&
+        note.fret <= endFret
+      ) {
+        const distance =
+          Math.abs(note.stringIndex - currentPosition.stringIndex) +
+          Math.abs(note.fret - currentPosition.fret);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestNote = note;
+        }
       }
+    });
+
+    if (!closestNote) {
+      fretboard.flat().forEach((note) => {
+        if (note.note === currentNote) {
+          const distance =
+            Math.abs(note.stringIndex - currentPosition.stringIndex) +
+            Math.abs(note.fret - currentPosition.fret);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestNote = note;
+          }
+        }
+      });
     }
 
     updateCurrentPosition({
@@ -207,7 +203,7 @@ const Fretboard = ({
         ))}
       </div>
       <div className="fret-numbers">
-        {[...Array(numberOfFrets + 1)].map((_, i) => (
+        {Array.from({ length: numberOfFrets + 1 }, (_, i) => (
           <div
             key={i}
             className="fret-number">
