@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
@@ -19,7 +19,7 @@ const getNoteNumber = (note) => {
 const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
   const canvasRef = useRef(null);
 
-  const calculateLinePath = () => {
+  const linePath = useMemo(() => {
     const noteNumbers = notes.map(getNoteNumber);
     const validNoteNumbers = noteNumbers.filter((note) => note !== null);
 
@@ -38,7 +38,7 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
             DOT_RADIUS
           : null,
     }));
-  };
+  }, [notes]);
 
   const drawLine = (linePath, ctx) => {
     ctx.beginPath();
@@ -85,7 +85,6 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const linePath = calculateLinePath();
     if (linePath.length > 0) {
       drawLine(linePath, ctx);
       drawSecondaryLines(linePath, ctx);
@@ -97,7 +96,8 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
 
   useEffect(() => {
     animate();
-  }, [notes, activeNote]);
+  }, [linePath, activeNote]);
+
   return (
     <div
       onClick={onClick}
@@ -110,4 +110,4 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
   );
 };
 
-export default LineRenderer;
+export default React.memo(LineRenderer); // Prevent unnecessary rerenders
