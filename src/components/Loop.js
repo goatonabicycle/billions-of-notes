@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import ClickFirst from "./ClickFirst";
 import { noteToMidiNumber } from "../useful";
 
+const audioContext = new AudioContext();
+
 function calculateInterval(bpm) {
-  const millisecondsPerBeat = 60000 / bpm;
-  return millisecondsPerBeat;
+  return 60000 / bpm;
 }
 
 const LoopComponent = ({
@@ -18,23 +19,12 @@ const LoopComponent = ({
   volume,
   notePlayLength,
 }) => {
-  const [audioContext, setAudioContext] = useState(null);
+  const interval = useMemo(() => calculateInterval(bpm), [bpm]);
 
   useEffect(() => {
-    if (!audioContext) {
-      const ctx = new AudioContext();
-      setAudioContext(ctx);
-    }
+    midiSoundsRef.current.setMasterVolume(volume);
+  }, [volume]);
 
-    return () => {
-      if (audioContext) {
-        audioContext.close();
-        setAudioContext(null);
-      }
-    };
-  }, [audioContext]);
-
-  // This is what's actually playing the note.
   useEffect(() => {
     const note = notes[currentIndex];
     if (!note) return;
@@ -50,27 +40,22 @@ const LoopComponent = ({
     }
   }, [notes, currentIndex, midiSoundsRef]);
 
-  // This handles the volume magic.
   useEffect(() => {
-    midiSoundsRef.current.setMasterVolume(volume);
-  }, [volume]);
+    if (!setCurrentIndex || !notes.length) return;
 
-  useEffect(() => {
-    if (!setCurrentIndex || notes.length === 0) return;
-
-    let interval;
+    let intervalId;
     if (isPlaying) {
-      interval = setInterval(() => {
+      intervalId = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
-      }, calculateInterval(bpm));
+      }, interval);
     }
 
     return () => {
-      if (interval) {
-        clearInterval(interval);
+      if (intervalId) {
+        clearInterval(intervalId);
       }
     };
-  }, [notes, bpm, isPlaying]);
+  }, [notes, interval, isPlaying]);
 
   if (!audioContext || audioContext.state !== "running") {
     return (
