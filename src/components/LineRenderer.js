@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useRef, useMemo, useCallback } from "react";
 import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
@@ -10,7 +10,6 @@ const SECONDARY_LINE_COLOUR = "rgba(255, 255, 255, 0.2)";
 
 const getNoteNumber = (note) => {
   if (note === "") return null;
-
   const octave = parseInt(note.slice(-1)) + 1;
   const noteName = note.slice(0, -1);
   return octave * 12 + KEYS.indexOf(noteName);
@@ -40,27 +39,29 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
     }));
   }, [notes]);
 
-  const drawLine = (linePath, ctx) => {
-    ctx.beginPath();
-    linePath.forEach((point, i) => {
-      if (point.y !== null) {
-        if (i === 0) ctx.moveTo(point.x, point.y);
-        else ctx.lineTo(point.x, point.y);
+  const drawLine = useCallback(
+    (linePath, ctx) => {
+      ctx.beginPath();
+      linePath.forEach((point, i) => {
+        if (point.y !== null) {
+          if (i === 0) ctx.moveTo(point.x, point.y);
+          else ctx.lineTo(point.x, point.y);
 
-        ctx.arc(point.x, point.y, EDGE_DOT_RADIUS, 0, 2 * Math.PI);
-        ctx.fillStyle = colour;
-        ctx.fill();
-      }
-    });
+          ctx.arc(point.x, point.y, EDGE_DOT_RADIUS, 0, 2 * Math.PI);
+          ctx.fillStyle = colour;
+          ctx.fill();
+        }
+      });
 
-    // Go back to the first point
-    if (linePath.filter((point) => point.y !== null).length <= 6)
-      ctx.lineTo(linePath[0].x, linePath[0].y);
-    ctx.strokeStyle = LINE_COLOUR;
-    ctx.stroke();
-  };
+      if (linePath.filter((point) => point.y !== null).length <= 6)
+        ctx.lineTo(linePath[0].x, linePath[0].y);
+      ctx.strokeStyle = LINE_COLOUR;
+      ctx.stroke();
+    },
+    [colour]
+  );
 
-  const drawSecondaryLines = (linePath, ctx) => {
+  const drawSecondaryLines = useCallback((linePath, ctx) => {
     ctx.strokeStyle = SECONDARY_LINE_COLOUR;
     const validPoints = linePath.filter((point) => point.y !== null);
     validPoints.slice(1).forEach((point) => {
@@ -69,18 +70,18 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
       ctx.lineTo(point.x, point.y);
       ctx.stroke();
     });
-  };
+  }, []);
 
-  const drawAnimationDot = (dotPosition, ctx) => {
+  const drawAnimationDot = useCallback((dotPosition, ctx) => {
     if (dotPosition && dotPosition.y !== null) {
       ctx.beginPath();
       ctx.arc(dotPosition.x, dotPosition.y, DOT_RADIUS, 0, 2 * Math.PI);
       ctx.fillStyle = ANIMATION_DOT_COLOUR;
       ctx.fill();
     }
-  };
+  }, []);
 
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -92,11 +93,11 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
     }
 
     requestAnimationFrame(animate);
-  };
+  }, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot]);
 
   useEffect(() => {
     animate();
-  }, [linePath, activeNote]);
+  }, [animate]);
 
   return (
     <div
@@ -110,4 +111,4 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
   );
 };
 
-export default React.memo(LineRenderer); // Prevent unnecessary rerenders
+export default React.memo(LineRenderer);

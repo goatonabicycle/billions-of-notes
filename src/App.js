@@ -199,7 +199,6 @@ function App() {
     incrementCount(selectedNumberOfNotes);
 
     const randomColour = randomRGBA();
-    console.log("setting the current colour to ", randomColour);
     setCurrentColour(randomColour);
   }, [
     selectedKey,
