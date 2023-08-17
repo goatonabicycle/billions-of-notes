@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import { useLocalStorage } from "../useLocalStorage";
 import {
@@ -14,7 +14,7 @@ import Fretboard from "./Fretboard";
 
 import "./Guitar.css";
 
-const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
+const BassGuitar = React.memo(({ notesToPlay, playbackIndex, scaleNotes }) => {
   const [selectedPosition, setSelectedPosition] = useLocalStorage(
     "selectedBassPosition",
     DEFAULT_POSITION
@@ -40,6 +40,26 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
   let strings = selectedBassTuning.slice(0, selectedNumberOfBassStrings);
 
+  const handleSelectedPositionChange = useCallback(
+    (e) => setSelectedPosition(parseInt(e.target.value, 10)),
+    [setSelectedPosition]
+  );
+
+  const handleSelectedFingerRangeChange = useCallback(
+    (e) => setSelectedFingerRange(parseInt(e.target.value, 10)),
+    [setSelectedFingerRange]
+  );
+
+  const handleSelectedNumberOfBassStringsChange = useCallback(
+    (e) => setSelectedNumberOfBassStrings(parseInt(e.target.value, 10)),
+    [setSelectedNumberOfBassStrings]
+  );
+
+  const handleNumberOfBassFretsChange = useCallback(
+    (e) => setNumberOfBassFrets(parseInt(e.target.value, 10)),
+    [setNumberOfBassFrets]
+  );
+
   return (
     <div className="guitar-container doodle-border">
       {"Bass Guitar"}
@@ -53,9 +73,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={selectedPosition}
-          onChange={(e) => {
-            setSelectedPosition(parseInt(e.target.value, 10));
-          }}
+          onChange={handleSelectedPositionChange}
         />
 
         <Slider
@@ -66,9 +84,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={selectedFingerRange}
-          onChange={(e) => {
-            setSelectedFingerRange(parseInt(e.target.value, 10));
-          }}
+          onChange={handleSelectedFingerRangeChange}
         />
 
         <Slider
@@ -79,9 +95,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={selectedNumberOfBassStrings}
-          onChange={(e) => {
-            setSelectedNumberOfBassStrings(parseInt(e.target.value, 10));
-          }}
+          onChange={handleSelectedNumberOfBassStringsChange}
         />
 
         <Slider
@@ -92,9 +106,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={numberOfBassFrets}
-          onChange={(e) => {
-            setNumberOfBassFrets(parseInt(e.target.value, 10));
-          }}
+          onChange={handleNumberOfBassFretsChange}
         />
       </div>
       <Fretboard
@@ -111,6 +123,6 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
       />
     </div>
   );
-};
+});
 
 export default BassGuitar;
