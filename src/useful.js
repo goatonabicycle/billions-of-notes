@@ -114,6 +114,8 @@ export const shuffleArray = (array) => {
 };
 
 export function noteToMidiNumber(note) {
+  if (!note) return;
+
   const keyNumber = note.slice(0, -1);
   const octave = note.slice(-1);
 
