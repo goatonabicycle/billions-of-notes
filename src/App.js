@@ -31,7 +31,6 @@ import OctaveSelector from "./components/OctaveSelector";
 import Loop from "./components/Loop";
 import SaveToMidi from "./components/SaveToMidi";
 import LineRenderer from "./components/LineRenderer";
-import MessageBox from "./components/MessageBox";
 import Counter from "./components/Counter";
 import KofiButton from "./components/KofiButton";
 import IconButton from "./components/IconButton";
@@ -43,6 +42,8 @@ import BassGuitar from "./components/BassGuitar";
 import ShowMeSelector from "./components/ShowMeSelector";
 import ExplainButton from "./components/ExplainButton";
 import Piano from "./components/Piano";
+import Title from "./components/Title";
+import MessageBoxes from "./components/MessageBoxes";
 
 import {
   ShareIcon,
@@ -57,7 +58,6 @@ import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import Title from "./components/Title";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -496,31 +496,9 @@ function App() {
             />
           </div>
 
-          <div className="messages">
-            <MessageBox
-              showWhen={selectedTempo === 0}
-              message={
-                "Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"
-              }
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "1"}
-              message={"Uhm... Yes. That's a note. Amazing!"}
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes === "69"}
-              message={"Nice!"}
-            />
-            <MessageBox
-              showWhen={selectedNumberOfNotes > 200}
-              message={"That... is a lot of notes!"}
-            />
-
-            <MessageBox
-              showWhen={selectedTempo > "700"}
-              message={"That's an insane amount of tempo!?! Can you handle it?"}
-            />
-          </div>
+          <MessageBoxes
+            selectedTempo={selectedTempo}
+            selectedNumberOfNotes={selectedNumberOfNotes}></MessageBoxes>
 
           <NotesInScale
             notesInScale={notesInScale}
