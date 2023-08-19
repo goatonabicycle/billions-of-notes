@@ -17,3 +17,9 @@
   background-color: transparent;
   z-index: 9999;
 }
+
+.kofi-iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
