@@ -350,7 +350,7 @@ function App() {
               id="numOfNotesSelect"
               label="Notes:"
               options={useMemo(() => {
-                const notes = Array.from({ length: 500 }, (_, i) => i + 1);
+                const notes = Array.from({ length: 40 }, (_, i) => i + 1);
                 return mapToSelectOptions(notes);
               }, [])}
               onChange={setSelectedNumberOfNotes}
