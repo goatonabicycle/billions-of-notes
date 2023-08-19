@@ -1,12 +1,12 @@
-import React from "react";
+import React, { memo } from "react";
 
-function Counter({ count }) {
+const Counter = memo(function Counter({ count }) {
   return (
     <div className="total-notes">
       Total notes generated:{" "}
       {<span className="number">{count || "Loading..."}</span>}
     </div>
   );
-}
+});
 
 export default Counter;
