@@ -27,13 +27,12 @@ import { useCount } from "./useCount";
 
 import Select from "./components/Select";
 import Slider from "./components/Slider";
-import OctaveSelector from "./components/OctaveSelector";
+
 import Loop from "./components/Loop";
 import SaveToMidi from "./components/SaveToMidi";
 import LineRenderer from "./components/LineRenderer";
 import Counter from "./components/Counter";
 import KofiButton from "./components/KofiButton";
-import IconButton from "./components/IconButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesInScale from "./components/NotesInScale";
 import NotesGrid from "./components/NotesGrid";
@@ -44,15 +43,8 @@ import ExplainButton from "./components/ExplainButton";
 import Piano from "./components/Piano";
 import Title from "./components/Title";
 import MessageBoxes from "./components/MessageBoxes";
-
-import {
-  ShareIcon,
-  SaveIcon,
-  NewNotesIcon,
-  PauseIcon,
-  PlayIcon,
-  ResetIcon,
-} from "./components/Icons";
+import ButtonBlock from "./components/ButtonBlock";
+import SelectInputGrid from "./components/SelectInputGrid";
 
 import "./App.css";
 import "./Buttons.css";
@@ -327,59 +319,21 @@ function App() {
           </div>
         </div>
         <div className="selects">
-          <div className="select-grid">
-            <Select
-              id="keySelect"
-              label="Key:"
-              options={useMemo(() => {
-                return mapToSelectOptions(KEYS);
-              }, [])}
-              onChange={setSelectedKey}
-              selectedValue={selectedKey}
-            />
+          <SelectInputGrid
+            KEYS={KEYS}
+            scales={scales}
+            selectedKey={selectedKey}
+            setSelectedKey={setSelectedKey}
+            selectedScale={selectedScale}
+            setSelectedScale={setSelectedScale}
+            selectedNumberOfNotes={selectedNumberOfNotes}
+            setSelectedNumberOfNotes={setSelectedNumberOfNotes}
+            selectedEmptyNotes={selectedEmptyNotes}
+            setSelectedEmptyNotes={setSelectedEmptyNotes}
+            selectedOctaves={selectedOctaves}
+            setSelectedOctaves={setSelectedOctaves}
+          />
 
-            <Select
-              id="ScaleSelect"
-              label="Scale:"
-              options={useMemo(() => mapToSelectOptions(scales), [scales])}
-              onChange={setSelectedScale}
-              selectedValue={selectedScale}
-            />
-
-            <Select
-              id="numOfNotesSelect"
-              label="Notes:"
-              options={useMemo(() => {
-                const notes = Array.from({ length: 40 }, (_, i) => i + 1);
-                return mapToSelectOptions(notes);
-              }, [])}
-              onChange={setSelectedNumberOfNotes}
-              selectedValue={selectedNumberOfNotes}
-            />
-
-            <Select
-              id="mixEmptySelect"
-              label="Empty notes:"
-              options={useMemo(() => {
-                const maxEmptyNotes = Math.max(
-                  0,
-                  parseInt(selectedNumberOfNotes) - 3
-                );
-                const emptyNotesOptions = Array.from(
-                  { length: maxEmptyNotes + 1 },
-                  (_, i) => i
-                );
-                return mapToSelectOptions(emptyNotesOptions);
-              }, [selectedNumberOfNotes])}
-              onChange={setSelectedEmptyNotes}
-              selectedValue={selectedEmptyNotes}
-            />
-
-            <OctaveSelector
-              selectedOctaves={selectedOctaves}
-              setSelectedOctaves={setSelectedOctaves}
-            />
-          </div>
           <div className="select-grid">
             <ShowMeSelector
               selectedPanelsToShow={selectedPanelsToShow}
@@ -436,65 +390,23 @@ function App() {
             />
           </div>
 
-          <div className="buttons">
-            <IconButton
-              icon={NewNotesIcon}
-              onClick={() => {
-                setTriggerRegenerate(!triggerRegenerate);
-              }}
-              text="New notes"
-            />
-
-            <IconButton
-              text={isPlaying ? "Pause" : "Play"}
-              icon={isPlaying ? PauseIcon : PlayIcon}
-              onClick={() => {
-                setIsPlaying(!isPlaying);
-              }}
-            />
-
-            <IconButton
-              onClick={resetInputs}
-              icon={ResetIcon}
-              text="Reset inputs"
-            />
-
-            <IconButton
-              onClick={() => {
-                const url = new URL(window.location.href);
-                const inputs = [
-                  selectedKey,
-                  selectedScale,
-                  selectedNumberOfNotes,
-                  selectedTempo,
-                  selectedInstrument,
-                ].join(",");
-                url.searchParams.set("inputs", inputs);
-                url.searchParams.set("octaves", selectedOctaves.join(","));
-                url.searchParams.set(
-                  "notes",
-                  encodeURIComponent(randomNotes.join(","))
-                );
-
-                navigator.clipboard.writeText(url.toString());
-                setShareButtonText("Link copied!");
-
-                setTimeout(() => {
-                  setShareButtonText("Share these notes");
-                }, 2000);
-              }}
-              text={shareButtonText}
-              icon={ShareIcon}
-            />
-
-            <IconButton
-              onClick={() => {
-                SaveToMidi(randomNotes, selectedTempo);
-              }}
-              icon={SaveIcon}
-              text="Save as MIDI"
-            />
-          </div>
+          <ButtonBlock
+            setTriggerRegenerate={setTriggerRegenerate}
+            triggerRegenerate={triggerRegenerate}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            resetInputs={resetInputs}
+            selectedKey={selectedKey}
+            selectedScale={selectedScale}
+            selectedNumberOfNotes={selectedNumberOfNotes}
+            selectedTempo={selectedTempo}
+            selectedInstrument={selectedInstrument}
+            selectedOctaves={selectedOctaves}
+            randomNotes={randomNotes}
+            setShareButtonText={setShareButtonText}
+            shareButtonText={shareButtonText}
+            SaveToMidi={SaveToMidi}
+          />
 
           <MessageBoxes
             selectedTempo={selectedTempo}

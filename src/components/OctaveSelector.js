@@ -1,23 +1,24 @@
-import React from "react";
-
+import React, { useCallback } from "react";
 import "./OctaveSelector.css";
-
 import { OCTAVES } from "../useful";
 
 const OctaveSelector = ({ selectedOctaves, setSelectedOctaves }) => {
-  const handleChange = (event) => {
-    const value = parseInt(event.target.value);
+  const handleChange = useCallback(
+    (event) => {
+      const value = parseInt(event.target.value);
 
-    if (event.target.checked) {
-      setSelectedOctaves((prevOctaves) => [...prevOctaves, value].sort());
-    } else {
-      setSelectedOctaves((prevOctaves) =>
-        prevOctaves.length > 1
-          ? prevOctaves.filter((octave) => octave !== value)
-          : prevOctaves
-      );
-    }
-  };
+      if (event.target.checked) {
+        setSelectedOctaves((prevOctaves) => [...prevOctaves, value].sort());
+      } else {
+        setSelectedOctaves((prevOctaves) =>
+          prevOctaves.length > 1
+            ? prevOctaves.filter((octave) => octave !== value)
+            : prevOctaves
+        );
+      }
+    },
+    [setSelectedOctaves]
+  );
 
   return (
     <div className="octave-selector">

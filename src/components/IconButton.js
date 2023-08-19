@@ -1,4 +1,6 @@
-function IconButton({ icon, onClick, text }) {
+import React, { memo } from "react";
+
+const IconButton = memo(function IconButton({ icon, onClick, text }) {
   return (
     <span className="icon-button">
       <button
@@ -8,6 +10,6 @@ function IconButton({ icon, onClick, text }) {
       </button>
     </span>
   );
-}
+});
 
 export default IconButton;
