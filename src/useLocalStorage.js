@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useLocalStorage(key, initialValue) {
+export function useStorage(key, initialValue) {
   // Get from local storage then
   // parse stored json or if none return initialValue
   const readValue = () => {

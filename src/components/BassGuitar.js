@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import { useLocalStorage } from "../useLocalStorage";
+import { useStorage } from "../useLocalStorage";
 import {
   DEFAULT_POSITION,
   DEFAULT_FINGER_RANGE,
@@ -15,25 +15,25 @@ import Fretboard from "./Fretboard";
 import "./Guitar.css";
 
 const BassGuitar = React.memo(({ notesToPlay, playbackIndex, scaleNotes }) => {
-  const [selectedPosition, setSelectedPosition] = useLocalStorage(
+  const [selectedPosition, setSelectedPosition] = useStorage(
     "selectedBassPosition",
     DEFAULT_POSITION
   );
 
-  const [selectedFingerRange, setSelectedFingerRange] = useLocalStorage(
+  const [selectedFingerRange, setSelectedFingerRange] = useStorage(
     "selectedBassFingerRange",
     DEFAULT_FINGER_RANGE
   );
 
   const [selectedNumberOfBassStrings, setSelectedNumberOfBassStrings] =
-    useLocalStorage("selectedBassStrings", DEFAULT_NUMBER_OF_BASS_STRINGS);
+    useStorage("selectedBassStrings", DEFAULT_NUMBER_OF_BASS_STRINGS);
 
-  const [selectedBassTuning, setSelectedBassTuning] = useLocalStorage(
+  const [selectedBassTuning, setSelectedBassTuning] = useStorage(
     "selectedBassTuning",
     INITIAL_BASS_TUNING
   );
 
-  const [numberOfBassFrets, setNumberOfBassFrets] = useLocalStorage(
+  const [numberOfBassFrets, setNumberOfBassFrets] = useStorage(
     "numberOfBassFrets",
     DEFAULT_NUMBER_OF_BASS_FRETS
   );

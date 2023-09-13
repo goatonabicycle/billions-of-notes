@@ -5,6 +5,9 @@
   - The localstorage idea isn't working anymore. Reloading a page after changing any of inputs reset it back to the initial state. 
   - Right now, the theming for dark mode sucks so much that it seems broken.
   - Changing the tuning of the guitar component does not result in the "reset tuning" button showing up immediately (It does after reloading though. Skill/state issue.)
+  - Play pause isn't working at the moment. :O 
+  - Check share. 
+  - Ghost note when a request gets made to update the "Total notes generated" count.
 
 # Do mode:
 
@@ -34,7 +37,3 @@
 - More interesting visualizations of the generated notes. Perhaps the pattern followed on the current fretboard?
 - Add a circle of 5ths
 - Add a vertical piano roll with the notes coming down from the top.
-
-There are a couple of bugs. 
-- check the storage hook. 
-- check share. 

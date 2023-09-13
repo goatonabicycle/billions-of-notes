@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useLocalStorage } from "../useLocalStorage";
+import { useStorage } from "../useLocalStorage";
 import {
   DEFAULT_POSITION,
   DEFAULT_FINGER_RANGE,
@@ -15,25 +15,25 @@ import Fretboard from "./Fretboard";
 import "./Guitar.css";
 
 const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
-  const [selectedPosition, setSelectedPosition] = useLocalStorage(
+  const [selectedPosition, setSelectedPosition] = useStorage(
     "selectedPosition",
     DEFAULT_POSITION
   );
 
-  const [selectedFingerRange, setSelectedFingerRange] = useLocalStorage(
+  const [selectedFingerRange, setSelectedFingerRange] = useStorage(
     "selectedFingerRange",
     DEFAULT_FINGER_RANGE
   );
 
   const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] =
-    useLocalStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
+    useStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
 
-  const [numberOfGuitarFrets, setNumberOfGuitarFrets] = useLocalStorage(
+  const [numberOfGuitarFrets, setNumberOfGuitarFrets] = useStorage(
     "numberOfGuitarFrets",
     DEFAULT_NUMBER_OF_GUITAR_FRETS
   );
 
-  const [selectedTuning, setSelectedTuning] = useLocalStorage(
+  const [selectedTuning, setSelectedTuning] = useStorage(
     "selectedTuning",
     INITIAL_GUITAR_TUNING
   );

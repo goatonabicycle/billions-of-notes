@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Note, Scale } from "tonal";
 import MIDISounds from "midi-sounds-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,12 +8,9 @@ import {
   DEFAULT_TEMPO,
   DEFAULT_NUMBER_OF_NOTES,
   KEYS,
-  mapToSelectOptions,
   DEFAULT_OCTAVES,
   FLAT_TO_SHARP,
   DEFAULT_INSTRUMENT,
-  mapObjectToSelectOptionsWithValues,
-  INSTRUMENTS,
   DEFAULT_VOLUME,
   shuffleArray,
   DEFAULT_PANELS_TO_SHOW,
@@ -22,85 +19,76 @@ import {
   DEFAULT_NOTE_LENGTH,
   randomRGBA,
 } from "./useful";
-import { useLocalStorage } from "./useLocalStorage";
+import { useStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
-
-import Select from "./components/Select";
-import Slider from "./components/Slider";
 
 import Loop from "./components/Loop";
 import SaveToMidi from "./components/SaveToMidi";
-import LineRenderer from "./components/LineRenderer";
-import Counter from "./components/Counter";
-import KofiButton from "./components/KofiButton";
 import NotesUsed from "./components/NotesUsed";
 import NotesInScale from "./components/NotesInScale";
 import NotesGrid from "./components/NotesGrid";
 import Guitar from "./components/Guitar";
 import BassGuitar from "./components/BassGuitar";
-import ShowMeSelector from "./components/ShowMeSelector";
-import ExplainButton from "./components/ExplainButton";
 import Piano from "./components/Piano";
-import Title from "./components/Title";
 import MessageBoxes from "./components/MessageBoxes";
 import ButtonBlock from "./components/ButtonBlock";
+
 import SelectInputGrid from "./components/SelectInputGrid";
+import SelectControlsGrid from "./components/SelectControlsGrid";
 
 import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
+import TitleArea from "./components/TitleArea";
 
 function App() {
   const { count, incrementCount } = useCount();
   const scales = Scale.names();
 
-  const [selectedKey, setSelectedKey] = useLocalStorage(
-    "selectedKey",
-    DEFAULT_KEY
-  );
+  const [selectedKey, setSelectedKey] = useStorage("selectedKey", DEFAULT_KEY);
 
-  const [selectedScale, setSelectedScale] = useLocalStorage(
+  const [selectedScale, setSelectedScale] = useStorage(
     "selectedScale",
     DEFAULT_SCALE
   );
 
-  const [selectedTempo, setSelectedTempo] = useLocalStorage(
+  const [selectedTempo, setSelectedTempo] = useStorage(
     "selectedTempo",
     DEFAULT_TEMPO
   );
 
-  const [selectedVolume, setSelectedVolume] = useLocalStorage(
+  const [selectedVolume, setSelectedVolume] = useStorage(
     "selectedVolume",
     DEFAULT_VOLUME
   );
 
-  const [selectedInstrument, setSelectedInstrument] = useLocalStorage(
+  const [selectedInstrument, setSelectedInstrument] = useStorage(
     "selectedInstrument",
     DEFAULT_INSTRUMENT
   );
 
-  const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useLocalStorage(
+  const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useStorage(
     "selectedNumberOfNotes",
     DEFAULT_NUMBER_OF_NOTES
   );
 
-  const [selectedOctaves, setSelectedOctaves] = useLocalStorage(
+  const [selectedOctaves, setSelectedOctaves] = useStorage(
     "selectedOctaves",
     DEFAULT_OCTAVES
   );
 
-  const [selectedPanelsToShow, setSelectedPanelsToShow] = useLocalStorage(
+  const [selectedPanelsToShow, setSelectedPanelsToShow] = useStorage(
     "selectedPanelsToShow",
     DEFAULT_PANELS_TO_SHOW
   );
 
-  const [selectedEmptyNotes, setSelectedEmptyNotes] = useLocalStorage(
+  const [selectedEmptyNotes, setSelectedEmptyNotes] = useStorage(
     "selectedEmptyNotes",
     DEFAULT_EMPTY_NOTES
   );
 
-  const [selectedNoteLength, setSelectedNoteLength] = useLocalStorage(
+  const [selectedNoteLength, setSelectedNoteLength] = useStorage(
     "selectedNoteLength",
     DEFAULT_NOTE_LENGTH
   );
@@ -266,10 +254,6 @@ function App() {
     };
   });
 
-  const getInstruments = () => {
-    return INSTRUMENTS;
-  };
-
   return (
     <div className="App">
       <button
@@ -279,45 +263,17 @@ function App() {
       </button>
       <div className={`App-inputs ${isInputHidden ? "hidden" : ""}`}>
         <div className="title doodle-border">
-          <h1>
-            <Title selectedTempo={selectedTempo} />
-          </h1>
-          <div className="fun-things">
-            <LineRenderer
-              onClick={() => {
-                setTriggerRegenerate(!triggerRegenerate);
-              }}
-              colour={currentColour}
-              notes={randomNotes}
-              tempo={selectedTempo}
-              activeNote={currentIndex}
-            />
-            <Counter count={count} />
-
-            <div className="tiny-links">
-              <a
-                href="https://github.com/goatonabicycle/billions-of-notes"
-                target="_blank"
-                className="source-code"
-                rel="noreferrer">
-                Source code
-              </a>
-              {"|"}
-              <ExplainButton />
-              {"|"}
-              <KofiButton />
-
-              {"|"}
-              <button
-                className="link-looking-button"
-                onClick={() => {
-                  document.body.classList.toggle("light-mode");
-                }}>
-                Toggle theme
-              </button>
-            </div>
-          </div>
+          <TitleArea
+            selectedTempo={selectedTempo}
+            setTriggerRegenerate={setTriggerRegenerate}
+            triggerRegenerate={triggerRegenerate}
+            currentColour={currentColour}
+            randomNotes={randomNotes}
+            currentIndex={currentIndex}
+            count={count}
+          />
         </div>
+
         <div className="selects">
           <SelectInputGrid
             KEYS={KEYS}
@@ -334,61 +290,18 @@ function App() {
             setSelectedOctaves={setSelectedOctaves}
           />
 
-          <div className="select-grid">
-            <ShowMeSelector
-              selectedPanelsToShow={selectedPanelsToShow}
-              setSelectedPanelsToShow={setSelectedPanelsToShow}
-            />
-
-            <Slider
-              id="tempoSlider"
-              label="Tempo"
-              min="0"
-              max="700"
-              step="5"
-              editable={true}
-              value={selectedTempo}
-              onChange={(e) => {
-                setSelectedTempo(parseInt(e.target.value, 10));
-              }}
-            />
-
-            <Slider
-              id="volumeSlider"
-              label="Volume"
-              min="0"
-              max="100"
-              step="1"
-              editable={false}
-              value={selectedVolume}
-              onChange={(e) => {
-                setSelectedVolume(parseInt(e.target.value, 10));
-              }}
-            />
-
-            <Slider
-              id="noteLengthSlider"
-              label="Note Length"
-              min="1"
-              max="10"
-              step="1"
-              editable={false}
-              value={selectedNoteLength}
-              onChange={(e) => {
-                setSelectedNoteLength(parseInt(e.target.value, 10));
-              }}
-            />
-
-            <Select
-              id="instrumentSelect"
-              label="Sounds:"
-              options={useMemo(() => {
-                return mapObjectToSelectOptionsWithValues(getInstruments());
-              }, [])}
-              onChange={setSelectedInstrument}
-              selectedValue={selectedInstrument}
-            />
-          </div>
+          <SelectControlsGrid
+            selectedPanelsToShow={selectedPanelsToShow}
+            setSelectedPanelsToShow={setSelectedPanelsToShow}
+            selectedTempo={selectedTempo}
+            setSelectedTempo={setSelectedTempo}
+            selectedVolume={selectedVolume}
+            setSelectedVolume={setSelectedVolume}
+            selectedNoteLength={selectedNoteLength}
+            setSelectedNoteLength={setSelectedNoteLength}
+            selectedInstrument={selectedInstrument}
+            setSelectedInstrument={setSelectedInstrument}
+          />
 
           <ButtonBlock
             setTriggerRegenerate={setTriggerRegenerate}
