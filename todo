@@ -1,16 +1,17 @@
 ## Todo
 
 # BUGS!!!
-  - Occasionally, the Guitar (and likely the bass) component does not show any notes being played. Other components do seem to have notes though. 
-  - The localstorage idea isn't working anymore. Reloading a page after changing any of inputs reset it back to the initial state. 
-  - Right now, the theming for dark mode sucks so much that it seems broken.
-  - Changing the tuning of the guitar component does not result in the "reset tuning" button showing up immediately (It does after reloading though. Skill/state issue.)
   - Play pause isn't working at the moment. :O 
-  - Check share. 
+  - Occasionally, the Guitar (and likely the bass) component does not show any notes being played. Other components do seem to have notes though. This seems to happen when deselecting the guitar component and reselecting it in the "Show me" control.
+  - The localstorage idea isn't working anymore. Reloading a page after changing any of inputs reset it back to the initial state. 
+  - Sharing isn't working as intended. Probably related to how storage is handled. 
+  - Changing the tuning of the guitar component does not result in the "reset tuning" button showing up immediately (It does after reloading though. Skill/state issue.)
   - Ghost note when a request gets made to update the "Total notes generated" count.
+  - Right now, the theming for dark mode sucks so much that it seems broken.
 
 # Do mode:
 
+- There are many unnecessary rerenders happening. I should be able to optimize this.
 - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
 - Add many more random interactive messages. Make this more prominent and obvious.
 - Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
