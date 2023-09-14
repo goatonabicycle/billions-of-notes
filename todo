@@ -1,7 +1,6 @@
 ## Todo
 
-# BUGS!!!
-  - Play pause isn't working at the moment. :O 
+# BUGS!!!  
   - Occasionally, the Guitar (and likely the bass) component does not show any notes being played. Other components do seem to have notes though. This seems to happen when deselecting the guitar component and reselecting it in the "Show me" control.
   - The localstorage idea isn't working anymore. Reloading a page after changing any of inputs reset it back to the initial state. 
   - Sharing isn't working as intended. Probably related to how storage is handled. 

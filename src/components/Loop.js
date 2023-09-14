@@ -31,7 +31,7 @@ const LoopComponent = ({
   }, [volume]);
 
   useEffect(() => {
-    if (!midiNumber) return;
+    if (!midiNumber || !isPlaying) return;
     if (audioContext && audioContext.state === "running") {
       midiSoundsRef.current.playChordNow(
         instrument,
@@ -39,7 +39,7 @@ const LoopComponent = ({
         notePlayLength
       );
     }
-  }, [midiNumber, midiSoundsRef]);
+  }, [midiNumber, midiSoundsRef, isPlaying, instrument, notePlayLength]);
 
   const animateNotes = useCallback(
     (startTime) => {
@@ -62,13 +62,7 @@ const LoopComponent = ({
   );
 
   useEffect(() => {
-    if (isPlaying) {
-      animateNotes(performance.now());
-    } else {
-      cancelAnimationFrame(playNotes.current);
-    }
-
-    return () => cancelAnimationFrame(playNotes.current);
+    animateNotes(performance.now());
   }, [isPlaying, animateNotes]);
 
   if (!audioContext || audioContext.state !== "running") {
