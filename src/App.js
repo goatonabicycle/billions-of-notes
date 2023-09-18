@@ -393,6 +393,22 @@ function App() {
         volume={selectedVolume / 500}
         notePlayLength={selectedNoteLength / 10}
       />
+
+      <div className="debug-info-block">
+        isPlaying: {isPlaying.toString()}
+        <br />
+        loadedFromUrl: {loadedFromUrl}
+        <br />
+        selectedKey: {selectedKey}
+        <br />
+        selectedScale: {selectedScale}
+        <br />
+        selectedNumberOfNotes: {selectedNumberOfNotes}
+        <br />
+        selectedEmptyNotes: {selectedEmptyNotes}
+        <br />
+        selectedOctaves: {selectedOctaves}
+      </div>
     </div>
   );
 }
