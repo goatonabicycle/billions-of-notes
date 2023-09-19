@@ -69,61 +69,66 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInScale }) => {
   );
 
   return (
-    <div className="notes-grid ">
-      {allPossibleNotes.map((noteRow, rowIndex) => {
-        const octave = parseInt(noteRow.slice(-1));
-        const nextOctave = parseInt(allPossibleNotes[rowIndex + 1]?.slice(-1));
-        const noteWithoutOctave = noteRow.slice(0, -1); // Extract note without octave
-        const isSameOrNextOctave = nextOctave - octave <= 1;
-        const isLastNote = rowIndex === allPossibleNotes.length - 1;
-
-        if (isLastNote || isSameOrNextOctave) {
-          return (
-            <NoteRow
-              key={noteRow}
-              noteRow={noteRow}
-              isFillingNote={false}
-              notes={notes}
-              allNotesInScale={allNotesInScale}
-              activeIndex={activeIndex}
-              notesInScale={notesInScale}
-              noteWithoutOctave={noteWithoutOctave}
-            />
+    <>
+      {"Piano Roll"}
+      <div className="notes-grid">
+        {allPossibleNotes.map((noteRow, rowIndex) => {
+          const octave = parseInt(noteRow.slice(-1));
+          const nextOctave = parseInt(
+            allPossibleNotes[rowIndex + 1]?.slice(-1)
           );
-        }
+          const noteWithoutOctave = noteRow.slice(0, -1); // Extract note without octave
+          const isSameOrNextOctave = nextOctave - octave <= 1;
+          const isLastNote = rowIndex === allPossibleNotes.length - 1;
 
-        const spacerRowsCount = nextOctave - octave - 1;
-        const spacerRows = Array(spacerRowsCount)
-          .fill()
-          .map((_, i) => (
-            <NoteRow
-              key={`${noteWithoutOctave}${octave + i + 1}`}
-              noteRow={`${noteWithoutOctave}${octave + i + 1}`}
-              isFillingNote={true}
-              notes={notes}
-              allNotesInScale={allNotesInScale}
-              activeIndex={activeIndex}
-              notesInScale={notesInScale}
-              noteWithoutOctave={noteWithoutOctave}
-            />
-          ));
+          if (isLastNote || isSameOrNextOctave) {
+            return (
+              <NoteRow
+                key={noteRow}
+                noteRow={noteRow}
+                isFillingNote={false}
+                notes={notes}
+                allNotesInScale={allNotesInScale}
+                activeIndex={activeIndex}
+                notesInScale={notesInScale}
+                noteWithoutOctave={noteWithoutOctave}
+              />
+            );
+          }
 
-        return (
-          <React.Fragment key={noteRow}>
-            <NoteRow
-              noteRow={noteRow}
-              isFillingNote={false}
-              notes={notes}
-              allNotesInScale={allNotesInScale}
-              activeIndex={activeIndex}
-              notesInScale={notesInScale}
-              noteWithoutOctave={noteWithoutOctave}
-            />
-            {spacerRows}
-          </React.Fragment>
-        );
-      })}
-    </div>
+          const spacerRowsCount = nextOctave - octave - 1;
+          const spacerRows = Array(spacerRowsCount)
+            .fill()
+            .map((_, i) => (
+              <NoteRow
+                key={`${noteWithoutOctave}${octave + i + 1}`}
+                noteRow={`${noteWithoutOctave}${octave + i + 1}`}
+                isFillingNote={true}
+                notes={notes}
+                allNotesInScale={allNotesInScale}
+                activeIndex={activeIndex}
+                notesInScale={notesInScale}
+                noteWithoutOctave={noteWithoutOctave}
+              />
+            ));
+
+          return (
+            <React.Fragment key={noteRow}>
+              <NoteRow
+                noteRow={noteRow}
+                isFillingNote={false}
+                notes={notes}
+                allNotesInScale={allNotesInScale}
+                activeIndex={activeIndex}
+                notesInScale={notesInScale}
+                noteWithoutOctave={noteWithoutOctave}
+              />
+              {spacerRows}
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

@@ -26,21 +26,17 @@ import Loop from "./components/Loop";
 import SaveToMidi from "./components/SaveToMidi";
 import NotesUsed from "./components/NotesUsed";
 import NotesInScale from "./components/NotesInScale";
-import NotesGrid from "./components/NotesGrid";
-import Guitar from "./components/Guitar";
-import BassGuitar from "./components/BassGuitar";
-import Piano from "./components/Piano";
 import MessageBoxes from "./components/MessageBoxes";
 import ButtonBlock from "./components/ButtonBlock";
-
 import SelectInputGrid from "./components/SelectInputGrid";
 import SelectControlsGrid from "./components/SelectControlsGrid";
+import TitleArea from "./components/TitleArea";
+import ShowMePanels from "./components/ShowMePanels";
 
 import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
-import TitleArea from "./components/TitleArea";
 
 function App() {
   const { count, incrementCount } = useCount();
@@ -341,47 +337,20 @@ function App() {
         </div>
       </div>
 
-      <div className="show-me-panels">
-        {selectedPanelsToShow.includes("Guitar") && (
-          <Guitar
-            playbackIndex={currentIndex}
-            notesToPlay={randomNotes}
-            scaleNotes={notesInScale}
-          />
-        )}
-        {selectedPanelsToShow.includes("Piano Roll") && (
-          <div className="doodle-border center">
-            <>{"Piano Roll"}</>
-            <NotesGrid
-              notes={randomNotes}
-              notesInScale={notesInScale}
-              octaveRange={selectedOctaves}
-              activeIndex={currentIndex}
-            />
-          </div>
-        )}
+      <ShowMePanels
+        selectedPanelsToShow={selectedPanelsToShow}
+        currentIndex={currentIndex}
+        randomNotes={randomNotes}
+        notesInScale={notesInScale}
+        selectedOctaves={selectedOctaves}
+      />
 
-        {selectedPanelsToShow.includes("Piano") && (
-          <Piano
-            playbackIndex={currentIndex}
-            notesToPlay={randomNotes}
-            scaleNotes={notesInScale}
-          />
-        )}
-
-        {selectedPanelsToShow.includes("Bass Guitar") && (
-          <BassGuitar
-            playbackIndex={currentIndex}
-            notesToPlay={randomNotes}
-            scaleNotes={notesInScale}
-          />
-        )}
-      </div>
       <MIDISounds
         ref={midiSoundsRef}
         appElementName="root"
         instruments={[selectedInstrument]} // Add all the chosen instruments here once I know what I want.
       />
+
       <Loop
         midiSoundsRef={midiSoundsRef}
         notes={randomNotes}
