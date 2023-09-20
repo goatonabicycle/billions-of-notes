@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
 import { KEYS, OCTAVES } from "../useful";
-
 import Modal from "./Modal.js";
 import Select from "./Select";
 import { ChangeTuningIcon } from "./Icons";
@@ -20,13 +19,6 @@ const Fretboard = ({
   initialTuning,
   numberOfFrets,
 }) => {
-  const hasTuningChanged = selectedTuning.some((tune, index) => {
-    return (
-      tune.note !== initialTuning[index].note ||
-      tune.octave !== initialTuning[index].octave
-    );
-  });
-
   const updateCurrentPosition = (newPosition) => {
     setCurrentPosition(newPosition);
   };
@@ -60,6 +52,14 @@ const Fretboard = ({
       }))
     );
     setFretboard(newFretboard);
+
+    const hasTuningChanged = selectedTuning.some((tune, index) => {
+      return (
+        tune.note !== initialTuning[index].note ||
+        tune.octave !== initialTuning[index].octave
+      );
+    });
+    setHasTuningChanged(hasTuningChanged);
   }, [strings, selectedTuning, numberOfFrets]);
 
   useEffect(() => {
@@ -110,6 +110,7 @@ const Fretboard = ({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStringIndex, setModalStringIndex] = useState(null);
+  const [hasTuningChanged, setHasTuningChanged] = useState(false);
 
   return (
     <div className="fretboard-container">

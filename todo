@@ -2,9 +2,7 @@
 
 # BUGS!!!  
   - Occasionally, the Guitar (and likely the bass) component does not show any notes being played. Other components do seem to have notes though. This seems to happen when deselecting the guitar component and reselecting it in the "Show me" control.
-  - The localstorage idea isn't working anymore. Reloading a page after changing any of inputs reset it back to the initial state. 
-  - Sharing isn't working as intended. Probably related to how storage is handled. 
-  - Changing the tuning of the guitar component does not result in the "reset tuning" button showing up immediately (It does after reloading though. Skill/state issue.)
+  - Sharing isn't working as intended. Probably related to how storage is handled.   
   - Ghost note when a request gets made to update the "Total notes generated" count.
   - Right now, the theming for dark mode sucks so much that it seems broken.
   - Don't have so many different states. Have a single state with an object. 
