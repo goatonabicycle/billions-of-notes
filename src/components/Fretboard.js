@@ -102,11 +102,20 @@ const Fretboard = ({
       });
     }
 
-    updateCurrentPosition({
-      stringIndex: closestNote && closestNote.stringIndex,
-      fret: closestNote && closestNote.fret,
-    });
-  }, [fretboard, notesToPlay, playbackIndex, preferredPosition]);
+    if (closestNote) {
+      updateCurrentPosition({
+        stringIndex: closestNote.stringIndex,
+        fret: closestNote.fret,
+      });
+    }
+  }, [
+    fretboard,
+    notesToPlay,
+    playbackIndex,
+    preferredPosition,
+    currentPosition,
+    getPreferredFretRange,
+  ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStringIndex, setModalStringIndex] = useState(null);
