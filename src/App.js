@@ -363,7 +363,7 @@ function App() {
         notePlayLength={selectedNoteLength / 10}
       />
 
-      <div className="debug-info-block">
+      {/* <div className="debug-info-block">
         isPlaying: {isPlaying.toString()}
         <br />
         loadedFromUrl: {loadedFromUrl}
@@ -377,7 +377,7 @@ function App() {
         selectedEmptyNotes: {selectedEmptyNotes}
         <br />
         selectedOctaves: {selectedOctaves}
-      </div>
+      </div> */}
     </div>
   );
 }
