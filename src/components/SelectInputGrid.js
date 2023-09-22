@@ -1,19 +1,12 @@
-import React, { useMemo, memo, useCallback } from "react";
+import React, { useMemo, memo } from "react";
 import Select from "./Select";
 import OctaveSelector from "./OctaveSelector";
 import { mapToSelectOptions } from "../useful";
 
 const SelectInputGrid = memo(
-  ({
-    KEYS,
-    scales,
-    selectedOctaves,
-    setSelectedOctaves,
-    inputState,
-    handleInputChange,
-  }) => {
-    const keyOptions = useMemo(() => mapToSelectOptions(KEYS), []);
-    const scaleOptions = useMemo(() => mapToSelectOptions(scales), []);
+  ({ KEYS, scales, inputState, setInputState, handleInputChange }) => {
+    const keyOptions = useMemo(() => mapToSelectOptions(KEYS), [KEYS]);
+    const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
     const notesOptions = useMemo(() => {
       const notes = Array.from({ length: 40 }, (_, i) => i + 1);
       return mapToSelectOptions(notes);
@@ -66,8 +59,8 @@ const SelectInputGrid = memo(
         />
 
         <OctaveSelector
-          selectedOctaves={selectedOctaves}
-          setSelectedOctaves={setSelectedOctaves}
+          inputState={inputState}
+          setInputState={setInputState}
         />
       </div>
     );

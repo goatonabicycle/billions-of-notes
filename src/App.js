@@ -48,16 +48,20 @@ function App() {
     numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
     emptyNotes: DEFAULT_EMPTY_NOTES,
     instrument: DEFAULT_INSTRUMENT,
+    octaves: DEFAULT_OCTAVES,
   });
 
-  const handleInputChange = (e) => {
-    setInputState({
-      ...inputState,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleInputChange = useCallback(
+    (event) => {
+      setInputState((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value,
+      }));
+    },
+    [setInputState]
+  );
 
-  // ------------------------------------
+  // Replace all these states to use the more general mechanism
 
   const [selectedTempo, setSelectedTempo] = useStorage(
     "selectedTempo",
@@ -69,15 +73,10 @@ function App() {
     DEFAULT_VOLUME
   );
 
-  // const [selectedInstrument, setSelectedInstrument] = useStorage(
-  //   "selectedInstrument",
-  //   DEFAULT_INSTRUMENT
+  // const [selectedOctaves, setSelectedOctaves] = useStorage(
+  //   "selectedOctaves",
+  //   DEFAULT_OCTAVES
   // );
-
-  const [selectedOctaves, setSelectedOctaves] = useStorage(
-    "selectedOctaves",
-    DEFAULT_OCTAVES
-  );
 
   const [selectedPanelsToShow, setSelectedPanelsToShow] = useStorage(
     "selectedPanelsToShow",
@@ -111,19 +110,15 @@ function App() {
       numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
       emptyNotes: DEFAULT_EMPTY_NOTES,
       instrument: DEFAULT_INSTRUMENT,
+      octaves: DEFAULT_OCTAVES,
     });
 
-    setSelectedOctaves(DEFAULT_OCTAVES);
     setSelectedTempo(DEFAULT_TEMPO);
-  }, [
-    setCurrentIndex,
-    setSelectedOctaves,
-    setSelectedTempo,
-    setInputState,
-    inputState,
-  ]);
+  }, [setCurrentIndex, setSelectedTempo, setInputState, inputState]);
 
   useEffect(() => {
+    if (!inputState) return;
+
     if (loadedFromUrl) {
       setLoadedFromUrl(false);
       navigate(".", { replace: true });
@@ -154,7 +149,9 @@ function App() {
       const randomNote =
         notesInScale[Math.floor(Math.random() * notesInScale.length)];
       const randomOctave =
-        selectedOctaves[Math.floor(Math.random() * selectedOctaves.length)];
+        inputState.octaves[
+          Math.floor(Math.random() * inputState.octaves.length)
+        ];
       randomNotes.push(`${randomNote}${randomOctave}`);
     }
 
@@ -178,9 +175,10 @@ function App() {
 
     const randomColour = randomRGBA();
     setCurrentColour(randomColour);
-  }, [inputState, selectedOctaves, triggerRegenerate, loadedFromUrl, navigate]);
+  }, [inputState, triggerRegenerate, loadedFromUrl, navigate]);
 
   useEffect(() => {
+    if (!inputState) return;
     const maxEmptyNotes = Math.max(0, parseInt(inputState.numberOfNotes) - 3);
     if (parseInt(inputState.emptyNotes) > maxEmptyNotes) {
       setInputState({
@@ -215,7 +213,10 @@ function App() {
 
     const urlOctaves = parsedQuery.get("octaves");
     if (urlOctaves) {
-      setSelectedOctaves(urlOctaves.split(",").map(Number));
+      setInputState({
+        ...inputState,
+        octaves: urlOctaves.split(",").map(Number),
+      });
     }
 
     const urlNotes = parsedQuery.get("notes");
@@ -254,6 +255,7 @@ function App() {
   });
 
   if (!inputState) return;
+  if (!inputState.octaves) return;
 
   return (
     <div className="App">
@@ -279,9 +281,8 @@ function App() {
           <SelectInputGrid
             KEYS={KEYS}
             scales={scales}
-            selectedOctaves={selectedOctaves}
-            setSelectedOctaves={setSelectedOctaves}
             inputState={inputState}
+            setInputState={setInputState}
             handleInputChange={handleInputChange}
           />
 
@@ -309,7 +310,7 @@ function App() {
             selectedNumberOfNotes={inputState.numberOfNotes}
             selectedTempo={selectedTempo}
             selectedInstrument={inputState.instrument}
-            selectedOctaves={selectedOctaves}
+            selectedOctaves={inputState.selectedOctaves}
             randomNotes={randomNotes}
             setShareButtonText={setShareButtonText}
             shareButtonText={shareButtonText}
@@ -331,7 +332,7 @@ function App() {
             randomNotes={randomNotes}
             setRandomNotes={setRandomNotes}
             currentIndex={currentIndex}
-            selectedOctaves={selectedOctaves}
+            selectedOctaves={inputState.octaves}
           />
         </div>
       </div>
@@ -341,7 +342,7 @@ function App() {
         currentIndex={currentIndex}
         randomNotes={randomNotes}
         notesInScale={notesInScale}
-        selectedOctaves={selectedOctaves}
+        selectedOctaves={inputState.octaves}
       />
 
       <MIDISounds
@@ -367,15 +368,7 @@ function App() {
         <br />
         loadedFromUrl: {loadedFromUrl}
         <br />
-        key: {inputState.key}
-        <br />
-        selectedScale: {inputState.scale}
-        <br />
-        selectedNumberOfNotes: {inputState.numberOfNotes}
-        <br />
-        selectedEmptyNotes: {inputState.emptyNotes}
-        <br />
-        selectedOctaves: {selectedOctaves}
+        inputState: {JSON.stringify(inputState)}
         <br />
         selectedInstrument: {inputState.instrument}
       </div>
