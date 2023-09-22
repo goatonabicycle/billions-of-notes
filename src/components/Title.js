@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 
 import RainbowText from "./RainbowText";
 
-const Title = ({ selectedTempo }) => {
+const Title = memo(({ selectedTempo }) => {
   return (
     <div>
       <RainbowText
@@ -19,6 +19,6 @@ const Title = ({ selectedTempo }) => {
       />
     </div>
   );
-};
+});
 
 export default Title;
