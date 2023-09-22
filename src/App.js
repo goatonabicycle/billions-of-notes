@@ -42,12 +42,22 @@ function App() {
   const { count, incrementCount } = useCount();
   const scales = Scale.names();
 
-  const [selectedKey, setSelectedKey] = useStorage("selectedKey", DEFAULT_KEY);
+  const [inputState, setInputState] = useStorage({
+    key: DEFAULT_KEY,
+    scale: DEFAULT_SCALE,
+    numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
+    emptyNotes: DEFAULT_EMPTY_NOTES,
+    instrument: DEFAULT_INSTRUMENT,
+  });
 
-  const [selectedScale, setSelectedScale] = useStorage(
-    "selectedScale",
-    DEFAULT_SCALE
-  );
+  const handleInputChange = (e) => {
+    setInputState({
+      ...inputState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // ------------------------------------
 
   const [selectedTempo, setSelectedTempo] = useStorage(
     "selectedTempo",
@@ -59,15 +69,10 @@ function App() {
     DEFAULT_VOLUME
   );
 
-  const [selectedInstrument, setSelectedInstrument] = useStorage(
-    "selectedInstrument",
-    DEFAULT_INSTRUMENT
-  );
-
-  const [selectedNumberOfNotes, setSelectedNumberOfNotes] = useStorage(
-    "selectedNumberOfNotes",
-    DEFAULT_NUMBER_OF_NOTES
-  );
+  // const [selectedInstrument, setSelectedInstrument] = useStorage(
+  //   "selectedInstrument",
+  //   DEFAULT_INSTRUMENT
+  // );
 
   const [selectedOctaves, setSelectedOctaves] = useStorage(
     "selectedOctaves",
@@ -77,11 +82,6 @@ function App() {
   const [selectedPanelsToShow, setSelectedPanelsToShow] = useStorage(
     "selectedPanelsToShow",
     DEFAULT_PANELS_TO_SHOW
-  );
-
-  const [selectedEmptyNotes, setSelectedEmptyNotes] = useStorage(
-    "selectedEmptyNotes",
-    DEFAULT_EMPTY_NOTES
   );
 
   const [selectedNoteLength, setSelectedNoteLength] = useStorage(
@@ -103,22 +103,24 @@ function App() {
 
   const resetInputs = useCallback(() => {
     setCurrentIndex(0);
-    setSelectedKey(DEFAULT_KEY);
-    setSelectedScale(DEFAULT_SCALE);
-    setSelectedNumberOfNotes(DEFAULT_NUMBER_OF_NOTES);
+
+    setInputState({
+      ...inputState,
+      key: DEFAULT_KEY,
+      scale: DEFAULT_SCALE,
+      numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
+      emptyNotes: DEFAULT_EMPTY_NOTES,
+      instrument: DEFAULT_INSTRUMENT,
+    });
+
     setSelectedOctaves(DEFAULT_OCTAVES);
     setSelectedTempo(DEFAULT_TEMPO);
-    setSelectedEmptyNotes(DEFAULT_EMPTY_NOTES);
-    setSelectedInstrument(DEFAULT_INSTRUMENT);
   }, [
     setCurrentIndex,
-    setSelectedKey,
-    setSelectedScale,
-    setSelectedNumberOfNotes,
     setSelectedOctaves,
     setSelectedTempo,
-    setSelectedInstrument,
-    setSelectedEmptyNotes,
+    setInputState,
+    inputState,
   ]);
 
   useEffect(() => {
@@ -133,7 +135,7 @@ function App() {
       return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
     };
 
-    const scale = Scale.get(`${selectedKey} ${selectedScale}`);
+    const scale = Scale.get(`${inputState.key} ${inputState.scale}`);
     const notesInScale = scale.notes.map((note) =>
       flatToSharp(Note.simplify(note))
     );
@@ -145,8 +147,8 @@ function App() {
     setNotesInScale(notesInScale);
 
     let randomNotes = [];
-    let totalNotes = parseInt(selectedNumberOfNotes);
-    let emptyNotes = parseInt(selectedEmptyNotes);
+    let totalNotes = parseInt(inputState.numberOfNotes);
+    let emptyNotes = parseInt(inputState.emptyNotes);
 
     for (let i = 0; i < totalNotes - emptyNotes; i++) {
       const randomNote =
@@ -172,27 +174,21 @@ function App() {
 
     setRandomNotes(randomNotes);
     setCurrentIndex(0);
-    incrementCount(selectedNumberOfNotes);
+    incrementCount(inputState.numberOfNotes);
 
     const randomColour = randomRGBA();
     setCurrentColour(randomColour);
-  }, [
-    selectedKey,
-    selectedScale,
-    selectedNumberOfNotes,
-    selectedOctaves,
-    triggerRegenerate,
-    selectedEmptyNotes,
-    loadedFromUrl,
-    navigate,
-  ]);
+  }, [inputState, selectedOctaves, triggerRegenerate, loadedFromUrl, navigate]);
 
   useEffect(() => {
-    const maxEmptyNotes = Math.max(0, parseInt(selectedNumberOfNotes) - 3);
-    if (parseInt(selectedEmptyNotes) > maxEmptyNotes) {
-      setSelectedEmptyNotes(maxEmptyNotes);
+    const maxEmptyNotes = Math.max(0, parseInt(inputState.numberOfNotes) - 3);
+    if (parseInt(inputState.emptyNotes) > maxEmptyNotes) {
+      setInputState({
+        ...inputState,
+        emptyNotes: maxEmptyNotes,
+      });
     }
-  }, [selectedNumberOfNotes, selectedEmptyNotes, setSelectedEmptyNotes]);
+  }, [inputState, setInputState]);
 
   const location = useLocation();
 
@@ -202,12 +198,19 @@ function App() {
 
     const urlInputs = parsedQuery.get("inputs");
     if (urlInputs) {
-      const [key, scale, number, tempo, instrument] = urlInputs.split(",");
-      setSelectedKey(key || DEFAULT_KEY);
-      setSelectedScale(scale || DEFAULT_SCALE);
-      setSelectedNumberOfNotes(number || DEFAULT_NUMBER_OF_NOTES);
+      const [urlKey, urlScale, urlNumberOfNotes, tempo, urlInstrument] =
+        urlInputs.split(",");
+
+      setInputState({
+        ...inputState,
+        key: urlKey || DEFAULT_KEY,
+        scale: urlScale || DEFAULT_SCALE,
+        numberOfNotes: urlNumberOfNotes || DEFAULT_NUMBER_OF_NOTES,
+        emptyNotes: DEFAULT_EMPTY_NOTES,
+        instrument: urlInstrument || DEFAULT_INSTRUMENT,
+      });
+
       setSelectedTempo(tempo || DEFAULT_TEMPO);
-      setSelectedInstrument(instrument || DEFAULT_INSTRUMENT);
     }
 
     const urlOctaves = parsedQuery.get("octaves");
@@ -250,6 +253,8 @@ function App() {
     };
   });
 
+  if (!inputState) return;
+
   return (
     <div className="App">
       <button
@@ -274,16 +279,10 @@ function App() {
           <SelectInputGrid
             KEYS={KEYS}
             scales={scales}
-            selectedKey={selectedKey}
-            setSelectedKey={setSelectedKey}
-            selectedScale={selectedScale}
-            setSelectedScale={setSelectedScale}
-            selectedNumberOfNotes={selectedNumberOfNotes}
-            setSelectedNumberOfNotes={setSelectedNumberOfNotes}
-            selectedEmptyNotes={selectedEmptyNotes}
-            setSelectedEmptyNotes={setSelectedEmptyNotes}
             selectedOctaves={selectedOctaves}
             setSelectedOctaves={setSelectedOctaves}
+            inputState={inputState}
+            handleInputChange={handleInputChange}
           />
 
           <SelectControlsGrid
@@ -295,8 +294,8 @@ function App() {
             setSelectedVolume={setSelectedVolume}
             selectedNoteLength={selectedNoteLength}
             setSelectedNoteLength={setSelectedNoteLength}
-            selectedInstrument={selectedInstrument}
-            setSelectedInstrument={setSelectedInstrument}
+            inputState={inputState}
+            handleInputChange={handleInputChange}
           />
 
           <ButtonBlock
@@ -305,11 +304,11 @@ function App() {
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
             resetInputs={resetInputs}
-            selectedKey={selectedKey}
-            selectedScale={selectedScale}
-            selectedNumberOfNotes={selectedNumberOfNotes}
+            selectedKey={inputState.key}
+            selectedScale={inputState.scale}
+            selectedNumberOfNotes={inputState.numberOfNotes}
             selectedTempo={selectedTempo}
-            selectedInstrument={selectedInstrument}
+            selectedInstrument={inputState.instrument}
             selectedOctaves={selectedOctaves}
             randomNotes={randomNotes}
             setShareButtonText={setShareButtonText}
@@ -319,7 +318,7 @@ function App() {
 
           <MessageBoxes
             selectedTempo={selectedTempo}
-            selectedNumberOfNotes={selectedNumberOfNotes}></MessageBoxes>
+            selectedNumberOfNotes={inputState.numberOfNotes}></MessageBoxes>
 
           <NotesInScale
             notesInScale={notesInScale}
@@ -348,7 +347,7 @@ function App() {
       <MIDISounds
         ref={midiSoundsRef}
         appElementName="root"
-        instruments={[selectedInstrument]} // Add all the chosen instruments here once I know what I want.
+        instruments={[inputState.instrument]} // Add all the chosen instruments here once I know what I want.
       />
 
       <Loop
@@ -358,26 +357,28 @@ function App() {
         isPlaying={isPlaying}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
-        instrument={selectedInstrument}
+        instrument={inputState.instrument}
         volume={selectedVolume / 500}
         notePlayLength={selectedNoteLength / 10}
       />
 
-      {/* <div className="debug-info-block">
+      <div className="debug-info-block">
         isPlaying: {isPlaying.toString()}
         <br />
         loadedFromUrl: {loadedFromUrl}
         <br />
-        selectedKey: {selectedKey}
+        key: {inputState.key}
         <br />
-        selectedScale: {selectedScale}
+        selectedScale: {inputState.scale}
         <br />
-        selectedNumberOfNotes: {selectedNumberOfNotes}
+        selectedNumberOfNotes: {inputState.numberOfNotes}
         <br />
-        selectedEmptyNotes: {selectedEmptyNotes}
+        selectedEmptyNotes: {inputState.emptyNotes}
         <br />
         selectedOctaves: {selectedOctaves}
-      </div> */}
+        <br />
+        selectedInstrument: {inputState.instrument}
+      </div>
     </div>
   );
 }

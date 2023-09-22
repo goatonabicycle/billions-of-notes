@@ -4,6 +4,7 @@ import "./Select.css";
 
 const Select = memo(function Select({
   id,
+  name,
   label,
   onChange,
   selectedValue,
@@ -21,8 +22,9 @@ const Select = memo(function Select({
         </label>
         <select
           id={id}
+          name={name}
           className="selectElement"
-          onChange={(event) => onChange(event.target.value)}
+          onChange={onChange}
           value={selectedValue}>
           {options.map((option) => (
             <option

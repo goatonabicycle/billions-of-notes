@@ -7,16 +7,10 @@ const SelectInputGrid = memo(
   ({
     KEYS,
     scales,
-    selectedKey,
-    setSelectedKey,
-    selectedScale,
-    setSelectedScale,
-    selectedNumberOfNotes,
-    setSelectedNumberOfNotes,
-    selectedEmptyNotes,
-    setSelectedEmptyNotes,
     selectedOctaves,
     setSelectedOctaves,
+    inputState,
+    handleInputChange,
   }) => {
     const keyOptions = useMemo(() => mapToSelectOptions(KEYS), []);
     const scaleOptions = useMemo(() => mapToSelectOptions(scales), []);
@@ -25,60 +19,50 @@ const SelectInputGrid = memo(
       return mapToSelectOptions(notes);
     }, []);
     const emptyNotesOptions = useMemo(() => {
-      const maxEmptyNotes = Math.max(0, parseInt(selectedNumberOfNotes) - 3);
+      const maxEmptyNotes = Math.max(0, parseInt(inputState.numberOfNotes) - 3);
       const emptyNotesOptions = Array.from(
         { length: maxEmptyNotes + 1 },
         (_, i) => i
       );
       return mapToSelectOptions(emptyNotesOptions);
-    }, [selectedNumberOfNotes]);
-
-    const handleKeyChange = useCallback((value) => setSelectedKey(value), []);
-    const handleScaleChange = useCallback(
-      (value) => setSelectedScale(value),
-      []
-    );
-    const handleNumberOfNotesChange = useCallback(
-      (value) => setSelectedNumberOfNotes(value),
-      []
-    );
-    const handleEmptyNotesChange = useCallback(
-      (value) => setSelectedEmptyNotes(value),
-      []
-    );
+    }, [inputState.numberOfNotes]);
 
     return (
       <div className="select-grid">
         <Select
-          id="keySelect"
+          id="key"
+          name="key"
           label="Key:"
           options={keyOptions}
-          onChange={handleKeyChange}
-          selectedValue={selectedKey}
+          onChange={handleInputChange}
+          selectedValue={inputState.key}
         />
 
         <Select
-          id="ScaleSelect"
+          id="scale"
+          name="scale"
           label="Scale:"
           options={scaleOptions}
-          onChange={handleScaleChange}
-          selectedValue={selectedScale}
+          onChange={handleInputChange}
+          selectedValue={inputState.scale}
         />
 
         <Select
-          id="numOfNotesSelect"
+          id="numberOfNotes"
+          name="numberOfNotes"
           label="Notes:"
           options={notesOptions}
-          onChange={handleNumberOfNotesChange}
-          selectedValue={selectedNumberOfNotes}
+          onChange={handleInputChange}
+          selectedValue={inputState.numberOfNotes}
         />
 
         <Select
-          id="mixEmptySelect"
+          id="emptyNotes"
+          name="emptyNotes"
           label="Empty notes:"
           options={emptyNotesOptions}
-          onChange={handleEmptyNotesChange}
-          selectedValue={selectedEmptyNotes}
+          onChange={handleInputChange}
+          selectedValue={inputState.emptyNotes}
         />
 
         <OctaveSelector

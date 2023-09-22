@@ -14,8 +14,8 @@ function SelectControlsGrid({
   setSelectedVolume,
   selectedNoteLength,
   setSelectedNoteLength,
-  selectedInstrument,
-  setSelectedInstrument,
+  inputState,
+  handleInputChange,
 }) {
   const getInstruments = () => {
     return INSTRUMENTS;
@@ -68,13 +68,14 @@ function SelectControlsGrid({
       />
 
       <Select
-        id="instrumentSelect"
+        id="instrument"
+        name="instrument"
         label="Sounds:"
         options={useMemo(() => {
           return mapObjectToSelectOptionsWithValues(getInstruments());
         }, [])}
-        onChange={setSelectedInstrument}
-        selectedValue={selectedInstrument}
+        onChange={handleInputChange}
+        selectedValue={inputState.instrument}
       />
     </div>
   );
