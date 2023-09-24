@@ -42,13 +42,18 @@ function App() {
   const { count, incrementCount } = useCount();
   const scales = Scale.names();
 
+  // input state is anything that ends up changing the randomNotes you got
   const [inputState, setInputState] = useStorage({
     key: DEFAULT_KEY,
     scale: DEFAULT_SCALE,
     numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
     emptyNotes: DEFAULT_EMPTY_NOTES,
-    instrument: DEFAULT_INSTRUMENT,
     octaves: DEFAULT_OCTAVES,
+  });
+
+  const [controlState, setControlState] = useStorage({
+    instrument: DEFAULT_INSTRUMENT,
+    tempo: DEFAULT_TEMPO,
   });
 
   const handleInputChange = useCallback(
@@ -61,22 +66,27 @@ function App() {
     [setInputState]
   );
 
+  const handleControlChange = useCallback(
+    (event) => {
+      setControlState((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value,
+      }));
+    },
+    [setControlState]
+  );
+
   // Replace all these states to use the more general mechanism
 
-  const [selectedTempo, setSelectedTempo] = useStorage(
-    "selectedTempo",
-    DEFAULT_TEMPO
-  );
+  // const [selectedTempo, setSelectedTempo] = useStorage(
+  //   "selectedTempo",
+  //   DEFAULT_TEMPO
+  // );
 
   const [selectedVolume, setSelectedVolume] = useStorage(
     "selectedVolume",
     DEFAULT_VOLUME
   );
-
-  // const [selectedOctaves, setSelectedOctaves] = useStorage(
-  //   "selectedOctaves",
-  //   DEFAULT_OCTAVES
-  // );
 
   const [selectedPanelsToShow, setSelectedPanelsToShow] = useStorage(
     "selectedPanelsToShow",
@@ -111,10 +121,9 @@ function App() {
       emptyNotes: DEFAULT_EMPTY_NOTES,
       instrument: DEFAULT_INSTRUMENT,
       octaves: DEFAULT_OCTAVES,
+      tempo: DEFAULT_TEMPO,
     });
-
-    setSelectedTempo(DEFAULT_TEMPO);
-  }, [setCurrentIndex, setSelectedTempo, setInputState, inputState]);
+  }, [setCurrentIndex, setInputState, inputState]);
 
   useEffect(() => {
     if (!inputState) return;
@@ -196,7 +205,7 @@ function App() {
 
     const urlInputs = parsedQuery.get("inputs");
     if (urlInputs) {
-      const [urlKey, urlScale, urlNumberOfNotes, tempo, urlInstrument] =
+      const [urlKey, urlScale, urlNumberOfNotes, urlTempo, urlInstrument] =
         urlInputs.split(",");
 
       setInputState({
@@ -205,10 +214,9 @@ function App() {
         scale: urlScale || DEFAULT_SCALE,
         numberOfNotes: urlNumberOfNotes || DEFAULT_NUMBER_OF_NOTES,
         emptyNotes: DEFAULT_EMPTY_NOTES,
-        instrument: urlInstrument || DEFAULT_INSTRUMENT,
+        // instrument: urlInstrument || DEFAULT_INSTRUMENT,
+        // tempo: urlTempo || DEFAULT_TEMPO,
       });
-
-      setSelectedTempo(tempo || DEFAULT_TEMPO);
     }
 
     const urlOctaves = parsedQuery.get("octaves");
@@ -240,7 +248,7 @@ function App() {
           resetInputs();
           break;
         case "s": // S for save as MIDI
-          SaveToMidi(randomNotes, selectedTempo);
+          SaveToMidi(randomNotes, controlState.tempo);
           break;
         default:
           break;
@@ -267,7 +275,7 @@ function App() {
       <div className={`App-inputs ${isInputHidden ? "hidden" : ""}`}>
         <div className="title doodle-border">
           <TitleArea
-            selectedTempo={selectedTempo}
+            selectedTempo={controlState.tempo}
             setTriggerRegenerate={setTriggerRegenerate}
             triggerRegenerate={triggerRegenerate}
             currentColour={currentColour}
@@ -289,14 +297,14 @@ function App() {
           <SelectControlsGrid
             selectedPanelsToShow={selectedPanelsToShow}
             setSelectedPanelsToShow={setSelectedPanelsToShow}
-            selectedTempo={selectedTempo}
-            setSelectedTempo={setSelectedTempo}
             selectedVolume={selectedVolume}
             setSelectedVolume={setSelectedVolume}
             selectedNoteLength={selectedNoteLength}
             setSelectedNoteLength={setSelectedNoteLength}
             inputState={inputState}
             handleInputChange={handleInputChange}
+            controlState={controlState}
+            handleControlChange={handleControlChange}
           />
 
           <ButtonBlock
@@ -308,7 +316,7 @@ function App() {
             selectedKey={inputState.key}
             selectedScale={inputState.scale}
             selectedNumberOfNotes={inputState.numberOfNotes}
-            selectedTempo={selectedTempo}
+            selectedTempo={controlState.tempo}
             selectedInstrument={inputState.instrument}
             selectedOctaves={inputState.selectedOctaves}
             randomNotes={randomNotes}
@@ -318,7 +326,7 @@ function App() {
           />
 
           <MessageBoxes
-            selectedTempo={selectedTempo}
+            selectedTempo={controlState.tempo}
             selectedNumberOfNotes={inputState.numberOfNotes}></MessageBoxes>
 
           <NotesInScale
@@ -354,7 +362,7 @@ function App() {
       <Loop
         midiSoundsRef={midiSoundsRef}
         notes={randomNotes}
-        bpm={selectedTempo}
+        bpm={controlState.tempo}
         isPlaying={isPlaying}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
@@ -369,6 +377,8 @@ function App() {
         loadedFromUrl: {loadedFromUrl}
         <br />
         inputState: {JSON.stringify(inputState)}
+        <br />
+        controlState: {JSON.stringify(controlState)}
         <br />
         selectedInstrument: {inputState.instrument}
       </div>
