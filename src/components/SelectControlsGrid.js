@@ -8,14 +8,10 @@ import { INSTRUMENTS, mapObjectToSelectOptionsWithValues } from "../useful";
 function SelectControlsGrid({
   selectedPanelsToShow,
   setSelectedPanelsToShow,
-  selectedTempo,
-  setSelectedTempo,
-  selectedVolume,
-  setSelectedVolume,
   selectedNoteLength,
   setSelectedNoteLength,
-  inputState,
-  handleInputChange,
+  controlState,
+  handleControlChange,
 }) {
   const getInstruments = () => {
     return INSTRUMENTS;
@@ -30,28 +26,26 @@ function SelectControlsGrid({
 
       <Slider
         id="tempoSlider"
+        name="tempo"
         label="Tempo"
         min="0"
         max="700"
         step="5"
         editable={true}
-        value={selectedTempo}
-        onChange={(e) => {
-          setSelectedTempo(parseInt(e.target.value, 10));
-        }}
+        value={controlState.tempo}
+        onChange={handleControlChange}
       />
 
       <Slider
         id="volumeSlider"
+        name="volume"
         label="Volume"
         min="0"
         max="100"
         step="1"
         editable={false}
-        value={selectedVolume}
-        onChange={(e) => {
-          setSelectedVolume(parseInt(e.target.value, 10));
-        }}
+        value={controlState.volume}
+        onChange={handleControlChange}
       />
 
       <Slider
@@ -74,8 +68,8 @@ function SelectControlsGrid({
         options={useMemo(() => {
           return mapObjectToSelectOptionsWithValues(getInstruments());
         }, [])}
-        onChange={handleInputChange}
-        selectedValue={inputState.instrument}
+        onChange={handleControlChange}
+        selectedValue={controlState.instrument}
       />
     </div>
   );

@@ -1,6 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const Slider = ({ id, min, max, step, value, onChange, label, editable }) => {
+const Slider = ({
+  id,
+  min,
+  max,
+  step,
+  value,
+  onChange,
+  label,
+  editable,
+  name,
+}) => {
   const mirrorRef = useRef(null);
   const [inputWidth, setInputWidth] = useState("0px");
 
@@ -41,6 +51,7 @@ const Slider = ({ id, min, max, step, value, onChange, label, editable }) => {
           <input
             type="range"
             id={id}
+            name={name}
             min={min}
             max={max}
             step={step}

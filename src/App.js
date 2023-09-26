@@ -43,7 +43,7 @@ function App() {
   const scales = Scale.names();
 
   // input state is anything that ends up changing the randomNotes you got
-  const [inputState, setInputState] = useStorage({
+  const [inputState, setInputState] = useStorage("inputState", {
     key: DEFAULT_KEY,
     scale: DEFAULT_SCALE,
     numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
@@ -51,9 +51,10 @@ function App() {
     octaves: DEFAULT_OCTAVES,
   });
 
-  const [controlState, setControlState] = useStorage({
+  const [controlState, setControlState] = useState({
     instrument: DEFAULT_INSTRUMENT,
     tempo: DEFAULT_TEMPO,
+    volume: DEFAULT_VOLUME,
   });
 
   const handleInputChange = useCallback(
@@ -74,18 +75,6 @@ function App() {
       }));
     },
     [setControlState]
-  );
-
-  // Replace all these states to use the more general mechanism
-
-  // const [selectedTempo, setSelectedTempo] = useStorage(
-  //   "selectedTempo",
-  //   DEFAULT_TEMPO
-  // );
-
-  const [selectedVolume, setSelectedVolume] = useStorage(
-    "selectedVolume",
-    DEFAULT_VOLUME
   );
 
   const [selectedPanelsToShow, setSelectedPanelsToShow] = useStorage(
@@ -214,8 +203,6 @@ function App() {
         scale: urlScale || DEFAULT_SCALE,
         numberOfNotes: urlNumberOfNotes || DEFAULT_NUMBER_OF_NOTES,
         emptyNotes: DEFAULT_EMPTY_NOTES,
-        // instrument: urlInstrument || DEFAULT_INSTRUMENT,
-        // tempo: urlTempo || DEFAULT_TEMPO,
       });
     }
 
@@ -297,12 +284,8 @@ function App() {
           <SelectControlsGrid
             selectedPanelsToShow={selectedPanelsToShow}
             setSelectedPanelsToShow={setSelectedPanelsToShow}
-            selectedVolume={selectedVolume}
-            setSelectedVolume={setSelectedVolume}
             selectedNoteLength={selectedNoteLength}
             setSelectedNoteLength={setSelectedNoteLength}
-            inputState={inputState}
-            handleInputChange={handleInputChange}
             controlState={controlState}
             handleControlChange={handleControlChange}
           />
@@ -344,7 +327,6 @@ function App() {
           />
         </div>
       </div>
-
       <ShowMePanels
         selectedPanelsToShow={selectedPanelsToShow}
         currentIndex={currentIndex}
@@ -352,12 +334,13 @@ function App() {
         notesInScale={notesInScale}
         selectedOctaves={inputState.octaves}
       />
-
-      <MIDISounds
-        ref={midiSoundsRef}
-        appElementName="root"
-        instruments={[inputState.instrument]} // Add all the chosen instruments here once I know what I want.
-      />
+      {inputState && inputState.instrument && (
+        <MIDISounds
+          ref={midiSoundsRef}
+          appElementName="root"
+          instruments={[inputState.instrument]} // Add all the chosen instruments here once I know what I want.
+        />
+      )}
 
       <Loop
         midiSoundsRef={midiSoundsRef}
@@ -367,10 +350,9 @@ function App() {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
         instrument={inputState.instrument}
-        volume={selectedVolume / 500}
+        volume={controlState.volume / 500}
         notePlayLength={selectedNoteLength / 10}
       />
-
       <div className="debug-info-block">
         isPlaying: {isPlaying.toString()}
         <br />
