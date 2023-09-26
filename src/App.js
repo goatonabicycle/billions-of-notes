@@ -331,12 +331,12 @@ function App() {
         notesInScale={notesInScale}
         selectedOctaves={inputState.octaves}
       />
-      {inputState && inputState.instrument && (
+      {controlState && controlState.instrument && (
         <>
           <MIDISounds
             ref={midiSoundsRef}
             appElementName="root"
-            instruments={[inputState.instrument]} // Add all the chosen instruments here once I know what I want.
+            instruments={[controlState.instrument]} // Add all the chosen instruments here once I know what I want.
           />
           <Loop
             midiSoundsRef={midiSoundsRef}

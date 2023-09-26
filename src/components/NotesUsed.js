@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-
 import Modal from "./Modal.js";
 import Select from "./Select";
-
 import "./NotesUsed.css";
 import IconButton from "./IconButton";
 import { PauseIcon } from "./Icons";
@@ -61,11 +59,11 @@ const NotesUsed = ({
                 notesInScale[0]
               : ""
           }
-          onChange={(newNote) => {
+          onChange={(event) => {
             const newOctave =
               randomNotes[selectedNoteForEditing]?.slice(-1) ||
               selectedOctaves[0];
-            handleNoteChange(newNote, newOctave);
+            handleNoteChange(event.target.value, newOctave);
           }}
         />
         <Select
@@ -78,11 +76,11 @@ const NotesUsed = ({
           selectedValue={
             randomNotes[selectedNoteForEditing]?.slice(-1) || selectedOctaves[0]
           }
-          onChange={(newOctave) => {
+          onChange={(event) => {
             const newNote =
               randomNotes[selectedNoteForEditing]?.slice(0, -1) ||
               notesInScale[0];
-            handleNoteChange(newNote, newOctave);
+            handleNoteChange(newNote, event.target.value);
           }}
         />
         <br />

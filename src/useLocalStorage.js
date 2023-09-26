@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 export function useStorage(key, initialValue) {
-  console.log("useStorage called");
-  console.log("key: ", key);
   // Get from local storage then
   // parse stored json or if none return initialValue
   const readValue = () => {
