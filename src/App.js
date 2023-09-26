@@ -51,7 +51,7 @@ function App() {
     octaves: DEFAULT_OCTAVES,
   });
 
-  const [controlState, setControlState] = useState({
+  const [controlState, setControlState] = useStorage("controlState", {
     instrument: DEFAULT_INSTRUMENT,
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
@@ -108,9 +108,7 @@ function App() {
       scale: DEFAULT_SCALE,
       numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
       emptyNotes: DEFAULT_EMPTY_NOTES,
-      instrument: DEFAULT_INSTRUMENT,
       octaves: DEFAULT_OCTAVES,
-      tempo: DEFAULT_TEMPO,
     });
   }, [setCurrentIndex, setInputState, inputState]);
 
@@ -194,8 +192,7 @@ function App() {
 
     const urlInputs = parsedQuery.get("inputs");
     if (urlInputs) {
-      const [urlKey, urlScale, urlNumberOfNotes, urlTempo, urlInstrument] =
-        urlInputs.split(",");
+      const [urlKey, urlScale, urlNumberOfNotes] = urlInputs.split(",");
 
       setInputState({
         ...inputState,
@@ -335,24 +332,26 @@ function App() {
         selectedOctaves={inputState.octaves}
       />
       {inputState && inputState.instrument && (
-        <MIDISounds
-          ref={midiSoundsRef}
-          appElementName="root"
-          instruments={[inputState.instrument]} // Add all the chosen instruments here once I know what I want.
-        />
+        <>
+          <MIDISounds
+            ref={midiSoundsRef}
+            appElementName="root"
+            instruments={[inputState.instrument]} // Add all the chosen instruments here once I know what I want.
+          />
+          <Loop
+            midiSoundsRef={midiSoundsRef}
+            notes={randomNotes}
+            bpm={controlState.tempo}
+            isPlaying={isPlaying}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+            instrument={controlState.instrument}
+            volume={controlState.volume / 500}
+            notePlayLength={selectedNoteLength / 10}
+          />
+        </>
       )}
 
-      <Loop
-        midiSoundsRef={midiSoundsRef}
-        notes={randomNotes}
-        bpm={controlState.tempo}
-        isPlaying={isPlaying}
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-        instrument={inputState.instrument}
-        volume={controlState.volume / 500}
-        notePlayLength={selectedNoteLength / 10}
-      />
       <div className="debug-info-block">
         isPlaying: {isPlaying.toString()}
         <br />
@@ -361,8 +360,6 @@ function App() {
         inputState: {JSON.stringify(inputState)}
         <br />
         controlState: {JSON.stringify(controlState)}
-        <br />
-        selectedInstrument: {inputState.instrument}
       </div>
     </div>
   );

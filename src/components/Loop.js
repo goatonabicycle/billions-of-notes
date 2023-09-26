@@ -27,7 +27,7 @@ const LoopComponent = ({
   const playNotes = useRef();
 
   useEffect(() => {
-    midiSoundsRef.current.setMasterVolume(volume);
+    if (volume) midiSoundsRef.current.setMasterVolume(volume);
   }, [volume]);
 
   useEffect(() => {
