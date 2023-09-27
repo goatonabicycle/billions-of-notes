@@ -140,10 +140,10 @@ const Fretboard = ({
           label="Note"
           options={KEYS.map((key) => ({ value: key, label: key }))}
           selectedValue={selectedTuning[modalStringIndex]?.note || ""}
-          onChange={(newNote) => {
+          onChange={(event) => {
             setSelectedTuning((prevTuning) => {
               const newTuning = [...prevTuning];
-              newTuning[modalStringIndex].note = newNote;
+              newTuning[modalStringIndex].note = event.target.value;
               return newTuning;
             });
           }}
@@ -156,10 +156,13 @@ const Fretboard = ({
             label: octave.toString(),
           }))}
           selectedValue={selectedTuning[modalStringIndex]?.octave || ""}
-          onChange={(newOctave) => {
+          onChange={(event) => {
             setSelectedTuning((prevTuning) => {
               const newTuning = [...prevTuning];
-              newTuning[modalStringIndex].octave = parseInt(newOctave, 10);
+              newTuning[modalStringIndex].octave = parseInt(
+                event.target.value,
+                10
+              );
               return newTuning;
             });
           }}
