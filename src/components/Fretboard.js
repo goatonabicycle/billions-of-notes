@@ -108,14 +108,7 @@ const Fretboard = ({
         fret: closestNote.fret,
       });
     }
-  }, [
-    fretboard,
-    notesToPlay,
-    playbackIndex,
-    preferredPosition,
-    currentPosition,
-    getPreferredFretRange,
-  ]);
+  }, [notesToPlay, playbackIndex, preferredPosition, getPreferredFretRange]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStringIndex, setModalStringIndex] = useState(null);
@@ -223,6 +216,17 @@ const Fretboard = ({
             {i}
           </div>
         ))}
+      </div>
+
+      <div className="debug">
+        {notesToPlay}
+        <br />
+        <br />
+        {fretboard.fret}
+        {fretboard.stringIndex}
+        {fretboard.note}
+        <br />
+        {hasTuningChanged}
       </div>
     </div>
   );
