@@ -273,7 +273,11 @@ function App() {
           <SelectInputGrid
             KEYS={KEYS}
             scales={scales}
-            inputState={inputState}
+            inputKey={inputState.key}
+            inputScale={inputState.scale}
+            inputNumberOfNotes={inputState.numberOfNotes}
+            inputEmptyNotes={inputState.emptyNotes}
+            inputOctaves={inputState.octaves}
             setInputState={setInputState}
             handleInputChange={handleInputChange}
           />

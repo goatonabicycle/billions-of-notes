@@ -1,23 +1,23 @@
-import React, { useCallback } from "react";
+import React, { memo } from "react";
 import "./OctaveSelector.css";
 import { OCTAVES } from "../useful";
 
-const OctaveSelector = ({ inputState, setInputState }) => {
+const OctaveSelector = memo(({ octaves, setInputState }) => {
   const handleChange = (event) => {
     const value = parseInt(event.target.value);
 
     if (event.target.checked) {
-      setInputState(() => ({
-        ...inputState,
-        octaves: [...inputState.octaves, value].sort(),
+      setInputState((prevState) => ({
+        ...prevState,
+        octaves: [...prevState.octaves, value].sort(),
       }));
     } else {
-      setInputState(() => ({
-        ...inputState,
+      setInputState((prevState) => ({
+        ...prevState,
         octaves:
-          inputState.octaves.length > 1
-            ? inputState.octaves.filter((octave) => octave !== value)
-            : inputState.octaves,
+          prevState.octaves.length > 1
+            ? prevState.octaves.filter((octave) => octave !== value)
+            : prevState.octaves,
       }));
     }
   };
@@ -33,7 +33,7 @@ const OctaveSelector = ({ inputState, setInputState }) => {
             <input
               type="checkbox"
               value={octave}
-              checked={inputState.octaves.includes(octave)}
+              checked={octaves.includes(octave)}
               onChange={handleChange}
             />
             {octave}
@@ -42,6 +42,6 @@ const OctaveSelector = ({ inputState, setInputState }) => {
       </div>
     </div>
   );
-};
+});
 
 export default OctaveSelector;
