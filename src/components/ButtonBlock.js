@@ -87,11 +87,11 @@ const ButtonBlock = ({
         icon={ResetIcon}
         text="Reset inputs"
       />
-      <IconButton
+      {/* <IconButton
         onClick={handleShareClick}
         text={shareButtonText}
         icon={ShareIcon}
-      />
+      /> */}
       <IconButton
         onClick={handleSaveClick}
         icon={SaveIcon}
