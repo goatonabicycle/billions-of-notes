@@ -217,17 +217,6 @@ const Fretboard = ({
           </div>
         ))}
       </div>
-
-      <div className="debug">
-        {notesToPlay}
-        <br />
-        <br />
-        {fretboard.fret}
-        {fretboard.stringIndex}
-        {fretboard.note}
-        <br />
-        {hasTuningChanged}
-      </div>
     </div>
   );
 };
