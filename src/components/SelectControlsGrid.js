@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ShowMeSelector from "./ShowMeSelector";
 import Slider from "./Slider";
 import Select from "./Select";
-import { useMemo } from "react";
 import { INSTRUMENTS, mapObjectToSelectOptionsWithValues } from "../useful";
 
 function SelectControlsGrid({
@@ -10,12 +9,13 @@ function SelectControlsGrid({
   setSelectedPanelsToShow,
   selectedNoteLength,
   setSelectedNoteLength,
-  controlState,
+  controlState: { tempo, volume, instrument },
   handleControlChange,
 }) {
-  const getInstruments = () => {
-    return INSTRUMENTS;
-  };
+  const instrumentOptions = useMemo(
+    () => mapObjectToSelectOptionsWithValues(INSTRUMENTS),
+    []
+  );
 
   return (
     <div className="select-grid">
@@ -32,7 +32,7 @@ function SelectControlsGrid({
         max="700"
         step="5"
         editable={true}
-        value={controlState.tempo}
+        value={tempo}
         onChange={handleControlChange}
       />
 
@@ -44,7 +44,7 @@ function SelectControlsGrid({
         max="100"
         step="1"
         editable={false}
-        value={controlState.volume}
+        value={volume}
         onChange={handleControlChange}
       />
 
@@ -65,14 +65,12 @@ function SelectControlsGrid({
         id="instrument"
         name="instrument"
         label="Sounds:"
-        options={useMemo(() => {
-          return mapObjectToSelectOptionsWithValues(getInstruments());
-        }, [])}
+        options={instrumentOptions}
         onChange={handleControlChange}
-        selectedValue={controlState.instrument}
+        selectedValue={instrument}
       />
     </div>
   );
 }
 
-export default SelectControlsGrid;
+export default React.memo(SelectControlsGrid);
