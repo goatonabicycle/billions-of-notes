@@ -171,7 +171,7 @@ function App() {
 
     const randomColour = randomRGBA();
     setCurrentColour(randomColour);
-  }, [inputState, triggerRegenerate, loadedFromUrl, navigate]);
+  }, [inputState, triggerRegenerate]);
 
   useEffect(() => {
     if (!inputState) return;
@@ -302,7 +302,7 @@ function App() {
             selectedNumberOfNotes={inputState.numberOfNotes}
             selectedTempo={controlState.tempo}
             selectedInstrument={inputState.instrument}
-            selectedOctaves={inputState.selectedOctaves}
+            selectedOctaves={inputState.octaves}
             randomNotes={randomNotes}
             setShareButtonText={setShareButtonText}
             shareButtonText={shareButtonText}
