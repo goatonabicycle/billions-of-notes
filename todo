@@ -1,14 +1,12 @@
 ## Todo
 
-# BUGS!!! 
-  - Sharing isn't working as intended. Probably related to how storage is handled.   
-    - Could I just handle most of the state in the URL? 
-  - Ghost note when a request gets made to update the "Total notes generated" count.
-  - Right now, the theming for dark mode sucks so much that it seems broken.
-  - Don't have so many different states. Have a single state with an object. 
-
+# BUGS!!!   
+  - Ghost note when a request gets made to update the "Total notes generated" count.  
+  
 # Do mode:
 
+- "Show me how to play this"/Import Midi. The fretboard is pretty cool. Having a way to import a midi file and then show you how to play it would be awesome. 
+- Right now, the theming for dark mode sucks so much that it seems broken.
 - There are many unnecessary rerenders happening. I should be able to optimize this.
 - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
 - Add many more random interactive messages. Make this more prominent and obvious.

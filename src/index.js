@@ -1,15 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 
 import "./index.css";
 import App from "./App";
+import ShowMe from "./ShowMe";
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={<App />}
+      />
+      <Route
+        path="/show-me"
+        element={<ShowMe />}
+      />
+    </Routes>
+  );
+}
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <AppRoutes />
     </BrowserRouter>
     <Analytics />
   </React.StrictMode>
