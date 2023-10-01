@@ -138,3 +138,6 @@ export const randomRGBA = () => {
   const b = randomBetween(0, 255);
   return `rgba(${r}, ${g}, ${b}, 0.5)`;
 };
+
+export const getRandomItem = (arr) =>
+  arr[Math.floor(Math.random() * arr.length)];

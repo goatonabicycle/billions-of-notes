@@ -18,6 +18,7 @@ import {
   DEFAULT_EMPTY_NOTES,
   DEFAULT_NOTE_LENGTH,
   randomRGBA,
+  getRandomItem,
 } from "./useful";
 import { useStorage } from "./useLocalStorage";
 import { useCount } from "./useCount";
@@ -121,41 +122,28 @@ function App() {
       return;
     }
 
-    const flatToSharp = (note) => {
-      const { pc, oct } = Note.get(note);
-      return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
+    const getRandomNotes = (notesInScale, total, empty) => {
+      const notesWithOctaves = Array(total - empty)
+        .fill(0)
+        .map(
+          () =>
+            `${getRandomItem(notesInScale)}${getRandomItem(inputState.octaves)}`
+        );
+      const emptyNotes = Array(empty).fill("");
+      return shuffleArray([...notesWithOctaves, ...emptyNotes]);
     };
 
     const scale = Scale.get(`${inputState.key} ${inputState.scale}`);
-    const notesInScale = scale.notes.map((note) =>
-      flatToSharp(Note.simplify(note))
-    );
+    const notesInScale = scale.notes.map((note) => {
+      const { pc, oct } = Note.get(Note.simplify(note));
+      return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
+    });
 
-    const intervals = scale.intervals;
-    console.log("intervals", intervals);
-
-    // Todo, get more interesting information about the scale here.
     setNotesInScale(notesInScale);
 
-    let randomNotes = [];
-    let totalNotes = parseInt(inputState.numberOfNotes);
-    let emptyNotes = parseInt(inputState.emptyNotes);
-
-    for (let i = 0; i < totalNotes - emptyNotes; i++) {
-      const randomNote =
-        notesInScale[Math.floor(Math.random() * notesInScale.length)];
-      const randomOctave =
-        inputState.octaves[
-          Math.floor(Math.random() * inputState.octaves.length)
-        ];
-      randomNotes.push(`${randomNote}${randomOctave}`);
-    }
-
-    for (let i = 0; i < emptyNotes; i++) {
-      randomNotes.push("");
-    }
-
-    randomNotes = shuffleArray(randomNotes);
+    const totalNotes = parseInt(inputState.numberOfNotes);
+    const emptyNotes = parseInt(inputState.emptyNotes);
+    let randomNotes = getRandomNotes(notesInScale, totalNotes, emptyNotes);
 
     let firstNonEmptyNoteIndex = randomNotes.findIndex((note) => note !== "");
     if (firstNonEmptyNoteIndex !== -1) {
@@ -167,10 +155,8 @@ function App() {
 
     setRandomNotes(randomNotes);
     setCurrentIndex(0);
-    incrementCount(inputState.numberOfNotes);
-
-    const randomColour = randomRGBA();
-    setCurrentColour(randomColour);
+    incrementCount(totalNotes);
+    setCurrentColour(randomRGBA());
   }, [inputState, triggerRegenerate]);
 
   useEffect(() => {
