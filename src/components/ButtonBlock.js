@@ -101,4 +101,4 @@ const ButtonBlock = ({
   );
 };
 
-export default ButtonBlock;
+export default React.memo(ButtonBlock);

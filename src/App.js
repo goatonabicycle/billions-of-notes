@@ -39,24 +39,27 @@ import "./Buttons.css";
 import "./Range.css";
 import "./Doodle/doodle.css";
 
+const scales = Scale.names();
+
 function App() {
   const { count, incrementCount } = useCount();
-  const scales = Scale.names();
 
   // input state is anything that ends up changing the randomNotes you got
-  const [inputState, setInputState] = useStorage("inputState", {
+  const [inputState, _setInputState] = useStorage("inputState", {
     key: DEFAULT_KEY,
     scale: DEFAULT_SCALE,
     numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
     emptyNotes: DEFAULT_EMPTY_NOTES,
     octaves: DEFAULT_OCTAVES,
   });
+  const setInputState = useCallback(_setInputState, []);
 
-  const [controlState, setControlState] = useStorage("controlState", {
+  const [controlState, _setControlState] = useStorage("controlState", {
     instrument: DEFAULT_INSTRUMENT,
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
   });
+  const setControlState = useCallback(_setControlState, []);
 
   const handleInputChange = useCallback(
     (event) => {
@@ -78,15 +81,17 @@ function App() {
     [setControlState]
   );
 
-  const [selectedPanelsToShow, setSelectedPanelsToShow] = useStorage(
+  const [selectedPanelsToShow, _setSelectedPanelsToShow] = useStorage(
     "selectedPanelsToShow",
     DEFAULT_PANELS_TO_SHOW
   );
+  const setSelectedPanelsToShow = useCallback(_setSelectedPanelsToShow, []);
 
-  const [selectedNoteLength, setSelectedNoteLength] = useStorage(
+  const [selectedNoteLength, _setSelectedNoteLength] = useStorage(
     "selectedNoteLength",
     DEFAULT_NOTE_LENGTH
   );
+  const setSelectedNoteLength = useCallback(_setSelectedNoteLength, []);
 
   const [currentColour, setCurrentColour] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
