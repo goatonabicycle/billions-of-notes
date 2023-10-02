@@ -164,6 +164,7 @@ function App() {
     setCurrentColour(randomRGBA());
   }, [inputState, triggerRegenerate]);
 
+  // This useEffect handles what happens when the user changes the number of notes.
   useEffect(() => {
     if (!inputState) return;
     const maxEmptyNotes = Math.max(0, parseInt(inputState.numberOfNotes) - 3);
@@ -209,6 +210,7 @@ function App() {
     }
   }, [location.search]);
 
+  // This useEffect is used handle button presses.
   useEffect(() => {
     const handleKeyPress = (event) => {
       switch (event.key.toLowerCase()) {
