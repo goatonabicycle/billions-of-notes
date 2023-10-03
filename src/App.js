@@ -21,7 +21,7 @@ import {
   getRandomItem,
 } from "./useful";
 import { useStorage } from "./useLocalStorage";
-import { useCount } from "./useCount";
+// import { useCount } from "./useCount";
 
 import Loop from "./components/Loop";
 import SaveToMidi from "./components/SaveToMidi";
@@ -42,7 +42,7 @@ import "./Doodle/doodle.css";
 const scales = Scale.names();
 
 function App() {
-  const { count, incrementCount } = useCount();
+  // const { count, incrementCount } = useCount();
 
   // input state is anything that ends up changing the randomNotes you got
   const [inputState, _setInputState] = useStorage("inputState", {
@@ -160,7 +160,7 @@ function App() {
 
     setRandomNotes(randomNotes);
     setCurrentIndex(0);
-    incrementCount(totalNotes);
+    // incrementCount(totalNotes);
     setCurrentColour(randomRGBA());
   }, [inputState, triggerRegenerate]);
 
@@ -258,7 +258,7 @@ function App() {
             currentColour={currentColour}
             randomNotes={randomNotes}
             currentIndex={currentIndex}
-            count={count}
+            count={0}
           />
         </div>
 

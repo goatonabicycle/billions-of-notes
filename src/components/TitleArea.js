@@ -30,7 +30,7 @@ const TitleArea = memo(
             tempo={selectedTempo}
             activeNote={currentIndex}
           />
-          <Counter count={count} />
+          {/* <Counter count={count} /> */}
 
           <div className="tiny-links">
             <a
