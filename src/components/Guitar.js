@@ -38,6 +38,22 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
     INITIAL_GUITAR_TUNING
   );
 
+  const handlePositionChange = React.useCallback((e) => {
+    setSelectedPosition(parseInt(e.target.value, 10));
+  }, []);
+
+  const handleFingerRangeChange = React.useCallback((e) => {
+    setSelectedFingerRange(parseInt(e.target.value, 10));
+  }, []);
+
+  const handleNumberOfGuitarStringsChange = React.useCallback((e) => {
+    setSelectedNumberOfGuitarStrings(parseInt(e.target.value, 10));
+  }, []);
+
+  const handleNumberOfGuitarFretsChange = React.useCallback((e) => {
+    setNumberOfGuitarFrets(parseInt(e.target.value, 10));
+  }, []);
+
   let strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
 
   return (
@@ -53,9 +69,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={selectedPosition}
-          onChange={(e) => {
-            setSelectedPosition(parseInt(e.target.value, 10));
-          }}
+          onChange={handlePositionChange}
         />
 
         <Slider
@@ -66,9 +80,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={selectedFingerRange}
-          onChange={(e) => {
-            setSelectedFingerRange(parseInt(e.target.value, 10));
-          }}
+          onChange={handleFingerRangeChange}
         />
 
         <Slider
@@ -79,9 +91,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={selectedNumberOfGuitarStrings}
-          onChange={(e) => {
-            setSelectedNumberOfGuitarStrings(parseInt(e.target.value, 10));
-          }}
+          onChange={handleNumberOfGuitarStringsChange}
         />
 
         <Slider
@@ -92,9 +102,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
           step="1"
           editable={false}
           value={numberOfGuitarFrets}
-          onChange={(e) => {
-            setNumberOfGuitarFrets(parseInt(e.target.value, 10));
-          }}
+          onChange={handleNumberOfGuitarFretsChange}
         />
       </div>
       <Fretboard
