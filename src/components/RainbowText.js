@@ -5,7 +5,7 @@ const RainbowText = ({ text, tempo, shadow }) => {
   if (!text) return null;
 
   if (tempo === 0) tempo = 100000;
-  const animationDuration = 1000 / tempo;
+  const animationDuration = 500 / tempo;
   const animationDelayConstant = 0.5;
 
   return (
