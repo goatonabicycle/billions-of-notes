@@ -1,7 +1,7 @@
 import React from "react";
 import "./RainbowText.css";
 
-const RainbowText = ({ text, tempo, shadow }) => {
+const RainbowText = ({ text, tempo }) => {
   if (!text) return null;
 
   if (tempo === 0) tempo = 100000;

@@ -1,7 +1,4 @@
-## Todo
-
-# BUGS!!!   
-  - Ghost note when a request gets made to update the "Total notes generated" count.  
+## Todo  
   
 # Do mode:
 
@@ -23,6 +20,7 @@
 - Record and save to mp3. 
 - Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. 
 - See about replacing the sound player with: https://github.com/danigb/smplr
+- Get the count stuff back. 
 
 # Think about it mode: 
 - Finish styling the new, improved fretboard.
