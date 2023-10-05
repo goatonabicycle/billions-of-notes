@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import ClickFirst from "./ClickFirst";
 import { noteToMidiNumber } from "../useful";
 
@@ -41,29 +41,37 @@ const LoopComponent = ({
     }
   }, [midiNumber, midiSoundsRef, isPlaying, instrument, notePlayLength]);
 
-  const animateNotes = useCallback(
-    (startTime) => {
+  useEffect(() => {
+    function animateNotes(startTime) {
       let lastNoteTime = startTime;
+      let expectedTime = startTime + interval; // Initialize expectedTime
 
       playNotes.current = (timestamp) => {
         if (!isPlaying) return;
 
-        if (timestamp - lastNoteTime > interval) {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
-          lastNoteTime = timestamp;
+        const elapsedTime = timestamp - lastNoteTime;
+
+        if (elapsedTime > interval) {
+          const drift = timestamp - expectedTime;
+
+          if (elapsedTime > interval * 2) {
+            lastNoteTime = timestamp;
+            expectedTime = timestamp + interval;
+          } else {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
+            lastNoteTime = timestamp - drift; // Compensate for the drift
+            expectedTime += interval;
+          }
         }
 
         requestAnimationFrame(playNotes.current);
       };
 
       requestAnimationFrame(playNotes.current);
-    },
-    [isPlaying, interval, notes.length, setCurrentIndex]
-  );
+    }
 
-  useEffect(() => {
     animateNotes(performance.now());
-  }, [isPlaying, animateNotes]);
+  }, [isPlaying, interval, notes.length, setCurrentIndex]);
 
   if (!audioContext || audioContext.state !== "running") {
     return <ClickFirst onClick={() => audioContext?.resume()} />;
