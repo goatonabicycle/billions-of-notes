@@ -306,11 +306,7 @@ function App() {
             selectedTempo={controlState.tempo}
             selectedNumberOfNotes={inputState.numberOfNotes}></MessageBoxes>
 
-          <NotesInScale
-            notesInScale={notesInScale}
-            randomNotes={randomNotes}
-            currentIndex={currentIndex}
-          />
+          <NotesInScale notesInScale={notesInScale} />
 
           <NotesUsed
             notesInScale={notesInScale}
