@@ -1,0 +1,29 @@
+/* WhatScale.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-box {
+  color: var(--main-accent) !important;
+  padding: 10px;
+  font-size: 20px;
+  width: 400px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.results {
+  text-align: left;
+  background-color: var(--background-color);
+  overflow-y: auto;
+}
+
+.containing {
+  border: 1px solid var(--main-accent);
+  font-weight: bold;
+}

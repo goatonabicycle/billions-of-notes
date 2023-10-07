@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./index.css";
 import App from "./App";
 import ShowMe from "./ShowMe";
+import WhatScale from "./WhatScale";
 
 function AppRoutes() {
   return (
@@ -17,6 +18,10 @@ function AppRoutes() {
       <Route
         path="/show-me"
         element={<ShowMe />}
+      />
+      <Route
+        path="/what-scale"
+        element={<WhatScale />}
       />
     </Routes>
   );
