@@ -36,7 +36,7 @@ function WhatScale() {
   return (
     <div className="container">
       <h2>What is this scale?</h2>
-      <p>
+      <p class="what-scale-explain">
         Input notes below (separated by commas). The <strong>first note</strong>{" "}
         you enter is considered the <strong>tonic</strong> of the scale.
       </p>
