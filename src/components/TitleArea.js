@@ -44,7 +44,14 @@ const TitleArea = memo(
             <ExplainButton />
             {"|"}
             <KofiButton />
-
+            {"|"}
+            <a
+              href="/what-scale"
+              target="_blank"
+              className="source-code"
+              rel="noreferrer">
+              What's the scale?
+            </a>
             {"|"}
             <button
               className="link-looking-button"
