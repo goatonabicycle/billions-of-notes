@@ -18,9 +18,10 @@
 - Allow single note items to be played as if they're tremolo'd.
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Record and save to mp3. 
-- Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. 
+- Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. (Continue with ShowMe.js)
 - See about replacing the sound player with: https://github.com/danigb/smplr
 - Get the count stuff back. 
+- https://www.billionsofnotes.com/what-scale -> This could go back to the main page with the key and scale selected.
 
 # Think about it mode: 
 - Finish styling the new, improved fretboard.

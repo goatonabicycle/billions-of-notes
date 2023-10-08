@@ -128,7 +128,10 @@ function App() {
     }
 
     const getRandomNotes = (notesInScale, total, empty) => {
-      const notesWithOctaves = Array(total - empty)
+      let numberOfNotesToUse = total - empty;
+      if (numberOfNotesToUse < 0) numberOfNotesToUse = total;
+
+      const notesWithOctaves = Array(numberOfNotesToUse)
         .fill(0)
         .map(
           () =>
