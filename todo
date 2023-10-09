@@ -2,28 +2,27 @@
   
 # Do mode:
 
-- "Show me how to play this"/Import Midi. The fretboard is pretty cool. Having a way to import a midi file and then show you how to play it would be awesome. 
-- Right now, the theming for dark mode sucks so much that it seems broken.
-- There are many unnecessary rerenders happening. I should be able to optimize this.
-- A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
-- Add many more random interactive messages. Make this more prominent and obvious.
-- Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
-  - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
-- For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
-- Flat vs sharp mode. Make it an option. Options page, generally?
-- Number of frets -> Make this a two way slider. 
 - Add a light/dark mode. Use something like this: https://uiverse.io/andrew-demchenk0/nasty-frog-73
   - This is added but it sucks right now. I can/should make this way nicer.
+- A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
+- Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
+  - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
+  - At least add a duplicate? This would double up the number of notes and empty notes.
+- For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
+- The notes being played overlap in some views. 
+- Flat vs sharp mode. Make it an option. Options page, generally?
+- Number of frets -> Make this a two way slider. 
 - Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
 - Allow single note items to be played as if they're tremolo'd.
   - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
 - Record and save to mp3. 
-- Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. (Continue with ShowMe.js)
+- There are still some unnecessary rerenders happening especially around the instruments being played. I should be able to optimize this.
+- "Show me how to play this"/Import Midi. The fretboard is pretty cool. Having a way to import a midi file and then show you how to play it would be awesome. 
+  - Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. (Continue with ShowMe.js)
 - See about replacing the sound player with: https://github.com/danigb/smplr
 - Get the count stuff back. 
 - https://www.billionsofnotes.com/what-scale -> This could go back to the main page with the key and scale selected.
-
-# Think about it mode: 
+- Add many more random interactive messages. Make this more prominent and obvious.
 - Finish styling the new, improved fretboard.
   - Invert the colors for the fretboard maybe? Make the playing notes bright and non playable notes dark. To make things more obvious
 - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
