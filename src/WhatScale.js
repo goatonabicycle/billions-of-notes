@@ -11,7 +11,10 @@ function WhatScale() {
       .split(",")
       .map((note) => Note.simplify(note.trim()));
     setNotes(e.target.value);
-    const scales = Scale.detect(inputNotes);
+    const scales = Scale.detect(inputNotes).filter(
+      (scaleName) => !scaleName.toLowerCase().includes("chromatic")
+    );
+
     setDetectedScales(scales);
   };
 
