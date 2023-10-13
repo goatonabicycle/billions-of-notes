@@ -4,16 +4,18 @@ import "./ExplainButton.css";
 const ModalContent = memo(() => (
   <div>
     <div className="question">What is this?</div>
-    <div className="answer">This is a website.</div>
+    <div className="answer">
+      This is a website that generates a random set of notes for you based on
+      your input.
+    </div>
     <div className="question">Does it use AI? </div>
     <div className="answer">Not even a little bit</div>
     <div className="question">What about bitcoins?</div>
     <div className="answer">Even less so</div>
-    <div className="question">What's the point?</div>
-    <div className="answer">This website randomly generates notes for you.</div>
     <div className="question">Why can't I make the tempo 151?</div>
     <div className="answer">
-      You can! There's a text box! Click on the number.
+      You could! There's a text box! Click on the number. I need to fix it
+      though.
     </div>
     <div className="question">
       Very cool... You should add this cool feature where...{" "}
@@ -27,7 +29,7 @@ const ModalContent = memo(() => (
         rel="noreferrer">
         here
       </a>
-      .
+      . I'd really appreciate it!
     </div>
     <div className="question">Got any cool keyboard shortcuts?</div>
     <div className="answer">
