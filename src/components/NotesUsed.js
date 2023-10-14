@@ -34,14 +34,14 @@ const NotesUsed = ({
         const isCurrentNote = i === currentIndex;
         return (
           <div key={i}>
-            <span
+            <div
               className={isCurrentNote ? "note active" : "note"}
               onClick={() => {
                 setSelectedNoteForEditing(i);
                 setIsModalOpen(true);
               }}>
               {note || ""}
-            </span>
+            </div>
           </div>
         );
       })}
