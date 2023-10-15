@@ -14,7 +14,7 @@ import Fretboard from "./Fretboard";
 
 import "./Guitar.css";
 
-const BassGuitar = React.memo(({ notesToPlay, playbackIndex, scaleNotes }) => {
+const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
   const [selectedPosition, setSelectedPosition] = useStorage(
     "selectedBassPosition",
     DEFAULT_POSITION
@@ -42,22 +42,22 @@ const BassGuitar = React.memo(({ notesToPlay, playbackIndex, scaleNotes }) => {
 
   const handleSelectedPositionChange = useCallback(
     (e) => setSelectedPosition(parseInt(e.target.value, 10)),
-    [setSelectedPosition]
+    []
   );
 
   const handleSelectedFingerRangeChange = useCallback(
     (e) => setSelectedFingerRange(parseInt(e.target.value, 10)),
-    [setSelectedFingerRange]
+    []
   );
 
   const handleSelectedNumberOfBassStringsChange = useCallback(
     (e) => setSelectedNumberOfBassStrings(parseInt(e.target.value, 10)),
-    [setSelectedNumberOfBassStrings]
+    []
   );
 
   const handleNumberOfBassFretsChange = useCallback(
     (e) => setNumberOfBassFrets(parseInt(e.target.value, 10)),
-    [setNumberOfBassFrets]
+    []
   );
 
   return (
@@ -123,6 +123,6 @@ const BassGuitar = React.memo(({ notesToPlay, playbackIndex, scaleNotes }) => {
       />
     </div>
   );
-});
+};
 
 export default BassGuitar;

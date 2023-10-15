@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import { useStorage } from "../useLocalStorage";
 import {
@@ -38,19 +38,19 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
     INITIAL_GUITAR_TUNING
   );
 
-  const handlePositionChange = React.useCallback((e) => {
+  const handlePositionChange = useCallback((e) => {
     setSelectedPosition(parseInt(e.target.value, 10));
   }, []);
 
-  const handleFingerRangeChange = React.useCallback((e) => {
+  const handleFingerRangeChange = useCallback((e) => {
     setSelectedFingerRange(parseInt(e.target.value, 10));
   }, []);
 
-  const handleNumberOfGuitarStringsChange = React.useCallback((e) => {
+  const handleNumberOfGuitarStringsChange = useCallback((e) => {
     setSelectedNumberOfGuitarStrings(parseInt(e.target.value, 10));
   }, []);
 
-  const handleNumberOfGuitarFretsChange = React.useCallback((e) => {
+  const handleNumberOfGuitarFretsChange = useCallback((e) => {
     setNumberOfGuitarFrets(parseInt(e.target.value, 10));
   }, []);
 
