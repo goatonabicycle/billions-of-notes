@@ -9,8 +9,11 @@
 
 .notes-used .note {
   border: 1px solid var(--main-accent);
-  padding: 5px;
   cursor: pointer;
+  padding: 5px;
+  margin: 0px;
+  min-height: 30px;
+  min-width: 30px;
 }
 
 .notes-used .active {
