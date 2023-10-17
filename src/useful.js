@@ -8,6 +8,7 @@ export const DEFAULT_POSITION = 2;
 export const DEFAULT_FINGER_RANGE = 6;
 export const DEFAULT_VOLUME = 10;
 export const DEFAULT_EMPTY_NOTES = 0;
+export const DEFAULT_NOTES_MODE = "sharp";
 export const DEFAULT_NOTE_LENGTH = 2;
 export const DEFAULT_PANELS_TO_SHOW = ["Guitar"];
 export const DEFAULT_NUMBER_OF_GUITAR_STRINGS = 6;

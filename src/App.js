@@ -19,6 +19,7 @@ import {
   DEFAULT_NOTE_LENGTH,
   randomRGBA,
   getRandomItem,
+  DEFAULT_NOTES_MODE,
 } from "./useful";
 import { useStorage } from "./useLocalStorage";
 // import { useCount } from "./useCount";
@@ -58,6 +59,7 @@ function App() {
     instrument: DEFAULT_INSTRUMENT,
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
+    noteMode: DEFAULT_NOTES_MODE,
   });
   const setControlState = useCallback(_setControlState, []);
 
@@ -127,7 +129,8 @@ function App() {
       return;
     }
 
-    const getRandomNotes = (notesInScale, total, empty) => {
+    const getRandomNotes = (notesInScale, total, empty, notesMode) => {
+      //Todo: Handle this notesMode idea.
       let numberOfNotesToUse = total - empty;
       if (numberOfNotesToUse < 0) numberOfNotesToUse = total;
 
@@ -151,7 +154,13 @@ function App() {
 
     const totalNotes = parseInt(inputState.numberOfNotes);
     const emptyNotes = parseInt(inputState.emptyNotes);
-    let randomNotes = getRandomNotes(notesInScale, totalNotes, emptyNotes);
+    const notesMode = parseInt(controlState.notesMode);
+    let randomNotes = getRandomNotes(
+      notesInScale,
+      totalNotes,
+      emptyNotes,
+      notesMode
+    );
 
     let firstNonEmptyNoteIndex = randomNotes.findIndex((note) => note !== "");
     if (firstNonEmptyNoteIndex !== -1) {

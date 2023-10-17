@@ -2,18 +2,27 @@ import React, { useMemo } from "react";
 import ShowMeSelector from "./ShowMeSelector";
 import Slider from "./Slider";
 import Select from "./Select";
-import { INSTRUMENTS, mapObjectToSelectOptionsWithValues } from "../useful";
+import {
+  INSTRUMENTS,
+  mapObjectToSelectOptionsWithValues,
+  mapToSelectOptions,
+} from "../useful";
 
 function SelectControlsGrid({
   selectedPanelsToShow,
   setSelectedPanelsToShow,
   selectedNoteLength,
   setSelectedNoteLength,
-  controlState: { tempo, volume, instrument },
+  controlState: { tempo, volume, instrument, noteMode },
   handleControlChange,
 }) {
   const instrumentOptions = useMemo(
     () => mapObjectToSelectOptionsWithValues(INSTRUMENTS),
+    []
+  );
+
+  const noteModeOptions = useMemo(
+    () => mapToSelectOptions(["flat", "sharp"]),
     []
   );
 
@@ -68,6 +77,15 @@ function SelectControlsGrid({
         options={instrumentOptions}
         onChange={handleControlChange}
         selectedValue={instrument}
+      />
+
+      <Select
+        id="noteMode"
+        name="noteMode"
+        label="Note mode:"
+        options={noteModeOptions}
+        onChange={handleControlChange}
+        selectedValue={noteMode}
       />
     </div>
   );
