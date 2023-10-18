@@ -13,7 +13,7 @@ function SelectControlsGrid({
   setSelectedPanelsToShow,
   selectedNoteLength,
   setSelectedNoteLength,
-  controlState: { tempo, volume, instrument, noteMode },
+  controlState: { tempo, volume, instrument, notation },
   handleControlChange,
 }) {
   const instrumentOptions = useMemo(
@@ -21,7 +21,7 @@ function SelectControlsGrid({
     []
   );
 
-  const noteModeOptions = useMemo(
+  const notationOptions = useMemo(
     () => mapToSelectOptions(["flat", "sharp"]),
     []
   );
@@ -80,12 +80,12 @@ function SelectControlsGrid({
       />
 
       <Select
-        id="noteMode"
-        name="noteMode"
-        label="Note mode:"
-        options={noteModeOptions}
+        id="notation"
+        name="notation"
+        label="Notation"
+        options={notationOptions}
         onChange={handleControlChange}
-        selectedValue={noteMode}
+        selectedValue={notation}
       />
     </div>
   );

@@ -154,12 +154,12 @@ function App() {
 
     const totalNotes = parseInt(inputState.numberOfNotes);
     const emptyNotes = parseInt(inputState.emptyNotes);
-    const notesMode = parseInt(controlState.notesMode);
+    const notation = parseInt(controlState.notation);
     let randomNotes = getRandomNotes(
       notesInScale,
       totalNotes,
       emptyNotes,
-      notesMode
+      notation
     );
 
     let firstNonEmptyNoteIndex = randomNotes.findIndex((note) => note !== "");
