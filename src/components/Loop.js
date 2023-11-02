@@ -42,9 +42,11 @@ const LoopComponent = ({
   }, [midiNumber, midiSoundsRef, isPlaying, instrument, notePlayLength]);
 
   useEffect(() => {
+    let animationFrameId;
+
     function animateNotes(startTime) {
       let lastNoteTime = startTime;
-      let expectedTime = startTime + interval; // Initialize expectedTime
+      let expectedTime = startTime + interval;
 
       playNotes.current = (timestamp) => {
         if (!isPlaying) return;
@@ -59,18 +61,20 @@ const LoopComponent = ({
             expectedTime = timestamp + interval;
           } else {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
-            lastNoteTime = timestamp - drift; // Compensate for the drift
+            lastNoteTime = timestamp - drift;
             expectedTime += interval;
           }
         }
 
-        requestAnimationFrame(playNotes.current);
+        animationFrameId = requestAnimationFrame(playNotes.current);
       };
 
-      requestAnimationFrame(playNotes.current);
+      animationFrameId = requestAnimationFrame(playNotes.current);
     }
 
     animateNotes(performance.now());
+
+    return () => cancelAnimationFrame(animationFrameId);
   }, [isPlaying, interval, notes.length, setCurrentIndex]);
 
   if (!audioContext || audioContext.state !== "running") {

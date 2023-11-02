@@ -79,14 +79,16 @@ function SelectControlsGrid({
         selectedValue={instrument}
       />
 
-      <Select
-        id="notation"
-        name="notation"
-        label="Notation"
-        options={notationOptions}
-        onChange={handleControlChange}
-        selectedValue={notation}
-      />
+      <div style={{ display: "none" }}>
+        <Select
+          id="notation"
+          name="notation"
+          label="Notation"
+          options={notationOptions}
+          onChange={handleControlChange}
+          selectedValue={notation}
+        />
+      </div>
     </div>
   );
 }
