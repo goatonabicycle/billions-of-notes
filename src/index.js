@@ -7,6 +7,7 @@ import "./index.css";
 import App from "./App";
 import ShowMe from "./ShowMe";
 import WhatScale from "./WhatScale";
+import V2App from "./v2/App";
 
 function AppRoutes() {
   return (
@@ -22,6 +23,10 @@ function AppRoutes() {
       <Route
         path="/what-scale"
         element={<WhatScale />}
+      />
+      <Route
+        path="/test-page"
+        element={<V2App />}
       />
     </Routes>
   );

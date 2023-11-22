@@ -17,6 +17,7 @@
     "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1",
     "smplr": "^0.6.1",
+    "soundfont-player": "^0.12.0",
     "tonal": "^4.14.1",
     "tonal-distance": "^2.2.2",
     "web-vitals": "^3.0.4"
