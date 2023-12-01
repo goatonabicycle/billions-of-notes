@@ -25,7 +25,7 @@ function AppRoutes() {
         element={<WhatScale />}
       />
       <Route
-        path="/test-page"
+        path="/v2"
         element={<V2App />}
       />
     </Routes>
