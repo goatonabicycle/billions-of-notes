@@ -52,14 +52,14 @@ const TitleArea = memo(
               rel="noreferrer">
               What's the scale?
             </a>
-            {"|"}
+            {/* {"|"}
             <button
               className="link-looking-button"
               onClick={() => {
                 document.body.classList.toggle("light-mode");
               }}>
               Toggle theme
-            </button>
+            </button> */}
           </div>
         </div>
       </>
