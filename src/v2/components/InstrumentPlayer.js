@@ -8,7 +8,7 @@ import {
   VOLUME_SLIDER,
 } from "../constants";
 
-export const InstrumentPlayer = ({ currentInstrument, instrumentName }) => {
+export const InstrumentPlayer = ({ currentInstrument }) => {
   const [noteIndex, setNoteIndex] = useState(0);
   const [tempo, setTempo] = useState(DEFAULT_TEMPO);
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
@@ -32,14 +32,14 @@ export const InstrumentPlayer = ({ currentInstrument, instrumentName }) => {
   const handleVolumeChange = (event) => {
     const newVolume = Number(event.target.value);
     setVolume(newVolume);
-    if (currentInstrument && currentInstrument.audioNode) {
-      currentInstrument.audioNode.gain.value = newVolume;
+
+    if (currentInstrument && currentInstrument.out) {
+      currentInstrument.out.gain.value = newVolume;
     }
   };
 
   return (
     <div>
-      <p>Current Instrument: {instrumentName}</p>
       <p>Current Note: {NOTES[noteIndex]}</p>
       <p>Tempo: {tempo} BPM</p>
       <p>Volume: {Math.round(volume * 100)}%</p>

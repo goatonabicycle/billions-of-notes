@@ -20,17 +20,16 @@ const V2App = () => {
 
   return (
     <div>
-      <InstrumentPlayer
-        instrumentName={instrumentName}
-        currentInstrument={currentInstrument}
-        notes={NOTES}
-        defaultTempo={DEFAULT_TEMPO}
-        defaultVolume={DEFAULT_VOLUME}
-      />
       <InstrumentSelector
         instruments={INSTRUMENTS}
         selected={instrumentName}
         onSelect={setInstrumentName}
+      />
+      <InstrumentPlayer
+        currentInstrument={currentInstrument}
+        notes={NOTES}
+        defaultTempo={DEFAULT_TEMPO}
+        defaultVolume={DEFAULT_VOLUME}
       />
     </div>
   );
