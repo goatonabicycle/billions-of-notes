@@ -35,6 +35,8 @@ import SelectControlsGrid from "./components/SelectControlsGrid";
 import TitleArea from "./components/TitleArea";
 import ShowMePanels from "./components/ShowMePanels";
 
+import { useAudioPlayer } from "./hooks/useAudioPlayer";
+
 import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
@@ -43,6 +45,27 @@ import "./Doodle/doodle.css";
 const scales = Scale.names();
 
 function App() {
+  // instruments.js
+  const INSTRUMENTS = [
+    { value: "acoustic_grand_piano", label: "Acoustic Grand Piano" },
+    { value: "electric_grand_piano", label: "Electric Grand Piano" },
+    { value: "honkytonk_piano", label: "Honky-tonk Piano" },
+    // ... Add all other instruments here
+    { value: "sitar", label: "Sitar" },
+  ];
+
+  const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
+  const { currentInstrument, isLoading, error } =
+    useAudioPlayer(instrumentName);
+
+  // if (error) {
+  //   return <div>Error loading instrument: {error.message}</div>;
+  // }
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
   // const { count, incrementCount } = useCount();
 
   // input state is anything that ends up changing the randomNotes you got
