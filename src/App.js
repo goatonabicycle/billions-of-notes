@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Note, Scale } from "tonal";
-import MIDISounds from "midi-sounds-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -10,13 +9,13 @@ import {
   KEYS,
   DEFAULT_OCTAVES,
   FLAT_TO_SHARP,
-  DEFAULT_INSTRUMENT,
   DEFAULT_VOLUME,
   shuffleArray,
   DEFAULT_PANELS_TO_SHOW,
   DEFAULT_SCALE,
   DEFAULT_EMPTY_NOTES,
   DEFAULT_NOTE_LENGTH,
+  INSTRUMENTS,
   randomRGBA,
   getRandomItem,
   DEFAULT_NOTES_MODE,
@@ -45,15 +44,6 @@ import "./Doodle/doodle.css";
 const scales = Scale.names();
 
 function App() {
-  // instruments.js
-  const INSTRUMENTS = [
-    { value: "acoustic_grand_piano", label: "Acoustic Grand Piano" },
-    { value: "electric_grand_piano", label: "Electric Grand Piano" },
-    { value: "honkytonk_piano", label: "Honky-tonk Piano" },
-    // ... Add all other instruments here
-    { value: "sitar", label: "Sitar" },
-  ];
-
   const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
   const { currentInstrument, isLoading, error } =
     useAudioPlayer(instrumentName);
@@ -79,7 +69,7 @@ function App() {
   const setInputState = useCallback(_setInputState, []);
 
   const [controlState, _setControlState] = useStorage("controlState", {
-    instrument: DEFAULT_INSTRUMENT,
+    instrument: INSTRUMENTS[0].value,
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
     noteMode: DEFAULT_NOTES_MODE,
@@ -361,11 +351,11 @@ function App() {
       />
       {controlState && controlState.instrument && (
         <>
-          <MIDISounds
+          {/* <MIDISounds
             ref={midiSoundsRef}
             appElementName="root"
             instruments={[controlState.instrument]} // Add all the chosen instruments here once I know what I want.
-          />
+          /> */}
           {currentInstrument && (
             <Loop
               midiSoundsRef={midiSoundsRef}
@@ -377,7 +367,7 @@ function App() {
               instrument={controlState.instrument}
               volume={controlState.volume}
               notePlayLength={selectedNoteLength / 10}
-              currentInstrument={currentInstrument}
+              playableInstrument={currentInstrument}
             />
           )}
         </>

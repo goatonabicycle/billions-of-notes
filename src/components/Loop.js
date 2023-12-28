@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useMemo } from "react";
 import ClickFirst from "./ClickFirst";
-import { noteToMidiNumber } from "../useful";
 
 const audioContext = new AudioContext();
 
@@ -18,20 +17,22 @@ const LoopComponent = ({
   instrument,
   volume,
   notePlayLength,
-  currentInstrument,
+  playableInstrument,
 }) => {
   const interval = useMemo(() => calculateInterval(bpm), [bpm]);
   const playNotes = useRef();
 
   useEffect(() => {
-    if (volume) currentInstrument.out.gain.value = Math.round(volume / 10);
-  }, [volume]);
+    if (playableInstrument && volume)
+      playableInstrument.out.gain.value = Math.round(volume / 10);
+  }, [volume, playableInstrument]);
 
   useEffect(() => {
     if (!isPlaying) return;
     if (audioContext && audioContext.state === "running") {
       // How do I handle notePlayLength here?
-      currentInstrument.play(notes[currentIndex]);
+
+      if (playableInstrument) playableInstrument.play(notes[currentIndex]);
     }
   }, [midiSoundsRef, isPlaying, instrument, notePlayLength]);
 

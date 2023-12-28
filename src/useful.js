@@ -43,27 +43,13 @@ export const FLAT_TO_SHARP = {
   Bb: "A#",
 };
 
-export const INSTRUMENTS = {
-  5: "Acoustic Grand Piano",
-  15: "Bright Accoustic Piano",
-  26: "Electric Grand Piano",
-  32: "Honky Tonk Piano",
-  43: "Electric Piano",
-  73: "Harpsicord",
-  84: "Clavinet",
-  91: "Celesta",
-  102: "Glockenspiel",
-  111: "Music box",
-  121: "Vibraphone",
-  125: "Marimba",
-  137: "Xylophone",
-  184: "Rock Organ",
-  279: "Jazz Guitar",
-  296: "Clean Electric Guitar",
-  306: "Muted Electric Guitar",
-  322: "Overdriven Guitar",
-  341: "Distorted Guitar",
-};
+export const INSTRUMENTS = [
+  { value: "acoustic_grand_piano", label: "Acoustic Grand Piano" },
+  { value: "electric_grand_piano", label: "Electric Grand Piano" },
+  { value: "honkytonk_piano", label: "Honky-tonk Piano" },
+  // ... Add all other instruments here
+  { value: "sitar", label: "Sitar" },
+];
 
 export const INITIAL_GUITAR_TUNING = [
   { note: "E", octave: 4 },
@@ -100,9 +86,9 @@ export const mapObjectToSelectOptionsWithValues = (items) => {
 };
 
 export const mapToSelectOptionsWithValues = (items) => {
-  return items.map((item, value) => ({
-    label: item,
-    value: value,
+  return items.map((item) => ({
+    label: item.label,
+    value: item.value,
   }));
 };
 

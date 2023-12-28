@@ -4,7 +4,7 @@ import Slider from "./Slider";
 import Select from "./Select";
 import {
   INSTRUMENTS,
-  mapObjectToSelectOptionsWithValues,
+  mapToSelectOptionsWithValues,
   mapToSelectOptions,
 } from "../useful";
 
@@ -17,7 +17,7 @@ function SelectControlsGrid({
   handleControlChange,
 }) {
   const instrumentOptions = useMemo(
-    () => mapObjectToSelectOptionsWithValues(INSTRUMENTS),
+    () => mapToSelectOptionsWithValues(INSTRUMENTS),
     []
   );
 
