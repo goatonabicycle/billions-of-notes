@@ -366,17 +366,20 @@ function App() {
             appElementName="root"
             instruments={[controlState.instrument]} // Add all the chosen instruments here once I know what I want.
           />
-          <Loop
-            midiSoundsRef={midiSoundsRef}
-            notes={randomNotes}
-            bpm={controlState.tempo}
-            isPlaying={isPlaying}
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-            instrument={controlState.instrument}
-            volume={controlState.volume / 500}
-            notePlayLength={selectedNoteLength / 10}
-          />
+          {currentInstrument && (
+            <Loop
+              midiSoundsRef={midiSoundsRef}
+              notes={randomNotes}
+              bpm={controlState.tempo}
+              isPlaying={isPlaying}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
+              instrument={controlState.instrument}
+              volume={controlState.volume}
+              notePlayLength={selectedNoteLength / 10}
+              currentInstrument={currentInstrument}
+            />
+          )}
         </>
       )}
 

@@ -18,28 +18,22 @@ const LoopComponent = ({
   instrument,
   volume,
   notePlayLength,
+  currentInstrument,
 }) => {
   const interval = useMemo(() => calculateInterval(bpm), [bpm]);
-  const midiNumber = useMemo(
-    () => noteToMidiNumber(notes[currentIndex]),
-    [notes, currentIndex]
-  );
   const playNotes = useRef();
 
   useEffect(() => {
-    if (volume) midiSoundsRef.current.setMasterVolume(volume);
+    if (volume) currentInstrument.out.gain.value = Math.round(volume / 10);
   }, [volume]);
 
   useEffect(() => {
-    if (!midiNumber || !isPlaying) return;
+    if (!isPlaying) return;
     if (audioContext && audioContext.state === "running") {
-      midiSoundsRef.current.playChordNow(
-        instrument,
-        [midiNumber],
-        notePlayLength
-      );
+      // How do I handle notePlayLength here?
+      currentInstrument.play(notes[currentIndex]);
     }
-  }, [midiNumber, midiSoundsRef, isPlaying, instrument, notePlayLength]);
+  }, [midiSoundsRef, isPlaying, instrument, notePlayLength]);
 
   useEffect(() => {
     let animationFrameId;
