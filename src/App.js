@@ -48,16 +48,6 @@ function App() {
   const { currentInstrument, isLoading, error } =
     useAudioPlayer(instrumentName);
 
-  // if (error) {
-  //   return <div>Error loading instrument: {error.message}</div>;
-  // }
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // const { count, incrementCount } = useCount();
-
   // input state is anything that ends up changing the randomNotes you got
   const [inputState, _setInputState] = useStorage("inputState", {
     key: DEFAULT_KEY,
@@ -69,7 +59,6 @@ function App() {
   const setInputState = useCallback(_setInputState, []);
 
   const [controlState, _setControlState] = useStorage("controlState", {
-    instrument: INSTRUMENTS[0].value,
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
     noteMode: DEFAULT_NOTES_MODE,
@@ -307,6 +296,8 @@ function App() {
             setSelectedNoteLength={setSelectedNoteLength}
             controlState={controlState}
             handleControlChange={handleControlChange}
+            setInstrumentName={setInstrumentName}
+            currentInstrument={currentInstrument}
           />
 
           <ButtonBlock
@@ -351,11 +342,6 @@ function App() {
       />
       {controlState && controlState.instrument && (
         <>
-          {/* <MIDISounds
-            ref={midiSoundsRef}
-            appElementName="root"
-            instruments={[controlState.instrument]} // Add all the chosen instruments here once I know what I want.
-          /> */}
           {currentInstrument && (
             <Loop
               midiSoundsRef={midiSoundsRef}

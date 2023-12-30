@@ -15,6 +15,8 @@ function SelectControlsGrid({
   setSelectedNoteLength,
   controlState: { tempo, volume, instrument, notation },
   handleControlChange,
+  setInstrumentName,
+  currentInstrument,
 }) {
   const instrumentOptions = useMemo(
     () => mapToSelectOptionsWithValues(INSTRUMENTS),
@@ -57,26 +59,30 @@ function SelectControlsGrid({
         onChange={handleControlChange}
       />
 
-      <Slider
-        id="noteLengthSlider"
-        label="Note Length"
-        min="1"
-        max="10"
-        step="1"
-        editable={false}
-        value={selectedNoteLength}
-        onChange={(e) => {
-          setSelectedNoteLength(parseInt(e.target.value, 10));
-        }}
-      />
+      <div style={{ display: "none" }}>
+        <Slider
+          id="noteLengthSlider"
+          label="Note Length"
+          min="1"
+          max="10"
+          step="1"
+          editable={false}
+          value={selectedNoteLength}
+          onChange={(e) => {
+            setSelectedNoteLength(parseInt(e.target.value, 10));
+          }}
+        />
+      </div>
 
       <Select
         id="instrument"
         name="instrument"
         label="Sounds:"
         options={instrumentOptions}
-        onChange={handleControlChange}
-        selectedValue={instrument}
+        onChange={(e) => {
+          setInstrumentName(e.target.value);
+        }}
+        selectedValue={currentInstrument && currentInstrument.value}
       />
 
       <div style={{ display: "none" }}>
