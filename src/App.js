@@ -45,8 +45,7 @@ const scales = Scale.names();
 
 function App() {
   const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
-  const { currentInstrument, isLoading, error } =
-    useAudioPlayer(instrumentName);
+  const { currentInstrument } = useAudioPlayer(instrumentName);
 
   // input state is anything that ends up changing the randomNotes you got
   const [inputState, _setInputState] = useStorage("inputState", {
@@ -310,7 +309,7 @@ function App() {
             selectedScale={inputState.scale}
             selectedNumberOfNotes={inputState.numberOfNotes}
             selectedTempo={controlState.tempo}
-            selectedInstrument={inputState.instrument}
+            selectedInstrument={currentInstrument}
             selectedOctaves={inputState.octaves}
             randomNotes={randomNotes}
             setShareButtonText={setShareButtonText}
