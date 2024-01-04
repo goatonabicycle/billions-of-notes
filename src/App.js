@@ -55,14 +55,14 @@ function App() {
     emptyNotes: DEFAULT_EMPTY_NOTES,
     octaves: DEFAULT_OCTAVES,
   });
-  const setInputState = useCallback(_setInputState, []);
+  const setInputState = useCallback(_setInputState, [_setInputState]);
 
   const [controlState, _setControlState] = useStorage("controlState", {
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
     noteMode: DEFAULT_NOTES_MODE,
   });
-  const setControlState = useCallback(_setControlState, []);
+  const setControlState = useCallback(_setControlState, [_setControlState]);
 
   const handleInputChange = useCallback(
     (event) => {

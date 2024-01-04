@@ -18,7 +18,7 @@ const SelectInputGrid = memo(
     const keyOptions = useMemo(() => mapToSelectOptions(KEYS), [KEYS]);
     const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
     const notesOptions = useMemo(() => {
-      const notes = Array.from({ length: 100 }, (_, i) => i + 1);
+      const notes = Array.from({ length: 50 }, (_, i) => i + 1);
       return mapToSelectOptions(notes);
     }, []);
     const emptyNotesOptions = useMemo(() => {
