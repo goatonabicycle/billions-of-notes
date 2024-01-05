@@ -330,6 +330,13 @@ function App() {
             currentIndex={currentIndex}
             selectedOctaves={inputState.octaves}
           />
+
+          <button
+            onClick={() => {
+              alert("Soon!");
+            }}>
+            Reverse
+          </button>
         </div>
       </div>
       <ShowMePanels
