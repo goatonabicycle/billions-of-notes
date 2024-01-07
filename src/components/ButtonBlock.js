@@ -8,6 +8,7 @@ import {
   PauseIcon,
   PlayIcon,
   ResetIcon,
+  ReverseIcon,
 } from "./Icons";
 
 const ButtonBlock = ({
@@ -26,6 +27,7 @@ const ButtonBlock = ({
   setShareButtonText,
   shareButtonText,
   SaveToMidi,
+  setRandomNotes,
 }) => {
   const handleNewNotesClick = useCallback(
     () => setTriggerRegenerate(!triggerRegenerate),
@@ -70,6 +72,12 @@ const ButtonBlock = ({
     [randomNotes, selectedTempo]
   );
 
+  const handleReverseClick = useCallback(() => {
+    const newRandomNotes = randomNotes.reverse();
+    setRandomNotes(newRandomNotes);
+    //setTriggerRegenerate((prevTrigger) => !prevTrigger);
+  }, [randomNotes]);
+
   return (
     <div className="buttons">
       <IconButton
@@ -96,6 +104,12 @@ const ButtonBlock = ({
         onClick={handleSaveClick}
         icon={SaveIcon}
         text="Save as MIDI"
+      />
+
+      <IconButton
+        onClick={handleReverseClick}
+        icon={ReverseIcon}
+        text="Reverse notes"
       />
     </div>
   );

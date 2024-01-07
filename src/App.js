@@ -102,6 +102,7 @@ function App() {
   const [shareButtonText, setShareButtonText] = useState("Share these notes");
   const [randomNotes, setRandomNotes] = useState([]);
   const [triggerRegenerate, setTriggerRegenerate] = useState(false);
+  const [triggerNotesUpdate, setTriggerNotesUpdate] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [loadedFromUrl, setLoadedFromUrl] = useState(false);
   const [isInputHidden, setIsInputHidden] = useState(false);
@@ -268,6 +269,8 @@ function App() {
             selectedTempo={controlState.tempo}
             setTriggerRegenerate={setTriggerRegenerate}
             triggerRegenerate={triggerRegenerate}
+            setTriggerNotesUpdate={setTriggerNotesUpdate}
+            triggerNotesUpdate={triggerNotesUpdate}
             currentColour={currentColour}
             randomNotes={randomNotes}
             currentIndex={currentIndex}
@@ -315,6 +318,7 @@ function App() {
             setShareButtonText={setShareButtonText}
             shareButtonText={shareButtonText}
             SaveToMidi={SaveToMidi}
+            setRandomNotes={setRandomNotes}
           />
 
           <MessageBoxes
@@ -330,13 +334,6 @@ function App() {
             currentIndex={currentIndex}
             selectedOctaves={inputState.octaves}
           />
-
-          <button
-            onClick={() => {
-              alert("Soon!");
-            }}>
-            Reverse
-          </button>
         </div>
       </div>
       <ShowMePanels

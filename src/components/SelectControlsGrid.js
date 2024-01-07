@@ -95,6 +95,17 @@ function SelectControlsGrid({
           selectedValue={notation}
         />
       </div>
+
+      <input
+        type="checkbox"
+        id="tieNotes"
+        checked={false}
+        enabled={false}
+        onChange={() => {
+          alert("soon");
+        }}
+      />
+      <label for="tieNotes">Tie notes</label>
     </div>
   );
 }
