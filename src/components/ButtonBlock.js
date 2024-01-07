@@ -31,11 +31,11 @@ const ButtonBlock = ({
 }) => {
   const handleNewNotesClick = useCallback(
     () => setTriggerRegenerate(!triggerRegenerate),
-    [triggerRegenerate]
+    [triggerRegenerate, setTriggerRegenerate]
   );
   const handlePlayPauseClick = useCallback(
     () => setIsPlaying(!isPlaying),
-    [isPlaying]
+    [isPlaying, setIsPlaying]
   );
   const handleResetClick = useCallback(() => resetInputs(), []);
   const handleShareClick = useCallback(() => {
@@ -67,16 +67,16 @@ const ButtonBlock = ({
     randomNotes,
     setShareButtonText,
   ]);
+
   const handleSaveClick = useCallback(
     () => SaveToMidi(randomNotes, selectedTempo),
-    [randomNotes, selectedTempo]
+    [randomNotes, selectedTempo, SaveToMidi]
   );
 
   const handleReverseClick = useCallback(() => {
     const newRandomNotes = randomNotes.reverse();
-    setRandomNotes(newRandomNotes);
-    //setTriggerRegenerate((prevTrigger) => !prevTrigger);
-  }, [randomNotes]);
+    setRandomNotes([...newRandomNotes]);
+  }, [randomNotes, setRandomNotes]);
 
   return (
     <div className="buttons">

@@ -13,7 +13,6 @@ const LoopComponent = ({
   isPlaying,
   currentIndex,
   setCurrentIndex,
-  midiSoundsRef,
   volume,
   notePlayLength,
   playableInstrument,
@@ -33,7 +32,7 @@ const LoopComponent = ({
 
       if (playableInstrument) playableInstrument.play(notes[currentIndex]);
     }
-  }, [midiSoundsRef, isPlaying, notePlayLength, playableInstrument]);
+  }, [isPlaying, notePlayLength, playableInstrument, currentIndex, notes]);
 
   useEffect(() => {
     let animationFrameId;

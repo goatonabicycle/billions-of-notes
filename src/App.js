@@ -107,7 +107,6 @@ function App() {
   const [loadedFromUrl, setLoadedFromUrl] = useState(false);
   const [isInputHidden, setIsInputHidden] = useState(false);
   const navigate = useNavigate();
-  const midiSoundsRef = React.createRef();
 
   const resetInputs = useCallback(() => {
     setCurrentIndex(0);
@@ -347,7 +346,6 @@ function App() {
         <>
           {currentInstrument && (
             <Loop
-              midiSoundsRef={midiSoundsRef}
               notes={randomNotes}
               bpm={controlState.tempo}
               isPlaying={isPlaying}
