@@ -342,7 +342,7 @@ function App() {
         notesInScale={notesInScale}
         selectedOctaves={inputState.octaves}
       />
-      {controlState && controlState.instrument && (
+      {controlState && (
         <>
           {currentInstrument && (
             <Loop
