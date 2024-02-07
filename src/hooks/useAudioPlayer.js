@@ -17,5 +17,5 @@ export const useAudioPlayer = (instrumentName) => {
       .catch(setError);
   }, [audioContext, instrumentName]);
 
-  return { currentInstrument, isLoading, error };
+  return { currentInstrument, isLoading, error }; // Remove error and isLoading if they're not going to be used.
 };
