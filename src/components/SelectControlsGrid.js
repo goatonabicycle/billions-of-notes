@@ -13,7 +13,7 @@ function SelectControlsGrid({
   setSelectedPanelsToShow,
   selectedNoteLength,
   setSelectedNoteLength,
-  controlState: { tempo, volume, instrument, notation },
+  controlState: { tempo, volume, instrument, notation, tieTogether },
   handleControlChange,
   setInstrumentName,
   currentInstrument,
@@ -79,9 +79,10 @@ function SelectControlsGrid({
         name="instrument"
         label="Sounds:"
         options={instrumentOptions}
-        onChange={(e) => {
-          setInstrumentName(e.target.value);
-        }}
+        onChange={handleControlChange}
+        // onChange={(e) => {
+        //   setInstrumentName(e.target.value);
+        // }}
         selectedValue={currentInstrument && currentInstrument.value}
       />
 
@@ -98,12 +99,10 @@ function SelectControlsGrid({
 
       <input
         type="checkbox"
-        id="tieNotes"
-        checked={false}
-        enabled={false}
-        onChange={() => {
-          alert("soon");
-        }}
+        id="tieTogether"
+        name="tieTogether"
+        checked={tieTogether}
+        onChange={handleControlChange}
       />
       <label for="tieNotes">Tie notes</label>
     </div>

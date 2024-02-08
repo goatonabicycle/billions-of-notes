@@ -61,6 +61,7 @@ function App() {
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
     noteMode: DEFAULT_NOTES_MODE,
+    tieTogether: false,
   });
   const setControlState = useCallback(_setControlState, [_setControlState]);
 
@@ -355,6 +356,7 @@ function App() {
               volume={controlState.volume}
               notePlayLength={selectedNoteLength / 10}
               playableInstrument={currentInstrument}
+              tieTogether={controlState.tieTogether}
             />
           )}
         </>

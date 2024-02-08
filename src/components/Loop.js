@@ -16,6 +16,7 @@ const LoopComponent = ({
   volume,
   notePlayLength,
   playableInstrument,
+  tieTogether,
 }) => {
   const interval = useMemo(() => calculateInterval(bpm), [bpm]);
   const playNotes = useRef();
@@ -30,7 +31,16 @@ const LoopComponent = ({
     if (audioContext && audioContext.state === "running") {
       // How do I handle notePlayLength here?
 
-      if (playableInstrument) playableInstrument.play(notes[currentIndex]);
+      if (tieTogether) {
+        if (notes[currentIndex] == notes[currentIndex - 1]) return;
+      }
+
+      if (playableInstrument)
+        playableInstrument.play(
+          notes[currentIndex],
+          playableInstrument.currentTime,
+          { duration: 1150 }
+        );
     }
   }, [isPlaying, notePlayLength, playableInstrument, currentIndex, notes]);
 
