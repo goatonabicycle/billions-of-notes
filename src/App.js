@@ -77,9 +77,11 @@ function App() {
 
   const handleControlChange = useCallback(
     (event) => {
+      const { target } = event;
+      const value = target.type === "checkbox" ? target.checked : target.value;
       setControlState((prevState) => ({
         ...prevState,
-        [event.target.name]: event.target.value,
+        [target.name]: value,
       }));
     },
     [setControlState]
