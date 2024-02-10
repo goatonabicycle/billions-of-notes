@@ -79,10 +79,9 @@ function SelectControlsGrid({
         name="instrument"
         label="Sounds:"
         options={instrumentOptions}
-        onChange={handleControlChange}
-        // onChange={(e) => {
-        //   setInstrumentName(e.target.value);
-        // }}
+        onChange={(e) => {
+          setInstrumentName(e.target.value);
+        }}
         selectedValue={currentInstrument && currentInstrument.value}
       />
 

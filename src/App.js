@@ -356,7 +356,7 @@ function App() {
               setCurrentIndex={setCurrentIndex}
               instrument={controlState.instrument}
               volume={controlState.volume}
-              notePlayLength={selectedNoteLength / 10}
+              notePlayLength={selectedNoteLength / 1} // Todo: Make this come from an input control.
               playableInstrument={currentInstrument}
               tieTogether={controlState.tieTogether}
             />
