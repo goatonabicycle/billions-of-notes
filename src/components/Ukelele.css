@@ -1,0 +1,11 @@
+.ukelele-container {
+  text-align: center;
+}
+
+.ukelele-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.4em;
+}

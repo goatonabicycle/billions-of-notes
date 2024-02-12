@@ -95,15 +95,16 @@ function SelectControlsGrid({
           selectedValue={notation}
         />
       </div>
-
-      <input
-        type="checkbox"
-        id="tieTogether"
-        name="tieTogether"
-        checked={tieTogether}
-        onChange={handleControlChange}
-      />
-      <label for="tieNotes">Tie notes</label>
+      <div>
+        <input
+          type="checkbox"
+          id="tieTogether"
+          name="tieTogether"
+          checked={tieTogether}
+          onChange={handleControlChange}
+        />
+        <label for="tieNotes">Tie notes</label>
+      </div>
     </div>
   );
 }

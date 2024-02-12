@@ -2,7 +2,7 @@ import React from "react";
 import "./ShowMeSelector.css";
 
 const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
-  const panels = ["Guitar", "Piano Roll", "Piano", "Bass Guitar"];
+  const panels = ["Guitar", "Piano Roll", "Piano", "Bass Guitar", "Ukelele"];
 
   const handleChange = (event) => {
     const value = event.target.value;

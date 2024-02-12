@@ -1,8 +1,8 @@
 # Todo now
 
-- Add a ukelele instrument. 
+x Add a ukelele instrument. 
 - Make "Tie notes" tie the actual notes together visually. 
-- Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
+x Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
 - Flat vs sharp mode. Make it an option. Options page, generally?
 - Piano uses flats when the rest of the app uses sharps. 
 
@@ -18,7 +18,6 @@
     - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
     - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
     - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
-    - Number of frets -> Make this a two way slider. 
     - Allow single note items to be played as if they're tremolo'd.
       - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
   

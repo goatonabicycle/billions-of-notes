@@ -3,6 +3,7 @@ import Guitar from "./Guitar";
 import NotesGrid from "./NotesGrid";
 import Piano from "./Piano";
 import BassGuitar from "./BassGuitar";
+import Ukelele from "./Ukelele";
 
 const ShowMePanels = ({
   selectedPanelsToShow,
@@ -42,6 +43,14 @@ const ShowMePanels = ({
 
       {selectedPanelsToShow.includes("Bass Guitar") && (
         <BassGuitar
+          playbackIndex={currentIndex}
+          notesToPlay={randomNotes}
+          scaleNotes={notesInScale}
+        />
+      )}
+
+      {selectedPanelsToShow.includes("Ukelele") && (
+        <Ukelele
           playbackIndex={currentIndex}
           notesToPlay={randomNotes}
           scaleNotes={notesInScale}
