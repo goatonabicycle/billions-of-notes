@@ -1,14 +1,20 @@
 # Todo now
+
+- Add a ukelele instrument. 
+- Make "Tie notes" tie the actual notes together visually. 
+- Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
+- Flat vs sharp mode. Make it an option. Options page, generally?
+- Piano uses flats when the rest of the app uses sharps. 
+
+
   ### Sounds 
     - Record and save to mp3. 
-    - Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
     - See about replacing the sound player with: https://github.com/danigb/smplr
   
   ### Functionality
     - Save multiple configurations you've enjoyed. Be able to load them up later.
     - https://www.billionsofnotes.com/what-scale -> This could go back to the main page with the key and scale selected.  
-    - There are still some unnecessary rerenders happening especially around the instruments being played. I should be able to optimize this.
-    - Flat vs sharp mode. Make it an option. Options page, generally?
+    - There are still some unnecessary rerenders happening especially around the instruments being played. I should be able to optimize this.    
     - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
     - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
     - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
