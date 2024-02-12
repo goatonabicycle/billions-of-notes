@@ -61,6 +61,7 @@ function App() {
     tempo: DEFAULT_TEMPO,
     volume: DEFAULT_VOLUME,
     noteMode: DEFAULT_NOTES_MODE,
+    noteLength: DEFAULT_NOTE_LENGTH,
     tieTogether: false,
   });
   const setControlState = useCallback(_setControlState, [_setControlState]);
@@ -296,8 +297,6 @@ function App() {
           <SelectControlsGrid
             selectedPanelsToShow={selectedPanelsToShow}
             setSelectedPanelsToShow={setSelectedPanelsToShow}
-            selectedNoteLength={selectedNoteLength}
-            setSelectedNoteLength={setSelectedNoteLength}
             controlState={controlState}
             handleControlChange={handleControlChange}
             setInstrumentName={setInstrumentName}
@@ -356,7 +355,7 @@ function App() {
               setCurrentIndex={setCurrentIndex}
               instrument={controlState.instrument}
               volume={controlState.volume}
-              notePlayLength={selectedNoteLength / 1} // Todo: Make this come from an input control.
+              notePlayLength={controlState.noteLength}
               playableInstrument={currentInstrument}
               tieTogether={controlState.tieTogether}
             />

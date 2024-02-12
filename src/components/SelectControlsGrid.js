@@ -11,9 +11,14 @@ import {
 function SelectControlsGrid({
   selectedPanelsToShow,
   setSelectedPanelsToShow,
-  selectedNoteLength,
-  setSelectedNoteLength,
-  controlState: { tempo, volume, instrument, notation, tieTogether },
+  controlState: {
+    tempo,
+    volume,
+    instrument,
+    notation,
+    tieTogether,
+    noteLength,
+  },
   handleControlChange,
   setInstrumentName,
   currentInstrument,
@@ -59,20 +64,17 @@ function SelectControlsGrid({
         onChange={handleControlChange}
       />
 
-      <div style={{ display: "none" }}>
-        <Slider
-          id="noteLengthSlider"
-          label="Note Length"
-          min="1"
-          max="10"
-          step="1"
-          editable={false}
-          value={selectedNoteLength}
-          onChange={(e) => {
-            setSelectedNoteLength(parseInt(e.target.value, 10));
-          }}
-        />
-      </div>
+      <Slider
+        id="noteLengthSlider"
+        name="noteLength"
+        label="Note Length"
+        min="1"
+        max="10"
+        step="1"
+        editable={false}
+        value={noteLength}
+        onChange={handleControlChange}
+      />
 
       <Select
         id="instrument"

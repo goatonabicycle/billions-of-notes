@@ -39,7 +39,7 @@ const LoopComponent = ({
         playableInstrument.play(
           notes[currentIndex],
           playableInstrument.currentTime,
-          { duration: 1150 }
+          { duration: notePlayLength / 10 }
         );
     }
   }, [isPlaying, notePlayLength, playableInstrument, currentIndex, notes]);
