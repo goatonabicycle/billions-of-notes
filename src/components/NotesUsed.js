@@ -11,6 +11,7 @@ const NotesUsed = ({
   setRandomNotes,
   notesInScale,
   selectedOctaves,
+  tieTogether, // Adding tieTogether prop
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNoteForEditing, setSelectedNoteForEditing] = useState(null);
@@ -28,19 +29,41 @@ const NotesUsed = ({
     setIsModalOpen(false);
   };
 
+  const groupNotes = () => {
+    const groupedNotes = [];
+    randomNotes.forEach((note, i) => {
+      if (!tieTogether || i === 0 || note !== randomNotes[i - 1]) {
+        groupedNotes.push({ note: note, count: 1 });
+      } else if (tieTogether && note === randomNotes[i - 1]) {
+        groupedNotes[groupedNotes.length - 1].count++;
+      }
+    });
+    return groupedNotes;
+  };
+
+  const processedNotes = groupNotes();
+
   return (
     <div className="notes-used">
-      {randomNotes.map((note, i) => {
-        const isCurrentNote = i === currentIndex;
+      {processedNotes.map((item, i) => {
+        const isCurrentNote = currentIndex === i;
         return (
-          <div key={i}>
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}>
             <div
               className={isCurrentNote ? "note active" : "note"}
+              style={{ minWidth: `${30 * item.count}px` }} // Adjust minWidth based on count
               onClick={() => {
                 setSelectedNoteForEditing(i);
                 setIsModalOpen(true);
               }}>
-              {note || ""}
+              {item.note}
+              {item.count > 1 && ` (x${item.count})`}{" "}
             </div>
           </div>
         );

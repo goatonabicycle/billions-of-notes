@@ -334,6 +334,7 @@ function App() {
             setRandomNotes={setRandomNotes}
             currentIndex={currentIndex}
             selectedOctaves={inputState.octaves}
+            tieTogether={controlState.tieTogether}
           />
         </div>
       </div>
