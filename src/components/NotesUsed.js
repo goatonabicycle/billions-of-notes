@@ -11,7 +11,7 @@ const NotesUsed = ({
   setRandomNotes,
   notesInScale,
   selectedOctaves,
-  tieTogether, // Adding tieTogether prop
+  tieTogether,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNoteForEditing, setSelectedNoteForEditing] = useState(null);
@@ -31,22 +31,26 @@ const NotesUsed = ({
 
   const groupNotes = () => {
     const groupedNotes = [];
-    randomNotes.forEach((note, i) => {
-      if (!tieTogether || i === 0 || note !== randomNotes[i - 1]) {
+    let originalIndexMap = [];
+
+    randomNotes.forEach((note, index) => {
+      if (!tieTogether || index === 0 || note !== randomNotes[index - 1]) {
         groupedNotes.push({ note: note, count: 1 });
-      } else if (tieTogether && note === randomNotes[i - 1]) {
+        originalIndexMap.push(index);
+      } else if (tieTogether && note === randomNotes[index - 1]) {
         groupedNotes[groupedNotes.length - 1].count++;
       }
     });
-    return groupedNotes;
+
+    return { groupedNotes, originalIndexMap };
   };
 
-  const processedNotes = groupNotes();
+  const { groupedNotes, originalIndexMap } = groupNotes();
 
   return (
     <div className="notes-used">
-      {processedNotes.map((item, i) => {
-        const isCurrentNote = currentIndex === i;
+      {groupedNotes.map((item, i) => {
+        const isCurrentNote = currentIndex === originalIndexMap[i];
         return (
           <div
             key={i}
@@ -59,11 +63,11 @@ const NotesUsed = ({
               className={isCurrentNote ? "note active" : "note"}
               style={{ minWidth: `${30 * item.count}px` }} // Adjust minWidth based on count
               onClick={() => {
-                setSelectedNoteForEditing(i);
+                setSelectedNoteForEditing(originalIndexMap[i]);
                 setIsModalOpen(true);
               }}>
               {item.note}
-              {item.count > 1 && ` (x${item.count})`}{" "}
+              {item.count > 1 && ` (x${item.count})`}
             </div>
           </div>
         );
