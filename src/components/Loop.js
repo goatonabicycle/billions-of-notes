@@ -29,8 +29,6 @@ const LoopComponent = ({
   useEffect(() => {
     if (!isPlaying) return;
     if (audioContext && audioContext.state === "running") {
-      // How do I handle notePlayLength here?
-
       if (tieTogether) {
         if (notes[currentIndex] == notes[currentIndex - 1]) return;
       }
