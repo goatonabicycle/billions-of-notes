@@ -42,7 +42,7 @@ function ShowMe() {
       <div>
         <strong>Notes:</strong>
         {notes.map((note, index) => (
-          <div key={index}>{note}</div>
+          <span key={index}>{note}</span>
         ))}
       </div>
       <Guitar
