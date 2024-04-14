@@ -18,12 +18,11 @@ const LoopComponent = ({
 }) => {
   const audioContextRef = useRef(null);
 
-  if (!audioContextRef.current) {
-    audioContextRef.current = new AudioContext();
-  }
-
-  const interval = useMemo(() => calculateInterval(bpm), [bpm]);
-  const playNotes = useRef();
+  useEffect(() => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new AudioContext();
+    }
+  }, []);
 
   useEffect(() => {
     if (playableInstrument && volume !== undefined) {
@@ -61,16 +60,16 @@ const LoopComponent = ({
     let animationFrameId;
 
     function animateNotes(startTime) {
+      const interval = calculateInterval(bpm);
       let lastNoteTime = startTime;
       let expectedTime = startTime + interval;
 
-      playNotes.current = (timestamp) => {
+      function playNotes(timestamp) {
         if (!isPlaying) return;
 
         const elapsedTime = timestamp - lastNoteTime;
         if (elapsedTime > interval) {
           const drift = timestamp - expectedTime;
-
           if (elapsedTime > interval * 2) {
             lastNoteTime = timestamp;
             expectedTime = timestamp + interval;
@@ -80,17 +79,18 @@ const LoopComponent = ({
             expectedTime += interval;
           }
         }
+        animationFrameId = requestAnimationFrame(playNotes);
+      }
 
-        animationFrameId = requestAnimationFrame(playNotes.current);
-      };
-
-      animationFrameId = requestAnimationFrame(playNotes.current);
+      animationFrameId = requestAnimationFrame(playNotes);
     }
 
     animateNotes(performance.now());
 
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isPlaying, interval, notes.length, setCurrentIndex]);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isPlaying, bpm, notes.length, setCurrentIndex]);
 
   if (!audioContextRef.current || audioContextRef.current.state !== "running") {
     return (
