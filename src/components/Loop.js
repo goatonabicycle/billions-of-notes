@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useMemo } from "react";
 import ClickFirst from "./ClickFirst";
 
-const audioContext = new AudioContext();
-
 function calculateInterval(bpm) {
   return 60000 / bpm;
 }
@@ -18,29 +16,46 @@ const LoopComponent = ({
   playableInstrument,
   tieTogether,
 }) => {
+  const audioContextRef = useRef(null);
+
+  if (!audioContextRef.current) {
+    audioContextRef.current = new AudioContext();
+  }
+
   const interval = useMemo(() => calculateInterval(bpm), [bpm]);
   const playNotes = useRef();
 
   useEffect(() => {
-    if (playableInstrument && volume)
+    if (playableInstrument && volume !== undefined) {
       playableInstrument.out.gain.value = Math.round(volume / 10);
+    }
   }, [volume, playableInstrument]);
 
   useEffect(() => {
     if (!isPlaying) return;
-    if (audioContext && audioContext.state === "running") {
-      if (tieTogether) {
-        if (notes[currentIndex] == notes[currentIndex - 1]) return;
+    if (
+      audioContextRef.current &&
+      audioContextRef.current.state === "running"
+    ) {
+      if (tieTogether && notes[currentIndex] === notes[currentIndex - 1]) {
+        return;
       }
-
-      if (playableInstrument)
+      if (playableInstrument) {
         playableInstrument.play(
           notes[currentIndex],
           playableInstrument.currentTime,
           { duration: notePlayLength / 10 }
         );
+      }
     }
-  }, [isPlaying, notePlayLength, playableInstrument, currentIndex, notes]);
+  }, [
+    isPlaying,
+    notePlayLength,
+    playableInstrument,
+    currentIndex,
+    notes,
+    tieTogether,
+  ]);
 
   useEffect(() => {
     let animationFrameId;
@@ -53,7 +68,6 @@ const LoopComponent = ({
         if (!isPlaying) return;
 
         const elapsedTime = timestamp - lastNoteTime;
-
         if (elapsedTime > interval) {
           const drift = timestamp - expectedTime;
 
@@ -78,8 +92,14 @@ const LoopComponent = ({
     return () => cancelAnimationFrame(animationFrameId);
   }, [isPlaying, interval, notes.length, setCurrentIndex]);
 
-  if (!audioContext || audioContext.state !== "running") {
-    return <ClickFirst onClick={() => audioContext?.resume()} />;
+  if (!audioContextRef.current || audioContextRef.current.state !== "running") {
+    return (
+      <ClickFirst
+        onClick={() =>
+          audioContextRef.current && audioContextRef.current.resume()
+        }
+      />
+    );
   } else {
     return null;
   }
