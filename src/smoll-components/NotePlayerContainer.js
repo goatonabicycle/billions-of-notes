@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import NotePlayer from "./NotePlayer";
 
 const notes = [
+  "C3",
+  "D3",
+  "E3",
+  "F3",
+  "G3",
+  "A3",
+  "B3",
   "C4",
   "D4",
   "E4",
@@ -10,35 +17,27 @@ const notes = [
   "A4",
   "B4",
   "C5",
-  "C5",
-  "D5",
-  "E5",
-  "F5",
-  "G5",
-  "A5",
-  "B5",
-  "C6",
 ];
 
 const NotePlayerContainer = () => {
-  const [currentNote, setCurrentNote] = useState(notes[0]);
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % notes.length);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setCurrentNote(notes[index]);
-  }, [index]);
+  const [tempo, setTempo] = useState(600); // Tempo in BPM
 
   return (
     <div>
-      <NotePlayer note={currentNote} />
+      <NotePlayer
+        notes={notes}
+        tempo={tempo}
+      />
+      <div>
+        <label>
+          Tempo:
+          <input
+            type="number"
+            value={tempo}
+            onChange={(e) => setTempo(Number(e.target.value))}
+          />
+        </label>
+      </div>
     </div>
   );
 };

@@ -1,18 +1,10 @@
-import React, { useEffect } from "react";
-import * as Tone from "tone";
+import React from "react";
+import useNotePlayer from "./hooks/useNotePlayer";
 
-const NotePlayer = ({ note }) => {
-  useEffect(() => {
-    const synth = new Tone.Synth().toDestination();
+const NotePlayer = ({ notes, tempo }) => {
+  useNotePlayer(notes, tempo);
 
-    synth.triggerAttackRelease(note, "8n");
-
-    return () => {
-      synth.dispose();
-    };
-  }, [note]);
-
-  return <div>Playing note: {note}</div>;
+  return <div>Playing notes at {tempo} BPM</div>;
 };
 
 export default NotePlayer;
