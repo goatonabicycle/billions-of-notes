@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NotePlayer from "./NotePlayer";
+import Knob from "./Knob";
 import "../Smoll.css";
 
 const amSynthNotes = ["C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4"];
@@ -11,6 +12,7 @@ const NotePlayerContainer = () => {
     AMSynth: null,
     FMSynth: null,
   });
+  const [volume, setVolume] = useState(50);
 
   return (
     <div>
@@ -46,6 +48,13 @@ const NotePlayerContainer = () => {
           onChange={(e) => setTempo(Number(e.target.value))}
         />
       </label>
+      <div>
+        <label>Volume: {volume.toFixed(2)}</label>
+        <Knob
+          initialValue={volume}
+          onChange={setVolume}
+        />
+      </div>
     </div>
   );
 };
