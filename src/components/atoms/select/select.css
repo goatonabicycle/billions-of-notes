@@ -1,0 +1,25 @@
+.selectContainer {
+  display: flex;
+}
+
+.selectWrapper {
+  display: flex;
+  min-width: 100px;
+  flex-direction: column;
+}
+
+.selectLabel {
+  outline: none;
+}
+
+.selectElement {
+  border-radius: 4px;
+}
+
+.selectElement:focus {
+  outline: none;
+}
+
+.selectElement option {
+  outline: none;
+}

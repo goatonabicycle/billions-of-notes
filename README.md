@@ -38,6 +38,10 @@ Builds the app for production to the `build` folder.
 
 It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
 
+## What else?
 
-## What else? 
 I think that's it. Thank you!
+
+## Working on V2 of this.
+
+Template from: https://github.com/jvidalv/vital <3
