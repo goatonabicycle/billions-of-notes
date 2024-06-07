@@ -1,9 +1,9 @@
-import React, { memo, ChangeEvent, useMemo } from "react";
+import React, { memo, ChangeEvent } from "react";
 import "./select.css";
 
 interface Option {
   value: string;
-  label: string;
+  label: number | string;
 }
 
 interface SelectProps {
@@ -17,14 +17,6 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = memo(
   ({ id, name, label, onChange, selectedValue, options }) => {
-    const memoizedOptions = useMemo(() => {
-      return options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ));
-    }, [options]);
-
     return (
       <div className="selectContainer">
         <div key={id} className="selectWrapper">
@@ -38,7 +30,11 @@ const Select: React.FC<SelectProps> = memo(
             onChange={onChange}
             value={selectedValue}
           >
-            {memoizedOptions}
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>

@@ -1,15 +1,17 @@
-import React, { ChangeEvent } from "react";
-import useStore from "../../../store";
+import React, { ChangeEvent, useCallback } from "react";
+import useStore from "../../store";
 import Select from "components/atoms/select";
-import "./key-select.css";
 
 const KeySelect: React.FC = () => {
-  const key = useStore((state) => state.key);
-  const setKey = useStore((state) => state.setKey);
+  const key = useStore((state) => state.inputState.key);
+  const setInputState = useStore((state) => state.setInputState);
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setKey(event.target.value);
-  };
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      setInputState("key", event.target.value);
+    },
+    [setInputState]
+  );
 
   const notesWithSharps = [
     "A",
