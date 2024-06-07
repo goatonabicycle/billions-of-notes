@@ -14,10 +14,11 @@ interface StoreState {
     key: K,
     value: InputState[K]
   ) => void;
+  resetInputState: () => void;
 }
 
 const DEFAULT_KEY = "C";
-const DEFAULT_SCALE = "major";
+const DEFAULT_SCALE = "Major";
 const DEFAULT_NUMBER_OF_NOTES = 12;
 const DEFAULT_EMPTY_NOTES = false;
 const DEFAULT_OCTAVES = 2;
@@ -37,6 +38,16 @@ const useStore = create<StoreState>((set) => ({
         [key]: value,
       },
     })),
+  resetInputState: () =>
+    set({
+      inputState: {
+        key: DEFAULT_KEY,
+        scale: DEFAULT_SCALE,
+        numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
+        emptyNotes: DEFAULT_EMPTY_NOTES,
+        octaves: DEFAULT_OCTAVES,
+      },
+    }),
 }));
 
 export default useStore;

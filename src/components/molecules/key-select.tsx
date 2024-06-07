@@ -29,7 +29,7 @@ const KeySelect: React.FC = () => {
   ];
 
   return (
-    <div className="border-gray-500 text-white">
+    <div className="w-full">
       <Select
         id="key"
         name="key"

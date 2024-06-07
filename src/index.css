@@ -1,9 +1,12 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html {
+  html,
+  body {
+    @apply w-full h-full m-0 p-0;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
   }
@@ -15,15 +18,46 @@
   }
 
   main {
-    @apply px-4 min-h-screen sm:px-0 space-y-16 w-full bg-gray-900;
+    @apply px-4 min-h-screen sm:px-0 space-y-16 w-full bg-stone-900;
     background-image: radial-gradient(
-        hsla(0, 0%, 84.3%, 0.25) 1px,
+        hsla(0, 0%, 100%, 0.25) 1px,
         transparent 0
       ),
-      radial-gradient(hsla(0, 0%, 84.3%, 0.1) 1px, transparent 0);
+      radial-gradient(hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
     background-size: 50px 50px;
     background-position: 0 0, 25px 25px;
     -webkit-animation: slide 2s linear infinite;
     animation: slide 4s linear infinite;
+  }
+}
+
+@layer components {
+  .main-container {
+    @apply w-full h-full grid grid-rows-3 grid-cols-2 gap-4 p-4;
+    grid-template-rows: 1fr 2fr; /* Top one-third for controls and header, bottom two-thirds for output */
+    grid-template-columns: 1fr 2fr; /* Two columns for top section */
+  }
+
+  .controls {
+    @apply row-span-1 col-span-1 flex flex-col space-y-4 justify-start items-start p-4 bg-slate-600 rounded-lg shadow-lg text-white;
+  }
+
+  .header {
+    @apply row-span-1 col-span-1 flex flex-col justify-center items-end p-4 text-right;
+  }
+
+  .output {
+    @apply row-span-2 col-span-2 flex flex-col space-y-4 justify-start items-center w-full p-4 bg-slate-600;
+
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 183, 255, 0.6);
+  }
+
+  .input-group {
+    @apply flex flex-col space-y-2;
+  }
+
+  .input-label {
+    @apply text-lg font-semibold;
   }
 }

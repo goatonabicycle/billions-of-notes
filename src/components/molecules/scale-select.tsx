@@ -31,7 +31,7 @@ const ScaleSelect: React.FC = () => {
   // Get these from tonejs
 
   return (
-    <div className="border-gray-500 text-white">
+    <div className="w-full">
       <Select
         id="scale"
         name="scale"

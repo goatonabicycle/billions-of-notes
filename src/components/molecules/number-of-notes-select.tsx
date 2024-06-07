@@ -19,7 +19,7 @@ const NumberOfNotesSelect: React.FC = () => {
   const notes = Array.from({ length: 399 }, (_, i) => i + 2);
 
   return (
-    <div className="border-gray-500 text-white">
+    <div className="w-full">
       <Select
         id="numberOfNotes"
         name="numberOfNotes"

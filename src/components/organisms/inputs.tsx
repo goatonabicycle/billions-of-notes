@@ -5,11 +5,11 @@ import NumberOfNotesSelect from "components/molecules/number-of-notes-select";
 
 const Inputs: React.FC = () => {
   return (
-    <>
+    <div className="input-group">
       <KeySelect />
       <ScaleSelect />
       <NumberOfNotesSelect />
-    </>
+    </div>
   );
 };
 
