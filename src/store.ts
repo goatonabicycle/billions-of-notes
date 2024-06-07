@@ -23,31 +23,43 @@ const DEFAULT_NUMBER_OF_NOTES = 12;
 const DEFAULT_EMPTY_NOTES = false;
 const DEFAULT_OCTAVES = 2;
 
-const useStore = create<StoreState>((set) => ({
-  inputState: {
+const loadStateFromLocalStorage = (): InputState => {
+  const savedState = localStorage.getItem("inputState");
+  if (savedState) {
+    return JSON.parse(savedState);
+  }
+  return {
     key: DEFAULT_KEY,
     scale: DEFAULT_SCALE,
     numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
     emptyNotes: DEFAULT_EMPTY_NOTES,
     octaves: DEFAULT_OCTAVES,
-  },
-  setInputState: (key, value) =>
-    set((state) => ({
-      inputState: {
+  };
+};
+
+const useStore = create<StoreState>((set) => ({
+  inputState: loadStateFromLocalStorage(),
+  setInputState: (key, value) => {
+    set((state) => {
+      const newState = {
         ...state.inputState,
         [key]: value,
-      },
-    })),
-  resetInputState: () =>
-    set({
-      inputState: {
-        key: DEFAULT_KEY,
-        scale: DEFAULT_SCALE,
-        numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
-        emptyNotes: DEFAULT_EMPTY_NOTES,
-        octaves: DEFAULT_OCTAVES,
-      },
-    }),
+      };
+      localStorage.setItem("inputState", JSON.stringify(newState));
+      return { inputState: newState };
+    });
+  },
+  resetInputState: () => {
+    const defaultState = {
+      key: DEFAULT_KEY,
+      scale: DEFAULT_SCALE,
+      numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
+      emptyNotes: DEFAULT_EMPTY_NOTES,
+      octaves: DEFAULT_OCTAVES,
+    };
+    localStorage.setItem("inputState", JSON.stringify(defaultState));
+    set({ inputState: defaultState });
+  },
 }));
 
 export default useStore;

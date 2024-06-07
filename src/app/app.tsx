@@ -24,9 +24,9 @@ const App: React.FC = () => {
         </a>
       </div>
 
-      <div className="output"></div>
-
-      <Debug />
+      <div className="output">
+        <Debug />
+      </div>
     </main>
   );
 };
