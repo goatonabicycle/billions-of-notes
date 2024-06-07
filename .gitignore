@@ -29,4 +29,5 @@ yarn-error.log*
 .vercel
 
 .million
+.million/store.json
 .eslintcache

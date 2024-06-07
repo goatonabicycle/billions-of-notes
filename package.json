@@ -48,7 +48,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^6.23.1",
-    "react-select": "^5.8.0"
+    "react-select": "^5.8.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@commitlint/cli": "17.4.2",

@@ -14,6 +14,7 @@
 
 .selectElement {
   border-radius: 4px;
+  color: black;
 }
 
 .selectElement:focus {

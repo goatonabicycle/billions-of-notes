@@ -1,4 +1,4 @@
-import React, { memo, ChangeEvent } from "react";
+import React, { memo, ChangeEvent, useMemo } from "react";
 import "./select.css";
 
 interface Option {
@@ -15,37 +15,35 @@ interface SelectProps {
   options: Option[];
 }
 
-const Select: React.FC<SelectProps> = memo(function Select({
-  id,
-  name,
-  label,
-  onChange,
-  selectedValue,
-  options,
-}) {
-  return (
-    <div className="selectContainer">
-      <div key={id} className="selectWrapper">
-        <label htmlFor={id} className="selectLabel">
-          {label}
-        </label>
-        <select
-          id={id}
-          name={name}
-          className="selectElement"
-          onChange={onChange}
-          value={selectedValue}
-          aria-label={label}
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+const Select: React.FC<SelectProps> = memo(
+  ({ id, name, label, onChange, selectedValue, options }) => {
+    const memoizedOptions = useMemo(() => {
+      return options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ));
+    }, [options]);
+
+    return (
+      <div className="selectContainer">
+        <div key={id} className="selectWrapper">
+          <label htmlFor={id} className="selectLabel">
+            {label}
+          </label>
+          <select
+            id={id}
+            name={name}
+            className="selectElement"
+            onChange={onChange}
+            value={selectedValue}
+          >
+            {memoizedOptions}
+          </select>
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default Select;
