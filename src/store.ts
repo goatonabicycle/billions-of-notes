@@ -1,6 +1,7 @@
 import create from "zustand";
 
 interface InputState {
+  id: string;
   key: string;
   scale: string;
   numberOfNotes: number;
@@ -9,11 +10,14 @@ interface InputState {
 }
 
 interface StoreState {
-  inputState: InputState;
-  setInputState: <K extends keyof InputState>(
-    key: K,
-    value: InputState[K]
+  inputStates: InputState[];
+  addInputState: () => void;
+  setInputState: (
+    id: string,
+    key: keyof InputState,
+    value: InputState[keyof InputState]
   ) => void;
+  removeInputState: (id: string) => void;
   resetInputState: () => void;
 }
 
@@ -23,42 +27,55 @@ const DEFAULT_NUMBER_OF_NOTES = 12;
 const DEFAULT_EMPTY_NOTES = 0;
 const DEFAULT_OCTAVES = 2;
 
-const loadStateFromLocalStorage = (): InputState => {
-  const savedState = localStorage.getItem("inputState");
+const createDefaultInputState = (id: string): InputState => ({
+  id,
+  key: DEFAULT_KEY,
+  scale: DEFAULT_SCALE,
+  numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
+  numberOfEmptyNotes: DEFAULT_EMPTY_NOTES,
+  octaves: DEFAULT_OCTAVES,
+});
+
+const loadStateFromLocalStorage = (): InputState[] => {
+  const savedState = localStorage.getItem("inputStates");
   if (savedState) {
     return JSON.parse(savedState);
   }
-  return {
-    key: DEFAULT_KEY,
-    scale: DEFAULT_SCALE,
-    numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
-    numberOfEmptyNotes: DEFAULT_EMPTY_NOTES,
-    octaves: DEFAULT_OCTAVES,
-  };
+  return [createDefaultInputState(`input_${Date.now()}`)];
 };
 
 const useStore = create<StoreState>((set) => ({
-  inputState: loadStateFromLocalStorage(),
-  setInputState: (key, value) => {
+  inputStates: loadStateFromLocalStorage(),
+  addInputState: () => {
     set((state) => {
-      const newState = {
-        ...state.inputState,
-        [key]: value,
-      };
-      localStorage.setItem("inputState", JSON.stringify(newState));
-      return { inputState: newState };
+      const newInputState = createDefaultInputState(`input_${Date.now()}`);
+      const updatedStates = [...state.inputStates, newInputState];
+      localStorage.setItem("inputStates", JSON.stringify(updatedStates));
+      return { inputStates: updatedStates };
+    });
+  },
+  setInputState: (id, key, value) => {
+    set((state) => {
+      const updatedStates = state.inputStates.map((inputState) =>
+        inputState.id === id ? { ...inputState, [key]: value } : inputState
+      );
+      localStorage.setItem("inputStates", JSON.stringify(updatedStates));
+      return { inputStates: updatedStates };
+    });
+  },
+  removeInputState: (id) => {
+    set((state) => {
+      const updatedStates = state.inputStates.filter(
+        (inputState) => inputState.id !== id
+      );
+      localStorage.setItem("inputStates", JSON.stringify(updatedStates));
+      return { inputStates: updatedStates };
     });
   },
   resetInputState: () => {
-    const defaultState = {
-      key: DEFAULT_KEY,
-      scale: DEFAULT_SCALE,
-      numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
-      numberOfEmptyNotes: DEFAULT_EMPTY_NOTES,
-      octaves: DEFAULT_OCTAVES,
-    };
-    localStorage.setItem("inputState", JSON.stringify(defaultState));
-    set({ inputState: defaultState });
+    const defaultState = [createDefaultInputState(`input_${Date.now()}`)];
+    localStorage.setItem("inputStates", JSON.stringify(defaultState));
+    set({ inputStates: defaultState });
   },
 }));
 

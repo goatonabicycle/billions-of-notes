@@ -1,13 +1,13 @@
 import React from "react";
 import Button from "components/atoms/button";
-import Inputs from "components/organisms/inputs";
+import InputTabs from "components/organisms/input-tabs";
 import Debug from "components/molecules/debug";
 
 const App: React.FC = () => {
   return (
     <main className="main-container">
       <div className="controls">
-        <Inputs />
+        <InputTabs />
       </div>
 
       <div className="header">

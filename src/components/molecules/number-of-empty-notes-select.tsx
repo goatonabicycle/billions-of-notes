@@ -1,39 +1,53 @@
-import React, { ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent, useCallback, useEffect } from "react";
 import useStore from "../../store";
 import Select from "components/atoms/select";
 
-const NumberOfEmptyNotesSelect: React.FC = () => {
-  const setInputState = useStore((state) => state.setInputState);
-  const numberOfNotes = useStore((state) => state.inputState.numberOfNotes);
-  const numberOfEmptyNotes = useStore(
-    (state) => state.inputState.numberOfEmptyNotes
-  );
+interface NumberOfEmptyNotesSelectProps {
+  id: string;
+}
 
-  const maxEmptyNotes = Math.max(0, numberOfNotes);
-  if (numberOfEmptyNotes > maxEmptyNotes) {
-    setInputState("numberOfEmptyNotes", maxEmptyNotes);
-  }
+const NumberOfEmptyNotesSelect: React.FC<NumberOfEmptyNotesSelectProps> = ({
+  id,
+}) => {
+  const inputStates = useStore((state) => state.inputStates);
+  const setInputState = useStore((state) => state.setInputState);
+
+  const inputState = inputStates.find((state) => state.id === id);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
       const value = parseInt(event.target.value, 10);
       if (!isNaN(value)) {
-        setInputState("numberOfEmptyNotes", value);
+        setInputState(id, "numberOfEmptyNotes", value);
       }
     },
-    [setInputState]
+    [id, setInputState]
   );
 
-  const notes = Array.from({ length: maxEmptyNotes }, (_, i) => i);
+  useEffect(() => {
+    if (inputState) {
+      const maxEmptyNotes = Math.max(0, inputState.numberOfNotes);
+      if (inputState.numberOfEmptyNotes > maxEmptyNotes) {
+        setInputState(id, "numberOfEmptyNotes", maxEmptyNotes);
+      }
+    }
+  }, [id, inputState, setInputState]);
+
+  if (!inputState) return null;
+
+  const notes = Array.from(
+    { length: Math.max(0, inputState.numberOfNotes) + 1 },
+    (_, i) => i
+  );
 
   return (
     <div className="w-full">
       <Select
-        id="numberOfEmptyNotes"
-        name="numberOfEmptyNotes"
-        label="Number of empty notes"
+        id={`numberOfEmptyNotes-${id}`}
+        name={`numberOfEmptyNotes-${id}`}
+        label="Number of Empty Notes"
         onChange={handleChange}
-        selectedValue={numberOfEmptyNotes.toString()}
+        selectedValue={inputState.numberOfEmptyNotes.toString()}
         options={notes.map((num) => ({
           value: num.toString(),
           label: num,

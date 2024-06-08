@@ -2,16 +2,23 @@ import React, { ChangeEvent, useCallback } from "react";
 import useStore from "../../store";
 import Select from "components/atoms/select";
 
-const KeySelect: React.FC = () => {
-  const key = useStore((state) => state.inputState.key);
+interface KeySelectProps {
+  id: string;
+}
+
+const KeySelect: React.FC<KeySelectProps> = ({ id }) => {
+  const inputStates = useStore((state) => state.inputStates);
   const setInputState = useStore((state) => state.setInputState);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
-      setInputState("key", event.target.value);
+      setInputState(id, "key", event.target.value);
     },
-    [setInputState]
+    [id, setInputState]
   );
+
+  const inputState = inputStates.find((state) => state.id === id);
+  if (!inputState) return null;
 
   const notesWithSharps = [
     "A",
@@ -31,11 +38,11 @@ const KeySelect: React.FC = () => {
   return (
     <div className="w-full">
       <Select
-        id="key"
-        name="key"
+        id={`key-${id}`}
+        name={`key-${id}`}
         label="Key"
         onChange={handleChange}
-        selectedValue={key}
+        selectedValue={inputState.key}
         options={notesWithSharps.map((note) => ({
           value: note,
           label: note,
