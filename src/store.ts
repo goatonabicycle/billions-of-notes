@@ -4,7 +4,7 @@ interface InputState {
   key: string;
   scale: string;
   numberOfNotes: number;
-  emptyNotes: boolean;
+  numberOfEmptyNotes: number;
   octaves: number;
 }
 
@@ -20,7 +20,7 @@ interface StoreState {
 const DEFAULT_KEY = "C";
 const DEFAULT_SCALE = "Major";
 const DEFAULT_NUMBER_OF_NOTES = 12;
-const DEFAULT_EMPTY_NOTES = false;
+const DEFAULT_EMPTY_NOTES = 0;
 const DEFAULT_OCTAVES = 2;
 
 const loadStateFromLocalStorage = (): InputState => {
@@ -32,7 +32,7 @@ const loadStateFromLocalStorage = (): InputState => {
     key: DEFAULT_KEY,
     scale: DEFAULT_SCALE,
     numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
-    emptyNotes: DEFAULT_EMPTY_NOTES,
+    numberOfEmptyNotes: DEFAULT_EMPTY_NOTES,
     octaves: DEFAULT_OCTAVES,
   };
 };
@@ -54,7 +54,7 @@ const useStore = create<StoreState>((set) => ({
       key: DEFAULT_KEY,
       scale: DEFAULT_SCALE,
       numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
-      emptyNotes: DEFAULT_EMPTY_NOTES,
+      numberOfEmptyNotes: DEFAULT_EMPTY_NOTES,
       octaves: DEFAULT_OCTAVES,
     };
     localStorage.setItem("inputState", JSON.stringify(defaultState));

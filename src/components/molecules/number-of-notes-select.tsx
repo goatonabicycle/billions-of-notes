@@ -16,7 +16,7 @@ const NumberOfNotesSelect: React.FC = () => {
     [setInputState]
   );
 
-  const notes = Array.from({ length: 399 }, (_, i) => i + 2);
+  const notes = Array.from({ length: 399 }, (_, i) => i + 1);
 
   return (
     <div className="w-full">

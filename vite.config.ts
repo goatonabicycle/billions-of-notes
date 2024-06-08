@@ -17,7 +17,7 @@ export default defineConfig((configEnv) => {
     test: {
       globals: true,
       environment: "happy-dom",
-      setupFiles: "./src/infrastructure/tests.setup.ts",
+      setupFiles: "./tests.setup.ts",
     },
     resolve: {
       alias: {
