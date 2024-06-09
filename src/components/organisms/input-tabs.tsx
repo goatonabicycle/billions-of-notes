@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import useStore from "../../store";
 import Input from "../molecules/input";
 
@@ -7,28 +7,62 @@ interface TabProps {
   label: string;
   onSelect: (id: string) => void;
   isActive: boolean;
+  onRemove: (id: string) => void;
 }
 
-const Tab: React.FC<TabProps> = ({ id, label, onSelect, isActive }) => (
-  <button
-    onClick={() => onSelect(id)}
-    className={`px-4 py-2 ${
-      isActive ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
-    }`}
-  >
-    {label}
-  </button>
+const Tab: React.FC<TabProps> = ({
+  id,
+  label,
+  onSelect,
+  isActive,
+  onRemove,
+}) => (
+  <div className="flex items-center">
+    <button
+      onClick={() => onSelect(id)}
+      className={`px-4 py-2 ${
+        isActive ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
+      }`}
+    >
+      {label}
+    </button>
+    <button onClick={() => onRemove(id)} className="ml-2 text-red-500">
+      x
+    </button>
+  </div>
 );
 
 const InputTabs: React.FC = () => {
-  const { inputStates, addInputState } = useStore();
-  const [activeTabId, setActiveTabId] = useState<string | null>(
-    inputStates[0]?.id || null
-  );
+  const { inputStates, addInputState, removeInputState } = useStore();
+  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (inputStates.length > 0) {
+      if (
+        !activeTabId ||
+        !inputStates.some((state) => state.id === activeTabId)
+      ) {
+        setActiveTabId(inputStates[0].id);
+      }
+    } else {
+      setActiveTabId(null);
+    }
+  }, [inputStates, activeTabId]);
 
   const handleTabSelect = useCallback((id: string) => {
     setActiveTabId(id);
   }, []);
+
+  const handleTabRemove = useCallback(
+    (id: string) => {
+      removeInputState(id);
+      if (activeTabId === id) {
+        const remainingTabs = inputStates.filter((state) => state.id !== id);
+        setActiveTabId(remainingTabs.length > 0 ? remainingTabs[0].id : null);
+      }
+    },
+    [activeTabId, removeInputState, inputStates]
+  );
 
   return (
     <div>
@@ -40,6 +74,7 @@ const InputTabs: React.FC = () => {
             label={`Input ${inputState.id}`}
             isActive={inputState.id === activeTabId}
             onSelect={handleTabSelect}
+            onRemove={handleTabRemove}
           />
         ))}
         <button

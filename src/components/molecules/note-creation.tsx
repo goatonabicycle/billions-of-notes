@@ -1,47 +1,45 @@
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 import useStore from "../../store";
-import { Scale } from "tonal";
 
 interface NoteCreationProps {
   id: string;
 }
 
-type Note = {
-  note: string;
-  octave: number | null;
-};
-
 const NoteCreation: React.FC<NoteCreationProps> = ({ id }) => {
   const inputStates = useStore((state) => state.inputStates);
   const inputState = inputStates.find((state) => state.id === id);
+  const generateNotes = useStore((state) => state.generateNotes);
 
-  const notesInKey = useMemo(() => {
-    if (inputState) {
-      return Scale.get(`${inputState.key} ${inputState.scale}`).notes;
+  useEffect(() => {
+    if (
+      inputState &&
+      (!inputState.generatedNotes || inputState.generatedNotes.length === 0)
+    ) {
+      generateNotes(id);
     }
-    return [];
-  }, [inputState]);
+  }, [id, inputState, generateNotes]);
 
-  if (!inputState || notesInKey.length === 0) return;
-
-  const { numberOfNotes, numberOfEmptyNotes, octaves } = inputState;
-  const generatedNotes = generateRandomNotes(
-    notesInKey,
-    numberOfNotes,
-    numberOfEmptyNotes,
-    octaves
-  );
-
-  if (!inputState) return null;
+  if (!inputState || !inputState.generatedNotes) return null;
 
   return (
     <div className="w-full">
+      This component will generate random notes with:
+      <br />
+      key: {inputState.key}
+      <br />
+      scale: {inputState.scale}
+      <br />
+      numberOfNotes: {inputState.numberOfNotes}
+      <br />
+      numberOfEmptyNotes: {inputState.numberOfEmptyNotes}
+      <br />
+      octaves: {inputState.octaves.map((octave) => octave).join(", ")}
       <div className="mt-4 flex flex-wrap gap-2">
-        {generatedNotes.map((note, index) => (
+        {inputState.generatedNotes.map((note, index) => (
           <div
             key={index}
             className={`w-10 h-10 flex items-center justify-center border ${
-              note.note ? "bg-blue-200" : "bg-gray-200"
+              note.note ? "bg-blue-700" : "bg-gray-200"
             }`}
           >
             {note.note ? `${note.note}${note.octave ?? ""}` : ""}
@@ -50,34 +48,6 @@ const NoteCreation: React.FC<NoteCreationProps> = ({ id }) => {
       </div>
     </div>
   );
-};
-
-const generateRandomNotes = (
-  notesInKey: string[],
-  numberOfNotes: number,
-  numberOfEmptyNotes: number,
-  octaves: number[]
-): Note[] => {
-  const emptyNoteIndices = new Set<number>();
-
-  while (emptyNoteIndices.size < numberOfEmptyNotes) {
-    emptyNoteIndices.add(Math.floor(Math.random() * numberOfNotes));
-  }
-
-  const randomNotes: Note[] = [];
-
-  for (let i = 0; i < numberOfNotes; i++) {
-    if (emptyNoteIndices.has(i)) {
-      randomNotes.push({ note: "", octave: null });
-    } else {
-      const randomNote =
-        notesInKey[Math.floor(Math.random() * notesInKey.length)];
-      const randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
-      randomNotes.push({ note: randomNote, octave: randomOctave });
-    }
-  }
-
-  return randomNotes;
 };
 
 export default NoteCreation;
