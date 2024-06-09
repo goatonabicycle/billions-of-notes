@@ -6,7 +6,7 @@ interface InputState {
   scale: string;
   numberOfNotes: number;
   numberOfEmptyNotes: number;
-  octaves: number;
+  octaves: number[];
 }
 
 interface StoreState {
@@ -25,7 +25,7 @@ const DEFAULT_KEY = "C";
 const DEFAULT_SCALE = "Major";
 const DEFAULT_NUMBER_OF_NOTES = 12;
 const DEFAULT_EMPTY_NOTES = 0;
-const DEFAULT_OCTAVES = 2;
+const DEFAULT_OCTAVES = [1, 2];
 
 const createDefaultInputState = (id: string): InputState => ({
   id,
