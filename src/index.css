@@ -34,12 +34,12 @@
 @layer components {
   .main-container {
     @apply w-full h-full grid grid-rows-3 grid-cols-2 gap-4 p-4;
-    grid-template-rows: 1fr 2fr; /* Top one-third for controls and header, bottom two-thirds for output */
-    grid-template-columns: 1fr 2fr; /* Two columns for top section */
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
   }
 
   .controls {
-    @apply row-span-1 col-span-1 flex flex-col space-y-4 justify-start items-start p-4 bg-slate-600 border-solid border-4 border-red-600 rounded-lg shadow-lg text-white;
+    @apply row-span-1 col-span-1 flex flex-col space-y-4 justify-start items-start p-4 bg-slate-600 border-solid border-4  rounded-lg shadow-lg text-white;
   }
 
   .header {
@@ -47,7 +47,7 @@
   }
 
   .output {
-    @apply row-span-2 col-span-2 flex flex-col space-y-4 justify-start items-center w-full p-4 bg-slate-600;
+    @apply row-span-2 col-span-2 flex flex-col w-full p-4 bg-slate-600;
 
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 183, 255, 0.6);

@@ -1,5 +1,10 @@
 import create from "zustand";
 
+interface Note {
+  note: string;
+  octave: number | null;
+}
+
 interface InputState {
   id: string;
   key: string;
@@ -7,6 +12,7 @@ interface InputState {
   numberOfNotes: number;
   numberOfEmptyNotes: number;
   octaves: number[];
+  generatedNotes?: Note[];
 }
 
 interface StoreState {

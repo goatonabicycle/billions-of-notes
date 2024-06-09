@@ -18,7 +18,7 @@ const Input: React.FC<InputProps> = ({ id }) => {
   if (!inputState) return null;
 
   return (
-    <div className="border-solid border-2 border-red-600 mb-4">
+    <div className="m-2">
       <KeySelect id={id} />
       <ScaleSelect id={id} />
       <NumberOfNotesSelect id={id} />
