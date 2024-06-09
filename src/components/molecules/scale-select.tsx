@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useCallback } from "react";
 import useStore from "../../store";
+import { Scale } from "tonal";
 import Select from "components/atoms/select";
 
 interface ScaleSelectProps {
@@ -20,20 +21,7 @@ const ScaleSelect: React.FC<ScaleSelectProps> = ({ id }) => {
   const inputState = inputStates.find((state) => state.id === id);
   if (!inputState) return null;
 
-  const scales = [
-    "Major",
-    "Minor",
-    "Dorian",
-    "Phrygian",
-    "Lydian",
-    "Mixolydian",
-    "Locrian",
-    "Harmonic Minor",
-    "Melodic Minor",
-    "Whole Tone",
-    "Pentatonic Major",
-    "Pentatonic Minor",
-  ];
+  const scales = Scale.names();
 
   return (
     <div className="w-full">
