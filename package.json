@@ -47,8 +47,10 @@
     "@million/lint": "^1.0.0-rc.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-json-view": "^1.21.3",
     "react-router-dom": "^6.23.1",
     "react-select": "^5.8.0",
+    "reactronica": "^0.8.1-canary.0",
     "tonal": "^6.0.1",
     "zustand": "^4.5.2"
   },
