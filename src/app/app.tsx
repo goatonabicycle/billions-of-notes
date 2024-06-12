@@ -2,6 +2,7 @@ import React from "react";
 import Button from "components/atoms/button";
 import InputTabs from "components/organisms/input-tabs";
 import Debug from "components/molecules/debug";
+import CurrentNoteDisplay from "components/molecules/current-note-display";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <a href="https://github.com/goatonabicycle/billions-of-notes">
           <Button>See what's up on Github</Button>
         </a>
+        <CurrentNoteDisplay />
       </div>
 
       <div className="output">

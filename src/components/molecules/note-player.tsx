@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import useStore from "../../store";
+import useCurrentNoteStore from "../../currentNoteStore";
 import * as Tone from "tone";
 
 interface NotePlayerProps {
@@ -9,7 +10,11 @@ interface NotePlayerProps {
 
 const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { inputStates } = useStore();
+  const { inputStates } = useStore((state) => ({
+    inputStates: state.inputStates,
+  }));
+  const { setCurrentNote } = useCurrentNoteStore();
+
   const inputState = inputStates.find((state) => state.id === id);
 
   const notes = (inputState?.generatedNotes ?? []).map((note) => {
@@ -35,6 +40,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
         (time, note) => {
           if (note) {
             synth.triggerAttackRelease(note, noteDuration, time);
+            setCurrentNote(note);
           }
         },
         notes,
@@ -60,6 +66,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
       }
       Tone.Transport.stop();
       Tone.Transport.cancel();
+      setCurrentNote(null);
     }
 
     return () => {
@@ -74,8 +81,9 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
       }
       Tone.Transport.stop();
       Tone.Transport.cancel();
+      setCurrentNote(null);
     };
-  }, [isPlaying, notes, tempo]);
+  }, [isPlaying, tempo]);
 
   if (!inputState || notes.length === 0) return null;
 
