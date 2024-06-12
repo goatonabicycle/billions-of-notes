@@ -52,6 +52,7 @@
     "react-select": "^5.8.0",
     "reactronica": "^0.8.1-canary.0",
     "tonal": "^6.0.1",
+    "tone": "^15.0.4",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
