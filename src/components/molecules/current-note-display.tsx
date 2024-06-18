@@ -2,11 +2,15 @@ import React from "react";
 import useCurrentNoteStore from "../../currentNoteStore";
 
 const CurrentNoteDisplay: React.FC = () => {
-  const currentNote = useCurrentNoteStore((state) => state.currentNote);
+  const notes = useCurrentNoteStore((state) => state.notes);
 
   return (
-    <div>
-      <p>Currently Playing Note: {currentNote ?? "None"}</p>
+    <div className="text-white">
+      {Object.entries(notes).map(([id, note]) => (
+        <p key={id}>
+          {id}: {note ?? "None"}
+        </p>
+      ))}
     </div>
   );
 };

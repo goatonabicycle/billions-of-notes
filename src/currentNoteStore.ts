@@ -1,13 +1,19 @@
 import create from "zustand";
 
 interface CurrentNoteState {
-  currentNote: string | null;
-  setCurrentNote: (note: string | null) => void;
+  notes: Record<string, string | null>;
+  setCurrentNote: (id: string, note: string | null) => void;
 }
 
 const useCurrentNoteStore = create<CurrentNoteState>((set) => ({
-  currentNote: null,
-  setCurrentNote: (note) => set({ currentNote: note }),
+  notes: {},
+  setCurrentNote: (id, note) =>
+    set((state) => ({
+      notes: {
+        ...state.notes,
+        [id]: note,
+      },
+    })),
 }));
 
 export default useCurrentNoteStore;

@@ -40,7 +40,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
         (time, note) => {
           if (note) {
             synth.triggerAttackRelease(note, noteDuration, time);
-            setCurrentNote(note);
+            setCurrentNote(id, note);
           }
         },
         notes,
@@ -66,7 +66,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
       }
       Tone.Transport.stop();
       Tone.Transport.cancel();
-      setCurrentNote(null);
+      setCurrentNote(id, null);
     }
 
     return () => {
@@ -81,7 +81,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
       }
       Tone.Transport.stop();
       Tone.Transport.cancel();
-      setCurrentNote(null);
+      setCurrentNote(id, null);
     };
   }, [isPlaying, tempo]);
 

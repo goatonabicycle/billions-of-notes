@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import useStore from "../../store";
 import Input from "../molecules/input";
+import NotePlayer from "../molecules/note-player";
 
 interface TabProps {
   id: string;
@@ -86,6 +87,9 @@ const InputTabs: React.FC = () => {
       </div>
       <div className="mt-4">
         {activeTabId && <TabContent id={activeTabId} />}
+        {inputStates.map((inputState) => (
+          <NotePlayer key={inputState.id} id={inputState.id} tempo={240} />
+        ))}
       </div>
     </div>
   );
