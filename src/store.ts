@@ -19,11 +19,7 @@ interface InputState {
 interface StoreState {
   inputStates: InputState[];
   addInputState: () => void;
-  setInputState: (
-    id: string,
-    key: keyof InputState,
-    value: InputState[keyof InputState]
-  ) => void;
+  setInputState: (id: string, key: keyof InputState, value: InputState[keyof InputState]) => void;
   generateNotes: (id: string) => void;
   removeInputState: (id: string) => void;
   resetInputState: () => void;
@@ -70,8 +66,7 @@ const generateRandomNotes = (
     if (emptyNoteIndices.has(i)) {
       randomNotes.push({ note: "", octave: null });
     } else {
-      const randomNote =
-        notesInKey[Math.floor(Math.random() * notesInKey.length)];
+      const randomNote = notesInKey[Math.floor(Math.random() * notesInKey.length)];
       const randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
       randomNotes.push({ note: randomNote, octave: randomOctave });
     }
@@ -95,24 +90,14 @@ const useStore = create<StoreState>((set) => ({
       const inputState = state.inputStates.find((s) => s.id === id);
       if (!inputState) return state;
 
-      const updatedStates = state.inputStates.map((s) =>
-        s.id === id ? { ...s, [key]: value } : s
-      );
+      const updatedStates = state.inputStates.map((s) => (s.id === id ? { ...s, [key]: value } : s));
 
-      const needsRegeneration = [
-        "key",
-        "scale",
-        "numberOfNotes",
-        "numberOfEmptyNotes",
-        "octaves",
-      ].includes(key);
+      const needsRegeneration = ["key", "scale", "numberOfNotes", "numberOfEmptyNotes", "octaves"].includes(key);
 
       if (needsRegeneration) {
         const updatedState = updatedStates.find((s) => s.id === id);
         if (updatedState) {
-          const notesInKey = Scale.get(
-            `${updatedState.key} ${updatedState.scale}`
-          ).notes;
+          const notesInKey = Scale.get(`${updatedState.key} ${updatedState.scale}`).notes;
           const generatedNotes = generateRandomNotes(
             notesInKey,
             updatedState.numberOfNotes,
@@ -132,19 +117,11 @@ const useStore = create<StoreState>((set) => ({
       const inputState = state.inputStates.find((s) => s.id === id);
       if (!inputState) return state;
 
-      const { key, scale, numberOfNotes, numberOfEmptyNotes, octaves } =
-        inputState;
+      const { key, scale, numberOfNotes, numberOfEmptyNotes, octaves } = inputState;
       const notesInKey = Scale.get(`${key} ${scale}`).notes;
-      const generatedNotes = generateRandomNotes(
-        notesInKey,
-        numberOfNotes,
-        numberOfEmptyNotes,
-        octaves
-      );
+      const generatedNotes = generateRandomNotes(notesInKey, numberOfNotes, numberOfEmptyNotes, octaves);
 
-      const updatedStates = state.inputStates.map((s) =>
-        s.id === id ? { ...s, generatedNotes } : s
-      );
+      const updatedStates = state.inputStates.map((s) => (s.id === id ? { ...s, generatedNotes } : s));
 
       localStorage.setItem("inputStates", JSON.stringify(updatedStates));
       return { inputStates: updatedStates };
@@ -152,9 +129,7 @@ const useStore = create<StoreState>((set) => ({
   },
   removeInputState: (id) => {
     set((state) => {
-      const updatedStates = state.inputStates.filter(
-        (inputState) => inputState.id !== id
-      );
+      const updatedStates = state.inputStates.filter((inputState) => inputState.id !== id);
       localStorage.setItem("inputStates", JSON.stringify(updatedStates));
       return { inputStates: updatedStates };
     });

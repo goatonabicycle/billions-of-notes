@@ -30,10 +30,7 @@ const Input: React.FC<InputProps> = ({ id }) => {
 
       <NotePlayer id={id} tempo={120} />
 
-      <button
-        onClick={() => removeInputState(id)}
-        className="mt-2 bg-red-500 text-white px-4 py-2"
-      >
+      <button onClick={() => removeInputState(id)} className="mt-2 bg-red-500 text-white px-4 py-2">
         Remove
       </button>
     </div>

@@ -7,9 +7,7 @@ describe("Button test", () => {
     const onClick = vi.fn();
     const label = "This is a button";
 
-    const { getByText, getByRole } = render(
-      <Button onClick={onClick}>{label}</Button>
-    );
+    const { getByText, getByRole } = render(<Button onClick={onClick}>{label}</Button>);
 
     const button = getByRole("button");
 

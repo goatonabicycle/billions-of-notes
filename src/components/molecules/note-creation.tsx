@@ -11,10 +11,7 @@ const NoteCreation: React.FC<NoteCreationProps> = ({ id }) => {
   const generateNotes = useStore((state) => state.generateNotes);
 
   useEffect(() => {
-    if (
-      inputState &&
-      (!inputState.generatedNotes || inputState.generatedNotes.length === 0)
-    ) {
+    if (inputState && (!inputState.generatedNotes || inputState.generatedNotes.length === 0)) {
       generateNotes(id);
     }
   }, [id, inputState, generateNotes]);
@@ -38,9 +35,7 @@ const NoteCreation: React.FC<NoteCreationProps> = ({ id }) => {
         {inputState.generatedNotes.map((note, index) => (
           <div
             key={index}
-            className={`w-10 h-10 flex items-center justify-center border ${
-              note.note ? "bg-blue-700" : "bg-gray-200"
-            }`}
+            className={`w-10 h-10 flex items-center justify-center border ${note.note ? "bg-blue-700" : "bg-gray-200"}`}
           >
             {note.note ? `${note.note}${note.octave ?? ""}` : ""}
           </div>

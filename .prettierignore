@@ -1,0 +1,6 @@
+node_modules
+dist
+V1/
+lint-staged.config.js
+.million/
+.vercel/

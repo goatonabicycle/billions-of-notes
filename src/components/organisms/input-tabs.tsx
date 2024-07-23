@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import useStore from "../../store";
 import Input from "../molecules/input";
-import NotePlayer from "../molecules/note-player";
 
 interface TabProps {
   id: string;
@@ -11,19 +10,11 @@ interface TabProps {
   onRemove: (id: string) => void;
 }
 
-const Tab: React.FC<TabProps> = ({
-  id,
-  label,
-  onSelect,
-  isActive,
-  onRemove,
-}) => (
+const Tab: React.FC<TabProps> = ({ id, label, onSelect, isActive, onRemove }) => (
   <div className="flex items-center">
     <button
       onClick={() => onSelect(id)}
-      className={`px-4 py-2 ${
-        isActive ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
-      }`}
+      className={`px-4 py-2 ${isActive ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}
     >
       {label}
     </button>
@@ -39,10 +30,7 @@ const InputTabs: React.FC = () => {
 
   useEffect(() => {
     if (inputStates.length > 0) {
-      if (
-        !activeTabId ||
-        !inputStates.some((state) => state.id === activeTabId)
-      ) {
+      if (!activeTabId || !inputStates.some((state) => state.id === activeTabId)) {
         setActiveTabId(inputStates[0].id);
       }
     } else {
@@ -78,19 +66,11 @@ const InputTabs: React.FC = () => {
             onRemove={handleTabRemove}
           />
         ))}
-        <button
-          onClick={addInputState}
-          className="px-4 py-2 bg-green-500 text-white"
-        >
+        <button onClick={addInputState} className="px-4 py-2 bg-green-500 text-white">
           Add New Input
         </button>
       </div>
-      <div className="mt-4">
-        {activeTabId && <TabContent id={activeTabId} />}
-        {inputStates.map((inputState) => (
-          <NotePlayer key={inputState.id} id={inputState.id} tempo={240} />
-        ))}
-      </div>
+      <div className="mt-4">{activeTabId && <TabContent id={activeTabId} />}</div>
     </div>
   );
 };

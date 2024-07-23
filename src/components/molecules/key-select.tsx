@@ -20,20 +20,7 @@ const KeySelect: React.FC<KeySelectProps> = ({ id }) => {
   const inputState = inputStates.find((state) => state.id === id);
   if (!inputState) return null;
 
-  const notesWithSharps = [
-    "A",
-    "A#",
-    "B",
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-  ];
+  const notesWithSharps = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
   return (
     <div className="w-full">

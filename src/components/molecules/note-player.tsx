@@ -17,70 +17,47 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
 
   const inputState = inputStates.find((state) => state.id === id);
 
-  const notes = (inputState?.generatedNotes ?? []).map((note) => {
-    if (note.note) {
-      return `${note.note}${note.octave ?? ""}`;
-    } else {
-      return null;
-    }
-  });
+  const notes = (inputState?.generatedNotes ?? []).map((note) =>
+    note.note ? `${note.note}${note.octave ?? ""}` : null
+  );
 
   const synthRef = useRef<Tone.Synth | null>(null);
   const sequenceRef = useRef<Tone.Sequence<string | null> | null>(null);
 
+  const initializeTone = async () => {
+    await Tone.start();
+    synthRef.current = new Tone.Synth().toDestination();
+    const noteDuration = `${60 / tempo}n`;
+
+    sequenceRef.current = new Tone.Sequence<string | null>(
+      (time, note) => {
+        if (note) {
+          synthRef.current?.triggerAttackRelease(note, noteDuration, time);
+          setCurrentNote(id, note);
+        }
+      },
+      notes,
+      noteDuration
+    ).start(0);
+
+    Tone.Transport.bpm.value = tempo;
+    Tone.Transport.start();
+  };
+
   useEffect(() => {
-    const initializeTone = async () => {
-      await Tone.start();
-      const synth = new Tone.Synth().toDestination();
-      synthRef.current = synth;
-
-      const noteDuration = `${60 / tempo}n`;
-
-      const sequence = new Tone.Sequence<string | null>(
-        (time, note) => {
-          if (note) {
-            synth.triggerAttackRelease(note, noteDuration, time);
-            setCurrentNote(id, note);
-          }
-        },
-        notes,
-        noteDuration
-      ).start(0);
-
-      sequenceRef.current = sequence;
-      Tone.Transport.bpm.value = tempo;
-      Tone.Transport.start();
-    };
-
     if (isPlaying) {
       initializeTone().catch(console.error);
     } else {
-      if (sequenceRef.current) {
-        sequenceRef.current.stop();
-        sequenceRef.current.dispose();
-        sequenceRef.current = null;
-      }
-      if (synthRef.current) {
-        synthRef.current.dispose();
-        synthRef.current = null;
-      }
-      Tone.Transport.stop();
-      Tone.Transport.cancel();
+      sequenceRef.current?.stop().dispose();
+      synthRef.current?.dispose();
+      Tone.Transport.stop().cancel();
       setCurrentNote(id, null);
     }
 
     return () => {
-      if (sequenceRef.current) {
-        sequenceRef.current.stop();
-        sequenceRef.current.dispose();
-        sequenceRef.current = null;
-      }
-      if (synthRef.current) {
-        synthRef.current.dispose();
-        synthRef.current = null;
-      }
-      Tone.Transport.stop();
-      Tone.Transport.cancel();
+      sequenceRef.current?.stop().dispose();
+      synthRef.current?.dispose();
+      Tone.Transport.stop().cancel();
       setCurrentNote(id, null);
     };
   }, [isPlaying, tempo]);
@@ -90,17 +67,8 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
   return (
     <div>
       <p>Playing notes for input: {id}</p>
-      <button
-        onClick={() => setIsPlaying(true)}
-        className="mt-2 bg-blue-500 text-white px-4 py-2"
-      >
-        Start Playing
-      </button>
-      <button
-        onClick={() => setIsPlaying(false)}
-        className="mt-2 bg-red-500 text-white px-4 py-2"
-      >
-        Stop Playing
+      <button onClick={() => setIsPlaying(!isPlaying)} className="mt-2 bg-blue-500 text-white px-4 py-2">
+        {isPlaying ? "Stop" : "Start"} Playing
       </button>
     </div>
   );

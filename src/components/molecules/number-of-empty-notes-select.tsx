@@ -6,9 +6,7 @@ interface NumberOfEmptyNotesSelectProps {
   id: string;
 }
 
-const NumberOfEmptyNotesSelect: React.FC<NumberOfEmptyNotesSelectProps> = ({
-  id,
-}) => {
+const NumberOfEmptyNotesSelect: React.FC<NumberOfEmptyNotesSelectProps> = ({ id }) => {
   const inputStates = useStore((state) => state.inputStates);
   const setInputState = useStore((state) => state.setInputState);
 
@@ -35,10 +33,7 @@ const NumberOfEmptyNotesSelect: React.FC<NumberOfEmptyNotesSelectProps> = ({
 
   if (!inputState) return null;
 
-  const notes = Array.from(
-    { length: Math.max(0, inputState.numberOfNotes) + 1 },
-    (_, i) => i
-  );
+  const notes = Array.from({ length: Math.max(0, inputState.numberOfNotes) + 1 }, (_, i) => i);
 
   return (
     <div className="w-full">
