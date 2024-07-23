@@ -4,3 +4,4 @@ V1/
 lint-staged.config.js
 .million/
 .vercel/
+.eslintrc

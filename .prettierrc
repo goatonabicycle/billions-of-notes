@@ -1,11 +1,11 @@
 {
   "arrowParens": "always",
   "bracketSpacing": true,
-  "endOfLine": "lf",    
+  "endOfLine": "lf",
   "printWidth": 120,
   "proseWrap": "preserve",
-  "quoteProps": "as-needed",  
-  "tabWidth": 2,  
+  "quoteProps": "as-needed",
+  "tabWidth": 2,
   "useTabs": false,
   "embeddedLanguageFormatting": "auto"
 }
