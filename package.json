@@ -45,6 +45,7 @@
   "dependencies": {
     "@heroicons/react": "2.0.18",
     "@million/lint": "^1.0.0-rc.26",
+    "immer": "^10.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-json-view": "^1.21.3",

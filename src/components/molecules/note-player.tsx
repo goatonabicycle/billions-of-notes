@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import useStore from "../../store";
-import useCurrentNoteStore from "../../currentNoteStore";
+import useInputStore from "../../store/inputStore";
+import useCurrentNoteStore from "../../store/currentNoteStore";
 import * as Tone from "tone";
 
 interface NotePlayerProps {
@@ -10,12 +10,9 @@ interface NotePlayerProps {
 
 const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { inputStates } = useStore((state) => ({
-    inputStates: state.inputStates,
-  }));
-  const { setCurrentNote } = useCurrentNoteStore();
-
-  const inputState = inputStates.find((state) => state.id === id);
+  const inputState = useInputStore((state) => state.inputStates.find((s) => s.id === id));
+  const setCurrentNote = useCurrentNoteStore((state) => state.setCurrentNote);
+  const removeCurrentNote = useCurrentNoteStore((state) => state.removeCurrentNote);
 
   const notes = (inputState?.generatedNotes ?? []).map((note) =>
     note.note ? `${note.note}${note.octave ?? ""}` : null
@@ -23,6 +20,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
 
   const synthRef = useRef<Tone.Synth | null>(null);
   const sequenceRef = useRef<Tone.Sequence<string | null> | null>(null);
+  const isMountedRef = useRef(true);
 
   const initializeTone = async () => {
     await Tone.start();
@@ -33,7 +31,9 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
       (time, note) => {
         if (note) {
           synthRef.current?.triggerAttackRelease(note, noteDuration, time);
-          setCurrentNote(id, note);
+          if (isMountedRef.current) {
+            setCurrentNote(id, note);
+          }
         }
       },
       notes,
@@ -45,20 +45,25 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
   };
 
   useEffect(() => {
+    isMountedRef.current = true;
+
     if (isPlaying) {
       initializeTone().catch(console.error);
     } else {
       sequenceRef.current?.stop().dispose();
       synthRef.current?.dispose();
       Tone.Transport.stop().cancel();
-      setCurrentNote(id, null);
+      if (isMountedRef.current) {
+        setCurrentNote(id, null);
+      }
     }
 
     return () => {
+      isMountedRef.current = false;
       sequenceRef.current?.stop().dispose();
       synthRef.current?.dispose();
       Tone.Transport.stop().cancel();
-      setCurrentNote(id, null);
+      removeCurrentNote(id);
     };
   }, [isPlaying, tempo]);
 

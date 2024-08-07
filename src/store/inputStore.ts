@@ -1,5 +1,5 @@
-import create from "zustand";
-import { Scale } from "tonal";
+import { create } from "zustand";
+import useNoteStore from "./noteStore";
 
 interface Note {
   note: string;
@@ -16,7 +16,7 @@ interface InputState {
   generatedNotes?: Note[];
 }
 
-interface StoreState {
+interface InputStoreState {
   inputStates: InputState[];
   addInputState: () => void;
   setInputState: (id: string, key: keyof InputState, value: InputState[keyof InputState]) => void;
@@ -48,34 +48,7 @@ const loadStateFromLocalStorage = (): InputState[] => {
   return [createDefaultInputState(`input_${Date.now()}`)];
 };
 
-const generateRandomNotes = (
-  notesInKey: string[],
-  numberOfNotes: number,
-  numberOfEmptyNotes: number,
-  octaves: number[]
-): Note[] => {
-  const emptyNoteIndices = new Set<number>();
-
-  while (emptyNoteIndices.size < numberOfEmptyNotes) {
-    emptyNoteIndices.add(Math.floor(Math.random() * numberOfNotes));
-  }
-
-  const randomNotes: Note[] = [];
-
-  for (let i = 0; i < numberOfNotes; i++) {
-    if (emptyNoteIndices.has(i)) {
-      randomNotes.push({ note: "", octave: null });
-    } else {
-      const randomNote = notesInKey[Math.floor(Math.random() * notesInKey.length)];
-      const randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
-      randomNotes.push({ note: randomNote, octave: randomOctave });
-    }
-  }
-
-  return randomNotes;
-};
-
-const useStore = create<StoreState>((set) => ({
+const useInputStore = create<InputStoreState>((set) => ({
   inputStates: loadStateFromLocalStorage(),
   addInputState: () => {
     set((state) => {
@@ -97,14 +70,15 @@ const useStore = create<StoreState>((set) => ({
       if (needsRegeneration) {
         const updatedState = updatedStates.find((s) => s.id === id);
         if (updatedState) {
-          const notesInKey = Scale.get(`${updatedState.key} ${updatedState.scale}`).notes;
-          const generatedNotes = generateRandomNotes(
-            notesInKey,
-            updatedState.numberOfNotes,
-            updatedState.numberOfEmptyNotes,
-            updatedState.octaves
-          );
-          updatedState.generatedNotes = generatedNotes;
+          updatedState.generatedNotes = useNoteStore
+            .getState()
+            .generateNotes(
+              updatedState.key,
+              updatedState.scale,
+              updatedState.numberOfNotes,
+              updatedState.numberOfEmptyNotes,
+              updatedState.octaves
+            );
         }
       }
 
@@ -117,11 +91,19 @@ const useStore = create<StoreState>((set) => ({
       const inputState = state.inputStates.find((s) => s.id === id);
       if (!inputState) return state;
 
-      const { key, scale, numberOfNotes, numberOfEmptyNotes, octaves } = inputState;
-      const notesInKey = Scale.get(`${key} ${scale}`).notes;
-      const generatedNotes = generateRandomNotes(notesInKey, numberOfNotes, numberOfEmptyNotes, octaves);
+      inputState.generatedNotes = useNoteStore
+        .getState()
+        .generateNotes(
+          inputState.key,
+          inputState.scale,
+          inputState.numberOfNotes,
+          inputState.numberOfEmptyNotes,
+          inputState.octaves
+        );
 
-      const updatedStates = state.inputStates.map((s) => (s.id === id ? { ...s, generatedNotes } : s));
+      const updatedStates = state.inputStates.map((s) =>
+        s.id === id ? { ...s, generatedNotes: inputState.generatedNotes } : s
+      );
 
       localStorage.setItem("inputStates", JSON.stringify(updatedStates));
       return { inputStates: updatedStates };
@@ -131,6 +113,7 @@ const useStore = create<StoreState>((set) => ({
     set((state) => {
       const updatedStates = state.inputStates.filter((inputState) => inputState.id !== id);
       localStorage.setItem("inputStates", JSON.stringify(updatedStates));
+
       return { inputStates: updatedStates };
     });
   },
@@ -141,4 +124,4 @@ const useStore = create<StoreState>((set) => ({
   },
 }));
 
-export default useStore;
+export default useInputStore;

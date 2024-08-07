@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import useStore from "../../store";
+import useStore from "../../store/inputStore";
 
 interface OctaveSelectProps {
   id: string;

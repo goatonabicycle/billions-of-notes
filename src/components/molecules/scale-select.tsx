@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback } from "react";
-import useStore from "../../store";
+import useStore from "../../store/inputStore";
 import { Scale } from "tonal";
 import Select from "components/atoms/select";
 

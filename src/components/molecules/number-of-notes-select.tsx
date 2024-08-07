@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback } from "react";
-import useStore from "../../store";
+import useStore from "../../store/inputStore";
 import Select from "components/atoms/select";
 
 interface NumberOfNotesSelectProps {

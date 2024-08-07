@@ -1,5 +1,5 @@
 import React from "react";
-import useStore from "../../store";
+import useInputStore from "../../store/inputStore";
 import KeySelect from "components/molecules/key-select";
 import ScaleSelect from "components/molecules/scale-select";
 import NumberOfNotesSelect from "components/molecules/number-of-notes-select";
@@ -13,8 +13,9 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({ id }) => {
-  const { inputStates, removeInputState } = useStore();
+  const { inputStates } = useInputStore();
   const inputState = inputStates.find((state) => state.id === id);
+
   if (!inputState) return null;
 
   return (
@@ -29,10 +30,6 @@ const Input: React.FC<InputProps> = ({ id }) => {
       </div>
 
       <NotePlayer id={id} tempo={120} />
-
-      <button onClick={() => removeInputState(id)} className="mt-2 bg-red-500 text-white px-4 py-2">
-        Remove
-      </button>
     </div>
   );
 };
