@@ -31,9 +31,9 @@ const OctaveSelect: React.FC<OctaveSelectProps> = ({ id }) => {
   const octaveOptions = [1, 2, 3, 4, 5, 6];
 
   return (
-    <div className="w-full">
-      <label className="block ">Select Octaves:</label>
-      <div className="flex flex-wrap space-x-2">
+    <div className="text-center">
+      <label className="block mb-2 ">Select Octaves:</label>
+      <div className="flex justify-center flex-wrap space-x-2">
         {octaveOptions.map((octave) => (
           <label key={octave} className="flex items-center space-x-1">
             <input

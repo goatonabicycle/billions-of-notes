@@ -20,16 +20,18 @@ const Input: React.FC<InputProps> = ({ id }) => {
 
   return (
     <div className="m-2">
-      <KeySelect id={id} />
-      <ScaleSelect id={id} />
-      <NumberOfNotesSelect id={id} />
-      <NumberOfEmptyNotesSelect id={id} />
-      <OctaveSelect id={id} />
-      <div className="bg-red-800 px-4 py-2">
-        <NoteCreation id={id} />
-      </div>
+      <div className="flex flex-wrap gap-4">
+        <KeySelect id={id} />
+        <ScaleSelect id={id} />
+        <NumberOfNotesSelect id={id} />
+        <NumberOfEmptyNotesSelect id={id} />
+        <OctaveSelect id={id} />
+        <div className="bg-red-800 px-4 py-2">
+          <NoteCreation id={id} />
+        </div>
 
-      <NotePlayer id={id} tempo={120} />
+        <NotePlayer id={id} tempo={120} />
+      </div>
     </div>
   );
 };

@@ -23,19 +23,17 @@ const KeySelect: React.FC<KeySelectProps> = ({ id }) => {
   const notesWithSharps = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
   return (
-    <div className="w-full">
-      <Select
-        id={`key-${id}`}
-        name={`key-${id}`}
-        label="Key"
-        onChange={handleChange}
-        selectedValue={inputState.key}
-        options={notesWithSharps.map((note) => ({
-          value: note,
-          label: note,
-        }))}
-      />
-    </div>
+    <Select
+      id={`key-${id}`}
+      name={`key-${id}`}
+      label="Key"
+      onChange={handleChange}
+      selectedValue={inputState.key}
+      options={notesWithSharps.map((note) => ({
+        value: note,
+        label: note,
+      }))}
+    />
   );
 };
 

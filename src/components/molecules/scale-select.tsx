@@ -24,19 +24,17 @@ const ScaleSelect: React.FC<ScaleSelectProps> = ({ id }) => {
   const scales = Scale.names();
 
   return (
-    <div className="w-full">
-      <Select
-        id={`scale-${id}`}
-        name={`scale-${id}`}
-        label="Scale"
-        onChange={handleChange}
-        selectedValue={inputState.scale}
-        options={scales.map((scale) => ({
-          value: scale,
-          label: scale,
-        }))}
-      />
-    </div>
+    <Select
+      id={`scale-${id}`}
+      name={`scale-${id}`}
+      label="Scale"
+      onChange={handleChange}
+      selectedValue={inputState.scale}
+      options={scales.map((scale) => ({
+        value: scale,
+        label: scale,
+      }))}
+    />
   );
 };
 

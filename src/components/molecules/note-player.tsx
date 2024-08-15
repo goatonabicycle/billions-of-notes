@@ -65,7 +65,7 @@ const NotePlayer: React.FC<NotePlayerProps> = ({ id, tempo }) => {
       Tone.Transport.stop().cancel();
       removeCurrentNote(id);
     };
-  }, [isPlaying, tempo]);
+  }, [isPlaying, tempo, notes]);
 
   if (!inputState || notes.length === 0) return null;
 

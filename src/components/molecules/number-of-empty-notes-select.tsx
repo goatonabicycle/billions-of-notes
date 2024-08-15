@@ -36,19 +36,17 @@ const NumberOfEmptyNotesSelect: React.FC<NumberOfEmptyNotesSelectProps> = ({ id 
   const notes = Array.from({ length: Math.max(0, inputState.numberOfNotes) + 1 }, (_, i) => i);
 
   return (
-    <div className="w-full">
-      <Select
-        id={`numberOfEmptyNotes-${id}`}
-        name={`numberOfEmptyNotes-${id}`}
-        label="Number of Empty Notes"
-        onChange={handleChange}
-        selectedValue={inputState.numberOfEmptyNotes.toString()}
-        options={notes.map((num) => ({
-          value: num.toString(),
-          label: num,
-        }))}
-      />
-    </div>
+    <Select
+      id={`numberOfEmptyNotes-${id}`}
+      name={`numberOfEmptyNotes-${id}`}
+      label="Number of Empty Notes"
+      onChange={handleChange}
+      selectedValue={inputState.numberOfEmptyNotes.toString()}
+      options={notes.map((num) => ({
+        value: num.toString(),
+        label: num,
+      }))}
+    />
   );
 };
 
