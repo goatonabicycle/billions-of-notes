@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "components/atoms/button";
-import InputBlocks from "components/organisms/input-blocks";
+import Input from "components/molecules/input";
 import Debug from "components/molecules/debug";
 import CurrentNoteDisplay from "components/molecules/current-note-display";
 
@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <main className="main-container">
       <div className="controls">
-        <InputBlocks />
+        <Input id="Main" />
       </div>
 
       <div className="header">

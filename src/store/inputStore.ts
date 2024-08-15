@@ -118,7 +118,7 @@ const useInputStore = create<InputStoreState>((set) => ({
     });
   },
   resetInputState: () => {
-    const defaultState = [createDefaultInputState(`input_${Date.now()}`)];
+    const defaultState = [createDefaultInputState(`Main`)];
     localStorage.setItem("inputStates", JSON.stringify(defaultState));
     set({ inputStates: defaultState });
   },
