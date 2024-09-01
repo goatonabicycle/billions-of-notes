@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useRef } from "react";
 import ClickFirst from "./ClickFirst";
 
 function calculateInterval(bpm) {
@@ -22,6 +22,13 @@ const LoopComponent = ({
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
     }
+
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -82,13 +89,23 @@ const LoopComponent = ({
         animationFrameId = requestAnimationFrame(playNotes);
       }
 
-      animationFrameId = requestAnimationFrame(playNotes);
+      if (isPlaying) {
+        animationFrameId = requestAnimationFrame(playNotes);
+      }
+
+      return () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+      };
     }
 
     animateNotes(performance.now());
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
   }, [isPlaying, bpm, notes.length, setCurrentIndex]);
 

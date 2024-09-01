@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
-
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { KEYS, OCTAVES } from "../useful";
 import Modal from "./Modal.js";
 import Select from "./Select";
 import { ChangeTuningIcon } from "./Icons";
-
 import "./Fretboard.css";
 
 const Fretboard = ({
@@ -19,6 +17,14 @@ const Fretboard = ({
   initialTuning,
   numberOfFrets,
 }) => {
+  const [currentPosition, setCurrentPosition] = useState({
+    stringIndex: 0,
+    fret: 0,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalStringIndex, setModalStringIndex] = useState(null);
+  const [hasTuningChanged, setHasTuningChanged] = useState(false);
+
   const updateCurrentPosition = (newPosition) => {
     setCurrentPosition(newPosition);
   };
@@ -29,12 +35,6 @@ const Fretboard = ({
     return { startFret, endFret };
   }, [preferredPosition, fingerRange]);
 
-  const [fretboard, setFretboard] = useState([]);
-  const [currentPosition, setCurrentPosition] = useState({
-    stringIndex: 0,
-    fret: 0,
-  });
-
   const getNote = useCallback((stringNote, stringOctave, fret) => {
     let noteIndex = (KEYS.indexOf(stringNote) + fret) % KEYS.length;
     let octave =
@@ -43,16 +43,19 @@ const Fretboard = ({
     return `${KEYS[noteIndex]}${octave}`;
   }, []);
 
-  useEffect(() => {
-    let newFretboard = strings.map(({ note, octave }, stringIndex) =>
+  const fretboard = useMemo(() => {
+    return strings.map(({ note, octave }, stringIndex) =>
       [...Array(numberOfFrets + 1)].map((e, fret) => ({
         note: getNote(note, octave, fret),
         stringIndex,
         fret,
       }))
     );
-    setFretboard(newFretboard);
+  }, [strings, getNote, numberOfFrets]);
 
+  const flatFretboard = useMemo(() => fretboard.flat(), [fretboard]);
+
+  useEffect(() => {
     const hasTuningChanged = selectedTuning.some((tune, index) => {
       return (
         tune.note !== initialTuning[index].note ||
@@ -60,7 +63,7 @@ const Fretboard = ({
       );
     });
     setHasTuningChanged(hasTuningChanged);
-  }, [strings, selectedTuning, numberOfFrets]);
+  }, [selectedTuning, initialTuning]);
 
   useEffect(() => {
     const currentNote = notesToPlay[playbackIndex];
@@ -72,7 +75,7 @@ const Fretboard = ({
     let minDistance = Infinity;
     let closestNote;
 
-    fretboard.flat().forEach((note) => {
+    for (const note of flatFretboard) {
       if (
         note.note === currentNote &&
         note.fret >= startFret &&
@@ -86,10 +89,10 @@ const Fretboard = ({
           closestNote = note;
         }
       }
-    });
+    }
 
     if (!closestNote) {
-      fretboard.flat().forEach((note) => {
+      for (const note of flatFretboard) {
         if (note.note === currentNote) {
           const distance =
             Math.abs(note.stringIndex - currentPosition.stringIndex) +
@@ -99,20 +102,26 @@ const Fretboard = ({
             closestNote = note;
           }
         }
-      });
+      }
     }
 
-    if (closestNote) {
+    if (
+      closestNote &&
+      (closestNote.stringIndex !== currentPosition.stringIndex ||
+        closestNote.fret !== currentPosition.fret)
+    ) {
       updateCurrentPosition({
         stringIndex: closestNote.stringIndex,
         fret: closestNote.fret,
       });
     }
-  }, [notesToPlay, playbackIndex, preferredPosition, getPreferredFretRange]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalStringIndex, setModalStringIndex] = useState(null);
-  const [hasTuningChanged, setHasTuningChanged] = useState(false);
+  }, [
+    notesToPlay,
+    playbackIndex,
+    getPreferredFretRange,
+    flatFretboard,
+    currentPosition,
+  ]);
 
   return (
     <div className="fretboard-container">
