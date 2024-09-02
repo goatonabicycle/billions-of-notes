@@ -1,56 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import NotePlayer from "./NotePlayer";
+import "./NotePlayer.css";
+import "../Range.css";
 
-import "../Smoll.css";
-
-const Synth1 = ["C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4"];
-const Synth2 = ["F4", "D#4", "C4", "A4", "E4", "B4", "B4", "E5"];
-const Synth3 = ["C2", "C2", "C2", "C2", "E3", "E3", "E3", "E3"];
+const Synth1 = ["C3", "D4", "E4", "F3", "G4", "A3", "B3", "C4"];
+const Synth2 = [
+  "F4",
+  "D4",
+  "C4",
+  "A4",
+  "E4",
+  "B4",
+  "B4",
+  "E5",
+  "D4",
+  "A4",
+  "G4",
+  "F4",
+  "A4",
+  "B4",
+  "C4",
+  "A5",
+];
+const Synth3 = ["C1", "C1", "C1", "C1", "E1", "E1", "E1", "E1"];
 
 const NotePlayerContainer = () => {
-  const [setCurrentNotes] = useState({
-    Synth1: null,
-    Synth2: null,
-    Synth3: null,
-  });
-
   return (
-    <div>
-      <div
-        style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
-        <NotePlayer
-          notes={Synth1}
-          initialTempo={100}
-          instrumentType="AMSynth"
-          setCurrentNote={(note) =>
-            setCurrentNotes((prev) => ({ ...prev, Synth1: note }))
-          }
-        />
-      </div>
-
-      <div
-        style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
-        <NotePlayer
-          notes={Synth2}
-          initialTempo={200}
-          instrumentType="FMSynth"
-          setCurrentNote={(note) =>
-            setCurrentNotes((prev) => ({ ...prev, Synth2: note }))
-          }
-        />
-      </div>
-
-      <div
-        style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
-        <NotePlayer
-          notes={Synth3}
-          initialTempo={50}
-          instrumentType="MonoSynth"
-          setCurrentNote={(note) =>
-            setCurrentNotes((prev) => ({ ...prev, Synth3: note }))
-          }
-        />
-      </div>
+    <div className="smol">
+      <NotePlayer
+        notes={Synth3}
+        initialTempo={50}
+        initialVolume={20}
+        instrumentType="Synth"
+      />
+      <NotePlayer
+        notes={Synth1}
+        initialTempo={400}
+        instrumentType="FMSynth"
+      />
+      <NotePlayer
+        notes={Synth2}
+        initialTempo={200}
+        instrumentType="AMSynth"
+      />
     </div>
   );
 };

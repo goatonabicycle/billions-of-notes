@@ -1,61 +1,96 @@
 import React, { useState } from "react";
 import useNotePlayer from "./hooks/useNotePlayer.js";
+import "./NotePlayer.css";
 
-const NotePlayer = ({ notes, initialTempo, instrumentType }) => {
+const NotePlayer = ({
+  notes,
+  initialTempo,
+  initialVolume = 20,
+  instrumentType,
+}) => {
   const [tempo, setTempo] = useState(initialTempo);
+  const [volume, setVolume] = useState(initialVolume);
   const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
 
   useNotePlayer(
     notes,
     tempo,
     instrumentType,
-    0.5, // volume
-    0.5, // noteDuration
+    volume / 100,
+    0.5,
     setCurrentNoteIndex
   );
 
   const handleTempoChange = (e) => {
-    const newTempo = Number(e.target.value);
-    if (newTempo > 0) {
-      setTempo(newTempo);
-    }
+    setTempo(Number(e.target.value));
+  };
+
+  const handleVolumeChange = (e) => {
+    setVolume(Number(e.target.value));
+  };
+
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
   };
 
   return (
-    <div
-      style={{
-        marginBottom: "20px",
-        padding: "10px",
-        border: "1px solid #ccc",
-      }}>
-      <h3>{instrumentType}</h3>
-      <div>
-        <strong>Current Note:</strong>{" "}
-        {currentNoteIndex !== null ? notes[currentNoteIndex] : "None"}
-      </div>
-      <div style={{ margin: "10px 0" }}>
+    <div className="note-player compact">
+      <h3 className="note-player-title">{instrumentType}</h3>
+
+      <div className="note-player-notes">
         {notes.map((note, index) => (
           <span
             key={index}
-            style={{
-              fontWeight: index === currentNoteIndex ? "bold" : "normal",
-              marginRight: "8px",
-            }}>
+            className={`note ${index === currentNoteIndex ? "active" : ""}`}>
             {note}
           </span>
         ))}
       </div>
-      <label>
-        <strong>Tempo:</strong>{" "}
-        <input
-          type="number"
-          value={tempo}
-          onChange={handleTempoChange}
-          min="1"
-          style={{ width: "60px" }}
-        />
-        {" BPM"}
-      </label>
+      <div className="note-player-controls compact">
+        <label>
+          <input
+            type="range"
+            value={tempo}
+            onChange={handleTempoChange}
+            min="10"
+            max="500"
+            step="10"
+            className="input-tempo"
+          />
+          <span>{tempo} BPM</span>
+        </label>
+        <label>
+          <input
+            type="range"
+            value={volume}
+            onChange={handleVolumeChange}
+            min="0"
+            max="100"
+            step="1"
+            className="input-volume"
+          />
+          <span>{volume}</span>
+        </label>
+      </div>
+      <div className="note-player-info">
+        <button
+          className="info-button"
+          onClick={toggleInfo}>
+          ℹ️ Info
+        </button>
+        {showInfo && (
+          <div className="info-panel">
+            <p>
+              <strong>Current Note:</strong>{" "}
+              {currentNoteIndex !== null ? notes[currentNoteIndex] : "None"}
+            </p>
+            <p>
+              <strong>Current Index:</strong> {currentNoteIndex}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

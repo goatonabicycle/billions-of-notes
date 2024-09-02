@@ -5,7 +5,7 @@ const useNotePlayer = (
   notes,
   tempo,
   instrumentType = "AMSynth",
-  volume = 0.5,
+  volume = 1,
   noteDuration = 0.5,
   setCurrentNote
 ) => {
@@ -25,14 +25,19 @@ const useNotePlayer = (
     }
 
     instrumentRef.current = instruments[instrumentType]();
-    instrumentRef.current.volume.value = Tone.gainToDb(volume) - 20;
 
     return () => {
       if (instrumentRef.current) {
         instrumentRef.current.dispose();
       }
     };
-  }, [instrumentType, volume]);
+  }, [instrumentType]);
+
+  useEffect(() => {
+    if (instrumentRef.current) {
+      instrumentRef.current.volume.value = Tone.gainToDb(volume);
+    }
+  }, [volume]);
 
   useEffect(() => {
     if (!notes || notes.length === 0) return;
@@ -48,24 +53,32 @@ const useNotePlayer = (
         instrument.triggerAttackRelease(note, noteDuration, time);
 
         if (setCurrentNote) {
-          Tone.Draw.schedule(() => {
+          requestAnimationFrame(() => {
             setCurrentNote(index);
-          }, time);
+          });
         }
       },
-      notes.map((note, index) => ({ time: index * (60 / tempo), note, index }))
+      notes.map((note, index) => ({
+        time: index * (60 / tempo),
+        note,
+        index,
+      }))
     );
 
     part.loop = true;
     part.loopEnd = notes.length * (60 / tempo);
     part.start(0);
 
-    if (Tone.Transport.state !== "started") {
+    if (!Tone.Transport.state || Tone.Transport.state !== "started") {
+      Tone.Transport.bpm.value = tempo;
       Tone.Transport.start();
     }
 
+    partRef.current = part;
+
     return () => {
       if (partRef.current) {
+        partRef.current.stop();
         partRef.current.dispose();
       }
     };
