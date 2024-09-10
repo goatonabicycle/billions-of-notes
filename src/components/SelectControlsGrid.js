@@ -45,7 +45,7 @@ function SelectControlsGrid({
         name="tempo"
         label="Tempo"
         min="0"
-        max="600"
+        max="900"
         step="5"
         editable={true}
         value={tempo}

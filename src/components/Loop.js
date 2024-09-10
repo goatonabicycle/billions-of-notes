@@ -1,9 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import * as Tone from "tone";
 import ClickFirst from "./ClickFirst";
-
-function calculateInterval(bpm) {
-  return 60000 / bpm;
-}
 
 const LoopComponent = ({
   notes,
@@ -13,110 +10,84 @@ const LoopComponent = ({
   setCurrentIndex,
   volume,
   notePlayLength,
-  playableInstrument,
+  instrumentType = "Synth",
   tieTogether,
 }) => {
-  const audioContextRef = useRef(null);
+  const instrumentRef = useRef(null);
+  const partRef = useRef(null);
 
   useEffect(() => {
-    if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+    const instruments = {
+      Synth: () => new Tone.Synth().toDestination(),
+      AMSynth: () => new Tone.AMSynth().toDestination(),
+      FMSynth: () => new Tone.FMSynth().toDestination(),
+      MonoSynth: () => new Tone.MonoSynth().toDestination(),
+    };
+
+    if (instrumentRef.current) {
+      instrumentRef.current.dispose();
     }
+
+    instrumentRef.current = instruments[instrumentType]();
 
     return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
+      if (instrumentRef.current) {
+        instrumentRef.current.dispose();
       }
     };
-  }, []);
+  }, [instrumentType]);
 
   useEffect(() => {
-    if (playableInstrument && volume !== undefined) {
-      playableInstrument.out.gain.value = Math.round(volume / 10);
+    if (instrumentRef.current) {
+      instrumentRef.current.volume.value = Tone.gainToDb(volume / 10);
     }
-  }, [volume, playableInstrument]);
+  }, [volume]);
 
   useEffect(() => {
-    if (!isPlaying) return;
-    if (
-      audioContextRef.current &&
-      audioContextRef.current.state === "running"
-    ) {
-      if (tieTogether && notes[currentIndex] === notes[currentIndex - 1]) {
-        return;
-      }
-      if (playableInstrument) {
-        playableInstrument.play(
-          notes[currentIndex],
-          playableInstrument.currentTime,
-          { duration: notePlayLength / 10 }
-        );
-      }
-    }
-  }, [
-    isPlaying,
-    notePlayLength,
-    playableInstrument,
-    currentIndex,
-    notes,
-    tieTogether,
-  ]);
+    if (!notes || notes.length === 0) return;
 
-  useEffect(() => {
-    let animationFrameId;
-
-    function animateNotes(startTime) {
-      const interval = calculateInterval(bpm);
-      let lastNoteTime = startTime;
-      let expectedTime = startTime + interval;
-
-      function playNotes(timestamp) {
-        if (!isPlaying) return;
-
-        const elapsedTime = timestamp - lastNoteTime;
-        if (elapsedTime > interval) {
-          const drift = timestamp - expectedTime;
-          if (elapsedTime > interval * 2) {
-            lastNoteTime = timestamp;
-            expectedTime = timestamp + interval;
-          } else {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % notes.length);
-            lastNoteTime = timestamp - drift;
-            expectedTime += interval;
-          }
-        }
-        animationFrameId = requestAnimationFrame(playNotes);
-      }
-
-      if (isPlaying) {
-        animationFrameId = requestAnimationFrame(playNotes);
-      }
-
-      return () => {
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-        }
-      };
+    if (partRef.current) {
+      partRef.current.dispose();
     }
 
-    animateNotes(performance.now());
+    const instrument = instrumentRef.current;
 
-    return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, [isPlaying, bpm, notes.length, setCurrentIndex]);
-
-  if (!audioContextRef.current || audioContextRef.current.state !== "running") {
-    return (
-      <ClickFirst
-        onClick={() =>
-          audioContextRef.current && audioContextRef.current.resume()
+    const part = new Tone.Part(
+      (time, { note, index }) => {
+        if (tieTogether && index > 0 && note === notes[index - 1]) {
+          return;
         }
-      />
+        instrument.triggerAttackRelease(note, notePlayLength / 10, time);
+        Tone.Draw.schedule(() => {
+          setCurrentIndex(index);
+        }, time);
+      },
+      notes.map((note, index) => ({ time: index * (60 / bpm), note, index }))
     );
+
+    part.loop = true;
+    part.loopEnd = notes.length * (60 / bpm);
+
+    if (isPlaying) {
+      Tone.Transport.bpm.value = bpm;
+      Tone.Transport.start();
+      part.start(0);
+    } else {
+      part.stop();
+    }
+
+    partRef.current = part;
+
+    return () => {
+      if (partRef.current) {
+        partRef.current.stop();
+        partRef.current.dispose();
+      }
+    };
+  }, [notes, bpm, isPlaying, notePlayLength, tieTogether, setCurrentIndex]);
+
+  if (Tone.context.state !== "running") {
+    return <ClickFirst onClick={() => Tone.start()} />;
   } else {
     return null;
   }
