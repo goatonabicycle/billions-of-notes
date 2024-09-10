@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Guitar from "./components/Guitar";
+import Guitar from "./components/instruments/Guitar";
 import { Midi } from "@tonejs/midi";
 
 function ShowMe() {

@@ -1,16 +1,16 @@
 import React, { useCallback } from "react";
 
-import { useStorage } from "../useLocalStorage";
+import { useStorage } from "../../hooks/useLocalStorage";
 import {
   DEFAULT_POSITION,
   DEFAULT_FINGER_RANGE,
   DEFAULT_NUMBER_OF_GUITAR_STRINGS,
   INITIAL_GUITAR_TUNING,
   DEFAULT_NUMBER_OF_GUITAR_FRETS,
-} from "../useful";
+} from "../../useful";
 
-import Slider from "../components/Slider";
-import Fretboard from "./Fretboard";
+import Slider from "../Slider";
+import Fretboard from "../Fretboard";
 
 import "./Guitar.css";
 

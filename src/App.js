@@ -20,7 +20,7 @@ import {
   getRandomItem,
   DEFAULT_NOTES_MODE,
 } from "./useful";
-import { useStorage } from "./useLocalStorage";
+import { useStorage } from "./hooks/useLocalStorage";
 // import { useCount } from "./useCount";
 
 import Loop from "./components/Loop";

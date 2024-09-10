@@ -1,9 +1,9 @@
 import React from "react";
-import Guitar from "./Guitar";
-import NotesGrid from "./NotesGrid";
-import Piano from "./Piano";
-import BassGuitar from "./BassGuitar";
-import Ukelele from "./Ukelele";
+import Guitar from "./instruments/Guitar";
+import NotesGrid from "./instruments/NotesGrid";
+import Piano from "./instruments/Piano";
+import BassGuitar from "./instruments/BassGuitar";
+import Ukelele from "./instruments/Ukelele";
 
 const ShowMePanels = ({
   selectedPanelsToShow,

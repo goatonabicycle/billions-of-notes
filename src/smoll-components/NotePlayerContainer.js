@@ -29,11 +29,11 @@ const NotePlayerContainer = () => {
     <div className="smol">
       <NotePlayer
         notes={Synth3}
-        initialTempo={50}
+        initialTempo={150}
         initialVolume={20}
         instrumentType="Synth"
       />
-      <NotePlayer
+      {/* <NotePlayer
         notes={Synth1}
         initialTempo={400}
         instrumentType="FMSynth"
@@ -42,7 +42,7 @@ const NotePlayerContainer = () => {
         notes={Synth2}
         initialTempo={200}
         instrumentType="AMSynth"
-      />
+      /> */}
     </div>
   );
 };

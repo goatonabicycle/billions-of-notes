@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import "./NotesGrid.css";
-import { KEYS } from "../useful";
+import { KEYS } from "./useful";
 
 const computeRowClasses = (props) =>
   [
@@ -70,7 +70,6 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInScale }) => {
 
   return (
     <>
-      {"Piano Roll"}
       <div className="notes-grid">
         {allPossibleNotes.map((noteRow, rowIndex) => {
           const octave = parseInt(noteRow.slice(-1));
