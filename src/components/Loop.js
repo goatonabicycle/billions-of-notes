@@ -15,6 +15,7 @@ const LoopComponent = ({
 }) => {
   const instrumentRef = useRef(null);
   const partRef = useRef(null);
+  const lastNoteRef = useRef(null);
 
   useEffect(() => {
     const instruments = {
@@ -54,10 +55,25 @@ const LoopComponent = ({
 
     const part = new Tone.Part(
       (time, { note, index }) => {
-        if (tieTogether && index > 0 && note === notes[index - 1]) {
-          return;
+        if (lastNoteRef.current) {
+          instrument.triggerRelease(time);
+          lastNoteRef.current = null;
         }
-        instrument.triggerAttackRelease(note, notePlayLength / 10, time);
+
+        if (note) {
+          if (!(tieTogether && index > 0 && note === notes[index - 1])) {
+            instrument.triggerAttack(note, time);
+            lastNoteRef.current = note;
+
+            Tone.Transport.schedule((t) => {
+              if (lastNoteRef.current === note) {
+                instrument.triggerRelease(t);
+                lastNoteRef.current = null;
+              }
+            }, time + notePlayLength / 10);
+          }
+        }
+
         Tone.Draw.schedule(() => {
           setCurrentIndex(index);
         }, time);
@@ -74,6 +90,8 @@ const LoopComponent = ({
       part.start(0);
     } else {
       part.stop();
+      instrument.triggerRelease("+0");
+      lastNoteRef.current = null;
     }
 
     partRef.current = part;
@@ -83,6 +101,8 @@ const LoopComponent = ({
         partRef.current.stop();
         partRef.current.dispose();
       }
+      instrument.triggerRelease("+0");
+      lastNoteRef.current = null;
     };
   }, [notes, bpm, isPlaying, notePlayLength, tieTogether, setCurrentIndex]);
 
