@@ -24,6 +24,11 @@ const Loop = ({
       AMSynth: () => new Tone.AMSynth().toDestination(),
       FMSynth: () => new Tone.FMSynth().toDestination(),
       MonoSynth: () => new Tone.MonoSynth().toDestination(),
+      DuoSynth: () => new Tone.DuoSynth().toDestination(),
+      PluckSynth: () => new Tone.PluckSynth().toDestination(),
+      MembraneSynth: () => new Tone.MembraneSynth().toDestination(),
+      MetalSynth: () => new Tone.MetalSynth().toDestination(),
+      PolySynth: () => new Tone.PolySynth(Tone.Synth).toDestination(),
     };
 
     if (instrumentRef.current) {

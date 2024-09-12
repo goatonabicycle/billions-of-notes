@@ -47,9 +47,14 @@ export const FLAT_TO_SHARP = {
 
 export const INSTRUMENTS = [
   { value: "Synth", label: "Synth" },
-  { value: "AMSynth", label: "AMSynth" },
-  { value: "FMSynth", label: "FMSynth" },
-  { value: "MonoSynth", label: "MonoSynth" },
+  { value: "AMSynth", label: "AM Synth" },
+  { value: "FMSynth", label: "FM Synth" },
+  { value: "MonoSynth", label: "Mono Synth" },
+  { value: "DuoSynth", label: "Duo Synth" },
+  { value: "PluckSynth", label: "Pluck Synth" },
+  { value: "MembraneSynth", label: "Membrane Synth" },
+  { value: "MetalSynth", label: "Metal Synth" },
+  { value: "PolySynth", label: "Poly Synth" },
 ];
 
 export const INITIAL_GUITAR_TUNING = [
