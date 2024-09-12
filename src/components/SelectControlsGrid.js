@@ -20,8 +20,6 @@ function SelectControlsGrid({
     noteLength,
   },
   handleControlChange,
-  setInstrumentName,
-  currentInstrument,
 }) {
   const instrumentOptions = useMemo(
     () => mapToSelectOptionsWithValues(INSTRUMENTS),
@@ -44,7 +42,7 @@ function SelectControlsGrid({
         id="tempoSlider"
         name="tempo"
         label="Tempo"
-        min="0"
+        min="5"
         max="900"
         step="5"
         editable={true}
@@ -81,10 +79,8 @@ function SelectControlsGrid({
         name="instrument"
         label="Sounds:"
         options={instrumentOptions}
-        onChange={(e) => {
-          setInstrumentName(e.target.value);
-        }}
-        selectedValue={currentInstrument && currentInstrument.value}
+        onChange={handleControlChange}
+        selectedValue={instrument}
       />
 
       <div style={{ display: "none" }}>
@@ -105,7 +101,7 @@ function SelectControlsGrid({
           checked={tieTogether}
           onChange={handleControlChange}
         />
-        <label for="tieNotes">Tie notes</label>
+        <label htmlFor="tieNotes">Tie notes</label>
       </div>
     </div>
   );

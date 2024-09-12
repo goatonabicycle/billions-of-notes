@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
-import ClickFirst from "./ClickFirst";
 
-const LoopComponent = ({
+const Loop = ({
   notes,
   bpm,
   isPlaying,
@@ -10,14 +9,16 @@ const LoopComponent = ({
   setCurrentIndex,
   volume,
   notePlayLength,
-  instrumentType = "Synth",
+  instrument = "Synth",
   tieTogether,
 }) => {
+  const [toneStarted, setToneStarted] = useState(false);
   const instrumentRef = useRef(null);
   const partRef = useRef(null);
   const lastNoteRef = useRef(null);
 
-  useEffect(() => {
+  const setupInstrument = async () => {
+    console.log("Setting up instrument:", instrument);
     const instruments = {
       Synth: () => new Tone.Synth().toDestination(),
       AMSynth: () => new Tone.AMSynth().toDestination(),
@@ -26,54 +27,36 @@ const LoopComponent = ({
     };
 
     if (instrumentRef.current) {
-      instrumentRef.current.dispose();
+      await instrumentRef.current.dispose();
     }
+    instrumentRef.current = instruments[instrument]();
+    instrumentRef.current.volume.value = Tone.gainToDb(volume / 10);
+    console.log("Instrument set up:", instrumentRef.current);
+  };
 
-    instrumentRef.current = instruments[instrumentType]();
-
-    return () => {
-      if (instrumentRef.current) {
-        instrumentRef.current.dispose();
-      }
-    };
-  }, [instrumentType]);
-
-  useEffect(() => {
-    if (instrumentRef.current) {
-      instrumentRef.current.volume.value = Tone.gainToDb(volume / 10);
-    }
-  }, [volume]);
-
-  useEffect(() => {
-    if (!notes || notes.length === 0) return;
-
+  const setupLoop = () => {
     if (partRef.current) {
       partRef.current.dispose();
     }
 
-    const instrument = instrumentRef.current;
-
     const part = new Tone.Part(
       (time, { note, index }) => {
         if (lastNoteRef.current) {
-          instrument.triggerRelease(time);
+          instrumentRef.current.triggerRelease(time);
           lastNoteRef.current = null;
         }
-
         if (note) {
           if (!(tieTogether && index > 0 && note === notes[index - 1])) {
-            instrument.triggerAttack(note, time);
+            instrumentRef.current.triggerAttack(note, time);
             lastNoteRef.current = note;
-
             Tone.Transport.schedule((t) => {
               if (lastNoteRef.current === note) {
-                instrument.triggerRelease(t);
+                instrumentRef.current.triggerRelease(t);
                 lastNoteRef.current = null;
               }
             }, time + notePlayLength / 10);
           }
         }
-
         Tone.Draw.schedule(() => {
           setCurrentIndex(index);
         }, time);
@@ -83,34 +66,66 @@ const LoopComponent = ({
 
     part.loop = true;
     part.loopEnd = notes.length * (60 / bpm);
+    partRef.current = part;
+  };
+
+  useEffect(() => {
+    const startAudio = async () => {
+      if (Tone.context.state !== "running") {
+        await Tone.start();
+        console.log("Tone started");
+      }
+      setToneStarted(true);
+    };
+
+    startAudio();
+  }, []);
+
+  useEffect(() => {
+    console.log("Instrument or volume changed");
+    setupInstrument().then(() => {
+      if (isPlaying) {
+        Tone.Transport.stop();
+        setupLoop();
+        Tone.Transport.start();
+        partRef.current.start(0);
+      }
+    });
+  }, [instrument, volume]);
+
+  useEffect(() => {
+    if (!notes || notes.length === 0) return;
+
+    Tone.Transport.bpm.value = bpm;
+
+    setupLoop();
 
     if (isPlaying) {
-      Tone.Transport.bpm.value = bpm;
       Tone.Transport.start();
-      part.start(0);
+      partRef.current.start(0);
     } else {
-      part.stop();
-      instrument.triggerRelease("+0");
+      Tone.Transport.stop();
+      if (partRef.current) partRef.current.stop();
+      if (instrumentRef.current) instrumentRef.current.triggerRelease("+0");
       lastNoteRef.current = null;
     }
-
-    partRef.current = part;
 
     return () => {
       if (partRef.current) {
         partRef.current.stop();
         partRef.current.dispose();
       }
-      instrument.triggerRelease("+0");
+      Tone.Transport.stop();
+      if (instrumentRef.current) instrumentRef.current.triggerRelease("+0");
       lastNoteRef.current = null;
     };
   }, [notes, bpm, isPlaying, notePlayLength, tieTogether, setCurrentIndex]);
 
-  if (Tone.context.state !== "running") {
-    return <ClickFirst onClick={() => Tone.start()} />;
-  } else {
-    return null;
+  if (!toneStarted) {
+    return <div>Loading audio...</div>;
   }
+
+  return null;
 };
 
-export default LoopComponent;
+export default Loop;

@@ -21,7 +21,6 @@ import {
   DEFAULT_NOTES_MODE,
 } from "./useful";
 import { useStorage } from "./hooks/useLocalStorage";
-// import { useCount } from "./useCount";
 
 import Loop from "./components/Loop";
 import SaveToMidi from "./components/SaveToMidi";
@@ -34,8 +33,6 @@ import SelectControlsGrid from "./components/SelectControlsGrid";
 import TitleArea from "./components/TitleArea";
 import ShowMePanels from "./components/ShowMePanels";
 
-import { useAudioPlayer } from "./hooks/useAudioPlayer";
-
 import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
@@ -45,7 +42,6 @@ const scales = Scale.names();
 
 function App() {
   const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
-  const { currentInstrument } = useAudioPlayer(instrumentName);
 
   // input state is anything that ends up changing the randomNotes you got
   const [inputState, _setInputState] = useStorage("inputState", {
@@ -300,7 +296,6 @@ function App() {
             controlState={controlState}
             handleControlChange={handleControlChange}
             setInstrumentName={setInstrumentName}
-            currentInstrument={currentInstrument}
           />
 
           <ButtonBlock
@@ -313,7 +308,6 @@ function App() {
             selectedScale={inputState.scale}
             selectedNumberOfNotes={inputState.numberOfNotes}
             selectedTempo={controlState.tempo}
-            selectedInstrument={currentInstrument}
             selectedOctaves={inputState.octaves}
             randomNotes={randomNotes}
             setShareButtonText={setShareButtonText}
@@ -347,20 +341,17 @@ function App() {
       />
       {controlState && (
         <>
-          {currentInstrument && (
-            <Loop
-              notes={randomNotes}
-              bpm={controlState.tempo}
-              isPlaying={isPlaying}
-              currentIndex={currentIndex}
-              setCurrentIndex={setCurrentIndex}
-              instrument={controlState.instrument}
-              volume={controlState.volume}
-              notePlayLength={controlState.noteLength}
-              playableInstrument={currentInstrument}
-              tieTogether={controlState.tieTogether}
-            />
-          )}
+          <Loop
+            notes={randomNotes}
+            bpm={controlState.tempo}
+            isPlaying={isPlaying}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+            instrument={controlState.instrument}
+            volume={controlState.volume}
+            notePlayLength={controlState.noteLength}
+            tieTogether={controlState.tieTogether}
+          />
         </>
       )}
 
