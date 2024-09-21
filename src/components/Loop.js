@@ -35,7 +35,7 @@ const Loop = ({
       await instrumentRef.current.dispose();
     }
     instrumentRef.current = instruments[instrument]();
-    instrumentRef.current.volume.value = Tone.gainToDb(volume / 10);
+    instrumentRef.current.volume.value = Tone.gainToDb(volume / 100);
     console.log("Instrument set up:", instrumentRef.current);
   };
 
