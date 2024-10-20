@@ -1,32 +1,32 @@
 .notes-used {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 1em;
-  text-align: center;
-  justify-content: center;
-  margin: 10px 0px 20px 0px;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 1em;
+	text-align: center;
+	justify-content: center;
+	margin: 10px 0px 20px 0px;
 }
 
 .notes-used .note {
-  border: 1px solid var(--main-accent);
-  cursor: pointer;
-  padding: 5px;
-  margin: 0px;
-  min-height: 30px;
-  min-width: 30px;
+	border: 1px solid var(--main-accent);
+	cursor: pointer;
+	padding: 5px;
+	margin: 0px;
+	min-height: 30px;
+	min-width: 30px;
 }
 
 .notes-used .active {
-  font-weight: bold;
-  box-shadow: var(--main-accent-box-shadow) 0px 0px 20px 10px;
-  text-decoration: underline;
+	font-weight: bold;
+	box-shadow: var(--main-accent-box-shadow) 0px 0px 20px 10px;
+	text-decoration: underline;
 }
 
 .notes-used .editing {
-  box-shadow: var(--main-accent-box-shadow) 0px 0px 20px 10px;
-  color: var(--main-accent);
+	box-shadow: var(--main-accent-box-shadow) 0px 0px 20px 10px;
+	color: var(--main-accent);
 }
 
 .notes-used .note:hover {
-  box-shadow: var(--main-accent-box-shadow) 0px 0px 20px 10px;
+	box-shadow: var(--main-accent-box-shadow) 0px 0px 20px 10px;
 }

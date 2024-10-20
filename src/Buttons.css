@@ -1,63 +1,63 @@
 button.rainbow-button {
-  background: transparent;
-  cursor: pointer;
-  -moz-user-select: text;
-  text-decoration: none;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  transition: all 0.5s ease;
-  color: var(--text-color);
+	background: transparent;
+	cursor: pointer;
+	-moz-user-select: text;
+	text-decoration: none;
+	text-transform: uppercase;
+	display: flex;
+	align-items: center;
+	transition: all 0.5s ease;
+	color: var(--text-color);
 }
 
 button.rainbow-button:hover {
-  border-color: #282c34;
-  border-radius: 12px;
-  animation-name: rainbow-buttons;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  box-shadow: var(--main-accent-box-shadow) 0px 5px;
+	border-color: #282c34;
+	border-radius: 12px;
+	animation-name: rainbow-buttons;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	box-shadow: var(--main-accent-box-shadow) 0px 5px;
 }
 
 @keyframes rainbow-buttons {
-  50% {
-    color: var(--main-accent);
-  }
+	50% {
+		color: var(--main-accent);
+	}
 }
 
 .hide-inputs-button {
-  font-size: 0.4em !important;
+	font-size: 0.4em !important;
 }
 
 .icon-button {
-  font-size: 1em;
+	font-size: 1em;
 }
 
 .icon-button-text {
-  padding: 5px;
+	padding: 5px;
 }
 
 .source-code {
-  font-size: 0.6em;
-  color: var(--text-color) !important;
+	font-size: 0.6em;
+	color: var(--text-color) !important;
 }
 
 .link-looking-button {
-  border-style: none !important;
-  border: none;
-  font-size: 0.6em !important;
-  text-decoration: underline;
-  background: none;
-  padding: 0px;
-  color: var(--text-color) !important;
+	border-style: none !important;
+	border: none;
+	font-size: 0.6em !important;
+	text-decoration: underline;
+	background: none;
+	padding: 0px;
+	color: var(--text-color) !important;
 }
 
 .dark-link-looking-button {
-  border-style: none !important;
-  border: none;
-  text-decoration: underline;
-  background: none;
-  padding: 0px;
-  color: var(--background-color) !important;
+	border-style: none !important;
+	border: none;
+	text-decoration: underline;
+	background: none;
+	padding: 0px;
+	color: var(--background-color) !important;
 }

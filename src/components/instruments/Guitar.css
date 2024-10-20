@@ -1,11 +1,11 @@
 .guitar-container {
-  text-align: center;
+	text-align: center;
 }
 
 .guitar-inputs {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.4em;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.4em;
 }

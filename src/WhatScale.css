@@ -1,40 +1,40 @@
 /* WhatScale.css */
 
 .container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
 }
 
 .input-box {
-  color: var(--main-accent) !important;
-  padding: 10px;
-  font-size: 20px;
-  min-width: 400px;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  text-align: center;
+	color: var(--main-accent) !important;
+	padding: 10px;
+	font-size: 20px;
+	min-width: 400px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	text-align: center;
 }
 
 .what-scale-explain {
-  padding: 10px 30px;
-  margin-bottom: 20px;
-  text-align: center;
+	padding: 10px 30px;
+	margin-bottom: 20px;
+	text-align: center;
 }
 
 .results {
-  text-align: left;
-  background-color: var(--background-color);
-  padding: 10px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+	text-align: left;
+	background-color: var(--background-color);
+	padding: 10px;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
 }
 
 .containing {
-  border: 1px solid var(--main-accent);
-  font-weight: bold;
+	border: 1px solid var(--main-accent);
+	font-weight: bold;
 }
