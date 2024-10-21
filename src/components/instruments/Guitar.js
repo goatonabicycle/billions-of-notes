@@ -38,21 +38,33 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 		INITIAL_GUITAR_TUNING,
 	);
 
-	const handlePositionChange = useCallback((e) => {
-		setSelectedPosition(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handlePositionChange = useCallback(
+		(e) => {
+			setSelectedPosition(Number.parseInt(e.target.value, 10));
+		},
+		[setSelectedPosition],
+	);
 
-	const handleFingerRangeChange = useCallback((e) => {
-		setSelectedFingerRange(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handleFingerRangeChange = useCallback(
+		(e) => {
+			setSelectedFingerRange(Number.parseInt(e.target.value, 10));
+		},
+		[setSelectedFingerRange],
+	);
 
-	const handleNumberOfGuitarStringsChange = useCallback((e) => {
-		setSelectedNumberOfGuitarStrings(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handleNumberOfGuitarStringsChange = useCallback(
+		(e) => {
+			setSelectedNumberOfGuitarStrings(Number.parseInt(e.target.value, 10));
+		},
+		[setSelectedNumberOfGuitarStrings],
+	);
 
-	const handleNumberOfGuitarFretsChange = useCallback((e) => {
-		setNumberOfGuitarFrets(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handleNumberOfGuitarFretsChange = useCallback(
+		(e) => {
+			setNumberOfGuitarFrets(Number.parseInt(e.target.value, 10));
+		},
+		[setNumberOfGuitarFrets],
+	);
 
 	const strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
 

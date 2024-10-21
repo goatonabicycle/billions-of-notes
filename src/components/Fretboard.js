@@ -131,6 +131,10 @@ const Fretboard = ({
 					onClick={() =>
 						setSelectedTuning(JSON.parse(JSON.stringify(initialTuning)))
 					}
+					onKeyUp={() =>
+						setSelectedTuning(JSON.parse(JSON.stringify(initialTuning)))
+					}
+					type="button"
 				>
 					Reset
 				</button>
@@ -182,7 +186,7 @@ const Fretboard = ({
 				}}
 			>
 				{fretboard.map((string, stringIndex) => (
-					<div key={stringIndex} className="string">
+					<div key={stringIndex.toString()} className="string">
 						{string.map((note, j) => {
 							const isCurrentNote =
 								note.note === notesToPlay[playbackIndex] &&
@@ -199,9 +203,15 @@ const Fretboard = ({
 
 							return (
 								<div
-									key={j}
+									key={j.toString()}
 									className={className + (j === 0 ? " tuning-adjuster" : "")}
 									onClick={() => {
+										if (j === 0) {
+											setModalStringIndex(stringIndex);
+											setIsModalOpen(true);
+										}
+									}}
+									onKeyUp={() => {
 										if (j === 0) {
 											setModalStringIndex(stringIndex);
 											setIsModalOpen(true);
@@ -218,7 +228,7 @@ const Fretboard = ({
 			</div>
 			<div className="fret-numbers">
 				{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
-					<div key={i} className="fret-number">
+					<div key={i.toString()} className="fret-number">
 						{i}
 					</div>
 				))}

@@ -14,7 +14,7 @@ const Overlay = ({ onClick }) => {
 	}
 
 	return (
-		<div className="overlay" onClick={handleClick}>
+		<div className="overlay" onClick={handleClick} onKeyUp={handleClick}>
 			<div className="overlay-content">
 				<h1>Hello!</h1>
 				<p>Let's click somewhere to get things going!</p>

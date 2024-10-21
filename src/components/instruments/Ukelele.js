@@ -36,21 +36,33 @@ const Ukelele = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 		INITIAL_UKELELE_TUNING,
 	);
 
-	const handlePositionChange = useCallback((e) => {
-		setSelectedPosition(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handlePositionChange = useCallback(
+		(e) => {
+			setSelectedPosition(Number.parseInt(e.target.value, 10));
+		},
+		[setSelectedPosition],
+	);
 
-	const handleFingerRangeChange = useCallback((e) => {
-		setSelectedUkeleleFingerRange(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handleFingerRangeChange = useCallback(
+		(e) => {
+			setSelectedUkeleleFingerRange(Number.parseInt(e.target.value, 10));
+		},
+		[setSelectedUkeleleFingerRange],
+	);
 
-	const handleNumberOfUkeleleStringsChange = useCallback((e) => {
-		setSelectedNumberOfUkeleleStrings(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handleNumberOfUkeleleStringsChange = useCallback(
+		(e) => {
+			setSelectedNumberOfUkeleleStrings(Number.parseInt(e.target.value, 10));
+		},
+		[setSelectedNumberOfUkeleleStrings],
+	);
 
-	const handleNumberOfUkeleleFretsChange = useCallback((e) => {
-		setNumberOfUkeleleFrets(Number.parseInt(e.target.value, 10));
-	}, []);
+	const handleNumberOfUkeleleFretsChange = useCallback(
+		(e) => {
+			setNumberOfUkeleleFrets(Number.parseInt(e.target.value, 10));
+		},
+		[setNumberOfUkeleleFrets],
+	);
 
 	const strings = selectedUkeleleTuning.slice(
 		0,

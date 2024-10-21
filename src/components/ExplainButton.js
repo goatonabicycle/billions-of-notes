@@ -56,14 +56,24 @@ const ExplainButton = () => {
 
 	return (
 		<>
-			<button className="link-looking-button" onClick={openModal}>
+			<button
+				className="link-looking-button"
+				onClick={openModal}
+				onKeyUp={openModal}
+				type="button"
+			>
 				Wtf is this?
 			</button>
 			{modalIsOpen && (
-				<div className="explain-modal-overlay" onClick={closeModal}>
+				<div
+					className="explain-modal-overlay"
+					onClick={closeModal}
+					onKeyUp={closeModal}
+				>
 					<div
 						className="explain-modal-content"
 						onClick={(e) => e.stopPropagation()}
+						onKeyUp={(e) => e.stopPropagation()}
 					>
 						<ModalContent />
 					</div>

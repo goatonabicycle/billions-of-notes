@@ -37,7 +37,7 @@ const ButtonBlock = ({
 		() => setIsPlaying(!isPlaying),
 		[isPlaying, setIsPlaying],
 	);
-	const handleResetClick = useCallback(() => resetInputs(), []);
+	const handleResetClick = useCallback(() => resetInputs(), [resetInputs]);
 	const handleShareClick = useCallback(() => {
 		const url = new URL(window.location.href);
 		const inputs = [

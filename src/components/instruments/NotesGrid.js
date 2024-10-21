@@ -38,11 +38,11 @@ const NoteRow = (props) => {
 	return (
 		<div className={rowClasses}>
 			<div className={noteClasses}>{props.noteRow}</div>
-			{props.notes.map((note, colIndex) => {
-				const cellClasses = computeCellClasses(props, note, colIndex);
+			{props.notes.map((note, i) => {
+				const cellClasses = computeCellClasses(props, note, i);
 
 				return (
-					<div key={`${note}-${colIndex}`} className={cellClasses}>
+					<div key={`${note}-${i.toString()}`} className={cellClasses}>
 						{note === props.noteRow ? note : ""}
 					</div>
 				);

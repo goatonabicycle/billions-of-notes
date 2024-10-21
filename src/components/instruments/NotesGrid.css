@@ -41,9 +41,6 @@
 	}
 }
 
-.note-in-scale-row {
-}
-
 .note-present {
 	background-color: #282c34;
 	color: white;
@@ -60,9 +57,6 @@
 
 .active-row {
 	background-color: #f3e8ff;
-}
-
-.chosen-note-row {
 }
 
 .note-in-scale {

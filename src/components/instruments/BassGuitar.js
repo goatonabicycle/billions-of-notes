@@ -42,22 +42,22 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 
 	const handleSelectedPositionChange = useCallback(
 		(e) => setSelectedPosition(Number.parseInt(e.target.value, 10)),
-		[],
+		[setSelectedPosition],
 	);
 
 	const handleSelectedFingerRangeChange = useCallback(
 		(e) => setSelectedFingerRange(Number.parseInt(e.target.value, 10)),
-		[],
+		[setSelectedFingerRange],
 	);
 
 	const handleSelectedNumberOfBassStringsChange = useCallback(
 		(e) => setSelectedNumberOfBassStrings(Number.parseInt(e.target.value, 10)),
-		[],
+		[setSelectedNumberOfBassStrings],
 	);
 
 	const handleNumberOfBassFretsChange = useCallback(
 		(e) => setNumberOfBassFrets(Number.parseInt(e.target.value, 10)),
-		[],
+		[setNumberOfBassFrets],
 	);
 
 	return (
