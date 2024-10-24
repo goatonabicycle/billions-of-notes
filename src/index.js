@@ -8,6 +8,7 @@ import App from "./App";
 import ShowMe from "./ShowMe";
 import SmolVersion from "./SmolVersion";
 import WhatScale from "./WhatScale";
+import Ampwall from "./CoolAmpwallStuff";
 
 function AppRoutes() {
 	return (
@@ -16,6 +17,7 @@ function AppRoutes() {
 			<Route path="/show-me" element={<ShowMe />} />
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/smoll" element={<SmolVersion />} />
+			<Route path="/ampwall" element={<Ampwall />} />
 		</Routes>
 	);
 }
