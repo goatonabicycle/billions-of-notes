@@ -8,8 +8,10 @@ const ModalContent = memo(() => (
 			This is a website that generates a random set of notes for you based on
 			your input.
 		</div>
-		<div className="question">Does it use AI? </div>
-		<div className="answer">Not even a little bit</div>
+		<div className="question">
+			Does it use AI techmologies to get the notes or something?{" "}
+		</div>
+		<div className="answer">Nope!</div>
 		<div className="question">What about bitcoins?</div>
 		<div className="answer">Even less so</div>
 		<div className="question">Why can't I make the tempo 151?</div>

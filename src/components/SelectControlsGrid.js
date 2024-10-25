@@ -42,9 +42,9 @@ function SelectControlsGrid({
 				id="tempoSlider"
 				name="tempo"
 				label="Tempo"
-				min="5"
+				min="10"
 				max="900"
-				step="5"
+				step="10"
 				editable={true}
 				value={tempo}
 				onChange={handleControlChange}

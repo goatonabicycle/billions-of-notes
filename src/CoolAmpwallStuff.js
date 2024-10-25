@@ -57,6 +57,25 @@ function Ampwall() {
 						}}
 					></iframe>
 				</div>
+
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+					}}
+				>
+					<p style={{ marginBottom: "10px" }}>witnesses:</p>
+					<iframe
+						src="https://ampwall.com/services/PlayerCard/v1/content/exclusive?embedId=0192c034-57d2-7181-85ab-8e4828ba6017&controlStyle=persistent&playerWidth=350"
+						style={{
+							width: "350px",
+							minWidth: "350px",
+							height: "501px",
+							minHeight: "492px",
+						}}
+					></iframe>
+				</div>
 			</div>
 		</div>
 	);
