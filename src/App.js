@@ -36,7 +36,6 @@ import TitleArea from "./components/TitleArea";
 import "./App.css";
 import "./Buttons.css";
 import "./Range.css";
-import "./Doodle/doodle.css";
 
 const scales = Scale.names();
 
@@ -105,7 +104,6 @@ function App() {
 	const [triggerNotesUpdate, setTriggerNotesUpdate] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(true);
 	const [loadedFromUrl, setLoadedFromUrl] = useState(false);
-	const [isInputHidden, setIsInputHidden] = useState(false);
 	const navigate = useNavigate();
 
 	const resetInputs = useCallback(() => {
@@ -260,14 +258,8 @@ function App() {
 
 	return (
 		<div className="App">
-			<button
-				className="rainbow-button hide-inputs-button"
-				onClick={() => setIsInputHidden(!isInputHidden)}
-			>
-				{isInputHidden ? "Show Inputs" : "Hide Inputs"}
-			</button>
-			<div className={`App-inputs ${isInputHidden ? "hidden" : ""}`}>
-				<div className="title doodle-border">
+			<div className={"App-inputs"}>
+				<div className="title">
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}

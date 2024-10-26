@@ -30,12 +30,13 @@ body.light-mode {
 
 .App {
 	display: flex;
-	flex-direction: column;	
-				
-	font-size: calc(5px + 2vmin);
-	/* background-color: var(--background-color); */
-
-	
+	flex-direction: column;
+	text-align: left;
+	color: var(--text-color);
+	min-height: 100vh;
+	align-items: left;
+	justify-content: flex-start;
+	font-size: calc(15px + 2vmin);
 	background-image: radial-gradient(hsla(0, 0%, 100%, 0.25) 1px, transparent 0),
 	radial-gradient(hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
 	background-size: 50px 50px;

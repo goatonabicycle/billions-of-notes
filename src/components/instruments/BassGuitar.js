@@ -61,7 +61,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	return (
-		<div className="guitar-container doodle-border">
+		<div className="guitar-container">
 			{"Bass Guitar"}
 
 			<div className="guitar-inputs">

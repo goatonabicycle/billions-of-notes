@@ -24,8 +24,8 @@ const OctaveSelector = memo(({ octaves, setInputState }) => {
 
 	return (
 		<div className="octave-selector">
-			<label>Octaves:</label>
-			<div className="doodle-border">
+			<div>Octaves:</div>
+			<div>
 				{OCTAVES.map((octave) => (
 					<span className="octave-selector-item" key={octave}>
 						<input

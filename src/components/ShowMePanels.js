@@ -23,7 +23,7 @@ const ShowMePanels = ({
 			)}
 
 			{selectedPanelsToShow.includes("Piano Roll") && (
-				<div className="doodle-border center">
+				<div className="center">
 					<NotesGrid
 						notes={randomNotes}
 						notesInScale={notesInScale}

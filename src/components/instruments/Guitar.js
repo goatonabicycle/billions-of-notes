@@ -69,7 +69,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	const strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
 
 	return (
-		<div className="guitar-container doodle-border">
+		<div className="guitar-container">
 			{"Guitar"}
 
 			<div className="guitar-inputs">

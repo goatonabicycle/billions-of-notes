@@ -70,7 +70,7 @@ const Ukelele = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	return (
-		<div className="ukelele-container doodle-border">
+		<div className="ukelele-container">
 			{"Ukelele"}
 
 			<div className="ukelele-inputs">

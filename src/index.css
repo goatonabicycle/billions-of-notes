@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
 @import url("https://fonts.googleapis.com/css2?family=Short+Stack&display=swap");
 
 body {
@@ -5,6 +9,8 @@ body {
 	font-family: "Short Stack", cursive, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color: #3c3c3c;
+	color: #fdf7f1;
 }
 
 code {

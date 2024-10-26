@@ -43,7 +43,8 @@ const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	}
 
 	return (
-		<div className="doodle-border">
+		<div>
+			{"Piano"}
 			<div className="piano-container">
 				<ReactPiano
 					noteRange={noteRange}
