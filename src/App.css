@@ -21,16 +21,27 @@ body.light-mode {
 	border-radius: 4px;
 }
 
+
+@keyframes slide {
+	100% {
+		background-position: 50px 0, 125px 25px;
+	}
+}
+
 .App {
 	display: flex;
-	flex-direction: column;
-	text-align: left;
-	color: var(--text-color);
-	min-height: 100vh;
-	align-items: left;
-	justify-content: flex-start;
-	font-size: calc(10px + 2vmin);
-	background-color: var(--background-color);
+	flex-direction: column;	
+				
+	font-size: calc(5px + 2vmin);
+	/* background-color: var(--background-color); */
+
+	
+	background-image: radial-gradient(hsla(0, 0%, 100%, 0.25) 1px, transparent 0),
+	radial-gradient(hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
+	background-size: 50px 50px;
+	background-position: 0 0, 25px 25px;
+	-webkit-animation: slide 2s linear infinite;
+	animation: slide 4s linear infinite;
 }
 
 .App-inputs {

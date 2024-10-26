@@ -13,6 +13,7 @@ x Add more instruments.  Ones that sound cool. The distorted guitar ones kinda s
   
   ### Functionality
     - Save multiple configurations you've enjoyed. Be able to load them up later.
+      - Last 10 played configs.
     - https://www.billionsofnotes.com/what-scale -> This could go back to the main page with the key and scale selected.  
     - There are still some unnecessary rerenders happening especially around the instruments being played. I should be able to optimize this.    
     - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.

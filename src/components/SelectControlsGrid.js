@@ -62,7 +62,7 @@ function SelectControlsGrid({
 				onChange={handleControlChange}
 			/>
 
-			<Slider
+			{/* <Slider
 				id="noteLengthSlider"
 				name="noteLength"
 				label="Note Length"
@@ -72,7 +72,7 @@ function SelectControlsGrid({
 				editable={false}
 				value={noteLength}
 				onChange={handleControlChange}
-			/>
+			/> */}
 
 			<Select
 				id="instrument"

@@ -17,7 +17,7 @@ const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
 
 	return (
 		<div className="show-me-selector">
-			<label>Show me:</label>
+			<div>Show me:</div>
 			<div className="doodle-border">
 				{panels.map((panel) => (
 					<span className="show-me-selector-item" key={panel}>
