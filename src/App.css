@@ -176,3 +176,28 @@ h1 {
 	padding: 20px;
 	font-size: 0.5em;
 }
+
+
+.link-looking-button {
+	border-style: none !important;
+	border: none;
+	font-size: 0.6em !important;
+	text-decoration: underline;
+	background: none;
+	padding: 0px;
+	color: var(--text-color) !important;
+}
+
+.dark-link-looking-button {
+	border-style: none !important;
+	border: none;
+	text-decoration: underline;
+	background: none;
+	padding: 0px;
+	color: var(--background-color) !important;
+}
+
+.source-code {
+	font-size: 0.6em;
+	color: var(--text-color) !important;
+}

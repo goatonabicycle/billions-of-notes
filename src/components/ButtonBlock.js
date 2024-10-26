@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import IconButton from "./IconButton";
+import Button from "./Button";
 
 import {
 	NewNotesIcon,
@@ -80,33 +80,25 @@ const ButtonBlock = ({
 
 	return (
 		<div className="buttons">
-			<IconButton
+			<Button
 				icon={NewNotesIcon}
 				onClick={handleNewNotesClick}
 				text="New notes"
 			/>
-			<IconButton
+			<Button
 				text={isPlaying ? "Pause" : "Play"}
 				icon={isPlaying ? PauseIcon : PlayIcon}
 				onClick={handlePlayPauseClick}
 			/>
-			<IconButton
-				onClick={handleResetClick}
-				icon={ResetIcon}
-				text="Reset inputs"
-			/>
-			<IconButton
+			<Button onClick={handleResetClick} icon={ResetIcon} text="Reset inputs" />
+			<Button
 				onClick={handleShareClick}
 				text={shareButtonText}
 				icon={ShareIcon}
 			/>
-			<IconButton
-				onClick={handleSaveClick}
-				icon={SaveIcon}
-				text="Save as MIDI"
-			/>
+			<Button onClick={handleSaveClick} icon={SaveIcon} text="Save as MIDI" />
 
-			<IconButton
+			<Button
 				onClick={handleReverseClick}
 				icon={ReverseIcon}
 				text="Reverse notes"

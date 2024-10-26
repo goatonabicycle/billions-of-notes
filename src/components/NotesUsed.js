@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "./Modal.js";
 import Select from "./Select";
 import "./NotesUsed.css";
-import IconButton from "./IconButton";
+import Button from "./Button.js";
 import { PauseIcon } from "./Icons";
 
 const NotesUsed = ({
@@ -111,7 +111,7 @@ const NotesUsed = ({
 					}}
 				/>
 				<br />
-				<IconButton
+				<Button
 					icon={PauseIcon}
 					onClick={handleEmptyNote}
 					text="Set to empty"

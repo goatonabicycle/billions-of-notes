@@ -1,11 +1,8 @@
 # Todo now
 
-x Add a ukelele instrument. 
-x Make "Tie notes" tie the actual notes together visually. 
-x Add more instruments.  Ones that sound cool. The distorted guitar ones kinda suck.
 - Flat vs sharp mode. Make it an option. Options page, generally?
 - Piano uses flats when the rest of the app uses sharps. 
-
+- Fix the first click overlay
 
   ### Sounds 
     - Record and save to mp3. 

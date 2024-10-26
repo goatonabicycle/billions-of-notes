@@ -34,7 +34,6 @@ import ShowMePanels from "./components/ShowMePanels";
 import TitleArea from "./components/TitleArea";
 
 import "./App.css";
-import "./Buttons.css";
 import "./Range.css";
 
 const scales = Scale.names();
