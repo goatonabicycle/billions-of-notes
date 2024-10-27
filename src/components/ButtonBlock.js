@@ -79,7 +79,7 @@ const ButtonBlock = ({
 	}, [randomNotes, setRandomNotes]);
 
 	return (
-		<div className="buttons">
+		<div className="flex flex-wrap items-center justify-center gap-4 m-4">
 			<Button
 				icon={NewNotesIcon}
 				onClick={handleNewNotesClick}

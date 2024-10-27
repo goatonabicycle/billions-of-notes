@@ -254,8 +254,9 @@ function App() {
 
 	return (
 		<div className="App">
-			<div className="grid grid-cols-12 gap-6 p-4">
-				<div className="col-span-4">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 p-4">
+				{/* Title Area */}
+				<div className="lg:col-span-4">
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -268,7 +269,8 @@ function App() {
 					/>
 				</div>
 
-				<div className="col-span-2 space-y-6">
+				{/* Controls Block */}
+				<div className="lg:col-span-2 space-y-6">
 					<NotesUsed
 						notesInScale={notesInScale}
 						randomNotes={randomNotes}
@@ -302,7 +304,8 @@ function App() {
 					/>
 				</div>
 
-				<div className="col-span-6 space-y-6">
+				{/* Tabbed Controls */}
+				<div className="lg:col-span-6 space-y-6">
 					<TabbedControls
 						KEYS={KEYS}
 						scales={scales}
