@@ -3,7 +3,6 @@ import { KEYS, OCTAVES } from "../useful";
 import { ChangeTuningIcon } from "./Icons";
 import Modal from "./Modal.js";
 import Select from "./Select";
-import "./Fretboard.css";
 
 const Fretboard = ({
 	notesToPlay,
@@ -56,20 +55,17 @@ const Fretboard = ({
 	const flatFretboard = useMemo(() => fretboard.flat(), [fretboard]);
 
 	useEffect(() => {
-		const hasTuningChanged = selectedTuning.some((tune, index) => {
-			return (
+		const hasTuningChanged = selectedTuning.some(
+			(tune, index) =>
 				tune.note !== initialTuning[index].note ||
-				tune.octave !== initialTuning[index].octave
-			);
-		});
+				tune.octave !== initialTuning[index].octave,
+		);
 		setHasTuningChanged(hasTuningChanged);
 	}, [selectedTuning, initialTuning]);
 
 	useEffect(() => {
 		const currentNote = notesToPlay[playbackIndex];
-		if (!currentNote) {
-			return;
-		}
+		if (!currentNote) return;
 
 		const { startFret, endFret } = getPreferredFretRange();
 		let minDistance = Number.POSITIVE_INFINITY;
@@ -123,15 +119,32 @@ const Fretboard = ({
 		currentPosition,
 	]);
 
+	const { startFret, endFret } = getPreferredFretRange();
+	const preferredRangeStyle = {
+		left: `calc((100% / ${numberOfFrets + 1}) * ${startFret})`,
+		width: `calc((100% / ${numberOfFrets + 1}) * ${endFret - startFret + 1})`,
+	};
+
+	const shouldShowFretMarker = (fretNumber) => {
+		const singleDotFrets = [3, 5, 7, 9, 15, 17, 19, 21];
+		const doubleDotFrets = [12, 24];
+		return (
+			singleDotFrets.includes(fretNumber) || doubleDotFrets.includes(fretNumber)
+		);
+	};
+
+	const isDoubleDotFret = (fretNumber) => {
+		return [12, 24].includes(fretNumber);
+	};
+
 	return (
-		<div className="fretboard-container">
+		<div className="flex flex-col items-center overflow-hidden pb-8 ">
 			{hasTuningChanged && (
 				<button
-					className="button reset-button"
+					className="px-3 py-1 mb-4 text-xs bg-pink-950/30 text-pink-300 border border-pink-400/30 
+                     rounded hover:border-pink-400/60 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]
+                     transition-all duration-300"
 					onClick={() =>
-						setSelectedTuning(JSON.parse(JSON.stringify(initialTuning)))
-					}
-					onKeyUp={() =>
 						setSelectedTuning(JSON.parse(JSON.stringify(initialTuning)))
 					}
 					type="button"
@@ -139,6 +152,7 @@ const Fretboard = ({
 					Reset
 				</button>
 			)}
+
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
 				<Select
 					id="noteSelect"
@@ -175,7 +189,7 @@ const Fretboard = ({
 			</Modal>
 
 			<div
-				className="fretboard"
+				className="relative text-[calc(4px+2vmin)] flex flex-col w-full gap-2"
 				style={{
 					"--number-of-frets": numberOfFrets + 1,
 					"--preferred-start": getPreferredFretRange().startFret,
@@ -185,8 +199,39 @@ const Fretboard = ({
 						1,
 				}}
 			>
+				{/* Fret markers row */}
+				<div className="flex justify-between w-full h-4">
+					{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
+						<div
+							key={`marker-${i}`}
+							className="flex flex-col items-center justify-end w-full"
+						>
+							{shouldShowFretMarker(i) && (
+								<div className="flex gap-1">
+									<div className="w-2 h-2 rounded-full bg-zinc-600" />
+									{isDoubleDotFret(i) && (
+										<div className="w-2 h-2 rounded-full bg-zinc-600" />
+									)}
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+
+				{/* Preferred range indicator */}
+				<div
+					className="absolute top-4 bottom-8 z-10 border-2 border-pink-500/50
+                     shadow-[0_0_10px_5px_rgba(236,72,153,0.2)]"
+					style={{
+						left: "calc((100% / var(--number-of-frets)) * var(--preferred-start))",
+						width:
+							"calc((100% / var(--number-of-frets)) * var(--preferred-range))",
+					}}
+				/>
+
+				{/* Strings */}
 				{fretboard.map((string, stringIndex) => (
-					<div key={stringIndex.toString()} className="string">
+					<div key={stringIndex} className="flex justify-between relative">
 						{string.map((note, j) => {
 							const isCurrentNote =
 								note.note === notesToPlay[playbackIndex] &&
@@ -196,22 +241,54 @@ const Fretboard = ({
 							const isScaleNote = scaleNotes.includes(note.note.slice(0, -1));
 							const isNoteToPlay = notesToPlay.includes(note.note);
 
-							let className = "fret";
-							if (isCurrentNote) className += " highlight";
-							if (isScaleNote) className += " scale-note";
-							if (isNoteToPlay) className += " note-to-play";
+							const baseClasses = `
+                flex items-center justify-center 
+                min-w-[10px] w-full h-[40px]
+                rounded
+                border border-zinc-800
+                transition-colors duration-150
+              `;
+
+							// Enhanced visibility logic
+							let bgColor = "bg-zinc-700/30"; // More faded for non-scale notes
+							let textColor = "text-zinc-400"; // Default faded text
+							let textDecoration = "";
+							let highlight = ""; // Using outline or ring instead of border
+
+							if (isCurrentNote) {
+								bgColor = "bg-pink-500";
+								textColor = "text-white";
+								textDecoration = "underline";
+								highlight =
+									"outline outline-2 outline-cyan ring-[2px] ring-cyan/35"; // Outline + ring for glow effect
+							} else if (isNoteToPlay) {
+								bgColor = "bg-purple-500";
+								textColor = "text-white font-bold";
+								textDecoration = "underline";
+							} else if (isScaleNote) {
+								bgColor = "bg-cyan-600/30";
+								textColor = "text-cyan-100/70";
+							}
+
+							const tuningClasses =
+								j === 0
+									? "border-pink-500/50 cursor-pointer shadow-[0_0_5px_rgba(236,72,153,0.3)] z-50"
+									: "";
+
+							const classes = `
+								${baseClasses} 
+								${bgColor} 
+								${tuningClasses} 
+								${textColor}
+								${textDecoration}
+								${highlight}
+							`;
 
 							return (
 								<div
-									key={j.toString()}
-									className={className + (j === 0 ? " tuning-adjuster" : "")}
+									key={j}
+									className={classes}
 									onClick={() => {
-										if (j === 0) {
-											setModalStringIndex(stringIndex);
-											setIsModalOpen(true);
-										}
-									}}
-									onKeyUp={() => {
 										if (j === 0) {
 											setModalStringIndex(stringIndex);
 											setIsModalOpen(true);
@@ -219,19 +296,24 @@ const Fretboard = ({
 									}}
 								>
 									{j === 0 && ChangeTuningIcon}
-									{note.note}
+									<span className="text-[0.7em]">{note.note}</span>
 								</div>
 							);
 						})}
 					</div>
 				))}
-			</div>
-			<div className="fret-numbers">
-				{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
-					<div key={i.toString()} className="fret-number">
-						{i}
-					</div>
-				))}
+
+				{/* Fret numbers */}
+				<div className="flex justify-between w-full mt-2 pt-2 border-t border-zinc-800">
+					{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
+						<div
+							key={i}
+							className="flex justify-center w-full text-[0.6em] text-pink-300"
+						>
+							{i}
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);

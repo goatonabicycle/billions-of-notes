@@ -57,52 +57,54 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	return (
-		<div className="text-center bg-zinc-900">
-			<div className="text-purple-300 text-xl p-5">Bass Guitar</div>
-			<div className="flex flex-wrap items-center justify-center text-sm gap-10">
-				<Slider
-					id="positionSlider"
-					label="Play from"
-					min="0"
-					max={numberOfBassFrets}
-					step="1"
-					editable={false}
-					value={selectedPosition}
-					onChange={handleSelectedPositionChange}
-				/>
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
+			<div className="flex items-center gap-20 px-4 py-1">
+				<div className="text-purple-300 text-xl min-w-[100px]">Bass Guitar</div>
+				<div className="flex flex-wrap items-center gap-6 text-sm">
+					<Slider
+						id="positionSlider"
+						label="Play from"
+						min="0"
+						max={numberOfBassFrets}
+						step="1"
+						editable={false}
+						value={selectedPosition}
+						onChange={handleSelectedPositionChange}
+					/>
 
-				<Slider
-					id="fingerRangeSlider"
-					label="Finger Range"
-					min="4"
-					max="7"
-					step="1"
-					editable={false}
-					value={selectedFingerRange}
-					onChange={handleSelectedFingerRangeChange}
-				/>
+					<Slider
+						id="fingerRangeSlider"
+						label="Finger Range"
+						min="4"
+						max="7"
+						step="1"
+						editable={false}
+						value={selectedFingerRange}
+						onChange={handleSelectedFingerRangeChange}
+					/>
 
-				<Slider
-					id="numberOfBassStringsSlider"
-					label="Strings"
-					min="4"
-					max="6"
-					step="1"
-					editable={false}
-					value={selectedNumberOfBassStrings}
-					onChange={handleSelectedNumberOfBassStringsChange}
-				/>
+					<Slider
+						id="numberOfBassStringsSlider"
+						label="Strings"
+						min="4"
+						max="6"
+						step="1"
+						editable={false}
+						value={selectedNumberOfBassStrings}
+						onChange={handleSelectedNumberOfBassStringsChange}
+					/>
 
-				<Slider
-					id="numberOfBassFretsSlider"
-					label="Frets"
-					min="12"
-					max="24"
-					step="1"
-					editable={false}
-					value={numberOfBassFrets}
-					onChange={handleNumberOfBassFretsChange}
-				/>
+					<Slider
+						id="numberOfBassFretsSlider"
+						label="Frets"
+						min="12"
+						max="24"
+						step="1"
+						editable={false}
+						value={numberOfBassFrets}
+						onChange={handleNumberOfBassFretsChange}
+					/>
+				</div>
 			</div>
 			<Fretboard
 				playbackIndex={playbackIndex}

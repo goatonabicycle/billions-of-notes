@@ -65,49 +65,51 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	const strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
 
 	return (
-		<div className="text-center bg-zinc-900">
-			<div className="text-purple-300 text-xl p-5">Guitar</div>
-			<div className="flex flex-wrap items-center justify-center text-sm gap-10">
-				<Slider
-					id="positionSlider"
-					label="Play from"
-					min="0"
-					max={numberOfGuitarFrets}
-					step="1"
-					editable={false}
-					value={selectedPosition}
-					onChange={handlePositionChange}
-				/>
-				<Slider
-					id="fingerRangeSlider"
-					label="Finger Range"
-					min="4"
-					max="7"
-					step="1"
-					editable={false}
-					value={selectedFingerRange}
-					onChange={handleFingerRangeChange}
-				/>
-				<Slider
-					id="numberOfGuitarStringsSlider"
-					label="Strings"
-					min="6"
-					max="8"
-					step="1"
-					editable={false}
-					value={selectedNumberOfGuitarStrings}
-					onChange={handleNumberOfGuitarStringsChange}
-				/>
-				<Slider
-					id="numberOfGuitarFretsSlider"
-					label="Frets"
-					min="12"
-					max="24"
-					step="1"
-					editable={false}
-					value={numberOfGuitarFrets}
-					onChange={handleNumberOfGuitarFretsChange}
-				/>
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
+			<div className="flex items-center gap-20 px-4 py-1">
+				<div className="text-purple-300 text-xl min-w-[100px]">Guitar</div>
+				<div className="flex flex-wrap items-center gap-6 text-sm">
+					<Slider
+						id="positionSlider"
+						label="Play from"
+						min="0"
+						max={numberOfGuitarFrets}
+						step="1"
+						editable={false}
+						value={selectedPosition}
+						onChange={handlePositionChange}
+					/>
+					<Slider
+						id="fingerRangeSlider"
+						label="Finger Range"
+						min="4"
+						max="7"
+						step="1"
+						editable={false}
+						value={selectedFingerRange}
+						onChange={handleFingerRangeChange}
+					/>
+					<Slider
+						id="numberOfGuitarStringsSlider"
+						label="Strings"
+						min="6"
+						max="8"
+						step="1"
+						editable={false}
+						value={selectedNumberOfGuitarStrings}
+						onChange={handleNumberOfGuitarStringsChange}
+					/>
+					<Slider
+						id="numberOfGuitarFretsSlider"
+						label="Frets"
+						min="12"
+						max="24"
+						step="1"
+						editable={false}
+						value={numberOfGuitarFrets}
+						onChange={handleNumberOfGuitarFretsChange}
+					/>
+				</div>
 			</div>
 			<Fretboard
 				playbackIndex={playbackIndex}

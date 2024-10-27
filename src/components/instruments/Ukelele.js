@@ -66,52 +66,54 @@ const Ukelele = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	return (
-		<div className="text-center bg-zinc-900">
-			<div className="text-purple-300 text-xl p-5">Ukelele</div>
-			<div className="flex flex-wrap items-center justify-center text-sm gap-10">
-				<Slider
-					id="positionSlider"
-					label="Play from"
-					min="0"
-					max={numberOfUkeleleFrets}
-					step="1"
-					editable={false}
-					value={selectedPosition}
-					onChange={handlePositionChange}
-				/>
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
+			<div className="flex items-center gap-20 px-4 py-1">
+				<div className="text-purple-300 text-xl min-w-[100px]">Ukelele</div>
+				<div className="flex flex-wrap items-center gap-6 text-sm">
+					<Slider
+						id="positionSlider"
+						label="Play from"
+						min="0"
+						max={numberOfUkeleleFrets}
+						step="1"
+						editable={false}
+						value={selectedPosition}
+						onChange={handlePositionChange}
+					/>
 
-				<Slider
-					id="fingerRangeSlider"
-					label="Finger Range"
-					min="4"
-					max="7"
-					step="1"
-					editable={false}
-					value={selectedUkeleleFingerRange}
-					onChange={handleFingerRangeChange}
-				/>
+					<Slider
+						id="fingerRangeSlider"
+						label="Finger Range"
+						min="4"
+						max="7"
+						step="1"
+						editable={false}
+						value={selectedUkeleleFingerRange}
+						onChange={handleFingerRangeChange}
+					/>
 
-				<Slider
-					id="numberOfUkeleleStringsSlider"
-					label="Strings"
-					min="6"
-					max="8"
-					step="1"
-					editable={false}
-					value={selectedNumberOfUkeleleStrings}
-					onChange={handleNumberOfUkeleleStringsChange}
-				/>
+					<Slider
+						id="numberOfUkeleleStringsSlider"
+						label="Strings"
+						min="6"
+						max="8"
+						step="1"
+						editable={false}
+						value={selectedNumberOfUkeleleStrings}
+						onChange={handleNumberOfUkeleleStringsChange}
+					/>
 
-				<Slider
-					id="numberOfGuitarFretsSlider"
-					label="Frets"
-					min="12"
-					max="24"
-					step="1"
-					editable={false}
-					value={numberOfUkeleleFrets}
-					onChange={handleNumberOfUkeleleFretsChange}
-				/>
+					<Slider
+						id="numberOfGuitarFretsSlider"
+						label="Frets"
+						min="12"
+						max="24"
+						step="1"
+						editable={false}
+						value={numberOfUkeleleFrets}
+						onChange={handleNumberOfUkeleleFretsChange}
+					/>
+				</div>
 			</div>
 			<Fretboard
 				playbackIndex={playbackIndex}
