@@ -47,7 +47,7 @@ const NotesUsed = ({
 	const { groupedNotes, originalIndexMap } = groupNotes();
 
 	return (
-		<div className="flex flex-wrap justify-center items-center gap-1 my-6">
+		<div className="flex flex-wrap justify-center items-center gap-1">
 			{groupedNotes.map((item, i) => {
 				const isCurrentNote = currentIndex === originalIndexMap[i];
 				return (

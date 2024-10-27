@@ -267,7 +267,15 @@ function App() {
 						currentColour={currentColour}
 						randomNotes={randomNotes}
 						currentIndex={currentIndex}
-						count={0}
+					/>
+
+					<NotesUsed
+						notesInScale={notesInScale}
+						randomNotes={randomNotes}
+						setRandomNotes={setRandomNotes}
+						currentIndex={currentIndex}
+						selectedOctaves={inputState.octaves}
+						tieTogether={controlState.tieTogether}
 					/>
 				</div>
 
@@ -291,14 +299,6 @@ function App() {
 
 					<NotesInScale notesInScale={notesInScale} />
 
-					<NotesUsed
-						notesInScale={notesInScale}
-						randomNotes={randomNotes}
-						setRandomNotes={setRandomNotes}
-						currentIndex={currentIndex}
-						selectedOctaves={inputState.octaves}
-						tieTogether={controlState.tieTogether}
-					/>
 					<ButtonBlock
 						setTriggerRegenerate={setTriggerRegenerate}
 						triggerRegenerate={triggerRegenerate}
