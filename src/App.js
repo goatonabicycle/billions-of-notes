@@ -314,7 +314,7 @@ function App() {
 					<MessageBoxes
 						selectedTempo={controlState.tempo}
 						selectedNumberOfNotes={inputState.numberOfNotes}
-					></MessageBoxes>
+					/>
 
 					<NotesInScale notesInScale={notesInScale} />
 
@@ -336,19 +336,17 @@ function App() {
 				selectedOctaves={inputState.octaves}
 			/>
 			{controlState && (
-				<>
-					<Loop
-						notes={randomNotes}
-						bpm={controlState.tempo}
-						isPlaying={isPlaying}
-						currentIndex={currentIndex}
-						setCurrentIndex={setCurrentIndex}
-						instrument={controlState.instrument}
-						volume={controlState.volume}
-						notePlayLength={controlState.noteLength}
-						tieTogether={controlState.tieTogether}
-					/>
-				</>
+				<Loop
+					notes={randomNotes}
+					bpm={controlState.tempo}
+					isPlaying={isPlaying}
+					currentIndex={currentIndex}
+					setCurrentIndex={setCurrentIndex}
+					instrument={controlState.instrument}
+					volume={controlState.volume}
+					notePlayLength={controlState.noteLength}
+					tieTogether={controlState.tieTogether}
+				/>
 			)}
 
 			<div className="debug-info-block">

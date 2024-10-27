@@ -28,15 +28,10 @@ body.light-mode {
 	}
 }
 
-.App {
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	color: var(--text-color);
-	min-height: 100vh;
+.App {	
+	/* min-height: 100vh; */
 	align-items: left;
-	justify-content: flex-start;
-	font-size: calc(15px + 2vmin);
+	justify-content: flex-start;	
 	background-image: radial-gradient(hsla(0, 0%, 100%, 0.25) 1px, transparent 0),
 	radial-gradient(hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
 	background-size: 50px 50px;
@@ -47,24 +42,14 @@ body.light-mode {
 
 .App-inputs {
 	display: flex;
-	flex-wrap: wrap;
-	font-size: 0.5em;
-	color: var(--text-color);
+	flex-wrap: wrap;		
 	max-height: 1000px;
-	overflow: hidden;
-	transition: opacity 1s, transform 1s, max-height 1s ease-in-out;
-}
-
-.App-inputs.hidden {
-	opacity: 0;
-	transform: translateX(-100%);
-	max-height: 0;
-	transition: opacity 1s, transform 1s, max-height 1s ease-in-out;
+	overflow: hidden;	
 }
 
 .App-inputs .title {
 	flex: 1 0 10%;
-	font-size: 3em;
+	font-size: 1em;
 }
 
 .App-inputs .tiny-info {
@@ -106,25 +91,16 @@ body.light-mode {
 	}
 }
 
-.MIDISounds {
-	display: none;
-	visibility: hidden;
-}
-
 h1 {
 	text-align: center;
 	display: block;
-	font-size: 1em;
+	font-size: 2em;
 	margin-block-start: 0em;
 	margin-block-end: 0em;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 	font-weight: normal;
 	font-style: italic;
-}
-
-.fun-things {
-	font-size: 0.4em;
 }
 
 .total-notes {
