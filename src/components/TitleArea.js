@@ -28,7 +28,7 @@ const LinkButton = memo(({ href, onClick, children, external }) => {
 	);
 });
 
-const synthwaveKeyframes = `
+const keyframes = `
  @keyframes gridMove {
 		0% { transform: translateY(40px); }
 		100% { transform: translateY(0px); }
@@ -54,8 +54,8 @@ const TitleArea = memo(
 		const gridAnimationDuration = Math.max(0.2, 240 / selectedTempo);
 
 		return (
-			<div className="relative w-full max-w-4xl mx-auto p-4">
-				<style>{synthwaveKeyframes}</style>
+			<div className="relative w-full max-w-4xl mx-auto ">
+				<style>{keyframes}</style>
 
 				<div
 					className="relative overflow-hidden"

@@ -27,8 +27,7 @@ import Loop from "./components/Loop";
 import MessageBoxes from "./components/MessageBoxes";
 import NotesUsed from "./components/NotesUsed";
 import SaveToMidi from "./components/SaveToMidi";
-import SelectControlsGrid from "./components/SelectControlsGrid";
-import SelectInputGrid from "./components/SelectInputGrid";
+import TabbedControls from "./components/TabbedControls";
 import ShowMePanels from "./components/ShowMePanels";
 import TitleArea from "./components/TitleArea";
 
@@ -255,8 +254,8 @@ function App() {
 
 	return (
 		<div className="App">
-			<div className={"App-inputs"}>
-				<div className="title">
+			<div className="grid grid-cols-12 gap-6 p-4">
+				<div className="col-span-4">
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -267,7 +266,9 @@ function App() {
 						randomNotes={randomNotes}
 						currentIndex={currentIndex}
 					/>
+				</div>
 
+				<div className="col-span-2 space-y-6">
 					<NotesUsed
 						notesInScale={notesInScale}
 						randomNotes={randomNotes}
@@ -294,28 +295,21 @@ function App() {
 						SaveToMidi={SaveToMidi}
 						setRandomNotes={setRandomNotes}
 					/>
-				</div>
-
-				<div className="selects">
-					<SelectInputGrid
-						KEYS={KEYS}
-						scales={scales}
-						notesInScale={notesInScale}
-						inputKey={inputState.key}
-						inputScale={inputState.scale}
-						inputNumberOfNotes={inputState.numberOfNotes}
-						inputEmptyNotes={inputState.emptyNotes}
-						inputOctaves={inputState.octaves}
-						setInputState={setInputState}
-						handleInputChange={handleInputChange}
-					/>
 
 					<MessageBoxes
 						selectedTempo={controlState.tempo}
 						selectedNumberOfNotes={inputState.numberOfNotes}
 					/>
+				</div>
 
-					<SelectControlsGrid
+				<div className="col-span-6 space-y-6">
+					<TabbedControls
+						KEYS={KEYS}
+						scales={scales}
+						notesInScale={notesInScale}
+						inputState={inputState}
+						setInputState={setInputState}
+						handleInputChange={handleInputChange}
 						selectedPanelsToShow={selectedPanelsToShow}
 						setSelectedPanelsToShow={setSelectedPanelsToShow}
 						controlState={controlState}
@@ -324,6 +318,7 @@ function App() {
 					/>
 				</div>
 			</div>
+
 			<ShowMePanels
 				selectedPanelsToShow={selectedPanelsToShow}
 				currentIndex={currentIndex}
@@ -331,6 +326,7 @@ function App() {
 				notesInScale={notesInScale}
 				selectedOctaves={inputState.octaves}
 			/>
+
 			{controlState && (
 				<Loop
 					notes={randomNotes}
@@ -346,13 +342,10 @@ function App() {
 			)}
 
 			<div className="debug-info-block">
-				isPlaying: {isPlaying.toString()}
-				<br />
-				loadedFromUrl: {loadedFromUrl}
-				<br />
-				inputState: {JSON.stringify(inputState)}
-				<br />
-				controlState: {JSON.stringify(controlState)}
+				isPlaying: {isPlaying.toString()} <br />
+				loadedFromUrl: {loadedFromUrl} <br />
+				inputState: {JSON.stringify(inputState)} <br />
+				controlState: {JSON.stringify(controlState)} <br />
 			</div>
 		</div>
 	);

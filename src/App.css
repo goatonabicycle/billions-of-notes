@@ -30,14 +30,7 @@ body.light-mode {
 
 .App {	
 	/* min-height: 100vh; */
-	align-items: left;
-	justify-content: flex-start;	
-	background-image: radial-gradient(hsla(0, 0%, 100%, 0.25) 1px, transparent 0),
-	radial-gradient(hsla(0, 0%, 100%, 0.1) 1px, transparent 0);
-	background-size: 50px 50px;
-	background-position: 0 0, 25px 25px;
-	-webkit-animation: slide 2s linear infinite;
-	animation: slide 4s linear infinite;
+
 }
 
 .App-inputs {

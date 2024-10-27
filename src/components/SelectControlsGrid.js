@@ -35,7 +35,7 @@ const SelectControlsGrid = memo(
 
 		return (
 			<div className="w-full max-w-4xl mx-auto">
-				<div className="bg-gray-900/80 backdrop-blur-sm rounded-lg border border-pink-500/20 p-6">
+				<div className="p-4">
 					<div>
 						<div className="flex items-start gap-8">
 							<Slider
@@ -87,7 +87,7 @@ const SelectControlsGrid = memo(
 								name="tieTogether"
 								checked={tieTogether}
 								onChange={handleControlChange}
-								label="Tie notes"
+								label="Tie same notes together"
 							/>
 						</div>
 

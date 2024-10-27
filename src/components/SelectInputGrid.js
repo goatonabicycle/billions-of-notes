@@ -37,7 +37,7 @@ const SelectInputGrid = memo(
 
 		return (
 			<div className="w-full max-w-4xl mx-auto">
-				<div className="bg-gray-900/80 backdrop-blur-sm rounded-lg border border-pink-500/20 p-6">
+				<div className="p-4">
 					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-x-8 gap-y-4">
 						<div className="space-y-4">
 							<div>

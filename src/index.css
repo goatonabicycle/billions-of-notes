@@ -9,8 +9,16 @@ body {
 	font-family: "Short Stack", cursive, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #3c3c3c;
+	background-color: #141313;
 	color: #fdf7f1;
+	align-items: left;
+	justify-content: flex-start;	
+	background-image: radial-gradient(hsla(304, 100%, 51%, 0.811) 1px, transparent 0),
+	radial-gradient(hsla(48, 100%, 51%, 0.791) 1px, transparent 0);
+	background-size: 50px 50px;
+	background-position: 0 0, 25px 25px;
+	-webkit-animation: slide 2s linear infinite;
+	animation: slide 4s linear infinite;
 }
 
 code {
