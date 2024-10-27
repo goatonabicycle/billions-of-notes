@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import ShowMe from "./ShowMe";
-import SmolVersion from "./SmolVersion";
 import WhatScale from "./WhatScale";
 import Ampwall from "./CoolAmpwallStuff";
 
@@ -16,7 +15,6 @@ function AppRoutes() {
 			<Route path="/" element={<App />} />
 			<Route path="/show-me" element={<ShowMe />} />
 			<Route path="/what-scale" element={<WhatScale />} />
-			<Route path="/smoll" element={<SmolVersion />} />
 			<Route path="/ampwall" element={<Ampwall />} />
 		</Routes>
 	);
