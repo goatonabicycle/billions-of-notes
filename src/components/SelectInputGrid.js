@@ -2,11 +2,13 @@ import React, { useMemo, memo } from "react";
 import { mapToSelectOptions } from "../useful";
 import OctaveSelector from "./OctaveSelector";
 import Select from "./Select";
+import ScaleSelector from "./ScaleSelector";
 
 const SelectInputGrid = memo(
 	({
 		KEYS,
 		scales,
+		notesInScale,
 		inputKey,
 		inputScale,
 		inputNumberOfNotes,
@@ -34,44 +36,80 @@ const SelectInputGrid = memo(
 		}, [inputNumberOfNotes]);
 
 		return (
-			<div className="select-grid">
-				<Select
-					id="key"
-					name="key"
-					label="Key:"
-					options={keyOptions}
-					onChange={handleInputChange}
-					selectedValue={inputKey}
-				/>
+			<div className="w-full max-w-4xl mx-auto">
+				<div className="bg-gray-900/80 backdrop-blur-sm rounded-lg border border-pink-500/20 p-6">
+					<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-x-8 gap-y-4">
+						<div className="space-y-4">
+							<div>
+								<label className="inline-block min-w-[120px] text-xs font-medium text-pink-300 uppercase tracking-wide mb-1">
+									Key:
+								</label>
+								<Select
+									id="key"
+									name="key"
+									options={keyOptions}
+									onChange={handleInputChange}
+									selectedValue={inputKey}
+									hideLabel={true}
+								/>
+							</div>
 
-				<Select
-					id="scale"
-					name="scale"
-					label="Scale:"
-					options={scaleOptions}
-					onChange={handleInputChange}
-					selectedValue={inputScale}
-				/>
+							<div>
+								<label className="inline-block min-w-[120px] text-xs font-medium text-pink-300 uppercase tracking-wide mb-1">
+									Scale:
+								</label>
+								<ScaleSelector
+									scaleOptions={scaleOptions}
+									inputScale={inputScale}
+									handleInputChange={handleInputChange}
+									notesInScale={notesInScale}
+									hideLabel={true}
+								/>
+							</div>
+						</div>
 
-				<Select
-					id="numberOfNotes"
-					name="numberOfNotes"
-					label="Notes:"
-					options={notesOptions}
-					onChange={handleInputChange}
-					selectedValue={inputNumberOfNotes}
-				/>
+						<div className="space-y-4">
+							<div>
+								<label className="inline-block min-w-[120px] text-xs font-medium text-pink-300 uppercase tracking-wide mb-1">
+									Notes:
+								</label>
+								<Select
+									id="numberOfNotes"
+									name="numberOfNotes"
+									options={notesOptions}
+									onChange={handleInputChange}
+									selectedValue={inputNumberOfNotes}
+									hideLabel={true}
+								/>
+							</div>
 
-				<Select
-					id="emptyNotes"
-					name="emptyNotes"
-					label="Empty notes:"
-					options={emptyNotesOptions}
-					onChange={handleInputChange}
-					selectedValue={inputEmptyNotes}
-				/>
+							<div>
+								<label className="inline-block min-w-[120px] text-xs font-medium text-pink-300 uppercase tracking-wide mb-1">
+									Empty Notes:
+								</label>
+								<Select
+									id="emptyNotes"
+									name="emptyNotes"
+									options={emptyNotesOptions}
+									onChange={handleInputChange}
+									selectedValue={inputEmptyNotes}
+									hideLabel={true}
+								/>
+							</div>
+						</div>
 
-				<OctaveSelector octaves={inputOctaves} setInputState={setInputState} />
+						<div>
+							<label className="inline-block min-w-[120px] text-xs font-medium text-pink-300 uppercase tracking-wide mb-1">
+								Octaves:
+							</label>
+							<OctaveSelector
+								octaves={inputOctaves}
+								setInputState={setInputState}
+								hideLabel={true}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	},

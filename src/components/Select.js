@@ -1,73 +1,67 @@
-import React, { memo } from "react";
+import React from "react";
 
-const Select = memo(function Select({
+const Select = ({
 	id,
 	name,
-	label,
+	options,
 	onChange,
 	selectedValue,
-	options,
-}) {
+	hideLabel,
+	label,
+}) => {
 	return (
-		<div className="flex items-center justify-center">
-			<div key={id} className="relative flex flex-col gap-2">
+		<div className="relative">
+			{!hideLabel && (
 				<label
 					htmlFor={id}
-					className="text-sm font-medium text-pink-300 uppercase tracking-wide"
+					className="text-xs font-medium text-pink-300 uppercase tracking-wide"
 				>
 					{label}
 				</label>
-
-				<div className="relative">
-					<select
-						id={id}
-						name={name}
-						onChange={onChange}
-						value={selectedValue}
-						className="appearance-none capitalize w-full py-2 px-4 pr-10
-                     bg-pink-950/30 text-pink-100
-                     border-2 border-pink-400/50 rounded-lg
-                     shadow-[0_0_10px_rgba(236,72,153,0.2)]
-                     hover:shadow-[0_0_15px_rgba(236,72,153,0.4)]
-                     focus:shadow-[0_0_20px_rgba(236,72,153,0.5)]
-                     transition-all duration-300
-                     focus:outline-none focus:border-pink-400
-                     backdrop-blur-sm
-                     cursor-pointer"
-					>
-						{options.map((option) => (
-							<option
-								key={option.value}
-								value={option.value}
-								className="bg-pink-950 text-pink-100 capitalize"
-							>
-								{option.label}
-							</option>
-						))}
-					</select>
-
-					{/* Custom dropdown arrow */}
-					<div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-						<svg
-							role="graphics-symbol img"
-							className="w-4 h-4 text-pink-400"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
+			)}
+			<div className="relative group">
+				<select
+					id={id}
+					name={name}
+					value={selectedValue}
+					onChange={onChange}
+					className="w-full px-3 py-1.5 rounded border border-pink-400/30 bg-pink-950/30 
+                   backdrop-blur-sm text-pink-100 
+                   group-hover:border-pink-400/60 
+                   group-hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] 
+                   transition-all duration-300 appearance-none 
+                   focus:outline-none focus:border-pink-400/60 
+                   focus:shadow-[0_0_15px_rgba(236,72,153,0.3)]"
+				>
+					{options.map((option) => (
+						<option
+							key={option.value}
+							value={option.value}
+							className="bg-pink-950 text-pink-100"
 						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M19 9l-7 7-7-7"
-							/>
-						</svg>
-					</div>
+							{option.label}
+						</option>
+					))}
+				</select>
+				<div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+					<svg
+						role="graphics-symbol img"
+						className="h-4 w-4 text-pink-300"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M19 9l-7 7-7-7"
+						/>
+					</svg>
 				</div>
 			</div>
 		</div>
 	);
-});
+};
 
 export default Select;

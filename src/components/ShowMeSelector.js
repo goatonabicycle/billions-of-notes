@@ -16,11 +16,11 @@ const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-3 m-6">
+		<div className="flex flex-col items-center gap-2 pt-5">
 			<div className="text-xs font-medium text-pink-300 uppercase tracking-wide">
 				Show me:
 			</div>
-			<div className="justify-center gap-1">
+			<div className="flex flex-wrap gap-10 justify-center">
 				{panels.map((panel) => (
 					<Checkbox
 						key={panel}

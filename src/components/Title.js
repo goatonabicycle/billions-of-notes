@@ -7,16 +7,33 @@ const RainbowText = ({ text, tempo }) => {
 
 	const keyframes = `
     @keyframes textGlow {
-      0% { color: #ff00ff; text-shadow: 2px 2px 0px #ff00ff, -2px -2px 0px #ff00ff; }
-      33% { color: #00ffff; text-shadow: 2px 2px 0px #00ffff, -2px -2px 0px #00ffff; }
-      66% { color: #ffff00; text-shadow: 2px 2px 0px #ffff00, -2px -2px 0px #ffff00; }
-      100% { color: #ff00ff; text-shadow: 2px 2px 0px #ff00ff, -2px -2px 0px #ff00ff; }
+      0% {
+        color: #FF2D95;
+        text-shadow: 2px 2px 0px rgba(255, 45, 149, 0.5);
+      }
+      33% {
+        color: #FF8C2D;
+        text-shadow: 2px 2px 0px rgba(255, 140, 45, 0.5);
+      }
+      66% {
+        color: #2DE2FF;
+        text-shadow: 2px 2px 0px rgba(45, 226, 255, 0.5);
+      }
+      100% {
+        color: #FF2D95;
+        text-shadow: 2px 2px 0px rgba(255, 45, 149, 0.5);
+      }
     }
   `;
 
 	return (
 		<span>
 			<style>{keyframes}</style>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
+				rel="stylesheet"
+			/>
+
 			{text.split("").map((char, index) => (
 				<span
 					key={index}
@@ -36,12 +53,11 @@ const RainbowText = ({ text, tempo }) => {
 const Title = memo(({ selectedTempo }) => {
 	return (
 		<div className="relative w-full max-w-5xl mx-auto px-4">
-			<div className="relative overflow-hidden py-2 px-6" style={{}}>
+			<div className="relative overflow-hidden py-2 px-6">
 				<div
 					className="relative z-10 flex justify-center items-center whitespace-nowrap"
 					style={{
-						fontFamily:
-							'"Press Start 2P", system-ui, -apple-system, sans-serif',
+						fontFamily: "Russo One, system-ui, -apple-system, sans-serif",
 					}}
 				>
 					<div className="flex flex-wrap justify-center gap-4">

@@ -25,7 +25,6 @@ import {
 import ButtonBlock from "./components/ButtonBlock";
 import Loop from "./components/Loop";
 import MessageBoxes from "./components/MessageBoxes";
-import NotesInScale from "./components/NotesInScale";
 import NotesUsed from "./components/NotesUsed";
 import SaveToMidi from "./components/SaveToMidi";
 import SelectControlsGrid from "./components/SelectControlsGrid";
@@ -277,27 +276,6 @@ function App() {
 						selectedOctaves={inputState.octaves}
 						tieTogether={controlState.tieTogether}
 					/>
-				</div>
-
-				<div className="selects">
-					<SelectInputGrid
-						KEYS={KEYS}
-						scales={scales}
-						inputKey={inputState.key}
-						inputScale={inputState.scale}
-						inputNumberOfNotes={inputState.numberOfNotes}
-						inputEmptyNotes={inputState.emptyNotes}
-						inputOctaves={inputState.octaves}
-						setInputState={setInputState}
-						handleInputChange={handleInputChange}
-					/>
-
-					<MessageBoxes
-						selectedTempo={controlState.tempo}
-						selectedNumberOfNotes={inputState.numberOfNotes}
-					/>
-
-					<NotesInScale notesInScale={notesInScale} />
 
 					<ButtonBlock
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -316,6 +294,27 @@ function App() {
 						SaveToMidi={SaveToMidi}
 						setRandomNotes={setRandomNotes}
 					/>
+				</div>
+
+				<div className="selects">
+					<SelectInputGrid
+						KEYS={KEYS}
+						scales={scales}
+						notesInScale={notesInScale}
+						inputKey={inputState.key}
+						inputScale={inputState.scale}
+						inputNumberOfNotes={inputState.numberOfNotes}
+						inputEmptyNotes={inputState.emptyNotes}
+						inputOctaves={inputState.octaves}
+						setInputState={setInputState}
+						handleInputChange={handleInputChange}
+					/>
+
+					<MessageBoxes
+						selectedTempo={controlState.tempo}
+						selectedNumberOfNotes={inputState.numberOfNotes}
+					/>
+
 					<SelectControlsGrid
 						selectedPanelsToShow={selectedPanelsToShow}
 						setSelectedPanelsToShow={setSelectedPanelsToShow}

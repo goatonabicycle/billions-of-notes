@@ -11,7 +11,7 @@ const Checkbox = ({
 }) => {
 	return (
 		<label
-			className={`flex items-center gap-2 cursor-pointer group ${className}`}
+			className={`flex items-center gap-2  cursor-pointer group ${className}`}
 		>
 			<div className="relative">
 				<input

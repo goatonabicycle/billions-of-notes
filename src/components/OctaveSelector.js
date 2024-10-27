@@ -23,11 +23,8 @@ const OctaveSelector = memo(({ octaves, setInputState }) => {
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-1 m-6">
-			<div className="text-xs font-medium text-pink-300 uppercase tracking-wide">
-				Octaves:
-			</div>
-			<div className="flex flex-wrap justify-center gap-1">
+		<div className="flex items-center gap-3">
+			<div className="flex flex-wrap gap-4">
 				{OCTAVES.map((octave) => (
 					<Checkbox
 						key={octave}
