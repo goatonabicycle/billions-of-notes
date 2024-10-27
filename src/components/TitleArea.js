@@ -4,6 +4,29 @@ import KofiButton from "./KofiButton";
 import LineRenderer from "./LineRenderer";
 import Title from "./Title";
 
+const LinkButton = memo(({ href, onClick, children, external }) => {
+	if (href) {
+		return (
+			<a
+				href={href}
+				target={external ? "_blank" : undefined}
+				rel={external ? "noreferrer" : undefined}
+				className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
+			>
+				{children}
+			</a>
+		);
+	}
+
+	return (
+		<button
+			onClick={onClick}
+			className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
+		>
+			{children}
+		</button>
+	);
+});
 const TitleArea = memo(
 	({
 		selectedTempo,
@@ -32,29 +55,26 @@ const TitleArea = memo(
 						/>
 					</div>
 
-					<div className="flex items-center justify-center gap-4 text-sm">
-						<a
+					<nav className="flex items-center justify-center gap-1 text-xs">
+						<LinkButton
 							href="https://github.com/goatonabicycle/billions-of-notes"
-							target="_blank"
-							className="text-pink-300 hover:text-pink-400 transition-colors"
-							rel="noreferrer"
+							external
 						>
 							Source code
-						</a>
+						</LinkButton>
+
 						<span className="text-pink-300/30">|</span>
+
 						<ExplainButton />
+
 						<span className="text-pink-300/30">|</span>
+
 						<KofiButton />
+
 						<span className="text-pink-300/30">|</span>
-						<a
-							href="/what-scale"
-							target="_blank"
-							className="text-pink-300 hover:text-pink-400 transition-colors"
-							rel="noreferrer"
-						>
-							What's the scale?
-						</a>
-					</div>
+
+						<LinkButton href="/what-scale">What's the scale?</LinkButton>
+					</nav>
 				</div>
 			</div>
 		);
