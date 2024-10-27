@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-
 import { useStorage } from "../../hooks/useLocalStorage";
 import {
 	DEFAULT_FINGER_RANGE,
@@ -8,11 +7,8 @@ import {
 	DEFAULT_POSITION,
 	INITIAL_UKELELE_TUNING,
 } from "../../useful";
-
 import Fretboard from "../Fretboard";
 import Slider from "../Slider";
-
-import "./Ukelele.css";
 
 const Ukelele = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	const [selectedPosition, setSelectedPosition] = useStorage(
@@ -70,10 +66,9 @@ const Ukelele = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	return (
-		<div className="ukelele-container">
-			{"Ukelele"}
-
-			<div className="ukelele-inputs">
+		<div className="text-center bg-zinc-900">
+			<div className="text-purple-300 text-xl p-5">Ukelele</div>
+			<div className="flex flex-wrap items-center justify-center text-sm gap-10">
 				<Slider
 					id="positionSlider"
 					label="Play from"

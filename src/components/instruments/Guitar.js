@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-
 import { useStorage } from "../../hooks/useLocalStorage";
 import {
 	DEFAULT_FINGER_RANGE,
@@ -8,11 +7,8 @@ import {
 	DEFAULT_POSITION,
 	INITIAL_GUITAR_TUNING,
 } from "../../useful";
-
 import Fretboard from "../Fretboard";
 import Slider from "../Slider";
-
-import "./Guitar.css";
 
 const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	const [selectedPosition, setSelectedPosition] = useStorage(
@@ -69,10 +65,9 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	const strings = selectedTuning.slice(0, selectedNumberOfGuitarStrings);
 
 	return (
-		<div className="guitar-container">
-			{"Guitar"}
-
-			<div className="guitar-inputs">
+		<div className="text-center bg-zinc-900">
+			<div className="text-purple-300 text-xl p-5">Guitar</div>
+			<div className="flex flex-wrap items-center justify-center text-sm gap-10">
 				<Slider
 					id="positionSlider"
 					label="Play from"
@@ -83,7 +78,6 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 					value={selectedPosition}
 					onChange={handlePositionChange}
 				/>
-
 				<Slider
 					id="fingerRangeSlider"
 					label="Finger Range"
@@ -94,7 +88,6 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 					value={selectedFingerRange}
 					onChange={handleFingerRangeChange}
 				/>
-
 				<Slider
 					id="numberOfGuitarStringsSlider"
 					label="Strings"
@@ -105,7 +98,6 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 					value={selectedNumberOfGuitarStrings}
 					onChange={handleNumberOfGuitarStringsChange}
 				/>
-
 				<Slider
 					id="numberOfGuitarFretsSlider"
 					label="Frets"

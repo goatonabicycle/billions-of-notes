@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-
 import { useStorage } from "../../hooks/useLocalStorage";
 import {
 	DEFAULT_FINGER_RANGE,
@@ -8,11 +7,8 @@ import {
 	DEFAULT_POSITION,
 	INITIAL_BASS_TUNING,
 } from "../../useful";
-
 import Fretboard from "../Fretboard";
 import Slider from "../Slider";
-
-import "./Guitar.css";
 
 const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	const [selectedPosition, setSelectedPosition] = useStorage(
@@ -61,10 +57,9 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	return (
-		<div className="guitar-container">
-			{"Bass Guitar"}
-
-			<div className="guitar-inputs">
+		<div className="text-center bg-zinc-900">
+			<div className="text-purple-300 text-xl p-5">Bass Guitar</div>
+			<div className="flex flex-wrap items-center justify-center text-sm gap-10">
 				<Slider
 					id="positionSlider"
 					label="Play from"
@@ -91,7 +86,7 @@ const BassGuitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 					id="numberOfBassStringsSlider"
 					label="Strings"
 					min="4"
-					max="6" // This could be 6. But bass guitars are tuned weirdly. They don't just simply get an extra low note. I'll need to support custom tunings first.
+					max="6"
 					step="1"
 					editable={false}
 					value={selectedNumberOfBassStrings}
