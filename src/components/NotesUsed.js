@@ -47,31 +47,14 @@ const NotesUsed = ({
 	const { groupedNotes, originalIndexMap } = groupNotes();
 
 	return (
-		<div className="flex flex-wrap justify-center items-center gap-0.5 my-6">
+		<div className="flex flex-wrap justify-center items-center gap-1 my-6">
 			{groupedNotes.map((item, i) => {
 				const isCurrentNote = currentIndex === originalIndexMap[i];
-				const baseStyle = `
-          flex items-center justify-center min-h-[30px] px-3 
-          border-2 border-pink-400/50 
-          bg-pink-950/30 backdrop-blur-sm
-          cursor-pointer transition-all
-          hover:shadow-[0_0_15px_rgba(236,72,153,0.4)]
-          hover:border-pink-400
-        `;
-
-				const activeStyle = isCurrentNote
-					? `
-          font-bold underline
-          shadow-[0_0_20px_rgba(236,72,153,0.5)]
-          border-pink-400
-        `
-					: "";
-
 				return (
 					<div
-						key={i.toString()}
+						key={i}
+						className={`relative ${isCurrentNote ? "group/active" : "group"}`}
 						style={{ minWidth: `${Math.max(30 * item.count, 30)}px` }}
-						className={`${baseStyle} ${activeStyle}`}
 						onClick={() => {
 							setSelectedNoteForEditing(originalIndexMap[i]);
 							setIsModalOpen(true);
@@ -80,9 +63,43 @@ const NotesUsed = ({
 							setSelectedNoteForEditing(originalIndexMap[i]);
 							setIsModalOpen(true);
 						}}
+						role="button"
+						tabIndex={0}
 					>
-						{item.note}
-						{item.count > 1 && ` (x${item.count})`}
+						{/* Animated background element */}
+						<div
+							className={`absolute inset-0 rounded bg-gradient-to-r 
+              ${
+								isCurrentNote
+									? "from-pink-600/40 to-purple-600/40 blur-sm"
+									: "from-pink-600/20 to-purple-600/20 group-hover:from-pink-600/40 group-hover:to-purple-600/40 blur-sm"
+							} 
+              transition-all duration-300 -z-10`}
+						/>
+
+						<div
+							className={`px-3 py-1.5 rounded cursor-pointer
+              border ${isCurrentNote ? "border-pink-400/60" : "border-pink-400/30"} 
+              bg-pink-950/30 backdrop-blur-sm
+              ${
+								isCurrentNote
+									? "shadow-[0_0_15px_rgba(236,72,153,0.3)]"
+									: "group-hover:border-pink-400/60 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"
+							}
+              transition-all duration-300`}
+						>
+							<span className="text-pink-100 font-medium tracking-wider">
+								{item.note}
+								{item.count > 1 && ` (x${item.count})`}
+							</span>
+
+							<div
+								className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5
+                bg-gradient-to-r from-pink-500 to-purple-500
+                ${isCurrentNote ? "w-full" : "w-0 group-hover:w-full"}
+                transition-all duration-0`}
+							/>
+						</div>
 					</div>
 				);
 			})}

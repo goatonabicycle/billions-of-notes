@@ -40,7 +40,7 @@ const Slider = ({
 
 	return (
 		<div className="flex flex-col w-40 m-6">
-			<div className="flex items-center justify-center gap-2 mb-2">
+			<div className="flex items-center justify-center gap-2">
 				<label
 					htmlFor={id}
 					className="text-xs font-medium text-pink-300 uppercase tracking-wide whitespace-nowrap"

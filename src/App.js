@@ -284,14 +284,21 @@ function App() {
 						handleInputChange={handleInputChange}
 					/>
 
-					<SelectControlsGrid
-						selectedPanelsToShow={selectedPanelsToShow}
-						setSelectedPanelsToShow={setSelectedPanelsToShow}
-						controlState={controlState}
-						handleControlChange={handleControlChange}
-						setInstrumentName={setInstrumentName}
+					<MessageBoxes
+						selectedTempo={controlState.tempo}
+						selectedNumberOfNotes={inputState.numberOfNotes}
 					/>
 
+					<NotesInScale notesInScale={notesInScale} />
+
+					<NotesUsed
+						notesInScale={notesInScale}
+						randomNotes={randomNotes}
+						setRandomNotes={setRandomNotes}
+						currentIndex={currentIndex}
+						selectedOctaves={inputState.octaves}
+						tieTogether={controlState.tieTogether}
+					/>
 					<ButtonBlock
 						setTriggerRegenerate={setTriggerRegenerate}
 						triggerRegenerate={triggerRegenerate}
@@ -309,21 +316,12 @@ function App() {
 						SaveToMidi={SaveToMidi}
 						setRandomNotes={setRandomNotes}
 					/>
-
-					<MessageBoxes
-						selectedTempo={controlState.tempo}
-						selectedNumberOfNotes={inputState.numberOfNotes}
-					/>
-
-					<NotesInScale notesInScale={notesInScale} />
-
-					<NotesUsed
-						notesInScale={notesInScale}
-						randomNotes={randomNotes}
-						setRandomNotes={setRandomNotes}
-						currentIndex={currentIndex}
-						selectedOctaves={inputState.octaves}
-						tieTogether={controlState.tieTogether}
+					<SelectControlsGrid
+						selectedPanelsToShow={selectedPanelsToShow}
+						setSelectedPanelsToShow={setSelectedPanelsToShow}
+						controlState={controlState}
+						handleControlChange={handleControlChange}
+						setInstrumentName={setInstrumentName}
 					/>
 				</div>
 			</div>

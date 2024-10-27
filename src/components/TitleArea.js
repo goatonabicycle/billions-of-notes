@@ -12,16 +12,15 @@ const TitleArea = memo(
 		currentColour,
 		randomNotes,
 		currentIndex,
-		count,
 	}) => {
 		return (
-			<div className="flex flex-col items-center w-full gap-6">
-				<h1 className="text-center">
-					<Title selectedTempo={selectedTempo} />
-				</h1>
+			<div className="relative w-full max-w-4xl mx-auto">
+				<div className="flex flex-col items-center">
+					<div className="w-full text-center">
+						<Title selectedTempo={selectedTempo} />
+					</div>
 
-				<div className="flex flex-col items-center w-full gap-6">
-					<div className="w-full flex justify-center">
+					<div className="w-full min-h-[200px] flex justify-center items-center">
 						<LineRenderer
 							onClick={() => {
 								setTriggerRegenerate(!triggerRegenerate);
@@ -33,24 +32,24 @@ const TitleArea = memo(
 						/>
 					</div>
 
-					<div className="tiny-links flex items-center gap-3 text-sm">
+					<div className="flex items-center justify-center gap-4 text-sm">
 						<a
 							href="https://github.com/goatonabicycle/billions-of-notes"
 							target="_blank"
-							className="source-code hover:text-pink-400 transition-colors"
+							className="text-pink-300 hover:text-pink-400 transition-colors"
 							rel="noreferrer"
 						>
 							Source code
 						</a>
-						<span className="text-gray-400">|</span>
+						<span className="text-pink-300/30">|</span>
 						<ExplainButton />
-						<span className="text-gray-400">|</span>
+						<span className="text-pink-300/30">|</span>
 						<KofiButton />
-						<span className="text-gray-400">|</span>
+						<span className="text-pink-300/30">|</span>
 						<a
 							href="/what-scale"
 							target="_blank"
-							className="source-code hover:text-pink-400 transition-colors"
+							className="text-pink-300 hover:text-pink-400 transition-colors"
 							rel="noreferrer"
 						>
 							What's the scale?
