@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import "./OctaveSelector.css";
 import { OCTAVES } from "../useful";
+import Checkbox from "./Checkbox";
 
 const OctaveSelector = memo(({ octaves, setInputState }) => {
 	const handleChange = (event) => {
@@ -23,19 +23,21 @@ const OctaveSelector = memo(({ octaves, setInputState }) => {
 	};
 
 	return (
-		<div className="octave-selector">
-			<div>Octaves:</div>
-			<div>
+		<div className="flex flex-col items-center gap-3 m-6">
+			<div className="text-xs font-medium text-pink-300 uppercase tracking-wide">
+				Octaves:
+			</div>
+			<div className="flex flex-wrap justify-center gap-4">
 				{OCTAVES.map((octave) => (
-					<span className="octave-selector-item" key={octave}>
-						<input
-							type="checkbox"
-							value={octave}
-							checked={octaves.includes(octave)}
-							onChange={handleChange}
-						/>
-						{octave}
-					</span>
+					<Checkbox
+						key={octave}
+						id={`octave-${octave}`}
+						name={`octave-${octave}`}
+						value={octave}
+						checked={octaves.includes(octave)}
+						onChange={handleChange}
+						label={octave.toString()}
+					/>
 				))}
 			</div>
 		</div>

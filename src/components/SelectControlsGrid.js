@@ -7,6 +7,7 @@ import {
 import Select from "./Select";
 import ShowMeSelector from "./ShowMeSelector";
 import Slider from "./Slider";
+import Checkbox from "./Checkbox";
 
 function SelectControlsGrid({
 	selectedPanelsToShow,
@@ -32,7 +33,7 @@ function SelectControlsGrid({
 	);
 
 	return (
-		<div className="select-grid">
+		<div className="flex flex-wrap justify-center items-start gap-4 m-4">
 			<ShowMeSelector
 				selectedPanelsToShow={selectedPanelsToShow}
 				setSelectedPanelsToShow={setSelectedPanelsToShow}
@@ -62,18 +63,6 @@ function SelectControlsGrid({
 				onChange={handleControlChange}
 			/>
 
-			{/* <Slider
-				id="noteLengthSlider"
-				name="noteLength"
-				label="Note Length"
-				min="1"
-				max="10"
-				step="1"
-				editable={false}
-				value={noteLength}
-				onChange={handleControlChange}
-			/> */}
-
 			<Select
 				id="instrument"
 				name="instrument"
@@ -93,16 +82,15 @@ function SelectControlsGrid({
 					selectedValue={notation}
 				/>
 			</div>
-			<div>
-				<input
-					type="checkbox"
-					id="tieTogether"
-					name="tieTogether"
-					checked={tieTogether}
-					onChange={handleControlChange}
-				/>
-				<label htmlFor="tieNotes">Tie notes</label>
-			</div>
+
+			<Checkbox
+				id="tieTogether"
+				name="tieTogether"
+				checked={tieTogether}
+				onChange={handleControlChange}
+				label="Tie notes"
+				className="m-6"
+			/>
 		</div>
 	);
 }
