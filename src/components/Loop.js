@@ -1,6 +1,54 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 
+const ClickFirst = ({ onClick }) => {
+	const [isVisible, setIsVisible] = useState(true);
+
+	const handleClick = () => {
+		setIsVisible(false);
+		onClick();
+	};
+
+	if (!isVisible) return null;
+
+	return (
+		<div
+			className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-purple-900/95 to-black/95 backdrop-blur-sm"
+			onClick={handleClick}
+			onKeyUp={handleClick}
+			role="button"
+			tabIndex={0}
+		>
+			<div className="relative text-center p-8">
+				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-t from-pink-500 to-purple-500 rounded-full blur-3xl opacity-20" />
+
+				<div
+					className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-fuchsia-500/20 to-transparent"
+					style={{
+						backgroundImage: `linear-gradient(0deg, rgba(255,0,255,0.2) 1px, transparent 1px), 
+                               linear-gradient(90deg, rgba(255,0,255,0.2) 1px, transparent 1px)`,
+						backgroundSize: "20px 20px",
+					}}
+				/>
+
+				<div className="relative">
+					<h1 className="text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-500">
+						Hello!
+					</h1>
+
+					<p className="text-3xl mb-4 font-medium text-purple-200">
+						Let's click somewhere to get things going!
+					</p>
+
+					<p className="text-sm text-cyan-300">
+						(You have to interact with the page to start the sound engine)
+					</p>
+				</div>
+			</div>
+		</div>
+	);
+};
+
 const Loop = ({
 	notes,
 	bpm,
@@ -16,6 +64,12 @@ const Loop = ({
 	const instrumentRef = useRef(null);
 	const partRef = useRef(null);
 	const lastNoteRef = useRef(null);
+
+	useEffect(() => {
+		if (Tone.context.state === "running") {
+			setToneStarted(true);
+		}
+	}, []);
 
 	const setupInstrument = async () => {
 		console.log("Setting up instrument:", instrument);
@@ -77,17 +131,13 @@ const Loop = ({
 		partRef.current = part;
 	};
 
-	useEffect(() => {
-		const startAudio = async () => {
-			if (Tone.context.state !== "running") {
-				await Tone.start();
-				console.log("Tone started");
-			}
-			setToneStarted(true);
-		};
-
-		startAudio();
-	}, []);
+	const handleOverlayClick = async () => {
+		if (Tone.context.state !== "running") {
+			await Tone.start();
+			console.log("Tone started");
+		}
+		setToneStarted(true);
+	};
 
 	useEffect(() => {
 		console.log("Instrument or volume changed");
@@ -130,7 +180,7 @@ const Loop = ({
 	}, [notes, bpm, isPlaying, notePlayLength, tieTogether, setCurrentIndex]);
 
 	if (!toneStarted) {
-		return <div>Loading audio...</div>;
+		return <ClickFirst onClick={handleOverlayClick} />;
 	}
 
 	return null;
