@@ -80,29 +80,21 @@ const ButtonBlock = ({
 
 	return (
 		<div className="flex flex-wrap items-center justify-center gap-4 m-4">
-			<Button
-				icon={NewNotesIcon}
-				onClick={handleNewNotesClick}
-				text="New notes"
-			/>
+			<Button icon={NewNotesIcon} onClick={handleNewNotesClick} text="New" />
 			<Button
 				text={isPlaying ? "Pause" : "Play"}
 				icon={isPlaying ? PauseIcon : PlayIcon}
 				onClick={handlePlayPauseClick}
 			/>
-			<Button onClick={handleResetClick} icon={ResetIcon} text="Reset inputs" />
+			<Button onClick={handleResetClick} icon={ResetIcon} text="Reset" />
+			<Button onClick={handleReverseClick} icon={ReverseIcon} text="Reverse" />
+
 			<Button
 				onClick={handleShareClick}
 				text={shareButtonText}
 				icon={ShareIcon}
 			/>
-			<Button onClick={handleSaveClick} icon={SaveIcon} text="Save as MIDI" />
-
-			<Button
-				onClick={handleReverseClick}
-				icon={ReverseIcon}
-				text="Reverse notes"
-			/>
+			<Button onClick={handleSaveClick} icon={SaveIcon} text="Save MIDI" />
 		</div>
 	);
 };

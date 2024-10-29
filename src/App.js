@@ -89,12 +89,13 @@ function App() {
 		"selectedNoteLength",
 		DEFAULT_NOTE_LENGTH,
 	);
-	const setSelectedNoteLength = useCallback(_setSelectedNoteLength, []);
+
+	// const setSelectedNoteLength = useCallback(_setSelectedNoteLength, []);
 
 	const [currentColour, setCurrentColour] = useState("");
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [notesInScale, setNotesInScale] = useState([]);
-	const [shareButtonText, setShareButtonText] = useState("Share these notes");
+	const [shareButtonText, setShareButtonText] = useState("Share notes");
 	const [randomNotes, setRandomNotes] = useState([]);
 	const [triggerRegenerate, setTriggerRegenerate] = useState(false);
 	const [triggerNotesUpdate, setTriggerNotesUpdate] = useState(false);
@@ -304,7 +305,6 @@ function App() {
 					/>
 				</div>
 
-				{/* Tabbed Controls */}
 				<div className="lg:col-span-6 space-y-6">
 					<TabbedControls
 						KEYS={KEYS}
