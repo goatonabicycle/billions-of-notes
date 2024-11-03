@@ -36,9 +36,9 @@ function WhatScale() {
 							{sharpNote}
 						</span>
 					);
-				} else {
-					return <span key={sharpNote}>{sharpNote}</span>;
 				}
+
+				return <span key={sharpNote}>{sharpNote}</span>;
 			})
 			.reduce((prev, curr) => [prev, ", ", curr]);
 	};
@@ -59,26 +59,22 @@ function WhatScale() {
 				onChange={handleInputChange}
 			/>
 			{detectedScales.length > 0 && (
-				<>
-					<div className="results">
-						<ul>
-							{detectedScales.map((scaleName, index) => {
-								const scaleInfo = Scale.get(scaleName);
-								return (
-									<li key={index}>
-										{scaleName} -{" "}
-										{renderScaleNotes(
-											scaleInfo.notes,
-											notes
-												.split(",")
-												.map((note) => Note.simplify(note.trim())),
-										)}
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				</>
+				<div className="results">
+					<ul>
+						{detectedScales.map((scaleName, index) => {
+							const scaleInfo = Scale.get(scaleName);
+							return (
+								<li key={index.toString()}>
+									{scaleName} -{" "}
+									{renderScaleNotes(
+										scaleInfo.notes,
+										notes.split(",").map((note) => Note.simplify(note.trim())),
+									)}
+								</li>
+							);
+						})}
+					</ul>
+				</div>
 			)}
 		</div>
 	);
