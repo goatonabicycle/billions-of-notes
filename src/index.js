@@ -8,6 +8,7 @@ import App from "./App";
 import ShowMe from "./ShowMe";
 import WhatScale from "./WhatScale";
 import Ampwall from "./CoolAmpwallStuff";
+import Fret from "./Fret";
 
 function AppRoutes() {
 	return (
@@ -16,6 +17,7 @@ function AppRoutes() {
 			<Route path="/show-me" element={<ShowMe />} />
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/ampwall" element={<Ampwall />} />
+			<Route path="/fret" element={<Fret />} />
 		</Routes>
 	);
 }
