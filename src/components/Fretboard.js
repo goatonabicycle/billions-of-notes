@@ -3,6 +3,7 @@ import { KEYS, OCTAVES } from "../useful";
 import { ChangeTuningIcon } from "./Icons";
 import Modal from "./Modal.js";
 import Select from "./Select";
+import { Scale, Note, Chord } from 'tonal';
 
 const Fretboard = ({
 	notesToPlay,
@@ -15,6 +16,7 @@ const Fretboard = ({
 	setSelectedTuning,
 	initialTuning,
 	numberOfFrets,
+	noteMode,
 }) => {
 	const [currentPosition, setCurrentPosition] = useState({
 		stringIndex: 0,
@@ -23,6 +25,15 @@ const Fretboard = ({
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalStringIndex, setModalStringIndex] = useState(null);
 	const [hasTuningChanged, setHasTuningChanged] = useState(false);
+
+	function formatNote(note) {
+		if (!note) return '';
+		const { pc, oct } = Note.get(note);
+		if (noteMode === 'sharp') {
+			return (pc + (oct || '')).replace(/b/g, '#');
+		}
+		return Note.enharmonic(pc).replace(/#/g, 'b') + (oct || '');
+	}
 
 	const updateCurrentPosition = (newPosition) => {
 		setCurrentPosition(newPosition);
@@ -36,11 +47,10 @@ const Fretboard = ({
 
 	const getNote = useCallback((stringNote, stringOctave, fret) => {
 		const noteIndex = (KEYS.indexOf(stringNote) + fret) % KEYS.length;
-		const octave =
-			stringOctave +
-			Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
-		return `${KEYS[noteIndex]}${octave}`;
-	}, []);
+		const octave = stringOctave + Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
+		const rawNote = `${KEYS[noteIndex]}${octave}`;
+		return formatNote(rawNote);
+	}, [noteMode]);
 
 	const fretboard = useMemo(() => {
 		return strings.map(({ note, octave }, stringIndex) =>
@@ -50,7 +60,7 @@ const Fretboard = ({
 				fret,
 			})),
 		);
-	}, [strings, getNote, numberOfFrets]);
+	}, [strings, getNote, numberOfFrets, noteMode]);
 
 	const flatFretboard = useMemo(() => fretboard.flat(), [fretboard]);
 
@@ -67,18 +77,19 @@ const Fretboard = ({
 		const currentNote = notesToPlay[playbackIndex];
 		if (!currentNote) return;
 
+		const formattedCurrentNote = formatNote(currentNote);
 		const { startFret, endFret } = getPreferredFretRange();
 		let minDistance = Number.POSITIVE_INFINITY;
 		let closestNote;
 
 		for (const note of flatFretboard) {
+			const formattedNote = formatNote(note.note);
 			if (
-				note.note === currentNote &&
+				formattedNote === formattedCurrentNote &&
 				note.fret >= startFret &&
 				note.fret <= endFret
 			) {
-				const distance =
-					Math.abs(note.stringIndex - currentPosition.stringIndex) +
+				const distance = Math.abs(note.stringIndex - currentPosition.stringIndex) +
 					Math.abs(note.fret - currentPosition.fret);
 				if (distance < minDistance) {
 					minDistance = distance;
@@ -89,9 +100,8 @@ const Fretboard = ({
 
 		if (!closestNote) {
 			for (const note of flatFretboard) {
-				if (note.note === currentNote) {
-					const distance =
-						Math.abs(note.stringIndex - currentPosition.stringIndex) +
+				if (formatNote(note.note) === formattedCurrentNote) {
+					const distance = Math.abs(note.stringIndex - currentPosition.stringIndex) +
 						Math.abs(note.fret - currentPosition.fret);
 					if (distance < minDistance) {
 						minDistance = distance;
@@ -101,23 +111,14 @@ const Fretboard = ({
 			}
 		}
 
-		if (
-			closestNote &&
-			(closestNote.stringIndex !== currentPosition.stringIndex ||
-				closestNote.fret !== currentPosition.fret)
-		) {
+		if (closestNote && (closestNote.stringIndex !== currentPosition.stringIndex ||
+			closestNote.fret !== currentPosition.fret)) {
 			updateCurrentPosition({
 				stringIndex: closestNote.stringIndex,
 				fret: closestNote.fret,
 			});
 		}
-	}, [
-		notesToPlay,
-		playbackIndex,
-		getPreferredFretRange,
-		flatFretboard,
-		currentPosition,
-	]);
+	}, [notesToPlay, playbackIndex, getPreferredFretRange, flatFretboard, currentPosition]);
 
 	const { startFret, endFret } = getPreferredFretRange();
 	const preferredRangeStyle = {
@@ -238,8 +239,10 @@ const Fretboard = ({
 								note.stringIndex === currentPosition.stringIndex &&
 								note.fret === currentPosition.fret;
 
-							const isScaleNote = scaleNotes.includes(note.note.slice(0, -1));
-							const isNoteToPlay = notesToPlay.includes(note.note);
+							const isScaleNote = scaleNotes.includes(formatNote(note.note).slice(0, -1));
+							const isNoteToPlay = notesToPlay.some(playNote =>
+								formatNote(playNote) === formatNote(note.note)
+							);
 
 							const baseClasses = `
                 flex items-center justify-center 

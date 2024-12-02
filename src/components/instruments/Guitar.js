@@ -10,7 +10,7 @@ import {
 import Fretboard from "../Fretboard";
 import Slider from "../Slider";
 
-const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
+const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode }) => {
 	const [selectedPosition, setSelectedPosition] = useStorage(
 		"selectedPosition",
 		DEFAULT_POSITION,
@@ -21,8 +21,10 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 		DEFAULT_FINGER_RANGE,
 	);
 
-	const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] =
-		useStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
+	const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] = useStorage(
+		"selectedGuitarStrings",
+		DEFAULT_NUMBER_OF_GUITAR_STRINGS
+	);
 
 	const [numberOfGuitarFrets, setNumberOfGuitarFrets] = useStorage(
 		"numberOfGuitarFrets",
@@ -35,30 +37,22 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	);
 
 	const handlePositionChange = useCallback(
-		(e) => {
-			setSelectedPosition(Number.parseInt(e.target.value, 10));
-		},
+		(e) => setSelectedPosition(Number.parseInt(e.target.value, 10)),
 		[setSelectedPosition],
 	);
 
 	const handleFingerRangeChange = useCallback(
-		(e) => {
-			setSelectedFingerRange(Number.parseInt(e.target.value, 10));
-		},
+		(e) => setSelectedFingerRange(Number.parseInt(e.target.value, 10)),
 		[setSelectedFingerRange],
 	);
 
 	const handleNumberOfGuitarStringsChange = useCallback(
-		(e) => {
-			setSelectedNumberOfGuitarStrings(Number.parseInt(e.target.value, 10));
-		},
+		(e) => setSelectedNumberOfGuitarStrings(Number.parseInt(e.target.value, 10)),
 		[setSelectedNumberOfGuitarStrings],
 	);
 
 	const handleNumberOfGuitarFretsChange = useCallback(
-		(e) => {
-			setNumberOfGuitarFrets(Number.parseInt(e.target.value, 10));
-		},
+		(e) => setNumberOfGuitarFrets(Number.parseInt(e.target.value, 10)),
 		[setNumberOfGuitarFrets],
 	);
 
@@ -122,6 +116,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 				setSelectedTuning={setSelectedTuning}
 				initialTuning={INITIAL_GUITAR_TUNING}
 				numberOfFrets={numberOfGuitarFrets}
+				noteMode={noteMode}
 			/>
 		</div>
 	);
