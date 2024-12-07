@@ -16,7 +16,7 @@ const Fretboard = ({
 	setSelectedTuning,
 	initialTuning,
 	numberOfFrets,
-	noteMode,
+	noteMode = 'sharp', // TODO: Make this a setting once I have a nice UI. 
 }) => {
 	const [currentPosition, setCurrentPosition] = useState({
 		stringIndex: 0,
