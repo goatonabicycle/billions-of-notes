@@ -8,30 +8,25 @@ const Select = ({
 	selectedValue,
 	hideLabel,
 	label,
+	width = "w-20"
 }) => {
 	return (
-		<div className="relative">
+		<div className={width}>
 			{!hideLabel && (
 				<label
 					htmlFor={id}
-					className="text-xs font-medium text-pink-300 uppercase tracking-wide"
+					className="block text-xs font-medium text-pink-300 uppercase mb-1"
 				>
 					{label}
 				</label>
 			)}
-			<div className="relative group">
+			<div className="relative">
 				<select
 					id={id}
 					name={name}
 					value={selectedValue}
 					onChange={onChange}
-					className="w-full px-3 py-1.5 rounded border border-pink-400/30 bg-pink-950/30 
-                   backdrop-blur-sm text-pink-100 
-                   group-hover:border-pink-400/60 
-                   group-hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] 
-                   transition-all duration-300 appearance-none 
-                   focus:outline-none focus:border-pink-400/60 
-                   focus:shadow-[0_0_15px_rgba(236,72,153,0.3)]"
+					className="w-full px-3 py-1.5 rounded border border-pink-400/30 bg-pink-950/30 text-pink-100 appearance-none"
 				>
 					{options.map((option) => (
 						<option

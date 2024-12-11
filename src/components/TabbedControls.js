@@ -4,12 +4,12 @@ import SelectControlsGrid from "./SelectControlsGrid";
 
 const TabButton = ({ label, isActive, onClick }) => (
 	<button
+		type="button"
 		onClick={onClick}
-		className={`px-6 py-3 text-sm font-medium transition-colors duration-200 ${
-			isActive
-				? "text-pink-400 border-b-2 border-pink-500 -mb-px"
-				: "text-pink-300/60 hover:text-pink-300"
-		}`}
+		className={`px-8 py-2.5 text-sm font-medium transition-colors duration-200 ${isActive
+			? "text-pink-400 border-b-2 border-pink-500 -mb-px"
+			: "text-pink-300/60 hover:text-pink-300"
+			}`}
 	>
 		{label}
 	</button>
@@ -28,11 +28,10 @@ const TabbedControls = ({
 	handleControlChange,
 	setInstrumentName,
 }) => {
-	const [activeTab, setActiveTab] = useState("input");
+	const [activeTab, setActiveTab] = useState("settings");
 
 	const tabs = [
-		{ id: "input", label: "Input" },
-		{ id: "output", label: "Output" },
+		{ id: "settings", label: "Settings" },
 		{ id: "history", label: "History" },
 	];
 
@@ -50,33 +49,34 @@ const TabbedControls = ({
 			</div>
 
 			<div>
-				{activeTab === "input" && (
-					<SelectInputGrid
-						KEYS={KEYS}
-						scales={scales}
-						notesInScale={notesInScale}
-						inputKey={inputState.key}
-						inputScale={inputState.scale}
-						inputNumberOfNotes={inputState.numberOfNotes}
-						inputEmptyNotes={inputState.emptyNotes}
-						inputOctaves={inputState.octaves}
-						setInputState={setInputState}
-						handleInputChange={handleInputChange}
-					/>
-				)}
-
-				{activeTab === "output" && (
-					<SelectControlsGrid
-						selectedPanelsToShow={selectedPanelsToShow}
-						setSelectedPanelsToShow={setSelectedPanelsToShow}
-						controlState={controlState}
-						handleControlChange={handleControlChange}
-						setInstrumentName={setInstrumentName}
-					/>
+				{activeTab === "settings" && (
+					<div className="space-y-6 p-6">
+						<div className="border-b border-pink-500/10 pb-6">
+							<SelectInputGrid
+								KEYS={KEYS}
+								scales={scales}
+								notesInScale={notesInScale}
+								inputKey={inputState.key}
+								inputScale={inputState.scale}
+								inputNumberOfNotes={inputState.numberOfNotes}
+								inputEmptyNotes={inputState.emptyNotes}
+								inputOctaves={inputState.octaves}
+								setInputState={setInputState}
+								handleInputChange={handleInputChange}
+							/>
+						</div>
+						<SelectControlsGrid
+							selectedPanelsToShow={selectedPanelsToShow}
+							setSelectedPanelsToShow={setSelectedPanelsToShow}
+							controlState={controlState}
+							handleControlChange={handleControlChange}
+							setInstrumentName={setInstrumentName}
+						/>
+					</div>
 				)}
 
 				{activeTab === "history" && (
-					<div className="p-4">
+					<div className="p-6">
 						Coming soon! A list of notes that have been generated!
 					</div>
 				)}
