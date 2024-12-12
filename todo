@@ -3,6 +3,7 @@
 - Flat vs sharp mode. Make it an option. Options page, generally?
 - Piano uses flats when the rest of the app uses sharps. 
 - Fix the first click overlay
+- Tuning bugs. When changing state, there's no good way of resetting.
 
   ### Sounds 
     - Record and save to mp3. 
@@ -11,18 +12,12 @@
   ### Functionality
     - Save multiple configurations you've enjoyed. Be able to load them up later.
       - Last 10 played configs.
-    - https://www.billionsofnotes.com/what-scale -> This could go back to the main page with the key and scale selected.  
-    - There are still some unnecessary rerenders happening especially around the instruments being played. I should be able to optimize this.    
-    - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.
-    - Allow a single note to ring over multiple indexes. Add this as a variable with randomness.
+    - https://www.billionsofnotes.com/what-scale -> This could go back to the main page with the key and scale selected.    
+    - A more in depth "These are the notes in this scale" mode. Show the whole and half steps.    
     - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
     - Allow single note items to be played as if they're tremolo'd.
       - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
   
-  ### Style
-    - Improve the theme for dark mode
-    - Finish styling the new, improved fretboard. Invert the colors for the fretboard maybe? Make the playing notes bright and non playable notes dark. To make things more obvious
-
 # Maybe later: 
   - Get the count stuff back and have it not cause a render. 
   - Add many more random interactive messages. Make this more prominent and obvious.

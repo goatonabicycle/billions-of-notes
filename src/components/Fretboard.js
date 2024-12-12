@@ -200,7 +200,6 @@ const Fretboard = ({
 						1,
 				}}
 			>
-				{/* Fret markers row */}
 				<div className="flex justify-between w-full h-4">
 					{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
 						<div
@@ -219,7 +218,6 @@ const Fretboard = ({
 					))}
 				</div>
 
-				{/* Preferred range indicator */}
 				<div
 					className="absolute top-4 bottom-8 z-10 border-2 border-pink-500/50
                      shadow-[0_0_10px_5px_rgba(236,72,153,0.2)]"
@@ -230,7 +228,6 @@ const Fretboard = ({
 					}}
 				/>
 
-				{/* Strings */}
 				{fretboard.map((string, stringIndex) => (
 					<div key={stringIndex} className="flex justify-between relative">
 						{string.map((note, j) => {
@@ -252,18 +249,17 @@ const Fretboard = ({
                 transition-colors duration-150
               `;
 
-							// Enhanced visibility logic
-							let bgColor = "bg-zinc-700/30"; // More faded for non-scale notes
-							let textColor = "text-zinc-400"; // Default faded text
+							let bgColor = "bg-zinc-700/30";
+							let textColor = "text-zinc-400";
 							let textDecoration = "";
-							let highlight = ""; // Using outline or ring instead of border
+							let highlight = "";
 
 							if (isCurrentNote) {
 								bgColor = "bg-pink-500";
 								textColor = "text-white";
 								textDecoration = "underline";
 								highlight =
-									"outline outline-2 outline-cyan ring-[2px] ring-cyan/35"; // Outline + ring for glow effect
+									"outline outline-2 outline-cyan ring-[2px] ring-cyan/35";
 							} else if (isNoteToPlay) {
 								bgColor = "bg-purple-500";
 								textColor = "text-white font-bold";
@@ -306,7 +302,6 @@ const Fretboard = ({
 					</div>
 				))}
 
-				{/* Fret numbers */}
 				<div className="flex justify-between w-full mt-2 pt-2 border-t border-zinc-800">
 					{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
 						<div
