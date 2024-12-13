@@ -60,12 +60,11 @@ export default function ScaleFretboard() {
 	);
 
 	return (
-		<div className="flex flex-col h-screen gap-4 p-4">
+		<div className="flex flex-col h-screen gap-6 p-6 pt-6">
 			<div className="flex gap-4">
 				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
 					<div className="flex flex-wrap gap-6">
 						<div>
-							<div className="block text-sm text-gray-200 mb-2">Key</div>
 							<Select
 								id="key"
 								name="key"
