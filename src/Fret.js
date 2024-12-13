@@ -8,10 +8,8 @@ export default function ScaleFretboard() {
 	const [selectedKey, setSelectedKey] = useState(DEFAULT_KEY);
 	const [selectedScale, setSelectedScale] = useState(DEFAULT_SCALE);
 	const [noteMode, setNoteMode] = useState(DEFAULT_NOTES_MODE);
-	const [hoveredChord, setHoveredChord] = useState(null);
 	const [selectedChords, setSelectedChords] = useState(new Set());
 	const [selectedOctaves, setSelectedOctaves] = useState([4]);
-	const [hoveredRoot, setHoveredRoot] = useState(null);
 
 	const scale = Scale.get(`${selectedKey} ${selectedScale}`);
 	const scaleNotes = scale.notes.map(note =>
@@ -39,9 +37,7 @@ export default function ScaleFretboard() {
 
 	return (
 		<div className="flex flex-col h-screen gap-4 p-4">
-			{/* Top Section with Controls and Chords */}
 			<div className="flex gap-4">
-				{/* Left Controls */}
 				<div className="w-[400px] bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
 					<div className="flex flex-wrap gap-4">
 						<div>
@@ -107,7 +103,6 @@ export default function ScaleFretboard() {
 					</div>
 				</div>
 
-				{/* Right Chord Section */}
 				<div className="w-[600px] bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
 					<label className="block text-sm text-gray-200 mb-2">Chords</label>
 					<div className="grid grid-cols-7 gap-2">
@@ -115,8 +110,8 @@ export default function ScaleFretboard() {
 							<button
 								key={chord.id}
 								className={`p-2 rounded text-center ${selectedChords.has(chord.id)
-										? 'bg-blue-600/50 ring-2 ring-blue-400'
-										: 'bg-blue-500/20 hover:bg-blue-500/30'
+									? 'bg-blue-600/50 ring-2 ring-blue-400'
+									: 'bg-blue-500/20 hover:bg-blue-500/30'
 									}`}
 								onClick={() => selectedChords.has(chord.id)
 									? setSelectedChords(prev => {
@@ -135,7 +130,6 @@ export default function ScaleFretboard() {
 				</div>
 			</div>
 
-			{/* Bottom Fretboard Section */}
 			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 rounded-lg overflow-hidden">
 				<Guitar
 					notesToPlay={visibleNotes}
