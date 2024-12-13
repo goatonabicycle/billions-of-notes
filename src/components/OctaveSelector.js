@@ -2,23 +2,33 @@ import React, { memo } from "react";
 import { OCTAVES } from "../useful";
 import Checkbox from "./Checkbox";
 
-const OctaveSelector = memo(({ octaves, setInputState }) => {
+const OctaveSelector = memo(({ octaves, setInputState, isFretComponent }) => {
 	const handleChange = (event) => {
-		const value = Number.parseInt(event.target.value);
 
-		if (event.target.checked) {
-			setInputState((prevState) => ({
-				...prevState,
-				octaves: [...prevState.octaves, value].sort(),
-			}));
+		const value = Number.parseInt(event.target.value);
+		if (isFretComponent) {
+			const newOctaves = event.target.checked
+				? [...octaves, value].sort()
+				: octaves.length > 1
+					? octaves.filter(octave => octave !== value)
+					: octaves;
+
+			setInputState(newOctaves);
 		} else {
-			setInputState((prevState) => ({
-				...prevState,
-				octaves:
-					prevState.octaves.length > 1
-						? prevState.octaves.filter((octave) => octave !== value)
-						: prevState.octaves,
-			}));
+			if (event.target.checked) {
+				setInputState((prevState) => ({
+					...prevState,
+					octaves: [...prevState.octaves, value].sort(),
+				}));
+			} else {
+				setInputState((prevState) => ({
+					...prevState,
+					octaves:
+						prevState.octaves.length > 1
+							? prevState.octaves.filter((octave) => octave !== value)
+							: prevState.octaves,
+				}));
+			}
 		}
 	};
 
