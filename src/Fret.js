@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Scale, Note, Chord } from 'tonal';
 import Guitar from './components/instruments/Guitar';
 import Checkbox from './components/Checkbox';
+import ScaleSelector from './components/ScaleSelector';
 import { DEFAULT_KEY, DEFAULT_SCALE, DEFAULT_NOTES_MODE, KEYS, OCTAVES } from './useful';
 
 export default function ScaleFretboard() {
@@ -39,7 +40,7 @@ export default function ScaleFretboard() {
 		<div className="flex flex-col h-screen gap-4 p-4">
 			<div className="flex gap-4">
 				<div className="w-[400px] bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
-					<div className="flex flex-wrap gap-4">
+					<div className="flex flex-wrap gap-6">
 						<div>
 							<label className="block text-sm text-gray-200 mb-2">Key</label>
 							<select
@@ -55,18 +56,15 @@ export default function ScaleFretboard() {
 							</select>
 						</div>
 
-						<div>
-							<label className="block text-sm text-gray-200 mb-2">Scale</label>
-							<select
-								value={selectedScale}
-								onChange={e => setSelectedScale(e.target.value)}
-								className="bg-gray-700 text-white rounded-md p-2 w-48"
-							>
-								{Scale.names().map(scale =>
-									<option key={scale} value={scale}>{scale}</option>
-								)}
-							</select>
-						</div>
+						<ScaleSelector
+							scaleOptions={Scale.names().map(scale => ({
+								value: scale,
+								label: scale
+							}))}
+							inputScale={selectedScale}
+							handleInputChange={e => setSelectedScale(e.target.value)}
+							notesInScale={scaleNotes}
+						/>
 
 						<div>
 							<label className="block text-sm text-gray-200 mb-2">Notation</label>
@@ -110,8 +108,8 @@ export default function ScaleFretboard() {
 							<button
 								key={chord.id}
 								className={`p-2 rounded text-center ${selectedChords.has(chord.id)
-									? 'bg-blue-600/50 ring-2 ring-blue-400'
-									: 'bg-blue-500/20 hover:bg-blue-500/30'
+										? 'bg-blue-600/50 ring-2 ring-blue-400'
+										: 'bg-blue-500/20 hover:bg-blue-500/30'
 									}`}
 								onClick={() => selectedChords.has(chord.id)
 									? setSelectedChords(prev => {
