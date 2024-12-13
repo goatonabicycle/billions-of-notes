@@ -1,5 +1,5 @@
 export const DEFAULT_KEY = "C";
-export const DEFAULT_SCALE = "major pentatonic";
+export const DEFAULT_SCALE = "major";
 export const DEFAULT_TEMPO = 220;
 export const DEFAULT_NUMBER_OF_NOTES = 8;
 export const DEFAULT_INSTRUMENT = 5;
