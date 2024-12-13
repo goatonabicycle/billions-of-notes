@@ -118,6 +118,10 @@ const TitleArea = memo(
 							<span className="text-pink-300/30">|</span>
 
 							<LinkButton href="/what-scale">What's the scale?</LinkButton>
+
+							<span className="text-pink-300/30">|</span>
+
+							<LinkButton href="/what-scale">Fretboard</LinkButton>
 						</nav>
 					</div>
 				</div>

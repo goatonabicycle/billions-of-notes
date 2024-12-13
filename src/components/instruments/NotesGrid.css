@@ -1,70 +1,69 @@
 .notes-grid {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	flex-grow: 1;
-	font-size: calc(1px + 1.5vmin);
-	font-weight: 700;
-	background-color: #fdf7f1;
-	overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  font-size: calc(1px + 1.5vmin);
+  font-weight: 700;
+  background-color: rgb(17, 24, 39);
+  overflow: hidden;
 }
 
 .note-row {
-	display: flex;
-	width: 100%;
-	flex-grow: 1;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
 }
 
 .note-cell {
-	border-top: 1px solid #bbbbbb;
-	border-bottom: 1px solid #bbbbbb;
-	text-align: center;
-	flex: 1;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  border-top: 1px solid rgba(75, 85, 99, 0.3);
+  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+  text-align: center;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .note-label {
-	/* color: #282c34; */
-	color: #a3a3a3;
-	font-weight: normal;
-	display: flex;
-	border-right: 1px solid #282c34;
-	min-width: 40px;
+  color: rgb(156, 163, 175);
+  font-weight: normal;
+  display: flex;
+  border-right: 1px solid rgb(75, 85, 99);
+  min-width: 40px;
 }
 
 @media (max-width: 600px) {
-	.note-label {
-		font-size: 1em;
-	}
+  .note-label {
+    font-size: 1em;
+  }
 }
 
 .note-present {
-	background-color: #282c34;
-	color: white;
-	font-size: 1em;
+  background-color: rgb(31, 41, 55);
+  color: white;
+  font-size: 1em;
 }
 
 .active-note {
-	background-color: #f3e8ff;
+  background-color: rgba(236, 72, 153, 0.2);
 }
 
 .active-row .active-note {
-	background-color: var(--main-accent);
+  background-color: rgb(236, 72, 153);
 }
 
 .active-row {
-	background-color: #f3e8ff;
+  background-color: rgba(236, 72, 153, 0.1);
 }
 
 .note-in-scale {
-	font-weight: 1000;
-	background-color: #282c34;
-	color: #f3e8ff;
+  font-weight: 1000;
+  background-color: rgb(31, 41, 55);
+  color: white;
 }
 
 .filling-note-row .note-cell {
-	background-color: var(--main-accent);
+  background-color: rgb(236, 72, 153);
 }

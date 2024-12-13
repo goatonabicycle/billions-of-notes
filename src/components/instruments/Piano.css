@@ -5,5 +5,5 @@
 }
 
 .ReactPiano__Key--active {
-	background: var(--main-accent);
+	background-color: rgb(236, 72, 153);
 }
