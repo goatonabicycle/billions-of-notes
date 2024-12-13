@@ -65,7 +65,7 @@ export default function WhatScale() {
 				<input
 					className="w-full bg-gray-800 border border-pink-500/20 rounded-lg p-4 text-xl text-center text-gray-200 focus:border-pink-500 focus:outline-none"
 					type="text"
-					placeholder="Enter notes separated by commas (e.g. C, D, E, F, G, A, B)"
+					placeholder="Enter notes separated by commas (e.g. C, D#, E, F, G, A#, B)"
 					value={notes}
 					onChange={handleInputChange}
 				/>
