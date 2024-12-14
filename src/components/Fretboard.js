@@ -150,7 +150,7 @@ const Fretboard = ({
 					}
 					type="button"
 				>
-					Reset
+					Reset Tuning
 				</button>
 			)}
 
@@ -312,6 +312,12 @@ const Fretboard = ({
 						</div>
 					))}
 				</div>
+
+				{/* <div className="debug-info-block">
+					<div>hasTuningChanged: {hasTuningChanged.toString()}</div>
+					<div>Selected Tuning: {JSON.stringify(selectedTuning)}</div>
+					<div>Initial Tuning: {JSON.stringify(initialTuning)}</div>
+				</div> */}
 			</div>
 		</div>
 	);

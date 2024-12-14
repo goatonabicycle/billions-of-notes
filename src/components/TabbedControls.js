@@ -33,6 +33,7 @@ const TabbedControls = ({
 	const tabs = [
 		{ id: "settings", label: "Settings" },
 		{ id: "history", label: "History" },
+		{ id: "keep", label: "Keep" },
 	];
 
 	return (
@@ -78,6 +79,12 @@ const TabbedControls = ({
 				{activeTab === "history" && (
 					<div className="p-6">
 						Coming soon! A list of notes that have been generated!
+					</div>
+				)}
+
+				{activeTab === "keep" && (
+					<div className="p-6">
+						Coming soon! A list of notes that have been generated that you liked!
 					</div>
 				)}
 			</div>

@@ -121,7 +121,7 @@ const TitleArea = memo(
 
 							<span className="text-pink-300/30">|</span>
 
-							<LinkButton href="/what-scale">Fretboard</LinkButton>
+							<LinkButton href="/fret">Fretboard</LinkButton>
 						</nav>
 					</div>
 				</div>
