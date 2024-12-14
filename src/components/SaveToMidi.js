@@ -1,6 +1,6 @@
 import MidiWriter from "midi-writer-js";
 
-const SaveToMidi = (notes, tempo) => {
+const SaveToMidi = (notes, tempo, key, scale, numberOfNotes) => {
 	const track = new MidiWriter.Track();
 
 	track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
@@ -24,7 +24,7 @@ const SaveToMidi = (notes, tempo) => {
 	const write = new MidiWriter.Writer(track);
 	const link = document.createElement("a");
 	link.href = write.dataUri();
-	link.download = "Billions-of-Notes.mid";
+	link.download = `${numberOfNotes}-notes-in-${key}-${scale}-Billions-of-Notes.mid`;
 	link.click();
 };
 

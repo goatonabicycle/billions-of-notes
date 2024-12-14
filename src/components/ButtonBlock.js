@@ -68,8 +68,8 @@ const ButtonBlock = ({
 		setShareButtonText,
 	]);
 
-	const handleSaveClick = useCallback(
-		() => SaveToMidi(randomNotes, selectedTempo),
+	const handleSaveMIDIClick = useCallback(
+		() => SaveToMidi(randomNotes, selectedTempo, selectedKey, selectedScale, selectedNumberOfNotes),
 		[randomNotes, selectedTempo, SaveToMidi],
 	);
 
@@ -94,7 +94,7 @@ const ButtonBlock = ({
 				text={shareButtonText}
 				icon={ShareIcon}
 			/>
-			<Button onClick={handleSaveClick} icon={SaveIcon} text="Save MIDI" />
+			<Button onClick={handleSaveMIDIClick} icon={SaveIcon} text="Save MIDI" />
 		</div>
 	);
 };
