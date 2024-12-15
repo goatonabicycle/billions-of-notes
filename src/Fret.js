@@ -1,15 +1,27 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { Scale, Note } from 'tonal';
+import { useNavigate, useParams } from 'react-router-dom';
 import Guitar from './components/instruments/Guitar';
 import OctaveSelector from './components/OctaveSelector';
 import ScaleSelector from './components/ScaleSelector';
 import Select from './components/Select';
-import { DEFAULT_KEY, DEFAULT_SCALE, KEYS, DEFAULT_OCTAVES, mapToSelectOptions, FLAT_TO_SHARP } from './useful';
+import { supabase } from './supabaseClient';
+import {
+	DEFAULT_KEY,
+	DEFAULT_SCALE,
+	KEYS,
+	mapToSelectOptions,
+	FLAT_TO_SHARP
+} from './useful';
 import { useStorage } from "./hooks/useLocalStorage";
 
 const scales = Scale.names();
 
 export default function ScaleFretboard() {
+	const navigate = useNavigate();
+	const { id } = useParams();
+	const [shareUrl, setShareUrl] = useState('');
+
 	const [inputState, _setInputState] = useStorage("fret-inputState", {
 		key: DEFAULT_KEY,
 		scale: DEFAULT_SCALE,
@@ -17,6 +29,56 @@ export default function ScaleFretboard() {
 		octaves: [2, 3],
 	});
 	const setInputState = useCallback(_setInputState, [_setInputState]);
+
+	useEffect(() => {
+		if (id) {
+			loadSharedState(id);
+		}
+	}, [id]);
+
+	const loadSharedState = async (stateId) => {
+		const { data, error } = await supabase
+			.from('fretboard_states')
+			.select('*')
+			.eq('id', stateId)
+			.single();
+
+		if (error) {
+			console.error('Error loading state:', error);
+			return;
+		}
+
+		if (data) {
+			setInputState({
+				key: data.key,
+				scale: data.scale,
+				notation: data.notation,
+				octaves: data.octaves,
+			});
+		}
+	};
+
+	const saveAndShare = async () => {
+		const { data, error } = await supabase
+			.from('fretboard_states')
+			.insert([{
+				key: inputState.key,
+				scale: inputState.scale,
+				notation: inputState.notation,
+				octaves: inputState.octaves,
+			}])
+			.select()
+			.single();
+
+		if (error) {
+			console.error('Error saving state:', error);
+			return;
+		}
+
+		const shareableUrl = `${window.location.origin}/fret/${data.id}`;
+		setShareUrl(shareableUrl);
+		navigator.clipboard.writeText(shareableUrl);
+	};
 
 	const handleInputChange = useCallback(
 		(event) => {
@@ -33,15 +95,11 @@ export default function ScaleFretboard() {
 		console.log('Before update:', inputState.octaves);
 		console.log('Updating to:', newOctaves);
 		setInputState(prevState => {
-			const updated = {
-				...prevState,
-				octaves: newOctaves
-			};
+			const updated = { ...prevState, octaves: newOctaves };
 			console.log('After update:', updated.octaves);
 			return updated;
 		});
 	}, [setInputState, inputState]);
-
 
 	const keyOptions = useMemo(() => mapToSelectOptions(KEYS), [KEYS]);
 	const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
@@ -93,13 +151,24 @@ export default function ScaleFretboard() {
 								/>
 							</div>
 						</div>
+
+						<button
+							onClick={saveAndShare}
+							className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+						>
+							Share
+						</button>
+						{shareUrl && (
+							<div className="text-sm text-gray-200">
+								URL copied to clipboard!
+							</div>
+						)}
 					</div>
 				</div>
 
 				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
 					<div className="block text-sm text-gray-200 mb-2">Chords</div>
 					Coming soon
-
 				</div>
 			</div>
 
@@ -113,6 +182,7 @@ export default function ScaleFretboard() {
 
 			<div className="debug-info-block">
 				inputState: {JSON.stringify(inputState)} <br />
+				shareUrl: {shareUrl}
 			</div>
 		</div>
 	);
