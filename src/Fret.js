@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { Scale, Note } from 'tonal';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Guitar from './components/instruments/Guitar';
 import OctaveSelector from './components/OctaveSelector';
 import ScaleSelector from './components/ScaleSelector';
@@ -18,7 +18,6 @@ import { useStorage } from "./hooks/useLocalStorage";
 const scales = Scale.names();
 
 export default function ScaleFretboard() {
-	const navigate = useNavigate();
 	const { id } = useParams();
 	const [shareUrl, setShareUrl] = useState('');
 
