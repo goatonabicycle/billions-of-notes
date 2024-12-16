@@ -18,6 +18,7 @@ function AppRoutes() {
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/ampwall" element={<Ampwall />} />
 			<Route path="/fret" element={<Fret />} />
+			<Route path="/fret/:id" element={<Fret />} />
 		</Routes>
 	);
 }

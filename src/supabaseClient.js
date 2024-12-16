@@ -8,8 +8,8 @@ try {
   supabaseUrl = auth.supabase_url
   supabaseAnonKey = auth.supabase_key
 } catch (e) {
-  supabaseUrl = process.env.SUPABASE_URL
-  supabaseAnonKey = process.env.SUPABASE_KEY
+  supabaseUrl = process.env.REACT_APP_SUPABASE_URL
+  supabaseAnonKey = process.env.REACT_APP_SUPABASE_KEY
 }
 
 if (!supabaseUrl || !supabaseAnonKey) {

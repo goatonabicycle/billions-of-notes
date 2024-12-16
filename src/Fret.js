@@ -58,13 +58,32 @@ export default function ScaleFretboard() {
 	};
 
 	const saveAndShare = async () => {
+		const stateToSave = {
+			key: inputState.key,
+			scale: inputState.scale,
+			notation: inputState.notation,
+			octaves: inputState.octaves,
+		};
+		const stateHash = btoa(JSON.stringify(stateToSave));
+
+		const { data: existingState } = await supabase
+			.from('fretboard_states')
+			.select('id')
+			.eq('state_hash', stateHash)
+			.single();
+
+		if (existingState) {
+			const shareableUrl = `${window.location.origin}/fret/${existingState.id}`;
+			setShareUrl(shareableUrl);
+			navigator.clipboard.writeText(shareableUrl);
+			return;
+		}
+
 		const { data, error } = await supabase
 			.from('fretboard_states')
 			.insert([{
-				key: inputState.key,
-				scale: inputState.scale,
-				notation: inputState.notation,
-				octaves: inputState.octaves,
+				...stateToSave,
+				state_hash: stateHash
 			}])
 			.select()
 			.single();
@@ -91,11 +110,8 @@ export default function ScaleFretboard() {
 	);
 
 	const handleOctaveChange = useCallback((newOctaves) => {
-		console.log('Before update:', inputState.octaves);
-		console.log('Updating to:', newOctaves);
 		setInputState(prevState => {
 			const updated = { ...prevState, octaves: newOctaves };
-			console.log('After update:', updated.octaves);
 			return updated;
 		});
 	}, [setInputState, inputState]);
