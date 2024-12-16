@@ -14,6 +14,7 @@ function AppRoutes() {
 	return (
 		<Routes>
 			<Route path="/" element={<App />} />
+			<Route path="/:id" element={<App />} />
 			<Route path="/show-me" element={<ShowMe />} />
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/ampwall" element={<Ampwall />} />

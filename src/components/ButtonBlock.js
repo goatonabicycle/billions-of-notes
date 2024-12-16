@@ -21,56 +21,32 @@ const ButtonBlock = ({
 	selectedScale,
 	selectedNumberOfNotes,
 	selectedTempo,
-	selectedInstrument,
 	selectedOctaves,
 	randomNotes,
 	setShareButtonText,
 	shareButtonText,
 	SaveToMidi,
 	setRandomNotes,
+	saveAndShare,
 }) => {
 	const handleNewNotesClick = useCallback(
 		() => setTriggerRegenerate(!triggerRegenerate),
 		[triggerRegenerate, setTriggerRegenerate],
 	);
+
 	const handlePlayPauseClick = useCallback(
 		() => setIsPlaying(!isPlaying),
 		[isPlaying, setIsPlaying],
 	);
+
 	const handleResetClick = useCallback(() => resetInputs(), [resetInputs]);
 	const handleShareClick = useCallback(() => {
-		const url = new URL(window.location.href);
-		const inputs = [
-			selectedKey,
-			selectedScale,
-			selectedNumberOfNotes,
-			selectedTempo,
-			selectedInstrument,
-		].join(",");
-		url.searchParams.set("inputs", inputs);
-		url.searchParams.set("octaves", selectedOctaves.join(","));
-		url.searchParams.set("notes", encodeURIComponent(randomNotes.join(",")));
-
-		navigator.clipboard.writeText(url.toString());
-		setShareButtonText("Link copied!");
-
-		setTimeout(() => {
-			setShareButtonText("Share these notes");
-		}, 2000);
-	}, [
-		selectedKey,
-		selectedScale,
-		selectedNumberOfNotes,
-		selectedTempo,
-		selectedInstrument,
-		selectedOctaves,
-		randomNotes,
-		setShareButtonText,
-	]);
+		saveAndShare();
+	}, [saveAndShare]);
 
 	const handleSaveMIDIClick = useCallback(
 		() => SaveToMidi(randomNotes, selectedTempo, selectedKey, selectedScale, selectedNumberOfNotes),
-		[randomNotes, selectedTempo, SaveToMidi],
+		[randomNotes, selectedTempo, SaveToMidi, selectedKey, selectedScale, selectedNumberOfNotes],
 	);
 
 	const handleReverseClick = useCallback(() => {
@@ -89,11 +65,7 @@ const ButtonBlock = ({
 			<Button onClick={handleResetClick} icon={ResetIcon} text="Reset" />
 			<Button onClick={handleReverseClick} icon={ReverseIcon} text="Reverse" />
 
-			<Button
-				onClick={handleShareClick}
-				text={shareButtonText}
-				icon={ShareIcon}
-			/>
+			<Button onClick={handleShareClick} text={shareButtonText} icon={ShareIcon} />
 			<Button onClick={handleSaveMIDIClick} icon={SaveIcon} text="Save MIDI" />
 		</div>
 	);

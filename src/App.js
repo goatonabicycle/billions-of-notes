@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Note, Scale } from "tonal";
+
+import { supabase } from './supabaseClient';
 
 import { useStorage } from "./hooks/useLocalStorage";
 import {
@@ -30,15 +32,19 @@ import SaveToMidi from "./components/SaveToMidi";
 import TabbedControls from "./components/TabbedControls";
 import ShowMePanels from "./components/ShowMePanels";
 import TitleArea from "./components/TitleArea";
+import SharedStateIndicator from "./components/SharedStateIndicator";
 
 import "./App.css";
 
 const scales = Scale.names();
 
 function App() {
+	const { id } = useParams();
+	const location = useLocation();
+	const [stateModified, setStateModified] = useState(false);
+
 	const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
 
-	// input state is anything that ends up changing the randomNotes you got
 	const [inputState, _setInputState] = useStorage("inputState", {
 		key: DEFAULT_KEY,
 		scale: DEFAULT_SCALE,
@@ -46,7 +52,11 @@ function App() {
 		emptyNotes: DEFAULT_EMPTY_NOTES,
 		octaves: DEFAULT_OCTAVES,
 	});
-	const setInputState = useCallback(_setInputState, [_setInputState]);
+
+	const setInputState = useCallback((newState) => {
+		setStateModified(true);
+		_setInputState(newState);
+	}, [_setInputState]);
 
 	const [controlState, _setControlState] = useStorage("controlState", {
 		tempo: DEFAULT_TEMPO,
@@ -55,7 +65,11 @@ function App() {
 		noteLength: DEFAULT_NOTE_LENGTH,
 		tieTogether: false,
 	});
-	const setControlState = useCallback(_setControlState, [_setControlState]);
+
+	const setControlState = useCallback((newState) => {
+		setStateModified(true);
+		_setControlState(newState);
+	}, [_setControlState]);
 
 	const handleInputChange = useCallback(
 		(event) => {
@@ -85,13 +99,6 @@ function App() {
 	);
 	const setSelectedPanelsToShow = useCallback(_setSelectedPanelsToShow, []);
 
-	const [selectedNoteLength, _setSelectedNoteLength] = useStorage(
-		"selectedNoteLength",
-		DEFAULT_NOTE_LENGTH,
-	);
-
-	// const setSelectedNoteLength = useCallback(_setSelectedNoteLength, []);
-
 	const [currentColour, setCurrentColour] = useState("");
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [notesInScale, setNotesInScale] = useState([]);
@@ -101,10 +108,10 @@ function App() {
 	const [triggerNotesUpdate, setTriggerNotesUpdate] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(true);
 	const [loadedFromUrl, setLoadedFromUrl] = useState(false);
-	const navigate = useNavigate();
 
 	const resetInputs = useCallback(() => {
 		setCurrentIndex(0);
+		setStateModified(true);
 
 		setInputState({
 			...inputState,
@@ -117,24 +124,121 @@ function App() {
 	}, [setCurrentIndex, setInputState, inputState]);
 
 	useEffect(() => {
+		async function loadSharedState(stateId) {
+
+			const { data, error } = await supabase
+				.from('app_states')
+				.select('*')
+				.eq('id', stateId)
+				.single();
+
+			if (error) {
+				console.error('Error loading state:', error);
+				return;
+			}
+
+			if (data) {
+				setLoadedFromUrl(true);
+
+				_setInputState({
+					key: data.key,
+					scale: data.scale,
+					numberOfNotes: Number(data.number_of_notes),
+					emptyNotes: Number(data.empty_notes),
+					octaves: data.octaves,
+				});
+
+				_setControlState({
+					tempo: Number(data.tempo),
+					volume: Number(data.volume),
+					noteMode: data.note_mode,
+					noteLength: Number(data.note_length),
+					tieTogether: data.tie_together === true,
+					instrument: data.instrument
+				});
+
+				setRandomNotes(data.random_notes);
+				setInstrumentName(data.instrument);
+				setSelectedPanelsToShow(data.panels_to_show);
+				setStateModified(false);
+			}
+		}
+
+		if (id) {
+			loadSharedState(id);
+		}
+	}, [id]);
+
+	const saveAndShare = async () => {
+		const stateToSave = {
+			key: inputState.key,
+			scale: inputState.scale,
+			number_of_notes: inputState.numberOfNotes,
+			empty_notes: inputState.emptyNotes,
+			octaves: inputState.octaves,
+			tempo: controlState.tempo,
+			volume: controlState.volume,
+			instrument: controlState.instrument,
+			note_mode: "sharp", // Todo: I still need to handle the sharp/flat note mode stuff. 
+			note_length: controlState.noteLength,
+			tie_together: controlState.tieTogether,
+			random_notes: randomNotes,
+			panels_to_show: selectedPanelsToShow
+		};
+
+		const stateHash = btoa(JSON.stringify(stateToSave));
+
+		const { data: existingState } = await supabase
+			.from('app_states')
+			.select('id')
+			.eq('state_hash', stateHash)
+			.single();
+
+		if (existingState) {
+			const shareableUrl = `${window.location.origin}/${existingState.id}`;
+			navigator.clipboard.writeText(shareableUrl);
+			setShareButtonText("Link copied!");
+			setTimeout(() => setShareButtonText("Share notes"), 2000);
+			return;
+		}
+
+		const { data, error } = await supabase
+			.from('app_states')
+			.insert([{
+				...stateToSave,
+				state_hash: stateHash
+			}])
+			.select()
+			.single();
+
+		if (error) {
+			console.error('Error saving state:', error);
+			return;
+		}
+
+		const shareableUrl = `${window.location.origin}/${data.id}`;
+		navigator.clipboard.writeText(shareableUrl);
+		setShareButtonText("Link copied!");
+		setTimeout(() => setShareButtonText("Share notes"), 2000);
+		setStateModified(false);
+	};
+
+	useEffect(() => {
 		if (!inputState) return;
 
 		if (loadedFromUrl) {
 			setLoadedFromUrl(false);
-			navigate(".", { replace: true });
 			return;
 		}
 
 		const getRandomNotes = (notesInScale, total, empty, notesMode) => {
-			//Todo: Handle this notesMode idea.
 			let numberOfNotesToUse = total - empty;
 			if (numberOfNotesToUse < 0) numberOfNotesToUse = total;
 
 			const notesWithOctaves = Array(numberOfNotesToUse)
 				.fill(0)
 				.map(
-					() =>
-						`${getRandomItem(notesInScale)}${getRandomItem(inputState.octaves)}`,
+					() => `${getRandomItem(notesInScale)}${getRandomItem(inputState.octaves)}`,
 				);
 			const emptyNotes = Array(empty).fill("");
 			return shuffleArray([...notesWithOctaves, ...emptyNotes]);
@@ -168,11 +272,9 @@ function App() {
 
 		setRandomNotes(randomNotes);
 		setCurrentIndex(0);
-		// incrementCount(totalNotes);
 		setCurrentColour(randomRGBA());
 	}, [inputState, triggerRegenerate]);
 
-	// This useEffect handles what happens when the user changes the number of notes.
 	useEffect(() => {
 		if (!inputState) return;
 		const maxEmptyNotes = Math.max(
@@ -187,41 +289,6 @@ function App() {
 		}
 	}, [inputState, setInputState]);
 
-	const location = useLocation();
-
-	// This useEffect is used to load the application's state from the URL.
-	useEffect(() => {
-		const parsedQuery = new URLSearchParams(location.search);
-
-		const urlInputs = parsedQuery.get("inputs");
-		if (urlInputs) {
-			const [urlKey, urlScale, urlNumberOfNotes] = urlInputs.split(",");
-
-			setInputState({
-				...inputState,
-				key: urlKey || DEFAULT_KEY,
-				scale: urlScale || DEFAULT_SCALE,
-				numberOfNotes: urlNumberOfNotes || DEFAULT_NUMBER_OF_NOTES,
-				emptyNotes: DEFAULT_EMPTY_NOTES,
-			});
-		}
-
-		const urlOctaves = parsedQuery.get("octaves");
-		if (urlOctaves) {
-			setInputState({
-				...inputState,
-				octaves: urlOctaves.split(",").map(Number),
-			});
-		}
-
-		const urlNotes = parsedQuery.get("notes");
-		if (urlNotes) {
-			setRandomNotes(decodeURIComponent(urlNotes).split(","));
-			setLoadedFromUrl(true);
-		}
-	}, [location.search]);
-
-	// This useEffect is used handle button presses.
 	useEffect(() => {
 		const handleKeyPress = (event) => {
 			switch (event.key.toLowerCase()) {
@@ -250,14 +317,15 @@ function App() {
 		};
 	});
 
-	if (!inputState) return;
-	if (!inputState.octaves) return;
+	if (!inputState) return null;
+	if (!inputState.octaves) return null;
 
 	return (
 		<div className="App">
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 p-4">
 				{/* Title Area */}
 				<div className="lg:col-span-4">
+					<SharedStateIndicator stateId={id} isModified={stateModified} />
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -297,6 +365,7 @@ function App() {
 						shareButtonText={shareButtonText}
 						SaveToMidi={SaveToMidi}
 						setRandomNotes={setRandomNotes}
+						saveAndShare={saveAndShare}
 					/>
 
 					<MessageBoxes
@@ -346,9 +415,13 @@ function App() {
 
 			<div className="debug-info-block">
 				isPlaying: {isPlaying.toString()} <br />
-				loadedFromUrl: {loadedFromUrl} <br />
+				loadedFromUrl: {loadedFromUrl.toString()} <br />
 				inputState: {JSON.stringify(inputState)} <br />
 				controlState: {JSON.stringify(controlState)} <br />
+				stateModified: {stateModified.toString()} <br />
+				instrumentName: {instrumentName} <br />
+				randomNotes: {JSON.stringify(randomNotes)} <br />
+				selectedPanelsToShow: {JSON.stringify(selectedPanelsToShow)} <br />
 			</div>
 		</div>
 	);
