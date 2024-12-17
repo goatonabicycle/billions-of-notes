@@ -168,6 +168,7 @@ const Fretboard = ({
 						});
 					}}
 				/>
+				<br />
 				<Select
 					id="octaveSelect"
 					label="Octave"
