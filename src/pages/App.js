@@ -374,7 +374,7 @@ function App() {
 					/>
 				</div>
 
-				<div className="lg:col-span-6 space-y-6">
+				<div className="md:col-span-2 lg:col-span-6 space-y-6">
 					<TabbedControls
 						KEYS={KEYS}
 						scales={scales}

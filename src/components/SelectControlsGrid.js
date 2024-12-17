@@ -27,7 +27,7 @@ const SelectControlsGrid = memo(({
 
 	return (
 		<div className="w-full max-w-4xl space-y-4">
-			<div className="flex items-end gap-6">
+			<div className="flex flex-wrap gap-4">
 				<Slider
 					id="tempoSlider"
 					name="tempo"
@@ -59,7 +59,6 @@ const SelectControlsGrid = memo(({
 					options={instrumentOptions}
 					onChange={handleControlChange}
 					selectedValue={instrument}
-					width="w-48"
 				/>
 
 				<div className="hidden">

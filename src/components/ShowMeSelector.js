@@ -9,18 +9,18 @@ const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
 		if (event.target.checked) {
 			setSelectedPanelsToShow((prevPanels) => [...prevPanels, value]);
 		} else {
-			setSelectedPanelsToShow((prevPanels) =>
-				prevPanels.filter((panel) => panel !== value),
+			setSelectedPanelsToShow(
+				(prevPanels) => prevPanels.filter((panel) => panel !== value),
 			);
 		}
 	};
 
 	return (
-		<div className="flex items-center gap-6">
-			<span className="text-xs font-medium text-pink-300 uppercase min-w-[4rem]">
+		<div className="flex flex-col gap-4">
+			<span className="text-xs font-medium text-pink-300 uppercase">
 				Show me:
 			</span>
-			<div className="flex gap-8">
+			<div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-4">
 				{panels.map((panel) => (
 					<Checkbox
 						key={panel}

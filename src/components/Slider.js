@@ -43,7 +43,7 @@ const Slider = ({
 	};
 
 	return (
-		<div className="w-32">
+		<div className="w-full md:w-32">
 			<div className="flex items-center gap-2 mb-1">
 				<label htmlFor={id} className="text-xs font-medium text-pink-300 uppercase">
 					{label}

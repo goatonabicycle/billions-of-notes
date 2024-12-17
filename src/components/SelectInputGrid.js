@@ -30,7 +30,7 @@ const SelectInputGrid = memo(({
 
 	return (
 		<div className="w-full max-w-4xl space-y-4">
-			<div className="flex gap-6">
+			<div className="flex flex-wrap gap-4">
 				<Select
 					id="key"
 					name="key"
@@ -40,14 +40,12 @@ const SelectInputGrid = memo(({
 					selectedValue={inputKey}
 				/>
 
-
 				<ScaleSelector
 					scaleOptions={scaleOptions}
 					inputScale={inputScale}
 					handleInputChange={handleInputChange}
 					notesInScale={notesInScale}
 				/>
-
 
 				<Select
 					id="numberOfNotes"
@@ -68,7 +66,7 @@ const SelectInputGrid = memo(({
 				/>
 
 				<div>
-					<div className="block text-xs font-medium text-pink-300 uppercase ">
+					<div className="block text-xs font-medium text-pink-300 uppercase">
 						Octaves
 					</div>
 					<OctaveSelector
