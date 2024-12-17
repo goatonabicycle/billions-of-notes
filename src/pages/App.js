@@ -22,6 +22,7 @@ import {
 	getRandomItem,
 	randomRGBA,
 	shuffleArray,
+	DEFAULT_ANIMATIONS_ENABLED
 } from "../useful";
 
 import ButtonBlock from "../components/ButtonBlock";
@@ -44,6 +45,7 @@ function App() {
 	const [stateModified, setStateModified] = useState(false);
 
 	const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
+	const [animationsEnabled, _setAnimationsEnabled] = useStorage("animationsEnabled", DEFAULT_ANIMATIONS_ENABLED);
 
 	const [inputState, _setInputState] = useStorage("inputState", {
 		key: DEFAULT_KEY,
@@ -317,6 +319,10 @@ function App() {
 		};
 	});
 
+	useEffect(() => {
+		document.body.classList.toggle('animations-enabled', animationsEnabled);
+	}, [animationsEnabled]);
+
 	if (!inputState) return null;
 	if (!inputState.octaves) return null;
 
@@ -335,6 +341,8 @@ function App() {
 						currentColour={currentColour}
 						randomNotes={randomNotes}
 						currentIndex={currentIndex}
+						animationsEnabled={animationsEnabled}
+						setAnimationsEnabled={_setAnimationsEnabled}
 					/>
 				</div>
 

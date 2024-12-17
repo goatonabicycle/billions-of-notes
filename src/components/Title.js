@@ -50,7 +50,7 @@ const RainbowText = ({ text, tempo }) => {
 	);
 };
 
-const Title = memo(({ selectedTempo }) => {
+const Title = memo(({ selectedTempo, animationsEnabled }) => {
 	return (
 		<div className="relative w-full max-w-5xl mx-auto px-4">
 			<div className="relative overflow-hidden py-2 px-6">
@@ -60,10 +60,23 @@ const Title = memo(({ selectedTempo }) => {
 						fontFamily: "Russo One, system-ui, -apple-system, sans-serif",
 					}}
 				>
+
 					<div className="flex flex-wrap justify-center gap-4">
-						<RainbowText text="BILLIONS" tempo={selectedTempo} />
-						<RainbowText text="OF" tempo={selectedTempo} />
-						<RainbowText text="NOTES!" tempo={selectedTempo} />
+						{animationsEnabled && (
+							<>
+								<RainbowText text="BILLIONS" tempo={selectedTempo} />
+								<RainbowText text="OF" tempo={selectedTempo} />
+								<RainbowText text="NOTES!" tempo={selectedTempo} />
+							</>
+						)}
+
+						{!animationsEnabled && (
+							<>
+								<RainbowText text="BILLIONS" tempo={0} />
+								<RainbowText text="OF" tempo={0} />
+								<RainbowText text="NOTES!" tempo={0} />
+							</>
+						)}
 					</div>
 				</div>
 			</div>

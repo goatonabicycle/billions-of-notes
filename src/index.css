@@ -13,12 +13,15 @@ body {
 	color: #fdf7f1;
 	align-items: left;
 	justify-content: flex-start;	
-	background-image: radial-gradient(hsla(304, 100%, 51%, 0.811) 1px, transparent 0),
-	radial-gradient(hsla(48, 100%, 51%, 0.791) 1px, transparent 0);
 	background-size: 50px 50px;
 	background-position: 0 0, 25px 25px;
+}
+
+.animations-enabled {
+	background-image: radial-gradient(hsla(304, 100%, 51%, 0.811) 1px, transparent 0),
+	radial-gradient(hsla(48, 100%, 51%, 0.791) 1px, transparent 0);
 	-webkit-animation: slide 2s linear infinite;
-	animation: slide 4s linear infinite;
+  animation: slide 4s linear infinite;
 }
 
 code {

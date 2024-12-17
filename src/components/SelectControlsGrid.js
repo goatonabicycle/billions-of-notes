@@ -59,6 +59,7 @@ const SelectControlsGrid = memo(({
 					options={instrumentOptions}
 					onChange={handleControlChange}
 					selectedValue={instrument}
+					width={"w-60"}
 				/>
 
 				<div className="hidden">

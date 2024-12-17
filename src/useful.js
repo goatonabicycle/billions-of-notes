@@ -17,6 +17,7 @@ export const DEFAULT_NUMBER_OF_UKELELE_STRINGS = 4;
 export const DEFAULT_NUMBER_OF_UKELELE_FRETS = 18;
 export const DEFAULT_NUMBER_OF_BASS_STRINGS = 4;
 export const DEFAULT_NUMBER_OF_BASS_FRETS = 24;
+export const DEFAULT_ANIMATIONS_ENABLED = true;
 
 export const KEYS = [
 	"C",
