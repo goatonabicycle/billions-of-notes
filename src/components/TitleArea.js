@@ -101,19 +101,6 @@ const TitleArea = memo(
 						</div>
 
 						<nav className="grid grid-cols-2 sm:grid-cols-3 gap-1 text-xs pt-4 border-t border-pink-500 mt-4">
-							<div className="flex items-center justify-center">
-								<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>
-									Source code
-								</LinkButton>
-							</div>
-
-							<div className="flex items-center justify-center">
-								<ExplainButton />
-							</div>
-
-							<div className="flex items-center justify-center">
-								<KofiButton />
-							</div>
 
 							<div className="flex items-center justify-center">
 								<LinkButton href="/what-scale">What's the scale?</LinkButton>
@@ -128,6 +115,20 @@ const TitleArea = memo(
 									{animationsEnabled ? "Animations On" : "Animations Off"}
 									<span className="text-base">{animationsEnabled ? "✨" : "💤"}</span>
 								</LinkButton>
+							</div>
+
+							<div className="flex items-center justify-center">
+								<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>
+									Source code
+								</LinkButton>
+							</div>
+
+							<div className="flex items-center justify-center">
+								<ExplainButton />
+							</div>
+
+							<div className="flex items-center justify-center">
+								<KofiButton />
 							</div>
 						</nav>
 					</div>
