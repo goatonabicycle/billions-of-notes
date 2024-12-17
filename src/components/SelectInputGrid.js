@@ -66,9 +66,6 @@ const SelectInputGrid = memo(({
 				/>
 
 				<div>
-					<div className="block text-xs font-medium text-pink-300 uppercase">
-						Octaves
-					</div>
 					<OctaveSelector
 						octaves={inputOctaves}
 						setInputState={setInputState}

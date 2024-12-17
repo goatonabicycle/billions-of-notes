@@ -16,7 +16,7 @@ const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
 	};
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-1">
 			<span className="text-xs font-medium text-pink-300 uppercase">
 				Show me:
 			</span>

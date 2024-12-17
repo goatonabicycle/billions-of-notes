@@ -28,6 +28,12 @@ const NotesUsed = ({
 		setIsModalOpen(false);
 	};
 
+	const getGridColumns = (total) => {
+		if (total % 4 === 0) return 4;
+		if (total % 3 === 0) return 3;
+		return 3;
+	};
+
 	const groupNotes = () => {
 		const groupedNotes = [];
 		const originalIndexMap = [];
@@ -45,64 +51,69 @@ const NotesUsed = ({
 	};
 
 	const { groupedNotes, originalIndexMap } = groupNotes();
+	const totalNotes = randomNotes.length;
+	const columns = getGridColumns(totalNotes);
 
 	return (
-		<div className="flex flex-wrap justify-center items-center gap-1">
-			{groupedNotes.map((item, i) => {
-				const isCurrentNote = currentIndex === originalIndexMap[i];
-				return (
-					<div
-						key={i}
-						className={`relative ${isCurrentNote ? "group/active" : "group"}`}
-						style={{ minWidth: `${Math.max(30 * item.count, 30)}px` }}
-						onClick={() => {
-							setSelectedNoteForEditing(originalIndexMap[i]);
-							setIsModalOpen(true);
-						}}
-						onKeyUp={() => {
-							setSelectedNoteForEditing(originalIndexMap[i]);
-							setIsModalOpen(true);
-						}}
-						role="button"
-						tabIndex={0}
-					>
-						{/* Animated background element */}
+		<div className="w-full">
+			<div
+				className="grid gap-1"
+				style={{
+					gridTemplateColumns: `repeat(${columns}, 1fr)`,
+					gridAutoRows: totalNotes > 25 ? '28px' : '36px'
+				}}
+			>
+				{groupedNotes.map((item, i) => {
+					const isCurrentNote = currentIndex === originalIndexMap[i];
+					const isEmpty = !item.note;
+
+					return (
 						<div
-							className={`absolute inset-0 rounded bg-gradient-to-r 
-              ${
-								isCurrentNote
+							key={i}
+							className={`relative ${isCurrentNote ? "group/active" : "group"}`}
+							onClick={() => {
+								setSelectedNoteForEditing(originalIndexMap[i]);
+								setIsModalOpen(true);
+							}}
+							onKeyUp={() => {
+								setSelectedNoteForEditing(originalIndexMap[i]);
+								setIsModalOpen(true);
+							}}
+							role="button"
+							tabIndex={0}
+						>
+							<div className={`absolute inset-0 rounded bg-gradient-to-r ${isEmpty
+								? "from-pink-600/10 to-purple-600/10"
+								: isCurrentNote
 									? "from-pink-600/40 to-purple-600/40 blur-sm"
 									: "from-pink-600/20 to-purple-600/20 group-hover:from-pink-600/40 group-hover:to-purple-600/40 blur-sm"
-							} 
-              transition-all duration-300 -z-10`}
-						/>
+								} transition-all duration-300 -z-10`} />
 
-						<div
-							className={`px-3 py-1.5 rounded cursor-pointer
-              border ${isCurrentNote ? "border-pink-400/60" : "border-pink-400/30"} 
-              bg-pink-950/30 backdrop-blur-sm
-              ${
-								isCurrentNote
+							<div className={`h-full flex items-center justify-center rounded cursor-pointer border 
+                ${isCurrentNote ? "border-pink-400/60" : "border-pink-400/30"}
+                ${isEmpty ? "bg-pink-950/10" : "bg-pink-950/30"}
+                backdrop-blur-sm
+                ${isCurrentNote
 									? "shadow-[0_0_15px_rgba(236,72,153,0.3)]"
-									: "group-hover:border-pink-400/60 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"
-							}
-              transition-all duration-300`}
-						>
-							<span className="text-pink-100 font-medium tracking-wider">
-								{item.note}
-								{item.count > 1 && ` (x${item.count})`}
-							</span>
+									: "group-hover:border-pink-400/60 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"}
+                transition-all duration-300`}
+							>
+								<span className={`text-pink-100 font-medium tracking-wider truncate px-1
+                  ${totalNotes > 50 ? 'text-xs' : 'text-sm'}
+                  ${isEmpty ? 'opacity-50' : ''}`}
+								>
+									{isEmpty ? '·' : item.note} {item.count > 1 && `(x${item.count})`}
+								</span>
 
-							<div
-								className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5
-                bg-gradient-to-r from-pink-500 to-purple-500
-                ${isCurrentNote ? "w-full" : "w-0 group-hover:w-full"}
-                transition-all duration-0`}
-							/>
+								<div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 
+                  ${isCurrentNote ? "w-full" : "w-0 group-hover:w-full"}
+                  transition-all duration-0`}
+								/>
+							</div>
 						</div>
-					</div>
-				);
-			})}
+					);
+				})}
+			</div>
 
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
 				<div className="flex flex-col gap-4">
@@ -112,14 +123,11 @@ const NotesUsed = ({
 						options={notesInScale.map((note) => ({ value: note, label: note }))}
 						selectedValue={
 							selectedNoteForEditing !== null
-								? randomNotes[selectedNoteForEditing]?.slice(0, -1) ||
-									notesInScale[0]
+								? randomNotes[selectedNoteForEditing]?.slice(0, -1) || notesInScale[0]
 								: ""
 						}
 						onChange={(event) => {
-							const newOctave =
-								randomNotes[selectedNoteForEditing]?.slice(-1) ||
-								selectedOctaves[0];
+							const newOctave = randomNotes[selectedNoteForEditing]?.slice(-1) || selectedOctaves[0];
 							handleNoteChange(event.target.value, newOctave);
 						}}
 					/>
@@ -132,23 +140,16 @@ const NotesUsed = ({
 							label: octave.toString(),
 						}))}
 						selectedValue={
-							randomNotes[selectedNoteForEditing]?.slice(-1) ||
-							selectedOctaves[0]
+							randomNotes[selectedNoteForEditing]?.slice(-1) || selectedOctaves[0]
 						}
 						onChange={(event) => {
-							const newNote =
-								randomNotes[selectedNoteForEditing]?.slice(0, -1) ||
-								notesInScale[0];
+							const newNote = randomNotes[selectedNoteForEditing]?.slice(0, -1) || notesInScale[0];
 							handleNoteChange(newNote, event.target.value);
 						}}
 					/>
 
 					<div className="mt-2">
-						<Button
-							icon={PauseIcon}
-							onClick={handleEmptyNote}
-							text="Set to empty"
-						/>
+						<Button icon={PauseIcon} onClick={handleEmptyNote} text="Set to empty" />
 					</div>
 				</div>
 			</Modal>

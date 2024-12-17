@@ -32,7 +32,6 @@ const TabbedControls = ({
 
 	const tabs = [
 		{ id: "settings", label: "Settings" },
-		{ id: "history", label: "History" },
 		{ id: "keep", label: "Keep" },
 	];
 
@@ -73,12 +72,6 @@ const TabbedControls = ({
 							handleControlChange={handleControlChange}
 							setInstrumentName={setInstrumentName}
 						/>
-					</div>
-				)}
-
-				{activeTab === "history" && (
-					<div className="p-6">
-						Coming soon! A list of notes that have been generated!
 					</div>
 				)}
 

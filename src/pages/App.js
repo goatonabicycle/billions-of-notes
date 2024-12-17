@@ -348,15 +348,6 @@ function App() {
 
 				{/* Controls Block */}
 				<div className="lg:col-span-2 space-y-6">
-					<NotesUsed
-						notesInScale={notesInScale}
-						randomNotes={randomNotes}
-						setRandomNotes={setRandomNotes}
-						currentIndex={currentIndex}
-						selectedOctaves={inputState.octaves}
-						tieTogether={controlState.tieTogether}
-					/>
-
 					<ButtonBlock
 						setTriggerRegenerate={setTriggerRegenerate}
 						triggerRegenerate={triggerRegenerate}
@@ -374,6 +365,18 @@ function App() {
 						SaveToMidi={SaveToMidi}
 						setRandomNotes={setRandomNotes}
 						saveAndShare={saveAndShare}
+					/>
+
+					{/* This would be cool as an animated line moving left to right as the notes play */}
+					<div className="w-full h-px bg-gradient-to-r from-pink-500 to-purple-500" />
+
+					<NotesUsed
+						notesInScale={notesInScale}
+						randomNotes={randomNotes}
+						setRandomNotes={setRandomNotes}
+						currentIndex={currentIndex}
+						selectedOctaves={inputState.octaves}
+						tieTogether={controlState.tieTogether}
 					/>
 
 					<MessageBoxes

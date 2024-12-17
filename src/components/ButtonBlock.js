@@ -55,7 +55,7 @@ const ButtonBlock = ({
 	}, [randomNotes, setRandomNotes]);
 
 	return (
-		<div className="flex flex-wrap items-center justify-center gap-4 m-4">
+		<div className="grid grid-cols-2 items-center justify-center gap-2">
 			<Button icon={NewNotesIcon} onClick={handleNewNotesClick} text="New" />
 			<Button
 				text={isPlaying ? "Pause" : "Play"}

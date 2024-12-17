@@ -134,6 +134,12 @@ export default function ScaleFretboard() {
 
 	return (
 		<div className="flex flex-col h-screen gap-6 p-6 pt-6">
+			<a href="/" className="text-xs text-pink-100 hover:text-pink-400 transition-colors duration-300">Back home</a>
+			<div className="flex justify-center items-center gap-2">
+				<div className="text-xl text-pink-300 uppercase">
+					Just a fretboard
+				</div>
+			</div>
 			<div className="flex gap-4">
 				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
 					<div className="flex flex-wrap gap-6">

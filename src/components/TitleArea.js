@@ -100,41 +100,35 @@ const TitleArea = memo(
 							/>
 						</div>
 
-						<nav className="flex items-center justify-center gap-2 text-xs">
-							<div className="flex items-center gap-2">
+						<nav className="grid grid-cols-2 sm:grid-cols-3 gap-1 text-xs pt-4 border-t border-pink-500 mt-4">
+							<div className="flex items-center justify-center">
 								<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>
 									Source code
 								</LinkButton>
-								<span className="text-pink-300/30 hidden md:inline">|</span>
 							</div>
 
-							<div className="flex items-center gap-2">
+							<div className="flex items-center justify-center">
 								<ExplainButton />
-								<span className="text-pink-300/30 hidden md:inline">|</span>
 							</div>
 
-							<div className="flex items-center gap-2">
+							<div className="flex items-center justify-center">
 								<KofiButton />
-								<span className="text-pink-300/30 hidden md:inline">|</span>
 							</div>
 
-							<div className="flex items-center gap-2">
+							<div className="flex items-center justify-center">
 								<LinkButton href="/what-scale">What's the scale?</LinkButton>
-								<span className="text-pink-300/30 hidden md:inline">|</span>
 							</div>
 
-							<div className="flex items-center gap-2">
+							<div className="flex items-center justify-center">
 								<LinkButton href="/fret">Fretboard</LinkButton>
-								<span className="text-pink-300/30 hidden md:inline">|</span>
 							</div>
 
-							<button
-								type="button"
-								onClick={() => setAnimationsEnabled(!animationsEnabled)}
-								className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
-							>
-								{animationsEnabled ? "🏃" : "🧍"}
-							</button>
+							<div className="flex items-center justify-center">
+								<LinkButton onClick={() => setAnimationsEnabled(!animationsEnabled)}>
+									{animationsEnabled ? "Animations On" : "Animations Off"}
+									<span className="text-base">{animationsEnabled ? "✨" : "💤"}</span>
+								</LinkButton>
+							</div>
 						</nav>
 					</div>
 				</div>

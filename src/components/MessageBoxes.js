@@ -4,7 +4,7 @@ import MessageBox from "../components/MessageBox";
 
 const MessageBoxes = ({ selectedTempo, selectedNumberOfNotes }) => {
 	return (
-		<div className="messages">
+		<div className="text-center">
 			<MessageBox
 				showWhen={selectedTempo === 0}
 				message={"Don't make tempo go to zero! WTF ARE YOU DOING!? OMG!!!"}
@@ -12,6 +12,10 @@ const MessageBoxes = ({ selectedTempo, selectedNumberOfNotes }) => {
 			<MessageBox
 				showWhen={selectedNumberOfNotes === "1"}
 				message={"Uhm... Yes. That's a note. Amazing!"}
+			/>
+			<MessageBox
+				showWhen={selectedNumberOfNotes === "2"}
+				message={"Keeping it simple. I like it!"}
 			/>
 			<MessageBox showWhen={selectedNumberOfNotes === "69"} message={"Nice!"} />
 			<MessageBox

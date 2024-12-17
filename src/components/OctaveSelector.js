@@ -33,19 +33,25 @@ const OctaveSelector = memo(({ octaves, setInputState, isFretComponent }) => {
 	};
 
 	return (
-		<div className="flex items-center gap-3">
-			<div className="flex flex-wrap gap-4">
-				{OCTAVES.map((octave) => (
-					<Checkbox
-						key={octave}
-						id={`octave-${octave}`}
-						name={`octave-${octave}`}
-						value={octave}
-						checked={octaves.includes(octave)}
-						onChange={handleChange}
-						label={octave.toString()}
-					/>
-				))}
+		<div>
+
+			<div className="flex flex-col gap-1">
+				<span className="text-xs font-medium text-pink-300 uppercase">
+					Octaves
+				</span>
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-4">
+					{OCTAVES.map((octave) => (
+						<Checkbox
+							key={octave}
+							id={`octave-${octave}`}
+							name={`octave-${octave}`}
+							value={octave}
+							checked={octaves.includes(octave)}
+							onChange={handleChange}
+							label={octave.toString()}
+						/>
+					))}
+				</div>
 			</div>
 		</div>
 	);
