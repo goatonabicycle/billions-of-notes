@@ -89,7 +89,8 @@ const Loop = ({
 		}
 
 		instrumentRef.current = createInstrument(instrument);
-		instrumentRef.current.volume.value = Tone.gainToDb(volume / 100);
+		const volumeValue = volume === 0 ? Number.NEGATIVE_INFINITY : Tone.gainToDb(volume / 100);
+		instrumentRef.current.volume.value = volumeValue;
 	};
 
 	const setupLoop = () => {
@@ -152,7 +153,12 @@ const Loop = ({
 		const setup = async () => {
 			Tone.Transport.stop();
 			if (partRef.current) {
-				partRef.current.stop();
+				try {
+					partRef.current.dispose();
+				} catch (e) {
+					console.error('Error disposing part:', e);
+				}
+				partRef.current = null;
 			}
 
 			await setupInstrument();
