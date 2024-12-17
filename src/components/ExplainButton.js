@@ -33,8 +33,7 @@ const ModalContent = memo(() => (
 					Why can't I make the tempo 151?
 				</div>
 				<div className="text-sm opacity-90">
-					You could! There's a text box! Click on the number. I need to fix it
-					though.
+					You can! There's a text box! Click on the number and change it.
 				</div>
 			</div>
 

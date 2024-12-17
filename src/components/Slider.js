@@ -25,15 +25,19 @@ const Slider = ({
 	const handleInputChange = (e) => {
 		const newValue = e.target.value;
 		setLocalValue(newValue);
-		const numValue = Number(newValue);
-		if (!Number.isNaN(numValue) && numValue >= min && numValue <= max) {
-			onChange(e);
+
+		if (!Number.isNaN(newValue) && newValue >= min && newValue <= max) {
+			onChange({
+				target: {
+					name: name,
+					value: newValue
+				}
+			});
 		}
 	};
 
 	const handleInputBlur = () => {
-		const numValue = Number(localValue);
-		if (Number.isNaN(numValue) || numValue < min || numValue > max) {
+		if (Number.isNaN(localValue) || localValue < min || localValue > max) {
 			setLocalValue(value);
 		}
 	};
