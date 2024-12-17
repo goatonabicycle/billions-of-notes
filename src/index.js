@@ -4,20 +4,16 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./index.css";
-import App from "./App";
-import ShowMe from "./ShowMe";
-import WhatScale from "./WhatScale";
-import Ampwall from "./CoolAmpwallStuff";
-import Fret from "./Fret";
+import App from "./pages/App";
+import WhatScale from "./pages/WhatScale";
+import Fret from "./pages/Fret";
 
 function AppRoutes() {
 	return (
 		<Routes>
 			<Route path="/" element={<App />} />
 			<Route path="/:id" element={<App />} />
-			<Route path="/show-me" element={<ShowMe />} />
 			<Route path="/what-scale" element={<WhatScale />} />
-			<Route path="/ampwall" element={<Ampwall />} />
 			<Route path="/fret" element={<Fret />} />
 			<Route path="/fret/:id" element={<Fret />} />
 		</Routes>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Note, Scale } from "tonal";
-import { FLAT_TO_SHARP } from "./useful";
+import { FLAT_TO_SHARP } from "../useful";
 
 export default function WhatScale() {
 	const [notes, setNotes] = useState("");

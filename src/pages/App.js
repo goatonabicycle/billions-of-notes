@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Note, Scale } from "tonal";
 
-import { supabase } from './supabaseClient';
+import { supabase } from '../supabaseClient';
 
-import { useStorage } from "./hooks/useLocalStorage";
+import { useStorage } from "../hooks/useLocalStorage";
 import {
 	DEFAULT_EMPTY_NOTES,
 	DEFAULT_KEY,
@@ -22,17 +22,17 @@ import {
 	getRandomItem,
 	randomRGBA,
 	shuffleArray,
-} from "./useful";
+} from "../useful";
 
-import ButtonBlock from "./components/ButtonBlock";
-import Loop from "./components/Loop";
-import MessageBoxes from "./components/MessageBoxes";
-import NotesUsed from "./components/NotesUsed";
-import SaveToMidi from "./components/SaveToMidi";
-import TabbedControls from "./components/TabbedControls";
-import ShowMePanels from "./components/ShowMePanels";
-import TitleArea from "./components/TitleArea";
-import SharedStateIndicator from "./components/SharedStateIndicator";
+import ButtonBlock from "../components/ButtonBlock";
+import Loop from "../components/Loop";
+import MessageBoxes from "../components/MessageBoxes";
+import NotesUsed from "../components/NotesUsed";
+import SaveToMidi from "../components/SaveToMidi";
+import TabbedControls from "../components/TabbedControls";
+import ShowMePanels from "../components/ShowMePanels";
+import TitleArea from "../components/TitleArea";
+import SharedStateIndicator from "../components/SharedStateIndicator";
 
 import "./App.css";
 

@@ -1,19 +1,19 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { Scale, Note } from 'tonal';
 import { useParams } from 'react-router-dom';
-import Guitar from './components/instruments/Guitar';
-import OctaveSelector from './components/OctaveSelector';
-import ScaleSelector from './components/ScaleSelector';
-import Select from './components/Select';
-import { supabase } from './supabaseClient';
+import Guitar from '../components/instruments/Guitar';
+import OctaveSelector from '../components/OctaveSelector';
+import ScaleSelector from '../components/ScaleSelector';
+import Select from '../components/Select';
+import { supabase } from '../supabaseClient';
 import {
 	DEFAULT_KEY,
 	DEFAULT_SCALE,
 	KEYS,
 	mapToSelectOptions,
 	FLAT_TO_SHARP
-} from './useful';
-import { useStorage } from "./hooks/useLocalStorage";
+} from '../useful';
+import { useStorage } from "../hooks/useLocalStorage";
 
 const scales = Scale.names();
 
