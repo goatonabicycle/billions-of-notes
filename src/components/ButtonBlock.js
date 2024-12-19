@@ -9,6 +9,7 @@ import {
 	ReverseIcon,
 	SaveIcon,
 	ShareIcon,
+	Guitar
 } from "./Icons";
 
 const ButtonBlock = ({
@@ -46,21 +47,31 @@ const ButtonBlock = ({
 	}, [saveAndShare]);
 
 	const handleSaveMIDIClick = useCallback(
-		() =>
-			SaveToMidi(
-				randomNotes,
-				selectedTempo,
-				selectedKey,
-				selectedScale,
-				selectedNumberOfNotes
-			),
+		() => SaveToMidi(
+			randomNotes,
+			selectedTempo,
+			selectedKey,
+			selectedScale,
+			selectedNumberOfNotes
+		),
 		[randomNotes, selectedTempo, SaveToMidi, selectedKey, selectedScale, selectedNumberOfNotes],
 	);
+
+	const handleKeepClick = () => {
+		alert("Coming soon!");
+	}
 
 	const handleReverseClick = useCallback(() => {
 		const newRandomNotes = randomNotes.reverse();
 		setRandomNotes([...newRandomNotes]);
 	}, [randomNotes, setRandomNotes]);
+
+	const getFretboardUrl = useCallback(() => {
+		const params = new URLSearchParams();
+		params.set('key', selectedKey);
+		params.set('scale', selectedScale);
+		return `/fret?${params.toString()}`;
+	}, [selectedKey, selectedScale]);
 
 	return (
 		<div className="grid grid-cols-2 items-center justify-center gap-2">
@@ -80,6 +91,16 @@ const ButtonBlock = ({
 				disabled={isGeneratingLink}
 			/>
 			<Button onClick={handleSaveMIDIClick} icon={SaveIcon} text="Save MIDI" />
+			<Button
+				icon={Guitar}
+				text="Fretboard"
+				onClick={() => window.open(getFretboardUrl(), '_blank')}
+			/>
+			<Button
+				text="Keep - soon"
+				// on click, I want the text of this button to read "comping soon"
+				onclick={handleKeepClick}
+			/>
 		</div>
 	);
 };

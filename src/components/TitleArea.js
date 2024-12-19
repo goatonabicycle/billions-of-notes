@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import ExplainButton from "./ExplainButton";
-import KofiButton from "./KofiButton";
 import LineRenderer from "./LineRenderer";
 import Title from "./Title";
 
@@ -21,6 +20,7 @@ const LinkButton = memo(({ href, onClick, children, external }) => {
 	return (
 		<button
 			onClick={onClick}
+			type="button"
 			className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
 		>
 			{children}
@@ -100,36 +100,14 @@ const TitleArea = memo(
 							/>
 						</div>
 
-						<nav className="grid grid-cols-2 sm:grid-cols-3 gap-1 text-xs pt-4 border-t border-pink-500 mt-4">
-
-							<div className="flex items-center justify-center">
-								<LinkButton href="/what-scale">What's the scale?</LinkButton>
-							</div>
-
-							<div className="flex items-center justify-center">
-								<LinkButton href="/fret">Fretboard</LinkButton>
-							</div>
-
-							<div className="flex items-center justify-center">
-								<LinkButton onClick={() => setAnimationsEnabled(!animationsEnabled)}>
-									{animationsEnabled ? "Animations On" : "Animations Off"}
-									<span className="text-base">{animationsEnabled ? "✨" : "💤"}</span>
-								</LinkButton>
-							</div>
-
-							<div className="flex items-center justify-center">
-								<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>
-									Source code
-								</LinkButton>
-							</div>
-
-							<div className="flex items-center justify-center">
-								<ExplainButton />
-							</div>
-
-							<div className="flex items-center justify-center">
-								<KofiButton />
-							</div>
+						<nav className="grid grid-cols-1 sm:grid-cols-4 text-xs pt-4 gap-4 border-t border-pink-500 place-items-center sm:place-items-center">
+							<LinkButton href="/what-scale" external>Scale❔</LinkButton>
+							<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>Code🧑‍💻</LinkButton>
+							<ExplainButton />
+							<LinkButton onClick={() => setAnimationsEnabled(!animationsEnabled)}>
+								{animationsEnabled ? "Move" : "Move"}
+								<span className="text-base">{animationsEnabled ? "✨" : "💤"}</span>
+							</LinkButton>
 						</nav>
 					</div>
 				</div>

@@ -12,7 +12,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 		>
 			<div
 				className="bg-pink-950/90 p-6 rounded-lg border border-pink-400/50
-                   shadow-[0_0_20px_rgba(236,72,153,0.3)]
+                   shadow-[0_0_500px_rgba(236,72,153,0.7)]
                    backdrop-blur-sm"
 				onClick={(e) => e.stopPropagation()}
 			>

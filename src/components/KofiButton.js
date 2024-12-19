@@ -11,16 +11,20 @@ const KofiButton = () => {
 				onClick={() => setIsModalOpen(true)}
 				className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
 			>
-				Buy me a coffee
+				☕ Coffee
 			</button>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<div className="w-[400px] h-[80vh]">
+				<div className="w-[400px] h-[80vh] bg-slate-100">
 					<iframe
-						id="kofiframe"
-						src="https://ko-fi.com/goatonabicycle/?hidefeed=true&widget=true&embed=true&preview=true"
-						className="w-full h-full rounded"
-						title="goatonabicycle"
-					/>
+						id='kofiframe'
+						src='https://ko-fi.com/goatonabicycle/?hidefeed=true&widget=true&embed=true&preview=true'
+						height='712' title='goatonabicycle'
+						style={{
+							border: "none",
+							width: "100%",
+							padding: "4px",
+							background: "#000000 !imprtant",
+						}} />
 				</div>
 			</Modal>
 		</>

@@ -1,8 +1,9 @@
 import React, { useState, memo } from "react";
 import Modal from "./Modal";
+import KofiButton from "./KofiButton";
 
 const ModalContent = memo(() => (
-	<div className="w-[400px] max-h-[80vh] overflow-y-auto space-y-6 text-pink-100">
+	<div className="w-[400px] max-h-[80vh] overflow-y-auto space-y-6 text-pink-100 text-center">
 		<div className="space-y-4">
 			<div>
 				<div className="text-lg font-bold text-pink-300 mb-2">
@@ -16,7 +17,7 @@ const ModalContent = memo(() => (
 
 			<div>
 				<div className="text-lg font-bold text-pink-300 mb-2">
-					Does it use AI technologies to get the notes or something?
+					AI notes?
 				</div>
 				<div className="text-sm opacity-90">Nope!</div>
 			</div>
@@ -39,7 +40,7 @@ const ModalContent = memo(() => (
 
 			<div>
 				<div className="text-lg font-bold text-pink-300 mb-2">
-					Very cool... You should add this cool feature where...
+					Very cool, you should...
 				</div>
 				<div className="text-sm opacity-90">
 					Please add your ideas{" "}
@@ -57,10 +58,10 @@ const ModalContent = memo(() => (
 
 			<div>
 				<div className="text-lg font-bold text-pink-300 mb-2">
-					Got any cool keyboard shortcuts?
+					Shortcuts?
 				</div>
 				<div className="text-sm opacity-90 space-y-1">
-					Sure do!
+					Yup
 					<div className="grid grid-cols-2 gap-2 mt-2">
 						<div className="px-2 py-1 bg-pink-950/50 rounded border border-pink-400/20">
 							p = Pause
@@ -77,6 +78,19 @@ const ModalContent = memo(() => (
 					</div>
 				</div>
 			</div>
+
+			<div>
+				<div className="text-lg font-bold text-pink-300 mb-2">
+					Can I help?
+				</div>
+				<div className="text-sm opacity-90 space-y-1 flex justify-center">
+					<a href='https://ko-fi.com/B0B1LV8D9' target='_blank'>
+						<img height='36' style={{ border: "0px", height: "36px" }} src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+					</a>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 ));
@@ -91,7 +105,7 @@ const ExplainButton = () => {
 				className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
 				type="button"
 			>
-				Wtf is this?
+				Wtf?🤷‍♂️
 			</button>
 			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
 				<ModalContent />
