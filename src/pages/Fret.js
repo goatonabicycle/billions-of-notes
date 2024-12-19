@@ -20,22 +20,18 @@ const scales = Scale.names();
 export default function ScaleFretboard() {
 	const { id } = useParams();
 	const [shareUrl, setShareUrl] = useState('');
+	const [isInitialLoading, setIsInitialLoading] = useState(false);
+	const [isSharing, setIsSharing] = useState(false);
 
 	const [inputState, _setInputState] = useStorage("fret-inputState", {
 		key: DEFAULT_KEY,
 		scale: DEFAULT_SCALE,
 		notation: "sharp",
-		octaves: [2, 3],
+		octaves: [1, 2, 3, 4, 5],
 	});
 	const setInputState = useCallback(_setInputState, [_setInputState]);
 
-	useEffect(() => {
-		if (id) {
-			loadSharedState(id);
-		}
-	}, [id]);
-
-	const loadSharedState = async (stateId) => {
+	const loadSharedState = useCallback(async (stateId) => {
 		const { data, error } = await supabase
 			.from('fretboard_states')
 			.select('*')
@@ -55,9 +51,77 @@ export default function ScaleFretboard() {
 				octaves: data.octaves,
 			});
 		}
-	};
+	}, [setInputState]);
+
+	useEffect(() => {
+		if (id) {
+			loadSharedState(id);
+		}
+	}, [id, loadSharedState]);
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const keyParam = params.get('key');
+		const scaleParam = params.get('scale');
+
+		if (keyParam && scaleParam && !id) {
+			setIsInitialLoading(true);
+
+			const isValidKey = KEYS.includes(keyParam);
+			const isValidScale = scales.includes(scaleParam);
+
+			if (!isValidKey || !isValidScale) {
+				console.error('Invalid key or scale parameters');
+				setIsInitialLoading(false);
+				return;
+			}
+
+			const stateToSave = {
+				key: keyParam,
+				scale: scaleParam,
+				notation: "sharp",
+				octaves: [1, 2, 3, 4, 5],
+			};
+
+			const handleInitialState = async () => {
+				const stateHash = btoa(JSON.stringify(stateToSave));
+
+				const { data: existingState } = await supabase
+					.from('fretboard_states')
+					.select('id')
+					.eq('state_hash', stateHash)
+					.single();
+
+				if (existingState) {
+					window.history.replaceState({}, '', `/fret/${existingState.id}`);
+					loadSharedState(existingState.id);
+					setIsInitialLoading(false);
+					return;
+				}
+
+				const { data, error } = await supabase
+					.from('fretboard_states')
+					.insert([{ ...stateToSave, state_hash: stateHash }])
+					.select()
+					.single();
+
+				if (error) {
+					console.error('Error saving state:', error);
+					setIsInitialLoading(false);
+					return;
+				}
+
+				window.history.replaceState({}, '', `/fret/${data.id}`);
+				loadSharedState(data.id);
+				setIsInitialLoading(false);
+			};
+
+			handleInitialState();
+		}
+	}, [id, KEYS, scales, loadSharedState]);
 
 	const saveAndShare = async () => {
+		setIsSharing(true);
 		const stateToSave = {
 			key: inputState.key,
 			scale: inputState.scale,
@@ -76,26 +140,26 @@ export default function ScaleFretboard() {
 			const shareableUrl = `${window.location.origin}/fret/${existingState.id}`;
 			setShareUrl(shareableUrl);
 			navigator.clipboard.writeText(shareableUrl);
+			setIsSharing(false);
 			return;
 		}
 
 		const { data, error } = await supabase
 			.from('fretboard_states')
-			.insert([{
-				...stateToSave,
-				state_hash: stateHash
-			}])
+			.insert([{ ...stateToSave, state_hash: stateHash }])
 			.select()
 			.single();
 
 		if (error) {
 			console.error('Error saving state:', error);
+			setIsSharing(false);
 			return;
 		}
 
 		const shareableUrl = `${window.location.origin}/fret/${data.id}`;
 		setShareUrl(shareableUrl);
 		navigator.clipboard.writeText(shareableUrl);
+		setIsSharing(false);
 	};
 
 	const handleInputChange = useCallback(
@@ -134,6 +198,12 @@ export default function ScaleFretboard() {
 
 	return (
 		<div className="flex flex-col h-screen gap-6 p-6 pt-6">
+			{isInitialLoading && (
+				<div className="absolute inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
+					<span className="text-pink-300">Loading...</span>
+				</div>
+			)}
+
 			<a href="/" className="text-xs text-pink-100 hover:text-pink-400 transition-colors duration-300">Back home</a>
 			<div className="flex justify-center items-center gap-2">
 				<div className="text-xl text-pink-300 uppercase">
@@ -151,6 +221,7 @@ export default function ScaleFretboard() {
 								options={keyOptions}
 								onChange={handleInputChange}
 								selectedValue={inputState.key}
+								disabled={isInitialLoading || isSharing}
 							/>
 						</div>
 
@@ -159,31 +230,37 @@ export default function ScaleFretboard() {
 							inputScale={inputState.scale}
 							handleInputChange={handleInputChange}
 							notesInScale={notesInScale}
+							disabled={isInitialLoading || isSharing}
 						/>
 
 						<div>
-							<div className="block text-sm text-gray-200 mb-2">Octaves</div>
 							<div className="flex gap-4">
 								<OctaveSelector
 									octaves={inputState.octaves}
 									setInputState={handleOctaveChange}
 									hideLabel={true}
 									isFretComponent={true}
+									disabled={isInitialLoading || isSharing}
 								/>
 							</div>
 						</div>
 
-						<button
-							onClick={saveAndShare}
-							className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
-						>
-							Share
-						</button>
-						{shareUrl && (
-							<div className="text-sm text-gray-200">
-								URL copied to clipboard!
-							</div>
-						)}
+						<div className="flex items-center gap-2">
+							<button
+								onClick={saveAndShare}
+								type="button"
+								disabled={isInitialLoading || isSharing}
+								className="px-3 py-1.5 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 disabled:opacity-50"
+							>
+								Share
+							</button>
+							{isSharing && (
+								<span className="text-sm text-gray-200">Getting link...</span>
+							)}
+							{shareUrl && !isSharing && (
+								<span className="text-sm text-gray-200">URL copied to clipboard!</span>
+							)}
+						</div>
 					</div>
 				</div>
 
@@ -194,11 +271,7 @@ export default function ScaleFretboard() {
 			</div>
 
 			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 rounded-lg overflow-hidden">
-				<Guitar
-					notesToPlay={visibleNotes}
-					playbackIndex={0}
-					scaleNotes={notesInScale}
-				/>
+				<Guitar notesToPlay={visibleNotes} playbackIndex={0} scaleNotes={notesInScale} />
 			</div>
 
 			<div className="debug-info-block">
