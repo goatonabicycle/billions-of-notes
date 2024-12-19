@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Note, Scale } from "tonal";
 
 import { supabase } from '../supabaseClient';
-
 import { useStorage } from "../hooks/useLocalStorage";
 import {
 	DEFAULT_EMPTY_NOTES,
@@ -16,8 +15,8 @@ import {
 	DEFAULT_SCALE,
 	DEFAULT_TEMPO,
 	DEFAULT_VOLUME,
+	DEFAULT_INSTRUMENT,
 	FLAT_TO_SHARP,
-	INSTRUMENTS,
 	KEYS,
 	getRandomItem,
 	randomRGBA,
@@ -41,11 +40,10 @@ const scales = Scale.names();
 
 function App() {
 	const { id } = useParams();
-	const location = useLocation();
 	const [stateModified, setStateModified] = useState(false);
 
-	const [instrumentName, setInstrumentName] = useState(INSTRUMENTS[0].value);
 	const [animationsEnabled, _setAnimationsEnabled] = useStorage("animationsEnabled", DEFAULT_ANIMATIONS_ENABLED);
+	const [isGeneratingLink, setIsGeneratingLink] = useState(false);
 
 	const [inputState, _setInputState] = useStorage("inputState", {
 		key: DEFAULT_KEY,
@@ -65,6 +63,7 @@ function App() {
 		volume: DEFAULT_VOLUME,
 		noteMode: DEFAULT_NOTES_MODE,
 		noteLength: DEFAULT_NOTE_LENGTH,
+		instrument: DEFAULT_INSTRUMENT,
 		tieTogether: false,
 	});
 
@@ -160,7 +159,6 @@ function App() {
 				});
 
 				setRandomNotes(data.random_notes);
-				setInstrumentName(data.instrument);
 				setSelectedPanelsToShow(data.panels_to_show);
 				setStateModified(false);
 			}
@@ -172,57 +170,74 @@ function App() {
 	}, [id]);
 
 	const saveAndShare = async () => {
-		const stateToSave = {
-			key: inputState.key,
-			scale: inputState.scale,
-			number_of_notes: inputState.numberOfNotes,
-			empty_notes: inputState.emptyNotes,
-			octaves: inputState.octaves,
-			tempo: controlState.tempo,
-			volume: controlState.volume,
-			instrument: controlState.instrument,
-			note_mode: "sharp", // Todo: I still need to handle the sharp/flat note mode stuff. 
-			note_length: controlState.noteLength,
-			tie_together: controlState.tieTogether,
-			random_notes: randomNotes,
-			panels_to_show: selectedPanelsToShow
-		};
+		setIsGeneratingLink(true);
 
-		const stateHash = btoa(JSON.stringify(stateToSave));
+		try {
+			const stateToSave = {
+				key: inputState.key,
+				scale: inputState.scale,
+				number_of_notes: inputState.numberOfNotes,
+				empty_notes: inputState.emptyNotes,
+				octaves: inputState.octaves,
+				tempo: controlState.tempo,
+				volume: controlState.volume,
+				instrument: controlState.instrument,
+				note_mode: "sharp",
+				note_length: controlState.noteLength,
+				tie_together: controlState.tieTogether,
+				random_notes: randomNotes,
+				panels_to_show: selectedPanelsToShow,
+				created_at: new Date().toISOString()
+			};
 
-		const { data: existingState } = await supabase
-			.from('app_states')
-			.select('id')
-			.eq('state_hash', stateHash)
-			.single();
+			const stateHash = btoa(JSON.stringify({
+				...stateToSave,
+				random_notes: randomNotes
+			}));
 
-		if (existingState) {
-			const shareableUrl = `${window.location.origin}/${existingState.id}`;
-			navigator.clipboard.writeText(shareableUrl);
+			const { data: existingState, error: searchError } = await supabase
+				.from('app_states')
+				.select('id')
+				.eq('state_hash', stateHash)
+				.single();
+
+			if (searchError && searchError.code !== 'PGRST116') {
+				console.error('Error searching for state:', searchError);
+				throw searchError;
+			}
+
+			if (existingState?.id) {
+				const shareableUrl = `${window.location.origin}/${existingState.id}`;
+				await navigator.clipboard.writeText(shareableUrl);
+				setShareButtonText("Link copied!");
+				setTimeout(() => setShareButtonText("Share notes"), 2000);
+				return;
+			}
+
+			const { data: newState, error: insertError } = await supabase
+				.from('app_states')
+				.insert([{ ...stateToSave, state_hash: stateHash }])
+				.select()
+				.single();
+
+			if (insertError) {
+				console.error('Error saving state:', insertError);
+				throw insertError;
+			}
+
+			const shareableUrl = `${window.location.origin}/${newState.id}`;
+			await navigator.clipboard.writeText(shareableUrl);
 			setShareButtonText("Link copied!");
 			setTimeout(() => setShareButtonText("Share notes"), 2000);
-			return;
+			setStateModified(false);
+
+		} catch (error) {
+			console.error('Error in saveAndShare:', error);
+			setShareButtonText("Error saving state");
+			setTimeout(() => setShareButtonText("Share notes"), 2000);
+		} finally {
+			setIsGeneratingLink(false);
 		}
-
-		const { data, error } = await supabase
-			.from('app_states')
-			.insert([{
-				...stateToSave,
-				state_hash: stateHash
-			}])
-			.select()
-			.single();
-
-		if (error) {
-			console.error('Error saving state:', error);
-			return;
-		}
-
-		const shareableUrl = `${window.location.origin}/${data.id}`;
-		navigator.clipboard.writeText(shareableUrl);
-		setShareButtonText("Link copied!");
-		setTimeout(() => setShareButtonText("Share notes"), 2000);
-		setStateModified(false);
 	};
 
 	useEffect(() => {
@@ -365,6 +380,7 @@ function App() {
 						SaveToMidi={SaveToMidi}
 						setRandomNotes={setRandomNotes}
 						saveAndShare={saveAndShare}
+						isGeneratingLink={isGeneratingLink}
 					/>
 
 					{/* This would be cool as an animated line moving left to right as the notes play */}
@@ -397,7 +413,6 @@ function App() {
 						setSelectedPanelsToShow={setSelectedPanelsToShow}
 						controlState={controlState}
 						handleControlChange={handleControlChange}
-						setInstrumentName={setInstrumentName}
 					/>
 				</div>
 			</div>
@@ -430,7 +445,6 @@ function App() {
 				inputState: {JSON.stringify(inputState)} <br />
 				controlState: {JSON.stringify(controlState)} <br />
 				stateModified: {stateModified.toString()} <br />
-				instrumentName: {instrumentName} <br />
 				randomNotes: {JSON.stringify(randomNotes)} <br />
 				selectedPanelsToShow: {JSON.stringify(selectedPanelsToShow)} <br />
 			</div>

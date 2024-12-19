@@ -28,6 +28,7 @@ const ButtonBlock = ({
 	SaveToMidi,
 	setRandomNotes,
 	saveAndShare,
+	isGeneratingLink,
 }) => {
 	const handleNewNotesClick = useCallback(
 		() => setTriggerRegenerate(!triggerRegenerate),
@@ -45,7 +46,14 @@ const ButtonBlock = ({
 	}, [saveAndShare]);
 
 	const handleSaveMIDIClick = useCallback(
-		() => SaveToMidi(randomNotes, selectedTempo, selectedKey, selectedScale, selectedNumberOfNotes),
+		() =>
+			SaveToMidi(
+				randomNotes,
+				selectedTempo,
+				selectedKey,
+				selectedScale,
+				selectedNumberOfNotes
+			),
 		[randomNotes, selectedTempo, SaveToMidi, selectedKey, selectedScale, selectedNumberOfNotes],
 	);
 
@@ -65,7 +73,12 @@ const ButtonBlock = ({
 			<Button onClick={handleResetClick} icon={ResetIcon} text="Reset" />
 			<Button onClick={handleReverseClick} icon={ReverseIcon} text="Reverse" />
 
-			<Button onClick={handleShareClick} text={shareButtonText} icon={ShareIcon} />
+			<Button
+				onClick={handleShareClick}
+				text={isGeneratingLink ? "Generating..." : shareButtonText}
+				icon={ShareIcon}
+				disabled={isGeneratingLink}
+			/>
 			<Button onClick={handleSaveMIDIClick} icon={SaveIcon} text="Save MIDI" />
 		</div>
 	);

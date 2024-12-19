@@ -26,7 +26,6 @@ const TabbedControls = ({
 	setSelectedPanelsToShow,
 	controlState,
 	handleControlChange,
-	setInstrumentName,
 }) => {
 	const [activeTab, setActiveTab] = useState("settings");
 
@@ -70,7 +69,6 @@ const TabbedControls = ({
 							setSelectedPanelsToShow={setSelectedPanelsToShow}
 							controlState={controlState}
 							handleControlChange={handleControlChange}
-							setInstrumentName={setInstrumentName}
 						/>
 					</div>
 				)}
