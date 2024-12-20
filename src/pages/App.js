@@ -21,7 +21,8 @@ import {
 	getRandomItem,
 	randomRGBA,
 	shuffleArray,
-	DEFAULT_ANIMATIONS_ENABLED
+	DEFAULT_ANIMATIONS_ENABLED,
+	DEFAULT_DEBUG_ENABLED
 } from "../useful";
 
 import ButtonBlock from "../components/ButtonBlock";
@@ -33,6 +34,7 @@ import TabbedControls from "../components/TabbedControls";
 import ShowMePanels from "../components/ShowMePanels";
 import TitleArea from "../components/TitleArea";
 import SharedStateIndicator from "../components/SharedStateIndicator";
+import Debug from "../components/Debug";
 
 import "./App.css";
 
@@ -42,6 +44,7 @@ function App() {
 	const { id } = useParams();
 	const [stateModified, setStateModified] = useState(false);
 
+	const [debugEnabled, _setDebugEnabled] = useStorage("debugEnabled", DEFAULT_DEBUG_ENABLED);
 	const [animationsEnabled, _setAnimationsEnabled] = useStorage("animationsEnabled", DEFAULT_ANIMATIONS_ENABLED);
 	const [isGeneratingLink, setIsGeneratingLink] = useState(false);
 
@@ -358,6 +361,8 @@ function App() {
 						currentIndex={currentIndex}
 						animationsEnabled={animationsEnabled}
 						setAnimationsEnabled={_setAnimationsEnabled}
+						debugEnabled={debugEnabled}
+						setDebugEnabled={_setDebugEnabled}
 					/>
 				</div>
 
@@ -439,15 +444,20 @@ function App() {
 				/>
 			)}
 
-			<div className="debug-info-block">
-				isPlaying: {isPlaying.toString()} <br />
-				loadedFromUrl: {loadedFromUrl.toString()} <br />
-				inputState: {JSON.stringify(inputState)} <br />
-				controlState: {JSON.stringify(controlState)} <br />
-				stateModified: {stateModified.toString()} <br />
-				randomNotes: {JSON.stringify(randomNotes)} <br />
-				selectedPanelsToShow: {JSON.stringify(selectedPanelsToShow)} <br />
-			</div>
+
+			{debugEnabled && (
+				<Debug
+					isPlaying={isPlaying}
+					loadedFromUrl={loadedFromUrl}
+					inputState={inputState}
+					controlState={controlState}
+					stateModified={stateModified}
+					randomNotes={randomNotes}
+					selectedPanelsToShow={selectedPanelsToShow}
+				/>
+			)}
+
+
 		</div>
 	);
 }
