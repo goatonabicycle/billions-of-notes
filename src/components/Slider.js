@@ -23,21 +23,23 @@ const Slider = ({
 	}, [value]);
 
 	const handleInputChange = (e) => {
-		const newValue = e.target.value;
-		setLocalValue(newValue);
+		const inputValue = e.target.value;
+		setLocalValue(inputValue);
 
-		if (!Number.isNaN(newValue) && newValue >= min && newValue <= max) {
+		const numericValue = parseFloat(inputValue);
+		if (!Number.isNaN(numericValue) && numericValue >= min && numericValue <= max) {
 			onChange({
 				target: {
 					name: name,
-					value: newValue
+					value: numericValue
 				}
 			});
 		}
 	};
 
 	const handleInputBlur = () => {
-		if (Number.isNaN(localValue) || localValue < min || localValue > max) {
+		const numericValue = parseFloat(localValue);
+		if (Number.isNaN(numericValue) || numericValue < min || numericValue > max) {
 			setLocalValue(value);
 		}
 	};
