@@ -1,14 +1,25 @@
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 import { MidiNumbers, Piano as ReactPiano } from "react-piano";
+import { FLAT_TO_SHARP } from "../../useful";
 import "react-piano/dist/styles.css";
 import "./Piano.css";
 
 const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
-	const renderNoteLabel = ({ midiNumber }) => {
-		const { note, octave } = MidiNumbers.getAttributes(midiNumber);
-		const noteLabel = note + octave;
+	const convertFlatToSharp = (note) => {
+		const matches = note.match(/([A-G][b#]?)(\d+)/);
+		if (!matches) return note;
 
-		// Fixes a weird annoying response making the octave add an extra number.
+		const [_, notePart, octave] = matches;
+		const sharpNote = FLAT_TO_SHARP[notePart] || notePart;
+
+		return sharpNote + octave;
+	};
+
+	const renderNoteLabel = ({ midiNumber }) => {
+		const attributes = MidiNumbers.getAttributes(midiNumber);
+		let noteLabel = attributes.note + attributes.octave;
+		noteLabel = convertFlatToSharp(noteLabel);
+
 		const correctNoteLabel =
 			noteLabel.length > 3
 				? noteLabel.substring(0, 3)
@@ -43,7 +54,7 @@ const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	}
 
 	return (
-		<div>
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
 			<div className="text-purple-300 text-xl min-w-[100px] p-4">Piano</div>
 			<div className="piano-container">
 				<ReactPiano

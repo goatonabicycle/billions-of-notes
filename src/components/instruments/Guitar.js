@@ -60,7 +60,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode }) => {
 
 	return (
 		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
-			<div className="flex items-center gap-20 px-4 py-1">
+			<div className="flex items-center gap-20 px-4 py-3">
 				<div className="text-purple-300 text-xl min-w-[100px]">Guitar</div>
 				<div className="flex flex-wrap items-center gap-6 text-sm">
 					<Slider
