@@ -43,15 +43,15 @@ const Slider = ({
 	};
 
 	return (
-		<div className="w-full md:w-32">
-			<div className="flex items-center gap-2 mb-1">
-				<label htmlFor={id} className="text-xs font-medium text-pink-300 uppercase">
+		<div className="w-full md:w-36">
+			<div className="flex items-center gap-2">
+				<label htmlFor={id} className="block text-xs text-pink-300 uppercase mb-1">
 					{label}
 				</label>
 				<input
 					type="text"
 					style={{ width: inputWidth }}
-					className="px-2 py-0.5 rounded border border-pink-400/30 bg-pink-950/30 text-pink-100 text-center"
+					className="w-full text-xs h-5 rounded border border-pink-400/30 bg-pink-950/30 text-pink-100 text-center"
 					disabled={!editable}
 					value={localValue}
 					onChange={handleInputChange}
@@ -84,7 +84,7 @@ const Slider = ({
 					step={step}
 					value={value}
 					onChange={onChange}
-					className="relative w-full h-3 appearance-none pt-2 bg-transparent cursor-pointer [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-pink-400 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:-mt-[6px] [&::-moz-range-thumb]:w-2 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:bg-pink-400 [&::-moz-range-thumb]:appearance-none"
+					className="relative w-full h-1 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-pink-400 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:-mt-[6px] [&::-moz-range-thumb]:w-2 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:bg-pink-400 [&::-moz-range-thumb]:appearance-none"
 				/>
 			</div>
 		</div>
