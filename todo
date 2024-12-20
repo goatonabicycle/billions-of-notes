@@ -1,7 +1,6 @@
 # Todo now
 
 - Flat vs sharp mode. Make it an option. Options page, generally?
-- Piano uses flats when the rest of the app uses sharps. 
 - Fix the first click overlay
 - Tuning bugs. When changing state, there's no good way of resetting.
 
@@ -17,16 +16,16 @@
     - Bass component: The tuning of bass guitars is strange because when it gets to 6 strings it doesn't just go lower. Cater for this.  
     - Allow single note items to be played as if they're tremolo'd.
       - Add "Tremolo" as a variable. Tremolo X of the selected notes randomly.
+    - combined notes could show sub playback progress
   
 # Maybe later: 
-  - Get the count stuff back and have it not cause a render. 
-  - Add many more random interactive messages. Make this more prominent and obvious.
+  - Get the count stuff back and have it not cause a render.   
   - "Show me how to play this"/Import Midi. The fretboard is pretty cool. Having a way to import a midi file and then show you how to play it would be awesome. 
     - Add some sort of  "Don't play stuff... I'm just looking at the fretboard" mode. (Continue with ShowMe.js)
   - For any scale, when hovering over the notes on the fretboard, show the relationship that note has with the root note. (Minor third, Perfect 5th, etc)
   - Give me a second verse with these notes -> This could use the same notes but maybe change the last note to something else?
-  - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
-  - At least add a duplicate? This would double up the number of notes and empty notes.
+    - "I like these notes, Give me a variation" -> Use the current notes but jiggle them around
+    - At least add a duplicate? This would double up the number of notes and empty notes.
   - Chords. Chords that make sense in the context of the current notes.
   - More interesting visualizations of the generated notes. Perhaps the pattern followed on the current fretboard?
   - Add a circle of 5ths
