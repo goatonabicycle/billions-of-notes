@@ -20,6 +20,7 @@ const Debug = ({
   stateModified,
   randomNotes,
   selectedPanelsToShow,
+  currentIndex
 }) => {
   const handleClearStorage = () => {
     localStorage.clear();
@@ -59,7 +60,7 @@ const Debug = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <DebugSection
             title="Playback State"
-            data={{ isPlaying, loadedFromUrl, stateModified }}
+            data={{ isPlaying, loadedFromUrl, stateModified, currentIndex }}
           />
 
           <DebugSection

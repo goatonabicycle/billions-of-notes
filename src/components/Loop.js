@@ -151,21 +151,19 @@ const Loop = ({
 		if (!toneStarted) return;
 
 		const setup = async () => {
-			Tone.Transport.stop();
-			if (partRef.current) {
-				try {
-					partRef.current.dispose();
-				} catch (e) {
-					console.error('Error disposing part:', e);
-				}
-				partRef.current = null;
+			const newInstrument = createInstrument(instrument);
+			const volumeValue = volume === 0 ? Number.NEGATIVE_INFINITY : Tone.gainToDb(volume / 100);
+			newInstrument.volume.value = volumeValue;
+
+			if (instrumentRef.current) {
+				instrumentRef.current.triggerRelease("+0");
+				instrumentRef.current.dispose();
 			}
 
-			await setupInstrument();
+			instrumentRef.current = newInstrument;
 
-			if (isPlaying) {
+			if (!partRef.current && isPlaying) {
 				setupLoop();
-				Tone.Transport.start();
 				partRef.current.start(0);
 			}
 		};
@@ -177,12 +175,22 @@ const Loop = ({
 		if (!toneStarted || !notes?.length) return;
 
 		Tone.Transport.bpm.value = bpm;
+		if (partRef.current && notes !== partRef.current.notes) {
+			partRef.current.stop();
+			partRef.current.dispose();
 
-		if (isPlaying) {
+			if (isPlaying) {
+				setupLoop();
+				Tone.Transport.stop();
+				Tone.Transport.cancel(0);
+				Tone.Transport.start();
+				partRef.current.start(0);
+			}
+		} else if (isPlaying && !partRef.current) {
 			setupLoop();
 			Tone.Transport.start();
 			partRef.current.start(0);
-		} else {
+		} else if (!isPlaying) {
 			if (partRef.current) {
 				partRef.current.stop();
 			}

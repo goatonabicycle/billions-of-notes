@@ -454,6 +454,7 @@ function App() {
 					stateModified={stateModified}
 					randomNotes={randomNotes}
 					selectedPanelsToShow={selectedPanelsToShow}
+					currentIndex={currentIndex}
 				/>
 			)}
 
