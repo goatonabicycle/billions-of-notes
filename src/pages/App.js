@@ -36,8 +36,6 @@ import TitleArea from "../components/TitleArea";
 import SharedStateIndicator from "../components/SharedStateIndicator";
 import Debug from "../components/Debug";
 
-import "./App.css";
-
 const scales = Scale.names();
 
 function App() {
