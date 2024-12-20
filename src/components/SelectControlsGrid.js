@@ -38,6 +38,7 @@ const SelectControlsGrid = memo(({
 					editable={true}
 					value={tempo}
 					onChange={handleControlChange}
+					tooltip="The speed of playback"
 				/>
 
 				<Slider
@@ -50,6 +51,7 @@ const SelectControlsGrid = memo(({
 					editable={false}
 					value={volume}
 					onChange={handleControlChange}
+					tooltip="How loud!"
 				/>
 
 				<Select
@@ -60,6 +62,7 @@ const SelectControlsGrid = memo(({
 					onChange={handleControlChange}
 					selectedValue={instrument}
 					width={"w-60"}
+					tooltip="What types of sounds to play"
 				/>
 
 				<div className="hidden">
@@ -80,6 +83,7 @@ const SelectControlsGrid = memo(({
 						checked={tieTogether}
 						onChange={handleControlChange}
 						label="Tie same notes together"
+						tooltip="Treat sequential notes as a single note that rings over the length of the notes"
 					/>
 				</div>
 			</div>
@@ -88,6 +92,7 @@ const SelectControlsGrid = memo(({
 				<ShowMeSelector
 					selectedPanelsToShow={selectedPanelsToShow}
 					setSelectedPanelsToShow={setSelectedPanelsToShow}
+					tooltip={"How you want to see the generated sequence"}
 				/>
 			</div>
 		</div>

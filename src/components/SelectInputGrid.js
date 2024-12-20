@@ -38,6 +38,7 @@ const SelectInputGrid = memo(({
 					options={keyOptions}
 					onChange={handleInputChange}
 					selectedValue={inputKey}
+					tooltip={"The key of the generated sequence"}
 				/>
 
 				<ScaleSelector
@@ -45,6 +46,7 @@ const SelectInputGrid = memo(({
 					inputScale={inputScale}
 					handleInputChange={handleInputChange}
 					notesInScale={notesInScale}
+					tooltip={"The scale/mode of the generated sequence"}
 				/>
 
 				<Select
@@ -54,6 +56,7 @@ const SelectInputGrid = memo(({
 					options={notesOptions}
 					onChange={handleInputChange}
 					selectedValue={inputNumberOfNotes}
+					tooltip={"Number of notes to generate"}
 				/>
 
 				<Select
@@ -63,6 +66,7 @@ const SelectInputGrid = memo(({
 					options={emptyNotesOptions}
 					onChange={handleInputChange}
 					selectedValue={inputEmptyNotes}
+					tooltip={"Number of empty notes to add to the end of the sequence"}
 				/>
 
 				<div>
@@ -70,6 +74,7 @@ const SelectInputGrid = memo(({
 						octaves={inputOctaves}
 						setInputState={setInputState}
 						hideLabel={true}
+						tooltip="Octaves to include in the generated sequence"
 					/>
 				</div>
 			</div>

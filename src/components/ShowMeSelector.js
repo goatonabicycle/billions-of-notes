@@ -1,7 +1,8 @@
 import React from "react";
 import Checkbox from "./Checkbox";
+import Tooltip from "./Tooltip";
 
-const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
+const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow, tooltip }) => {
 	const panels = ["Guitar", "Piano Roll", "Piano", "Bass Guitar", "Ukelele"];
 
 	const handleChange = (event) => {
@@ -16,24 +17,26 @@ const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow }) => {
 	};
 
 	return (
-		<div className="flex flex-col gap-1">
-			<span className="text-xs font-medium text-pink-300 uppercase">
-				Show me:
-			</span>
-			<div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-4">
-				{panels.map((panel) => (
-					<Checkbox
-						key={panel}
-						id={`panel-${panel}`}
-						name={`panel-${panel}`}
-						value={panel}
-						checked={selectedPanelsToShow.includes(panel)}
-						onChange={handleChange}
-						label={panel}
-					/>
-				))}
+		<Tooltip text={tooltip}>
+			<div className="flex flex-col gap-1">
+				<span className="text-xs font-medium text-pink-300 uppercase">
+					Show me:
+				</span>
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-4">
+					{panels.map((panel) => (
+						<Checkbox
+							key={panel}
+							id={`panel-${panel}`}
+							name={`panel-${panel}`}
+							value={panel}
+							checked={selectedPanelsToShow.includes(panel)}
+							onChange={handleChange}
+							label={panel}
+						/>
+					))}
+				</div>
 			</div>
-		</div>
+		</Tooltip>
 	);
 };
 

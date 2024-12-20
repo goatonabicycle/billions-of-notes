@@ -75,31 +75,53 @@ const ButtonBlock = ({
 
 	return (
 		<div className="grid grid-cols-2 items-center justify-center gap-2">
-			<Button icon={NewNotesIcon} onClick={handleNewNotesClick} text="New" />
+			<Button
+				icon={NewNotesIcon}
+				onClick={handleNewNotesClick}
+				text="New"
+				tooltip="Generate a new sequence of random notes"
+			/>
 			<Button
 				text={isPlaying ? "Pause" : "Play"}
 				icon={isPlaying ? PauseIcon : PlayIcon}
 				onClick={handlePlayPauseClick}
+				tooltip={isPlaying ? "Pause playback" : "Play the current sequence"}
 			/>
-			<Button onClick={handleResetClick} icon={ResetIcon} text="Reset" />
-			<Button onClick={handleReverseClick} icon={ReverseIcon} text="Reverse" />
-
+			<Button
+				onClick={handleResetClick}
+				icon={ResetIcon}
+				text="Reset"
+				tooltip="Reset all settings to default values"
+			/>
+			<Button
+				onClick={handleReverseClick}
+				icon={ReverseIcon}
+				text="Reverse"
+				tooltip="Reverse the current sequence of notes"
+			/>
 			<Button
 				onClick={handleShareClick}
 				text={isGeneratingLink ? "Generating..." : shareButtonText}
 				icon={ShareIcon}
 				disabled={isGeneratingLink}
+				tooltip="Share your current configuration with others"
 			/>
-			<Button onClick={handleSaveMIDIClick} icon={SaveIcon} text="Save MIDI" />
+			<Button
+				onClick={handleSaveMIDIClick}
+				icon={SaveIcon}
+				text="Save MIDI"
+				tooltip="Download the current sequence as a MIDI file"
+			/>
 			<Button
 				icon={Guitar}
 				text="Fretboard"
 				onClick={() => window.open(getFretboardUrl(), '_blank')}
+				tooltip="View these notes on a guitar fretboard"
 			/>
 			<Button
-				text="Keep - soon"
-				// on click, I want the text of this button to read "comping soon"
-				onclick={handleKeepClick}
+				text="Keep"
+				onClick={handleKeepClick}
+				tooltip="Save this sequence to your favorites (coming soon)"
 			/>
 		</div>
 	);

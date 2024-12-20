@@ -35,7 +35,7 @@ const TabbedControls = ({
 	];
 
 	return (
-		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 overflow-hidden">
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
 			<div className="flex border-b border-pink-500/20">
 				{tabs.map((tab) => (
 					<TabButton
@@ -47,7 +47,7 @@ const TabbedControls = ({
 				))}
 			</div>
 
-			<div className="overflow-x-auto">
+			<div>
 				{activeTab === "settings" && (
 					<div className="space-y-6 p-6">
 						<div className="border-b border-pink-500/10 pb-6">
@@ -79,7 +79,7 @@ const TabbedControls = ({
 					</div>
 				)}
 			</div>
-		</div>
+		</div >
 	);
 };
 
