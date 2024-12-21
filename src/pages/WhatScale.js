@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Note, Scale } from "tonal";
 import { FLAT_TO_SHARP } from "../useful";
+import { Link } from "react-router-dom";
 
 export default function WhatScale() {
 	const [notes, setNotes] = useState("");
@@ -28,6 +29,15 @@ export default function WhatScale() {
 		return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
 	};
 
+	const getFretboardUrl = (scaleName) => {
+		const params = new URLSearchParams();
+		const key = notes.split(",")[0].trim();
+
+		params.set('key', key.toUpperCase());
+		params.set('scale', scaleName.replace(`${key} `, "").trim().toLowerCase());
+		return `/fret?${params.toString()}`;
+	};
+
 	const renderScaleNotes = (scaleNotes, inputNotes) => {
 		if (!scaleNotes || scaleNotes.length === 0) return null;
 
@@ -35,10 +45,7 @@ export default function WhatScale() {
 			const sharpNote = convertToSharp(scaleNote);
 			if (inputNotes.includes(sharpNote)) {
 				return (
-					<span
-						className="px-1 border border-pink-500 text-pink-400 font-semibold"
-						key={sharpNote}
-					>
+					<span className="px-1 border border-pink-500 text-pink-400 font-semibold" key={sharpNote}>
 						{sharpNote}
 					</span>
 				);
@@ -58,8 +65,7 @@ export default function WhatScale() {
 				<h2 className="text-2xl font-semibold text-gray-200 mb-4">What is this scale?</h2>
 				<p className="text-gray-300 mb-6">
 					Input notes below (separated by commas). The <strong>first note</strong>{" "}
-					you enter is considered the <strong>tonic</strong> of the scale. Use sharps
-					(<code className="bg-gray-800 px-1 rounded">C#</code> instead of{" "}
+					you enter is considered the <strong>tonic</strong> of the scale. Use sharps (<code className="bg-gray-800 px-1 rounded">C#</code> instead of{" "}
 					<code className="bg-gray-800 px-1 rounded">Db</code>)
 				</p>
 				<input
@@ -78,7 +84,8 @@ export default function WhatScale() {
 						{detectedScales.map((scaleName, index) => {
 							const scaleInfo = Scale.get(scaleName);
 							return (
-								<div
+								<Link
+									to={getFretboardUrl(scaleName)}
 									key={index.toString()}
 									className="bg-gray-800/50 p-4 rounded-lg border border-pink-500/10 hover:border-pink-500/30 transition-colors"
 								>
@@ -89,7 +96,7 @@ export default function WhatScale() {
 											notes.split(",").map((note) => Note.simplify(note.trim()))
 										)}
 									</div>
-								</div>
+								</Link>
 							);
 						})}
 					</div>
