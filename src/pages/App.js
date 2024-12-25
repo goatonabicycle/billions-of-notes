@@ -123,6 +123,17 @@ function App() {
 			emptyNotes: DEFAULT_EMPTY_NOTES,
 			octaves: DEFAULT_OCTAVES,
 		});
+
+		setSelectedPanelsToShow(DEFAULT_PANELS_TO_SHOW);
+		setControlState({
+			...controlState,
+			tempo: DEFAULT_TEMPO,
+			volume: DEFAULT_VOLUME,
+			noteMode: DEFAULT_NOTES_MODE,
+			noteLength: DEFAULT_NOTE_LENGTH,
+			instrument: DEFAULT_INSTRUMENT,
+			tieTogether: false,
+		});
 	}, [setCurrentIndex, setInputState, inputState]);
 
 	useEffect(() => {
