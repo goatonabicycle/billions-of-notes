@@ -26,7 +26,7 @@ const SelectControlsGrid = memo(({
 	);
 
 	return (
-		<div className="w-full max-w-4xl space-y-4">
+		<div className="w-full max-w-4xl space-y-4" data-intro="The controls here do not change the notes. Instead, they change how you experience them" data-step="6">
 			<div className="flex flex-wrap gap-4">
 				<Slider
 					id="tempoSlider"
@@ -88,7 +88,7 @@ const SelectControlsGrid = memo(({
 				</div>
 			</div>
 
-			<div className="pt-5 border-t border-pink-400/10">
+			<div className="pt-5 border-t border-pink-400/10" data-intro="Here you can control how you want to see the notes. Each instrument will show how to play the notes" data-step="7">
 				<ShowMeSelector
 					selectedPanelsToShow={selectedPanelsToShow}
 					setSelectedPanelsToShow={setSelectedPanelsToShow}

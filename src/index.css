@@ -3,6 +3,7 @@
 @tailwind utilities; 
 
 @import url('https://fonts.cdnfonts.com/css/jetbrains-mono-2');
+@import 'intro.js/minified/introjs.min.css';
 
 body {
   margin: 0;  
@@ -22,7 +23,64 @@ body {
   animation: slide 4s linear infinite;
 }
 
+@keyframes slide {
+	100% {
+		background-position: 50px 0, 125px 25px;
+	}
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
+}
+
+/* Custom IntroJS style stuff */
+.introjs-tooltip {
+  background: #1a1a1a;
+  color: #ff10f0;
+  border: 2px solid #ff10f0;
+  box-shadow: 0 0 10px rgba(255, 16, 240, 0.3);
+}
+
+.introjs-tooltiptext {
+  color: #ff10f0;
+}
+
+.introjs-button {
+  background: #2d1f3d;
+  color: #ff10f0;
+  border: 1px solid #ff10f0;
+  text-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.introjs-button:hover {
+  background: #ff10f0;
+  color: #1a1a1a;
+}
+
+.introjs-helperLayer {
+  background: rgba(255, 16, 240, 0.1);
+  border: 2px solid #ff10f0;
+  box-shadow: 0 0 10px rgba(255, 16, 240, 0.3);
+}
+
+.introjs-arrow {
+  border-color: #ff10f0;
+}
+
+.introjs-arrow.top {
+  border-bottom-color: #1a1a1a;
+}
+
+.introjs-arrow.right {
+  border-left-color: #1a1a1a;
+}
+
+.introjs-arrow.bottom {
+  border-top-color: #1a1a1a;
+}
+
+.introjs-arrow.left {
+  border-right-color: #1a1a1a;
 }

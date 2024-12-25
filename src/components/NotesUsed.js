@@ -55,7 +55,7 @@ const NotesUsed = ({
 	const columns = getGridColumns(totalNotes);
 
 	return (
-		<div className="w-full">
+		<div className="w-full" data-intro="These are the generated notes. This is what you're hearing right now and what the output is. All the buttons and controls exist to influence these notes" data-step="4">
 			<div
 				className="grid gap-1"
 				style={{

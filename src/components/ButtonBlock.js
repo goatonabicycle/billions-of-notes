@@ -74,7 +74,7 @@ const ButtonBlock = ({
 	}, [selectedKey, selectedScale]);
 
 	return (
-		<div className="grid grid-cols-2 items-center justify-center gap-2">
+		<div className="grid grid-cols-2 items-center justify-center gap-2" data-intro="These are the main control buttons. This is where you can generate new notes, play them, reset them, reverse them, and more!" data-step="3">
 			<Button
 				icon={NewNotesIcon}
 				onClick={handleNewNotesClick}

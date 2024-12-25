@@ -61,7 +61,7 @@ const Title = memo(({ selectedTempo, animationsEnabled }) => {
 					}}
 				>
 
-					<div className="flex flex-wrap justify-center gap-4">
+					<div className="flex flex-wrap justify-center gap-4" data-intro="Welcome to Billions of Notes!" data-step="1">
 						{animationsEnabled && (
 							<>
 								<RainbowText text="BILLIONS" tempo={selectedTempo} />

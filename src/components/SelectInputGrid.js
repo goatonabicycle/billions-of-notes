@@ -29,7 +29,7 @@ const SelectInputGrid = memo(({
 	}, [inputNumberOfNotes]);
 
 	return (
-		<div className="w-full max-w-4xl space-y-4">
+		<div className="w-full max-w-4xl space-y-4" data-intro="The controls here directly influence which notes get created. Changing anything here will generate brand new notes" data-step="5">
 			<div className="flex flex-wrap gap-4">
 				<Select
 					id="key"

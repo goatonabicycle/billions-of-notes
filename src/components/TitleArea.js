@@ -1,4 +1,6 @@
 import React, { memo } from "react";
+import introJs from "intro.js";
+
 import ExplainButton from "./ExplainButton";
 import LineRenderer from "./LineRenderer";
 import Title from "./Title";
@@ -102,7 +104,7 @@ const TitleArea = memo(
 							/>
 						</div>
 
-						<nav className="grid grid-cols-1 sm:grid-cols-5 text-xs pt-4 gap-4 border-t border-pink-500 place-items-center sm:place-items-center">
+						<nav className="grid grid-cols-1 sm:grid-cols-6 text-xs pt-4 gap-4 border-t border-pink-500 place-items-center sm:place-items-center" data-intro="Here are some useful links if you're stuck or want more info on things" data-step="2">
 							<LinkButton href="/what-scale" external>Scale❔</LinkButton>
 							<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>Code🧑‍💻</LinkButton>
 							<ExplainButton />
@@ -114,6 +116,7 @@ const TitleArea = memo(
 								{animationsEnabled ? "Debug" : "debug"}
 								<span className="text-base">{debugEnabled ? "🐛" : "💤"}</span>
 							</LinkButton>
+							<LinkButton onClick={() => introJs().start()}>Help📖</LinkButton>
 						</nav>
 					</div>
 				</div>
