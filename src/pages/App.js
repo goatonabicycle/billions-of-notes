@@ -4,6 +4,8 @@ import { Note, Scale } from "tonal";
 
 import { supabase } from '../supabaseClient';
 import { useStorage } from "../hooks/useLocalStorage";
+import { useKeptStates } from "../hooks/useKeptStates";
+
 import {
 	DEFAULT_EMPTY_NOTES,
 	DEFAULT_KEY,
@@ -55,9 +57,13 @@ function App() {
 	});
 
 	const setInputState = useCallback((newState) => {
-		setStateModified(true);
+		const isActuallyModified = JSON.stringify(newState) !== JSON.stringify(inputState);
+		if (isActuallyModified) {
+			setStateModified(true);
+			setLoadedFromKeep(false);
+		}
 		_setInputState(newState);
-	}, [_setInputState]);
+	}, [_setInputState, inputState]);
 
 	const [controlState, _setControlState] = useStorage("controlState", {
 		tempo: DEFAULT_TEMPO,
@@ -69,9 +75,13 @@ function App() {
 	});
 
 	const setControlState = useCallback((newState) => {
-		setStateModified(true);
+		const isActuallyModified = JSON.stringify(newState) !== JSON.stringify(controlState);
+		if (isActuallyModified) {
+			setStateModified(true);
+			setLoadedFromKeep(false);
+		}
 		_setControlState(newState);
-	}, [_setControlState]);
+	}, [_setControlState, controlState]);
 
 	const handleInputChange = useCallback(
 		(event) => {
@@ -94,6 +104,17 @@ function App() {
 		},
 		[setControlState],
 	);
+
+	const [loadedFromKeep, setLoadedFromKeep] = useState(false);
+	const [isKeeping, setIsKeeping] = useState(false);
+	const [activeTab, setActiveTab] = useState("settings");
+	const {
+		addKeptState,
+		removeKeptState,
+		getKeptStates,
+		hasKeptState,
+		keptStatesCount
+	} = useKeptStates();
 
 	const [selectedPanelsToShow, _setSelectedPanelsToShow] = useStorage(
 		"selectedPanelsToShow",
@@ -181,8 +202,12 @@ function App() {
 		}
 	}, [id]);
 
-	const saveAndShare = async () => {
-		setIsGeneratingLink(true);
+	const saveAndShare = async (isKeeping = false) => {
+		if (isKeeping) {
+			setIsKeeping(true);
+		} else {
+			setIsGeneratingLink(true);
+		}
 
 		try {
 			const stateToSave = {
@@ -202,10 +227,7 @@ function App() {
 				created_at: new Date().toISOString()
 			};
 
-			const stateHash = btoa(JSON.stringify({
-				...stateToSave,
-				random_notes: randomNotes
-			}));
+			const stateHash = btoa(JSON.stringify({ ...stateToSave, random_notes: randomNotes }));
 
 			const { data: existingState, error: searchError } = await supabase
 				.from('app_states')
@@ -218,45 +240,109 @@ function App() {
 				throw searchError;
 			}
 
+			let stateId;
+
 			if (existingState?.id) {
-				const shareableUrl = `${window.location.origin}/${existingState.id}`;
+				stateId = existingState.id;
+			} else {
+				const { data: newState, error: insertError } = await supabase
+					.from('app_states')
+					.insert([{ ...stateToSave, state_hash: stateHash }])
+					.select()
+					.single();
+
+				if (insertError) {
+					console.error('Error saving state:', insertError);
+					throw insertError;
+				}
+
+				stateId = newState.id;
+			}
+
+			if (isKeeping) {
+				const displayName = generateDisplayName();
+				addKeptState(stateId, displayName);
+				setActiveTab("keep");
+			} else {
+				const shareableUrl = `${window.location.origin}/${stateId}`;
 				await navigator.clipboard.writeText(shareableUrl);
 				setShareButtonText("Link copied!");
 				setTimeout(() => setShareButtonText("Share notes"), 2000);
-				return;
 			}
 
-			const { data: newState, error: insertError } = await supabase
-				.from('app_states')
-				.insert([{ ...stateToSave, state_hash: stateHash }])
-				.select()
-				.single();
-
-			if (insertError) {
-				console.error('Error saving state:', insertError);
-				throw insertError;
-			}
-
-			const shareableUrl = `${window.location.origin}/${newState.id}`;
-			await navigator.clipboard.writeText(shareableUrl);
-			setShareButtonText("Link copied!");
-			setTimeout(() => setShareButtonText("Share notes"), 2000);
 			setStateModified(false);
 
 		} catch (error) {
 			console.error('Error in saveAndShare:', error);
-			setShareButtonText("Error saving state");
-			setTimeout(() => setShareButtonText("Share notes"), 2000);
+			if (isKeeping) {
+				console.error('Error keeping state:', error);
+			} else {
+				setShareButtonText("Error saving state");
+				setTimeout(() => setShareButtonText("Share notes"), 2000);
+			}
 		} finally {
-			setIsGeneratingLink(false);
+			if (isKeeping) {
+				setIsKeeping(false);
+			} else {
+				setIsGeneratingLink(false);
+			}
 		}
 	};
+
+	const loadKeptState = async (stateId) => {
+		try {
+			const { data, error } = await supabase
+				.from('app_states')
+				.select('*')
+				.eq('id', stateId)
+				.single();
+
+			if (error) {
+				console.error('Error loading kept state:', error);
+				return;
+			}
+
+			if (data) {
+				setLoadedFromUrl(true);
+				setLoadedFromKeep(true);
+				setStateModified(false);
+
+				_setInputState({
+					key: data.key,
+					scale: data.scale,
+					numberOfNotes: Number(data.number_of_notes),
+					emptyNotes: Number(data.empty_notes),
+					octaves: data.octaves,
+				});
+
+				_setControlState({
+					tempo: Number(data.tempo),
+					volume: Number(data.volume),
+					noteMode: data.note_mode,
+					noteLength: Number(data.note_length),
+					tieTogether: data.tie_together === true,
+					instrument: data.instrument
+				});
+
+				setRandomNotes(data.random_notes);
+				setSelectedPanelsToShow(data.panels_to_show);
+
+			}
+		} catch (error) {
+			console.error('Error in loadKeptState:', error);
+		}
+	};
+
+	const generateDisplayName = useCallback(() => {
+		return `${inputState.key} ${inputState.scale} - ${inputState.numberOfNotes} notes`;
+	}, [inputState.key, inputState.scale, inputState.numberOfNotes]);
 
 	useEffect(() => {
 		if (!inputState) return;
 
-		if (loadedFromUrl) {
+		if (loadedFromUrl || loadedFromKeep) {
 			setLoadedFromUrl(false);
+			setLoadedFromKeep(false);
 			return;
 		}
 
@@ -356,9 +442,8 @@ function App() {
 	return (
 		<div className="App">
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 p-4">
-				{/* Title Area */}
 				<div className="lg:col-span-4">
-					<SharedStateIndicator stateId={id} isModified={stateModified} />
+
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -375,7 +460,6 @@ function App() {
 					/>
 				</div>
 
-				{/* Controls Block */}
 				<div className="lg:col-span-2 space-y-6">
 					<ButtonBlock
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -395,6 +479,17 @@ function App() {
 						setRandomNotes={setRandomNotes}
 						saveAndShare={saveAndShare}
 						isGeneratingLink={isGeneratingLink}
+						activeTab={activeTab}
+						setActiveTab={setActiveTab}
+						isKeeping={isKeeping}
+						loadedFromKeep={loadedFromKeep}
+						stateModified={stateModified}
+					/>
+
+					<SharedStateIndicator
+						stateId={id}
+						isModified={stateModified}
+						loadedFromKeep={loadedFromKeep}
 					/>
 
 					{/* This would be cool as an animated line moving left to right as the notes play */}
@@ -427,6 +522,11 @@ function App() {
 						setSelectedPanelsToShow={setSelectedPanelsToShow}
 						controlState={controlState}
 						handleControlChange={handleControlChange}
+						activeTab={activeTab}
+						setActiveTab={setActiveTab}
+						keptStates={getKeptStates()}
+						onRemoveKeptState={removeKeptState}
+						onLoadKeptState={loadKeptState}
 					/>
 				</div>
 			</div>

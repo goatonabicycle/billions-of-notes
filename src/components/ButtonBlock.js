@@ -9,7 +9,8 @@ import {
 	ReverseIcon,
 	SaveIcon,
 	ShareIcon,
-	Guitar
+	Guitar,
+	StarIcon
 } from "./Icons";
 
 const ButtonBlock = ({
@@ -30,20 +31,37 @@ const ButtonBlock = ({
 	setRandomNotes,
 	saveAndShare,
 	isGeneratingLink,
+	setActiveTab,
+	isKeeping,
+	loadedFromKeep,
+	stateModified,
 }) => {
 	const handleNewNotesClick = useCallback(
 		() => setTriggerRegenerate(!triggerRegenerate),
-		[triggerRegenerate, setTriggerRegenerate],
+		[triggerRegenerate, setTriggerRegenerate]
 	);
 
 	const handlePlayPauseClick = useCallback(
 		() => setIsPlaying(!isPlaying),
-		[isPlaying, setIsPlaying],
+		[isPlaying, setIsPlaying]
 	);
 
-	const handleResetClick = useCallback(() => resetInputs(), [resetInputs]);
-	const handleShareClick = useCallback(() => {
-		saveAndShare();
+	const handleResetClick = useCallback(
+		() => resetInputs(),
+		[resetInputs]
+	);
+
+	const handleShareClick = useCallback(
+		() => saveAndShare(false),
+		[saveAndShare]
+	);
+
+	const handleKeepClick = useCallback(async () => {
+		try {
+			await saveAndShare(true);
+		} catch (error) {
+			console.error('Error keeping state:', error);
+		}
 	}, [saveAndShare]);
 
 	const handleSaveMIDIClick = useCallback(
@@ -54,27 +72,33 @@ const ButtonBlock = ({
 			selectedScale,
 			selectedNumberOfNotes
 		),
-		[randomNotes, selectedTempo, SaveToMidi, selectedKey, selectedScale, selectedNumberOfNotes],
+		[randomNotes, selectedTempo, SaveToMidi, selectedKey, selectedScale, selectedNumberOfNotes]
 	);
 
-	const handleKeepClick = () => {
-		alert("Coming soon!");
-	}
+	const handleReverseClick = useCallback(
+		() => {
+			const newRandomNotes = randomNotes.reverse();
+			setRandomNotes([...newRandomNotes]);
+		},
+		[randomNotes, setRandomNotes]
+	);
 
-	const handleReverseClick = useCallback(() => {
-		const newRandomNotes = randomNotes.reverse();
-		setRandomNotes([...newRandomNotes]);
-	}, [randomNotes, setRandomNotes]);
-
-	const getFretboardUrl = useCallback(() => {
-		const params = new URLSearchParams();
-		params.set('key', selectedKey);
-		params.set('scale', selectedScale);
-		return `/fret?${params.toString()}`;
-	}, [selectedKey, selectedScale]);
+	const getFretboardUrl = useCallback(
+		() => {
+			const params = new URLSearchParams();
+			params.set('key', selectedKey);
+			params.set('scale', selectedScale);
+			return `/fret?${params.toString()}`;
+		},
+		[selectedKey, selectedScale]
+	);
 
 	return (
-		<div className="grid grid-cols-2 items-center justify-center gap-2" data-intro="These are the main control buttons. This is where you can generate new notes, play them, reset them, reverse them, and more!" data-step="3">
+		<div
+			className="grid grid-cols-2 items-center justify-center gap-2"
+			data-intro="These are the main control buttons. This is where you can generate new notes, play them, reset them, reverse them, and more!"
+			data-step="3"
+		>
 			<Button
 				icon={NewNotesIcon}
 				onClick={handleNewNotesClick}
@@ -119,9 +143,15 @@ const ButtonBlock = ({
 				tooltip="View these notes on a guitar fretboard"
 			/>
 			<Button
-				text="Keep"
+				icon={StarIcon}
+				text={isKeeping ? "Saving..." : "Keep"}
 				onClick={handleKeepClick}
-				tooltip="Save this sequence to your favorites (coming soon)"
+				disabled={isKeeping || isGeneratingLink || (loadedFromKeep && !stateModified)}
+				tooltip={
+					loadedFromKeep && !stateModified
+						? "Make changes to save a new version"
+						: "Save this sequence to your favorites"
+				}
 			/>
 		</div>
 	);
