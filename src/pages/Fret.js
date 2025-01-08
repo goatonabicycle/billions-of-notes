@@ -271,7 +271,7 @@ export default function ScaleFretboard() {
 			</div>
 
 			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 rounded-lg overflow-hidden">
-				{!isInitialLoading && <Guitar notesToPlay={visibleNotes} playbackIndex={0} scaleNotes={notesInScale} />}
+				{!isInitialLoading && <Guitar notesToPlay={visibleNotes} playbackIndex={0} scaleNotes={notesInScale} smallOctaveNumbers={true} />}
 			</div>
 		</div>
 	);

@@ -10,7 +10,7 @@ import {
 import Fretboard from "../Fretboard";
 import Slider from "../Slider";
 
-const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode }) => {
+const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode, smallOctaveNumbers = false }) => {
 	const [selectedPosition, setSelectedPosition] = useStorage(
 		"selectedPosition",
 		DEFAULT_POSITION,
@@ -117,6 +117,7 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode }) => {
 				initialTuning={INITIAL_GUITAR_TUNING}
 				numberOfFrets={numberOfGuitarFrets}
 				noteMode={noteMode}
+				smallOctaveNumbers={smallOctaveNumbers}
 			/>
 		</div>
 	);

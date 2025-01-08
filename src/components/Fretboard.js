@@ -17,6 +17,7 @@ const Fretboard = ({
 	initialTuning,
 	numberOfFrets,
 	noteMode = 'sharp', // TODO: Make this a setting once I have a nice UI. 
+	smallOctaveNumbers = false,
 }) => {
 	const [currentPosition, setCurrentPosition] = useState({
 		stringIndex: 0,
@@ -137,6 +138,18 @@ const Fretboard = ({
 	const isDoubleDotFret = (fretNumber) => {
 		return [12, 24].includes(fretNumber);
 	};
+
+	function renderNote(note) {
+		if (!note) return note;
+		const { pc, oct } = Note.get(note);
+		const pitch = noteMode === 'sharp' ? pc.replace(/b/g, '#') : Note.enharmonic(pc).replace(/#/g, 'b');
+		return (
+			<>
+				{pitch}
+				{oct && <span className={`${smallOctaveNumbers ? 'text-[0.8em]' : ''}`}>{oct}</span>}
+			</>
+		);
+	}
 
 	return (
 		<div className="flex flex-col items-center overflow-hidden pb-8 ">
@@ -296,7 +309,9 @@ const Fretboard = ({
 									}}
 								>
 									{j === 0 && ChangeTuningIcon}
-									<span className="text-[0.7em]">{note.note}</span>
+									<span className="text-[0.8em]">
+										{renderNote(note.note)}
+									</span>
 								</div>
 							);
 						})}
