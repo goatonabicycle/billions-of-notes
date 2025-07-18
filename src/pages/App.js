@@ -430,7 +430,7 @@ function App() {
 		return () => {
 			window.removeEventListener("keydown", handleKeyPress);
 		};
-	});
+	}, [resetInputs, randomNotes, controlState.tempo]);
 
 	useEffect(() => {
 		document.body.classList.toggle('animations-enabled', animationsEnabled);
