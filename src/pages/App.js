@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { Note, Scale } from "tonal";
+import { Scale } from "tonal";
 
 import { useStorage } from "../hooks/useLocalStorage";
 import { useKeptStates } from "../hooks/useKeptStates";
+import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
 import * as supabaseService from "../services/supabaseService";
+import { generateRandomNotes, validateEmptyNotes } from "../services/notesGenerator";
 
 import {
 	DEFAULT_EMPTY_NOTES,
@@ -18,11 +20,8 @@ import {
 	DEFAULT_TEMPO,
 	DEFAULT_VOLUME,
 	DEFAULT_INSTRUMENT,
-	FLAT_TO_SHARP,
 	KEYS,
-	getRandomItem,
 	randomRGBA,
-	shuffleArray,
 	DEFAULT_ANIMATIONS_ENABLED,
 	DEFAULT_DEBUG_ENABLED
 } from "../useful";
@@ -254,45 +253,9 @@ function App() {
 			return;
 		}
 
-		const getRandomNotes = (notesInScale, total, empty, notesMode) => {
-			let numberOfNotesToUse = total - empty;
-			if (numberOfNotesToUse < 0) numberOfNotesToUse = total;
-
-			const notesWithOctaves = Array(numberOfNotesToUse)
-				.fill(0)
-				.map(
-					() => `${getRandomItem(notesInScale)}${getRandomItem(inputState.octaves)}`,
-				);
-			const emptyNotes = Array(empty).fill("");
-			return shuffleArray([...notesWithOctaves, ...emptyNotes]);
-		};
-
-		const scale = Scale.get(`${inputState.key} ${inputState.scale}`);
-		const notesInScale = scale.notes.map((note) => {
-			const { pc, oct } = Note.get(Note.simplify(note));
-			return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
-		});
-
+		const { notesInScale, randomNotes } = generateRandomNotes(inputState);
+		
 		setNotesInScale(notesInScale);
-
-		const totalNotes = Number.parseInt(inputState.numberOfNotes);
-		const emptyNotes = Number.parseInt(inputState.emptyNotes);
-		const notation = Number.parseInt(controlState.notation);
-		const randomNotes = getRandomNotes(
-			notesInScale,
-			totalNotes,
-			emptyNotes,
-			notation,
-		);
-
-		const firstNonEmptyNoteIndex = randomNotes.findIndex((note) => note !== "");
-		if (firstNonEmptyNoteIndex !== -1) {
-			[randomNotes[0], randomNotes[firstNonEmptyNoteIndex]] = [
-				randomNotes[firstNonEmptyNoteIndex],
-				randomNotes[0],
-			];
-		}
-
 		setRandomNotes(randomNotes);
 		setCurrentIndex(0);
 		setCurrentColour(randomRGBA());
@@ -300,45 +263,25 @@ function App() {
 
 	useEffect(() => {
 		if (!inputState) return;
-		const maxEmptyNotes = Math.max(
-			0,
-			Number.parseInt(inputState.numberOfNotes) - 3,
+		const validatedEmptyNotes = validateEmptyNotes(
+			inputState.numberOfNotes,
+			inputState.emptyNotes
 		);
-		if (Number.parseInt(inputState.emptyNotes) > maxEmptyNotes) {
+		if (Number.parseInt(inputState.emptyNotes) !== validatedEmptyNotes) {
 			setInputState({
 				...inputState,
-				emptyNotes: maxEmptyNotes,
+				emptyNotes: validatedEmptyNotes,
 			});
 		}
 	}, [inputState, setInputState]);
 
-	useEffect(() => {
-		const handleKeyPress = (event) => {
-			switch (event.key.toLowerCase()) {
-				case "p": // P for play/pause. Space is important for accessibility of the page.
-					event.preventDefault();
-					setIsPlaying((prevIsPlaying) => !prevIsPlaying);
-					break;
-				case "n": // N for new notes
-					setTriggerRegenerate((prevTrigger) => !prevTrigger);
-					break;
-				case "r": // R for reset inputs
-					resetInputs();
-					break;
-				case "s": // S for save as MIDI
-					SaveToMidi(randomNotes, controlState.tempo);
-					break;
-				default:
-					break;
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyPress);
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyPress);
-		};
-	}, [resetInputs, randomNotes, controlState.tempo]);
+	useKeyboardShortcuts({
+		setIsPlaying,
+		setTriggerRegenerate,
+		resetInputs,
+		randomNotes,
+		tempo: controlState.tempo
+	});
 
 	useEffect(() => {
 		document.body.classList.toggle('animations-enabled', animationsEnabled);
