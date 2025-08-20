@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Note, Scale } from "tonal";
 
-import { supabase } from '../supabaseClient';
 import { useStorage } from "../hooks/useLocalStorage";
 import { useKeptStates } from "../hooks/useKeptStates";
+import * as supabaseService from "../services/supabaseService";
 
 import {
 	DEFAULT_EMPTY_NOTES,
@@ -158,48 +158,22 @@ function App() {
 	}, [setCurrentIndex, setInputState, inputState]);
 
 	useEffect(() => {
-		async function loadSharedState(stateId) {
+		async function loadInitialState() {
+			if (!id) return;
 
-			const { data, error } = await supabase
-				.from('app_states')
-				.select('*')
-				.eq('id', stateId)
-				.single();
-
-			if (error) {
-				console.error('Error loading state:', error);
-				return;
-			}
-
+			const data = await supabaseService.loadSharedState(id);
 			if (data) {
+				const parsed = supabaseService.parseStateData(data);
 				setLoadedFromUrl(true);
-
-				_setInputState({
-					key: data.key,
-					scale: data.scale,
-					numberOfNotes: Number(data.number_of_notes),
-					emptyNotes: Number(data.empty_notes),
-					octaves: data.octaves,
-				});
-
-				_setControlState({
-					tempo: Number(data.tempo),
-					volume: Number(data.volume),
-					noteMode: data.note_mode,
-					noteLength: Number(data.note_length),
-					tieTogether: data.tie_together === true,
-					instrument: data.instrument
-				});
-
-				setRandomNotes(data.random_notes);
-				setSelectedPanelsToShow(data.panels_to_show);
+				_setInputState(parsed.inputState);
+				_setControlState(parsed.controlState);
+				setRandomNotes(parsed.randomNotes);
+				setSelectedPanelsToShow(parsed.panelsToShow);
 				setStateModified(false);
 			}
 		}
 
-		if (id) {
-			loadSharedState(id);
-		}
+		loadInitialState();
 	}, [id]);
 
 	const saveAndShare = async (isKeeping = false) => {
@@ -210,57 +184,19 @@ function App() {
 		}
 
 		try {
-			const stateToSave = {
-				key: inputState.key,
-				scale: inputState.scale,
-				number_of_notes: inputState.numberOfNotes,
-				empty_notes: inputState.emptyNotes,
-				octaves: inputState.octaves,
-				tempo: controlState.tempo,
-				volume: controlState.volume,
-				instrument: controlState.instrument,
-				note_mode: "sharp",
-				note_length: controlState.noteLength,
-				tie_together: controlState.tieTogether,
-				random_notes: randomNotes,
-				panels_to_show: selectedPanelsToShow,
-				created_at: new Date().toISOString()
-			};
+			const stateId = await supabaseService.saveState({
+				inputState,
+				controlState,
+				randomNotes,
+				selectedPanelsToShow
+			});
 
-			const stateHash = btoa(JSON.stringify({ ...stateToSave, random_notes: randomNotes }));
-
-			const { data: existingState, error: searchError } = await supabase
-				.from('app_states')
-				.select('id')
-				.eq('state_hash', stateHash)
-				.single();
-
-			if (searchError && searchError.code !== 'PGRST116') {
-				console.error('Error searching for state:', searchError);
-				throw searchError;
-			}
-
-			let stateId;
-
-			if (existingState?.id) {
-				stateId = existingState.id;
-			} else {
-				const { data: newState, error: insertError } = await supabase
-					.from('app_states')
-					.insert([{ ...stateToSave, state_hash: stateHash }])
-					.select()
-					.single();
-
-				if (insertError) {
-					console.error('Error saving state:', insertError);
-					throw insertError;
-				}
-
-				stateId = newState.id;
+			if (!stateId) {
+				throw new Error('Failed to save state');
 			}
 
 			if (isKeeping) {
-				const displayName = generateDisplayName();
+				const displayName = supabaseService.generateDisplayName(inputState);
 				addKeptState(stateId, displayName);
 				setActiveTab("keep");
 			} else {
@@ -291,51 +227,23 @@ function App() {
 
 	const loadKeptState = async (stateId) => {
 		try {
-			const { data, error } = await supabase
-				.from('app_states')
-				.select('*')
-				.eq('id', stateId)
-				.single();
-
-			if (error) {
-				console.error('Error loading kept state:', error);
-				return;
-			}
-
+			const data = await supabaseService.loadKeptState(stateId);
+			
 			if (data) {
+				const parsed = supabaseService.parseStateData(data);
 				setLoadedFromUrl(true);
 				setLoadedFromKeep(true);
 				setStateModified(false);
-
-				_setInputState({
-					key: data.key,
-					scale: data.scale,
-					numberOfNotes: Number(data.number_of_notes),
-					emptyNotes: Number(data.empty_notes),
-					octaves: data.octaves,
-				});
-
-				_setControlState({
-					tempo: Number(data.tempo),
-					volume: Number(data.volume),
-					noteMode: data.note_mode,
-					noteLength: Number(data.note_length),
-					tieTogether: data.tie_together === true,
-					instrument: data.instrument
-				});
-
-				setRandomNotes(data.random_notes);
-				setSelectedPanelsToShow(data.panels_to_show);
-
+				_setInputState(parsed.inputState);
+				_setControlState(parsed.controlState);
+				setRandomNotes(parsed.randomNotes);
+				setSelectedPanelsToShow(parsed.panelsToShow);
 			}
 		} catch (error) {
 			console.error('Error in loadKeptState:', error);
 		}
 	};
 
-	const generateDisplayName = useCallback(() => {
-		return `${inputState.key} ${inputState.scale} - ${inputState.numberOfNotes} notes`;
-	}, [inputState.key, inputState.scale, inputState.numberOfNotes]);
 
 	useEffect(() => {
 		if (!inputState) return;
