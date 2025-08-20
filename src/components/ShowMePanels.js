@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import BassGuitar from "./instruments/BassGuitar";
 import Guitar from "./instruments/Guitar";
 import NotesGrid from "./instruments/NotesGrid";
 import Piano from "./instruments/Piano";
 import Ukelele from "./instruments/Ukelele";
 
-const ShowMePanels = ({
+const ShowMePanels = memo(({
 	selectedPanelsToShow,
 	currentIndex,
 	randomNotes,
@@ -58,6 +58,6 @@ const ShowMePanels = ({
 			)}
 		</div>
 	);
-};
+});
 
 export default ShowMePanels;

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Scale } from "tonal";
 
 import { useStorage } from "../hooks/useLocalStorage";
 import { useKeptStates } from "../hooks/useKeptStates";
 import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
+import { useInputStateWithTracking, useControlStateWithTracking } from "../hooks/useStateWithTracking";
 import * as supabaseService from "../services/supabaseService";
 import { generateRandomNotes, validateEmptyNotes } from "../services/notesGenerator";
 
@@ -37,50 +38,40 @@ import TitleArea from "../components/TitleArea";
 import SharedStateIndicator from "../components/SharedStateIndicator";
 import Debug from "../components/Debug";
 
-const scales = Scale.names();
-
 function App() {
+	const scales = useMemo(() => Scale.names(), []);
 	const { id } = useParams();
 	const [stateModified, setStateModified] = useState(false);
 
 	const [debugEnabled, _setDebugEnabled] = useStorage("debugEnabled", DEFAULT_DEBUG_ENABLED);
 	const [animationsEnabled, _setAnimationsEnabled] = useStorage("animationsEnabled", DEFAULT_ANIMATIONS_ENABLED);
 	const [isGeneratingLink, setIsGeneratingLink] = useState(false);
+	const [loadedFromKeep, setLoadedFromKeep] = useState(false);
 
-	const [inputState, _setInputState] = useStorage("inputState", {
-		key: DEFAULT_KEY,
-		scale: DEFAULT_SCALE,
-		numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
-		emptyNotes: DEFAULT_EMPTY_NOTES,
-		octaves: DEFAULT_OCTAVES,
-	});
+	const [inputState, setInputState] = useInputStateWithTracking(
+		{
+			key: DEFAULT_KEY,
+			scale: DEFAULT_SCALE,
+			numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
+			emptyNotes: DEFAULT_EMPTY_NOTES,
+			octaves: DEFAULT_OCTAVES,
+		},
+		setStateModified,
+		setLoadedFromKeep
+	);
 
-	const setInputState = useCallback((newState) => {
-		const isActuallyModified = JSON.stringify(newState) !== JSON.stringify(inputState);
-		if (isActuallyModified) {
-			setStateModified(true);
-			setLoadedFromKeep(false);
-		}
-		_setInputState(newState);
-	}, [_setInputState, inputState]);
-
-	const [controlState, _setControlState] = useStorage("controlState", {
-		tempo: DEFAULT_TEMPO,
-		volume: DEFAULT_VOLUME,
-		noteMode: DEFAULT_NOTES_MODE,
-		noteLength: DEFAULT_NOTE_LENGTH,
-		instrument: DEFAULT_INSTRUMENT,
-		tieTogether: false,
-	});
-
-	const setControlState = useCallback((newState) => {
-		const isActuallyModified = JSON.stringify(newState) !== JSON.stringify(controlState);
-		if (isActuallyModified) {
-			setStateModified(true);
-			setLoadedFromKeep(false);
-		}
-		_setControlState(newState);
-	}, [_setControlState, controlState]);
+	const [controlState, setControlState] = useControlStateWithTracking(
+		{
+			tempo: DEFAULT_TEMPO,
+			volume: DEFAULT_VOLUME,
+			noteMode: DEFAULT_NOTES_MODE,
+			noteLength: DEFAULT_NOTE_LENGTH,
+			instrument: DEFAULT_INSTRUMENT,
+			tieTogether: false,
+		},
+		setStateModified,
+		setLoadedFromKeep
+	);
 
 	const handleInputChange = useCallback(
 		(event) => {
@@ -104,15 +95,12 @@ function App() {
 		[setControlState],
 	);
 
-	const [loadedFromKeep, setLoadedFromKeep] = useState(false);
 	const [isKeeping, setIsKeeping] = useState(false);
 	const [activeTab, setActiveTab] = useState("settings");
 	const {
 		addKeptState,
 		removeKeptState,
-		getKeptStates,
-		hasKeptState,
-		keptStatesCount
+		getKeptStates
 	} = useKeptStates();
 
 	const [selectedPanelsToShow, _setSelectedPanelsToShow] = useStorage(
@@ -164,8 +152,8 @@ function App() {
 			if (data) {
 				const parsed = supabaseService.parseStateData(data);
 				setLoadedFromUrl(true);
-				_setInputState(parsed.inputState);
-				_setControlState(parsed.controlState);
+				setInputState(parsed.inputState);
+				setControlState(parsed.controlState);
 				setRandomNotes(parsed.randomNotes);
 				setSelectedPanelsToShow(parsed.panelsToShow);
 				setStateModified(false);
@@ -233,8 +221,8 @@ function App() {
 				setLoadedFromUrl(true);
 				setLoadedFromKeep(true);
 				setStateModified(false);
-				_setInputState(parsed.inputState);
-				_setControlState(parsed.controlState);
+				setInputState(parsed.inputState);
+				setControlState(parsed.controlState);
 				setRandomNotes(parsed.randomNotes);
 				setSelectedPanelsToShow(parsed.panelsToShow);
 			}
