@@ -83,29 +83,29 @@ const NotesUsed = ({
 							tabIndex={0}
 						>
 							<div className={`absolute inset-0 rounded bg-gradient-to-r ${isEmpty
-								? "from-pink-600/10 to-purple-600/10"
+								? "from-primary-600/10 to-secondary-600/10"
 								: isCurrentNote
-									? "from-pink-600/40 to-purple-600/40 blur-sm"
-									: "from-pink-600/20 to-purple-600/20 group-hover:from-pink-600/40 group-hover:to-purple-600/40 blur-sm"
+									? "from-primary-600/40 to-secondary-600/40 blur-sm"
+									: "from-primary-600/20 to-secondary-600/20 group-hover:from-primary-600/40 group-hover:to-secondary-600/40 blur-sm"
 								} transition-all duration-300 -z-10`} />
 
 							<div className={`h-full flex items-center justify-center rounded cursor-pointer border 
-                ${isCurrentNote ? "border-pink-400/60" : "border-pink-400/30"}
-                ${isEmpty ? "bg-pink-950/10" : "bg-pink-950/30"}
+                ${isCurrentNote ? "border-primary-400/60" : "border-primary-400/30"}
+                ${isEmpty ? "bg-primary-950/10" : "bg-primary-950/30"}
                 backdrop-blur-sm
                 ${isCurrentNote
-									? "shadow-[0_0_15px_rgba(236,72,153,0.3)]"
-									: "group-hover:border-pink-400/60 group-hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"}
+									? "shadow-glow"
+									: "group-hover:border-primary-400/60 group-hover:shadow-glow"}
                 transition-all duration-300`}
 							>
-								<span className={`text-pink-100 font-medium tracking-wider truncate px-1
+								<span className={`text-primary-100 font-medium tracking-wider truncate px-1
                   ${totalNotes > 50 ? 'text-xs' : 'text-sm'}
                   ${isEmpty ? 'opacity-50' : ''}`}
 								>
 									{isEmpty ? '·' : item.note} {item.count > 1 && `(x${item.count})`}
 								</span>
 
-								<div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 
+								<div className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 
                   ${isCurrentNote ? "w-full" : "w-0 group-hover:w-full"}
                   transition-all duration-0`}
 								/>

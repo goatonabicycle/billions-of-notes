@@ -1,9 +1,7 @@
 .piano-container {
-	display: flex;
-	justify-content: center;
-	height: 300px;
+	@apply flex justify-center h-[300px];
 }
 
 .ReactPiano__Key--active {
-	background-color: rgb(236, 72, 153);
+	@apply bg-primary-500;
 }

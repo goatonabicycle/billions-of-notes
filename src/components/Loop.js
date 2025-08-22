@@ -13,28 +13,28 @@ const ClickFirst = ({ onClick }) => {
 
 	return (
 		<div
-			className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-purple-900/95 to-black/95 backdrop-blur-sm"
+			className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-primary-900/95 to-black/95 backdrop-blur-sm"
 			onClick={handleClick}
 			onKeyUp={handleClick}
 			type="button"
 		>
 			<div className="relative text-center p-8">
-				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-t from-pink-500 to-purple-500 rounded-full blur-3xl opacity-20" />
+				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-t from-primary-500 to-secondary-500 rounded-full blur-3xl opacity-20" />
 				<div
-					className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-fuchsia-500/20 to-transparent"
+					className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary-500/20 to-transparent"
 					style={{
-						backgroundImage: "linear-gradient(0deg, rgba(255,0,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,255,0.2) 1px, transparent 1px)",
+						backgroundImage: "linear-gradient(0deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px)",
 						backgroundSize: "20px 20px",
 					}}
 				/>
 				<div className="relative">
-					<h1 className="text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-500">
+					<h1 className="text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
 						Hello!
 					</h1>
-					<p className="text-3xl mb-4 font-medium text-purple-200">
+					<p className="text-3xl mb-4 font-medium text-primary-200">
 						Let's click somewhere to get things going!
 					</p>
-					<p className="text-sm text-cyan-300">
+					<p className="text-sm text-secondary-300">
 						(You have to interact with the page to start the sound engine)
 					</p>
 				</div>

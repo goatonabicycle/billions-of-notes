@@ -22,7 +22,7 @@ const Checkbox = ({
 						value={value}
 						checked={checked}
 						onChange={onChange}
-						className="appearance-none w-4 h-4 border-2 border-pink-400/50 bg-pink-950/30 rounded checked:bg-gradient-to-r checked:from-pink-600 checked:to-purple-600 focus:outline-none focus:border-pink-400 shadow-[0_0_10px_rgba(236,72,153,0.2)] hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] focus:shadow-[0_0_20px_rgba(236,72,153,0.4)] transition-all duration-300 backdrop-blur-sm"
+						className="appearance-none w-4 h-4 border-2 border-primary-400/50 bg-primary-950/30 rounded checked:bg-gradient-to-r checked:from-primary-600 checked:to-secondary-600 focus:outline-none focus:border-primary-400 shadow-glow-sm hover:shadow-glow focus:shadow-glow-lg transition-all duration-300 backdrop-blur-sm"
 					/>
 					{/* Custom checkmark */}
 					<div
@@ -46,7 +46,7 @@ const Checkbox = ({
 					</div>
 				</div>
 				{label && (
-					<span className="text-sm text-pink-100 group-hover:text-pink-300 transition-colors duration-200 leading-none -mt-0.5">
+					<span className="text-sm text-primary-100 group-hover:text-primary-300 transition-colors duration-200 leading-none -mt-0.5">
 						{label}
 					</span>
 				)}

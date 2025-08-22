@@ -88,7 +88,7 @@ const SelectControlsGrid = memo(({
 				</div>
 			</div>
 
-			<div className="pt-5 border-t border-pink-400/10" data-intro="Here you can control how you want to see the notes. Each instrument will show how to play the notes" data-step="7">
+			<div className="pt-5 border-t border-primary-400/10" data-intro="Here you can control how you want to see the notes. Each instrument will show how to play the notes" data-step="7">
 				<ShowMeSelector
 					selectedPanelsToShow={selectedPanelsToShow}
 					setSelectedPanelsToShow={setSelectedPanelsToShow}

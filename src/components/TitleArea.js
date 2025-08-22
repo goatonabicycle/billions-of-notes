@@ -12,7 +12,7 @@ const LinkButton = memo(({ href, onClick, children, external }) => {
 				href={href}
 				target={external ? "_blank" : undefined}
 				rel={external ? "noreferrer" : undefined}
-				className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
+				className="text-primary-100 hover:text-primary-400 transition-colors duration-300"
 			>
 				{children}
 			</a>
@@ -23,7 +23,7 @@ const LinkButton = memo(({ href, onClick, children, external }) => {
 		<button
 			onClick={onClick}
 			type="button"
-			className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
+			className="text-primary-100 hover:text-primary-400 transition-colors duration-300"
 		>
 			{children}
 		</button>
@@ -37,10 +37,10 @@ const keyframes = `
   }
 
   @keyframes borderGlow {
-    0% { border-color: #ff00ff; }
-    33% { border-color: #00ffff; }
-    66% { border-color: #ffff00; }
-    100% { border-color: #ff00ff; }
+    0% { border-color: #3b82f6; }
+    33% { border-color: #60a5fa; }
+    66% { border-color: #93c5fd; }
+    100% { border-color: #3b82f6; }
   }
 `;
 
@@ -64,22 +64,19 @@ const TitleArea = memo(
 				<style>{keyframes}</style>
 
 				<div
-					className={`relative overflow-hidden ${!animationsEnabled ? "border border-pink-500/20" : ""}`}
+					className={`relative overflow-hidden bg-background-light ${!animationsEnabled ? "border border-primary-500/20" : "border-4"} ${animationsEnabled ? "shadow-glow-title" : ""}`}
 					style={{
-						borderWidth: "4px",
 						borderStyle: "solid",
 						animation: animationsEnabled ? "borderGlow 3s linear infinite" : "none",
-						boxShadow: animationsEnabled ? "0px 0px 120px rgba(255, 0, 255, 0.5), inset 0 0 10px rgba(255, 0, 255, 0.5)" : "none",
-						background: "#1a1a1a",
 					}}
 				>
 					<div
 						className="absolute inset-0 x-0"
 						style={{
 							background: `
-              linear-gradient(transparent 0%, #2d1f3d 90%),
-              linear-gradient(90deg, #ff10f0 1px, transparent 1px),
-              linear-gradient(#ff10f0 1px, transparent 1px)
+              linear-gradient(transparent 0%, rgba(29, 78, 216, 0.3) 90%),
+              linear-gradient(90deg, rgba(59, 130, 246, 0.8) 1px, transparent 1px),
+              linear-gradient(rgba(59, 130, 246, 0.8) 1px, transparent 1px)
             `,
 							backgroundSize: "40px 40px",
 							animation: animationsEnabled ? `gridMove ${gridAnimationDuration}s linear infinite` : "none",
@@ -104,7 +101,7 @@ const TitleArea = memo(
 							/>
 						</div>
 
-						<nav className="grid grid-cols-1 sm:grid-cols-6 text-xs pt-4 gap-4 border-t border-pink-500 place-items-center sm:place-items-center" data-intro="Here are some useful links if you're stuck or want more info on things" data-step="2">
+						<nav className="grid grid-cols-1 sm:grid-cols-6 text-xs pt-4 gap-4 border-t border-primary-500 place-items-center sm:place-items-center" data-intro="Here are some useful links if you're stuck or want more info on things" data-step="2">
 							<LinkButton href="/what-scale" external>Scale❔</LinkButton>
 							<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>Code🧑‍💻</LinkButton>
 							<ExplainButton />

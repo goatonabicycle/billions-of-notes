@@ -1,32 +1,22 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
 
-@import url('https://fonts.cdnfonts.com/css/jetbrains-mono-2');
-@import 'intro.js/minified/introjs.min.css';
+@import url("https://fonts.cdnfonts.com/css/jetbrains-mono-2");
+@import "intro.js/minified/introjs.min.css";
 
 body {
-  margin: 0;  
-  font-family: "JetBrains Mono", system-ui, monospace;  
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #141313;
-  color: #fdf7f1;	
-  background-size: 50px 50px;
-  background-position: 0 0, 25px 25px;
+	@apply m-0 font-mono antialiased bg-background text-text;
+	background-size: 50px 50px;
+	background-position: 0 0, 25px 25px;
 }
 
 .animations-enabled {
-	background-image: radial-gradient(hsla(304, 100%, 51%, 0.811) 1px, transparent 0),
-	radial-gradient(hsla(48, 100%, 51%, 0.791) 1px, transparent 0);
-	-webkit-animation: slide 2s linear infinite;
-  animation: slide 4s linear infinite;
-}
-
-@keyframes slide {
-	100% {
-		background-position: 50px 0, 125px 25px;
-	}
+	background-image: radial-gradient(
+			theme("colors.animation-dots.primary") 1px,
+			transparent 0
+		), radial-gradient(theme("colors.animation-dots.secondary") 1px, transparent 0);
+	@apply animate-slide;
 }
 
 code {
@@ -36,51 +26,51 @@ code {
 
 /* Custom IntroJS style stuff */
 .introjs-tooltip {
-  background: #1a1a1a;
-  color: #ff10f0;
-  border: 2px solid #ff10f0;
-  box-shadow: 0 0 10px rgba(255, 16, 240, 0.3);
+	@apply bg-background-light border-2 shadow-lg;
+	color: theme("colors.primary.400");
+	border-color: theme("colors.primary.400");
+	box-shadow: 0 0 10px theme("colors.primary.500 / 30%");
 }
 
 .introjs-tooltiptext {
-  color: #ff10f0;
+	color: theme("colors.primary.400");
 }
 
 .introjs-button {
-  background: #2d1f3d;
-  color: #ff10f0;
-  border: 1px solid #ff10f0;
-  text-shadow: none;
-  transition: all 0.3s ease;
+	@apply text-sm transition-all duration-300 border;
+	background: theme("colors.primary.950");
+	color: theme("colors.primary.400");
+	border-color: theme("colors.primary.400");
+	text-shadow: none;
 }
 
 .introjs-button:hover {
-  background: #ff10f0;
-  color: #1a1a1a;
+	background: theme("colors.primary.400");
+	@apply text-background-light;
 }
 
 .introjs-helperLayer {
-  background: rgba(255, 16, 240, 0.1);
-  border: 2px solid #ff10f0;
-  box-shadow: 0 0 10px rgba(255, 16, 240, 0.3);
+	background: theme("colors.primary.500 / 10%");
+	border: 2px solid theme("colors.primary.400");
+	box-shadow: 0 0 10px theme("colors.primary.500 / 30%");
 }
 
 .introjs-arrow {
-  border-color: #ff10f0;
+	border-color: theme("colors.primary.400");
 }
 
 .introjs-arrow.top {
-  border-bottom-color: #1a1a1a;
+	border-bottom-color: theme("colors.background.light");
 }
 
 .introjs-arrow.right {
-  border-left-color: #1a1a1a;
+	border-left-color: theme("colors.background.light");
 }
 
 .introjs-arrow.bottom {
-  border-top-color: #1a1a1a;
+	border-top-color: theme("colors.background.light");
 }
 
 .introjs-arrow.left {
-  border-right-color: #1a1a1a;
+	border-right-color: theme("colors.background.light");
 }

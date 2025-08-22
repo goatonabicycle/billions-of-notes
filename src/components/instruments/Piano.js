@@ -54,8 +54,8 @@ const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 	}
 
 	return (
-		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
-			<div className="text-purple-300 text-xl min-w-[100px] p-4">Piano</div>
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-primary-500/20">
+			<div className="text-primary-300 text-xl min-w-[100px] p-4">Piano</div>
 			<div className="piano-container">
 				<ReactPiano
 					noteRange={noteRange}

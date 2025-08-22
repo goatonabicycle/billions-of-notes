@@ -18,7 +18,7 @@ const Select = ({
 				{!hideLabel && (
 					<label
 						htmlFor={id}
-						className="block text-xs font-medium text-pink-300 uppercase mb-1"
+						className="block text-xs font-medium text-primary-300 uppercase mb-1"
 					>
 						{label}
 					</label>
@@ -29,13 +29,13 @@ const Select = ({
 						name={name}
 						value={selectedValue}
 						onChange={onChange}
-						className="w-full px-3 py-1.5 rounded border border-pink-400/30 bg-pink-950/30 text-pink-100 appearance-none"
+						className="w-full px-3 py-1.5 rounded border border-primary-400/30 bg-primary-950/30 text-primary-100 appearance-none"
 					>
 						{options.map((option) => (
 							<option
 								key={option.value}
 								value={option.value}
-								className="bg-pink-950 text-pink-100"
+								className="bg-primary-950 text-primary-100"
 							>
 								{option.label}
 							</option>
@@ -44,7 +44,7 @@ const Select = ({
 					<div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
 						<svg
 							role="graphics-symbol img"
-							className="h-4 w-4 text-pink-300"
+							className="h-4 w-4 text-primary-300"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"

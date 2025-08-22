@@ -27,7 +27,7 @@ const ScaleSelector = ({
 						{notesInScale.map((note, i) => (
 							<div
 								key={i.toString()}
-								className="px-1.5 py-0.5 text-[10px] rounded border border-pink-400/30 bg-pink-950/30 text-pink-100"
+								className="px-1.5 py-0.5 text-[10px] rounded border border-primary-400/30 bg-primary-950/30 text-primary-100"
 							>
 								{note || ""}
 							</div>

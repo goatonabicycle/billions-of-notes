@@ -8,8 +8,8 @@ const TabButton = ({ label, isActive, onClick }) => (
 		type="button"
 		onClick={onClick}
 		className={`px-8 py-2.5 text-sm font-medium transition-colors duration-200 ${isActive
-			? "text-pink-400 border-b-2 border-pink-500 -mb-px"
-			: "text-pink-300/60 hover:text-pink-300"
+			? "text-primary-400 border-b-2 border-primary-500 -mb-px"
+			: "text-primary-300/60 hover:text-primary-300"
 			}`}
 	>
 		{label}
@@ -45,7 +45,7 @@ const KeptStatesList = ({ keptStates, onLoadKeptState, onRemoveKeptState }) => {
 				>
 					<button
 						onClick={() => onLoadKeptState(state.id)}
-						className="flex-1 text-left text-gray-300 hover:text-pink-400 transition-colors"
+						className="flex-1 text-left text-gray-300 hover:text-primary-400 transition-colors"
 					>
 						<div className="font-medium">{state.displayName}</div>
 						<div className="text-xs text-gray-500">
@@ -54,7 +54,7 @@ const KeptStatesList = ({ keptStates, onLoadKeptState, onRemoveKeptState }) => {
 					</button>
 					<button
 						onClick={() => onRemoveKeptState(state.id)}
-						className="px-3 py-2 text-pink-500/70 hover:text-pink-500 hover:bg-pink-500/10 rounded transition-colors"
+						className="px-3 py-2 text-primary-500/70 hover:text-primary-500 hover:bg-primary-500/10 rounded transition-colors"
 						title="Remove from saved states"
 					>
 						<TrashIcon className="w-4 h-4" />
@@ -88,8 +88,8 @@ const TabbedControls = ({
 	];
 
 	return (
-		<div className="bg-gray-900/80 backdrop-blur-sm border border-pink-500/20">
-			<div className="flex border-b border-pink-500/20">
+		<div className="bg-gray-900/80 backdrop-blur-sm border border-primary-500/20">
+			<div className="flex border-b border-primary-500/20">
 				{tabs.map((tab) => (
 					<TabButton
 						key={tab.id}
@@ -103,7 +103,7 @@ const TabbedControls = ({
 			<div>
 				{activeTab === "settings" && (
 					<div className="space-y-6 p-6">
-						<div className="border-b border-pink-500/10 pb-6">
+						<div className="border-b border-primary-500/10 pb-6">
 							<SelectInputGrid
 								KEYS={KEYS}
 								scales={scales}

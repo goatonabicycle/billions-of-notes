@@ -332,7 +332,7 @@ function App() {
 					/>
 
 					{/* This would be cool as an animated line moving left to right as the notes play */}
-					<div className="w-full h-px bg-gradient-to-r from-pink-500 to-purple-500" />
+					<div className="w-full h-px bg-gradient-to-r from-primary-500 to-secondary-500" />
 
 					<NotesUsed
 						notesInScale={notesInScale}

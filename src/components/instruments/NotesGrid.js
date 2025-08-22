@@ -64,7 +64,7 @@ const NotesGrid = ({ octaveRange, notes, activeIndex, notesInScale }) => {
 		<>
 
 			<div className="notes-grid">
-				<div className="text-purple-300 text-xl min-w-[100px] p-4">Piano Roll</div>
+				<div className="text-primary-300 text-xl min-w-[100px] p-4">Piano Roll</div>
 				{allPossibleNotes.map((noteRow, rowIndex) => {
 					const octave = Number.parseInt(noteRow.slice(-1));
 					const nextOctave = Number.parseInt(

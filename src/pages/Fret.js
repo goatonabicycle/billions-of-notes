@@ -200,18 +200,18 @@ export default function ScaleFretboard() {
 		<div className="flex flex-col h-screen gap-6 p-6 pt-6">
 			{isInitialLoading && (
 				<div className="absolute inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
-					<span className="text-pink-300">Loading...</span>
+					<span className="text-primary-300">Loading...</span>
 				</div>
 			)}
 
-			<a href="/" className="text-xs text-pink-100 hover:text-pink-400 transition-colors duration-300">Back home</a>
+			<a href="/" className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300">Back home</a>
 			<div className="flex justify-center items-center gap-2">
-				<div className="text-xl text-pink-300 uppercase">
+				<div className="text-xl text-primary-300 uppercase">
 					Just a fretboard
 				</div>
 			</div>
 			<div className="flex gap-4">
-				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
+				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-4 rounded-lg">
 					<div className="flex flex-wrap gap-6">
 						<div>
 							<Select
@@ -250,7 +250,7 @@ export default function ScaleFretboard() {
 								onClick={saveAndShare}
 								type="button"
 								disabled={isInitialLoading || isSharing}
-								className="px-3 py-1.5 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 disabled:opacity-50"
+								className="px-3 py-1.5 text-sm bg-primary-500 text-white rounded hover:bg-primary-600 disabled:opacity-50"
 							>
 								Share
 							</button>
@@ -264,13 +264,13 @@ export default function ScaleFretboard() {
 					</div>
 				</div>
 
-				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-4 rounded-lg">
+				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-4 rounded-lg">
 					<div className="block text-sm text-gray-200 mb-2">Chords</div>
 					Coming soon
 				</div>
 			</div>
 
-			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 rounded-lg overflow-hidden">
+			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 rounded-lg overflow-hidden">
 				{!isInitialLoading && <Guitar notesToPlay={visibleNotes} playbackIndex={0} scaleNotes={notesInScale} smallOctaveNumbers={true} />}
 			</div>
 		</div>

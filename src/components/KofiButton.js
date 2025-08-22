@@ -9,7 +9,7 @@ const KofiButton = () => {
 		<>
 			<button
 				onClick={() => setIsModalOpen(true)}
-				className="text-pink-100 hover:text-pink-400 transition-colors duration-300"
+				className="text-primary-100 hover:text-primary-400 transition-colors duration-300"
 			>
 				☕ Coffee
 			</button>
