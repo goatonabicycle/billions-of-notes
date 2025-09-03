@@ -260,7 +260,7 @@ const Fretboard = ({
                 min-w-[10px] w-full h-[40px]
                 rounded
                 border border-zinc-800
-                transition-all duration-200 ease-out
+                transition-all duration-100 ease-out
                 transform-gpu
               `;
 
@@ -310,7 +310,7 @@ const Fretboard = ({
 									}}
 								>
 									{j === 0 && ChangeTuningIcon}
-									<span className={`${isCurrentNote ? "text-[1.1em] font-black" : "text-[0.8em]"} transition-all duration-200`}>
+									<span className={`${isCurrentNote ? "text-[1.1em] font-black" : "text-[0.8em]"} transition-all duration-100`}>
 										{renderNote(note.note)}
 									</span>
 								</div>

@@ -57,8 +57,8 @@ module.exports = {
 			},
 			animation: {
 				'slide': 'slide 4s linear infinite',
-				'pulse-glow': 'pulse-glow 1.5s ease-in-out infinite',
-				'note-bounce': 'note-bounce 0.3s ease-out',
+				'pulse-glow': 'pulse-glow 0.8s ease-in-out infinite',
+				'note-bounce': 'note-bounce 0.15s ease-out',
 			},
 			boxShadow: {
 				'glow-sm': '0 0 10px rgba(59, 130, 246, 0.2)',
