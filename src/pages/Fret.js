@@ -19,7 +19,6 @@ const scales = Scale.names();
 
 export default function ScaleFretboard() {
 	const { id } = useParams();
-	const [shareUrl, setShareUrl] = useState('');
 	const [isInitialLoading, setIsInitialLoading] = useState(false);
 	const [isSharing, setIsSharing] = useState(false);
 
@@ -120,47 +119,6 @@ export default function ScaleFretboard() {
 		}
 	}, [id, KEYS, scales, loadSharedState]);
 
-	const saveAndShare = async () => {
-		setIsSharing(true);
-		const stateToSave = {
-			key: inputState.key,
-			scale: inputState.scale,
-			notation: inputState.notation,
-			octaves: inputState.octaves,
-		};
-		const stateHash = btoa(JSON.stringify(stateToSave));
-
-		const { data: existingState } = await supabase
-			.from('fretboard_states')
-			.select('id')
-			.eq('state_hash', stateHash)
-			.single();
-
-		if (existingState) {
-			const shareableUrl = `${window.location.origin}/fret/${existingState.id}`;
-			setShareUrl(shareableUrl);
-			navigator.clipboard.writeText(shareableUrl);
-			setIsSharing(false);
-			return;
-		}
-
-		const { data, error } = await supabase
-			.from('fretboard_states')
-			.insert([{ ...stateToSave, state_hash: stateHash }])
-			.select()
-			.single();
-
-		if (error) {
-			console.error('Error saving state:', error);
-			setIsSharing(false);
-			return;
-		}
-
-		const shareableUrl = `${window.location.origin}/fret/${data.id}`;
-		setShareUrl(shareableUrl);
-		navigator.clipboard.writeText(shareableUrl);
-		setIsSharing(false);
-	};
 
 	const handleInputChange = useCallback(
 		(event) => {
@@ -221,7 +179,7 @@ export default function ScaleFretboard() {
 								options={keyOptions}
 								onChange={handleInputChange}
 								selectedValue={inputState.key}
-								disabled={isInitialLoading || isSharing}
+								disabled={isInitialLoading}
 							/>
 						</div>
 
@@ -240,33 +198,12 @@ export default function ScaleFretboard() {
 									setInputState={handleOctaveChange}
 									hideLabel={true}
 									isFretComponent={true}
-									disabled={isInitialLoading || isSharing}
+									disabled={isInitialLoading}
 								/>
 							</div>
 						</div>
 
-						<div className="flex items-center gap-2">
-							<button
-								onClick={saveAndShare}
-								type="button"
-								disabled={isInitialLoading || isSharing}
-								className="px-3 py-1.5 text-sm bg-primary-500 text-white rounded hover:bg-primary-600 disabled:opacity-50"
-							>
-								Share
-							</button>
-							{isSharing && (
-								<span className="text-sm text-gray-200">Getting link...</span>
-							)}
-							{shareUrl && !isSharing && (
-								<span className="text-sm text-gray-200">URL copied to clipboard!</span>
-							)}
-						</div>
 					</div>
-				</div>
-
-				<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-4 rounded-lg">
-					<div className="block text-sm text-gray-200 mb-2">Chords</div>
-					Coming soon
 				</div>
 			</div>
 

@@ -9,8 +9,7 @@ import {
 	ReverseIcon,
 	SaveIcon,
 	ShareIcon,
-	Guitar,
-	StarIcon
+	Guitar
 } from "./Icons";
 
 const ButtonBlock = ({
@@ -32,9 +31,6 @@ const ButtonBlock = ({
 	saveAndShare,
 	isGeneratingLink,
 	setActiveTab,
-	isKeeping,
-	loadedFromKeep,
-	stateModified,
 }) => {
 	const handleNewNotesClick = useCallback(
 		() => setTriggerRegenerate(!triggerRegenerate),
@@ -52,17 +48,12 @@ const ButtonBlock = ({
 	);
 
 	const handleShareClick = useCallback(
-		() => saveAndShare(false),
-		[saveAndShare]
+		() => {
+			// Functionality coming soon
+		},
+		[]
 	);
 
-	const handleKeepClick = useCallback(async () => {
-		try {
-			await saveAndShare(true);
-		} catch (error) {
-			console.error('Error keeping state:', error);
-		}
-	}, [saveAndShare]);
 
 	const handleSaveMIDIClick = useCallback(
 		() => SaveToMidi(
@@ -125,10 +116,10 @@ const ButtonBlock = ({
 			/>
 			<Button
 				onClick={handleShareClick}
-				text={isGeneratingLink ? "Generating..." : shareButtonText}
+				text="Share"
 				icon={ShareIcon}
-				disabled={isGeneratingLink}
-				tooltip="Share your current configuration with others"
+				disabled={true}
+				tooltip="Share functionality coming soon"
 			/>
 			<Button
 				onClick={handleSaveMIDIClick}
@@ -141,17 +132,6 @@ const ButtonBlock = ({
 				text="Fretboard"
 				onClick={() => window.open(getFretboardUrl(), '_blank')}
 				tooltip="View these notes on a guitar fretboard"
-			/>
-			<Button
-				icon={StarIcon}
-				text={isKeeping ? "Saving..." : "Keep"}
-				onClick={handleKeepClick}
-				disabled={isKeeping || isGeneratingLink || (loadedFromKeep && !stateModified)}
-				tooltip={
-					loadedFromKeep && !stateModified
-						? "Make changes to save a new version"
-						: "Save this sequence to your favorites"
-				}
 			/>
 		</div>
 	);

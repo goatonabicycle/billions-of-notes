@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { useStorage } from './useLocalStorage';
 
-export function useInputStateWithTracking(initialState, setStateModified, setLoadedFromKeep) {
+export function useInputStateWithTracking(initialState, setStateModified) {
 	const [state, _setState] = useStorage("inputState", initialState);
 	const stateRef = useRef(state);
 	stateRef.current = state;
@@ -19,16 +19,15 @@ export function useInputStateWithTracking(initialState, setStateModified, setLoa
 		
 		if (hasChanged) {
 			setStateModified(true);
-			setLoadedFromKeep(false);
 		}
 		
 		_setState(actualNewState);
-	}, [_setState, setStateModified, setLoadedFromKeep]);
+	}, [_setState, setStateModified]);
 
 	return [state, setState];
 }
 
-export function useControlStateWithTracking(initialState, setStateModified, setLoadedFromKeep) {
+export function useControlStateWithTracking(initialState, setStateModified) {
 	const [state, _setState] = useStorage("controlState", initialState);
 	const stateRef = useRef(state);
 	stateRef.current = state;
@@ -47,11 +46,10 @@ export function useControlStateWithTracking(initialState, setStateModified, setL
 		
 		if (hasChanged) {
 			setStateModified(true);
-			setLoadedFromKeep(false);
 		}
 		
 		_setState(actualNewState);
-	}, [_setState, setStateModified, setLoadedFromKeep]);
+	}, [_setState, setStateModified]);
 
 	return [state, setState];
 }

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Scale } from "tonal";
 
 import { useStorage } from "../hooks/useLocalStorage";
-import { useKeptStates } from "../hooks/useKeptStates";
 import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
 import { useInputStateWithTracking, useControlStateWithTracking } from "../hooks/useStateWithTracking";
 import * as supabaseService from "../services/supabaseService";
@@ -46,7 +45,6 @@ function App() {
 	const [debugEnabled, _setDebugEnabled] = useStorage("debugEnabled", DEFAULT_DEBUG_ENABLED);
 	const [animationsEnabled, _setAnimationsEnabled] = useStorage("animationsEnabled", DEFAULT_ANIMATIONS_ENABLED);
 	const [isGeneratingLink, setIsGeneratingLink] = useState(false);
-	const [loadedFromKeep, setLoadedFromKeep] = useState(false);
 
 	const [inputState, setInputState] = useInputStateWithTracking(
 		{
@@ -56,8 +54,7 @@ function App() {
 			emptyNotes: DEFAULT_EMPTY_NOTES,
 			octaves: DEFAULT_OCTAVES,
 		},
-		setStateModified,
-		setLoadedFromKeep
+		setStateModified
 	);
 
 	const [controlState, setControlState] = useControlStateWithTracking(
@@ -69,8 +66,7 @@ function App() {
 			instrument: DEFAULT_INSTRUMENT,
 			tieTogether: false,
 		},
-		setStateModified,
-		setLoadedFromKeep
+		setStateModified
 	);
 
 	const handleInputChange = useCallback(
@@ -95,13 +91,7 @@ function App() {
 		[setControlState],
 	);
 
-	const [isKeeping, setIsKeeping] = useState(false);
 	const [activeTab, setActiveTab] = useState("settings");
-	const {
-		addKeptState,
-		removeKeptState,
-		getKeptStates
-	} = useKeptStates();
 
 	const [selectedPanelsToShow, _setSelectedPanelsToShow] = useStorage(
 		"selectedPanelsToShow",
@@ -163,12 +153,8 @@ function App() {
 		loadInitialState();
 	}, [id]);
 
-	const saveAndShare = async (isKeeping = false) => {
-		if (isKeeping) {
-			setIsKeeping(true);
-		} else {
-			setIsGeneratingLink(true);
-		}
+	const saveAndShare = async () => {
+		setIsGeneratingLink(true);
 
 		try {
 			const stateId = await supabaseService.saveState({
@@ -182,62 +168,29 @@ function App() {
 				throw new Error('Failed to save state');
 			}
 
-			if (isKeeping) {
-				const displayName = supabaseService.generateDisplayName(inputState);
-				addKeptState(stateId, displayName);
-				setActiveTab("keep");
-			} else {
-				const shareableUrl = `${window.location.origin}/${stateId}`;
-				await navigator.clipboard.writeText(shareableUrl);
-				setShareButtonText("Link copied!");
-				setTimeout(() => setShareButtonText("Share notes"), 2000);
-			}
+			const shareableUrl = `${window.location.origin}/${stateId}`;
+			await navigator.clipboard.writeText(shareableUrl);
+			setShareButtonText("Link copied!");
+			setTimeout(() => setShareButtonText("Share notes"), 2000);
 
 			setStateModified(false);
 
 		} catch (error) {
 			console.error('Error in saveAndShare:', error);
-			if (isKeeping) {
-				console.error('Error keeping state:', error);
-			} else {
-				setShareButtonText("Error saving state");
-				setTimeout(() => setShareButtonText("Share notes"), 2000);
-			}
+			setShareButtonText("Error saving state");
+			setTimeout(() => setShareButtonText("Share notes"), 2000);
 		} finally {
-			if (isKeeping) {
-				setIsKeeping(false);
-			} else {
-				setIsGeneratingLink(false);
-			}
+			setIsGeneratingLink(false);
 		}
 	};
 
-	const loadKeptState = async (stateId) => {
-		try {
-			const data = await supabaseService.loadKeptState(stateId);
-			
-			if (data) {
-				const parsed = supabaseService.parseStateData(data);
-				setLoadedFromUrl(true);
-				setLoadedFromKeep(true);
-				setStateModified(false);
-				setInputState(parsed.inputState);
-				setControlState(parsed.controlState);
-				setRandomNotes(parsed.randomNotes);
-				setSelectedPanelsToShow(parsed.panelsToShow);
-			}
-		} catch (error) {
-			console.error('Error in loadKeptState:', error);
-		}
-	};
 
 
 	useEffect(() => {
 		if (!inputState) return;
 
-		if (loadedFromUrl || loadedFromKeep) {
+		if (loadedFromUrl) {
 			setLoadedFromUrl(false);
-			setLoadedFromKeep(false);
 			return;
 		}
 
@@ -320,15 +273,11 @@ function App() {
 						isGeneratingLink={isGeneratingLink}
 						activeTab={activeTab}
 						setActiveTab={setActiveTab}
-						isKeeping={isKeeping}
-						loadedFromKeep={loadedFromKeep}
-						stateModified={stateModified}
 					/>
 
 					<SharedStateIndicator
 						stateId={id}
 						isModified={stateModified}
-						loadedFromKeep={loadedFromKeep}
 					/>
 
 					{/* This would be cool as an animated line moving left to right as the notes play */}
@@ -363,9 +312,6 @@ function App() {
 						handleControlChange={handleControlChange}
 						activeTab={activeTab}
 						setActiveTab={setActiveTab}
-						keptStates={getKeptStates()}
-						onRemoveKeptState={removeKeptState}
-						onLoadKeptState={loadKeptState}
 					/>
 				</div>
 			</div>

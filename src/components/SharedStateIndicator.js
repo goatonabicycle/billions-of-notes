@@ -1,4 +1,4 @@
-const SharedStateIndicator = ({ stateId, isModified, loadedFromKeep }) => {
+const SharedStateIndicator = ({ stateId, isModified }) => {
   return
 
   // TODO: Having this once the state handling is less complex will be super nice.
