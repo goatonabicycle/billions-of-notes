@@ -186,21 +186,19 @@ function App() {
 
 
 
+	const generatedNotes = useMemo(() => {
+		if (!inputState || loadedFromUrl) return null;
+		return generateRandomNotes(inputState);
+	}, [inputState, loadedFromUrl]);
+
 	useEffect(() => {
-		if (!inputState) return;
+		if (!generatedNotes) return;
 
-		if (loadedFromUrl) {
-			setLoadedFromUrl(false);
-			return;
-		}
-
-		const { notesInScale, randomNotes } = generateRandomNotes(inputState);
-		
-		setNotesInScale(notesInScale);
-		setRandomNotes(randomNotes);
+		setNotesInScale(generatedNotes.notesInScale);
+		setRandomNotes(generatedNotes.randomNotes);
 		setCurrentIndex(0);
 		setCurrentColour(randomRGBA());
-	}, [inputState, triggerRegenerate]);
+	}, [generatedNotes]);
 
 	useEffect(() => {
 		if (!inputState) return;
