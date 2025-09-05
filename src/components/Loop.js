@@ -217,4 +217,4 @@ const Loop = ({
 	return null;
 };
 
-export default Loop;
+export default React.memo(Loop);

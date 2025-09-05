@@ -78,4 +78,4 @@ const TabbedControls = ({
 	);
 };
 
-export default TabbedControls;
+export default React.memo(TabbedControls);

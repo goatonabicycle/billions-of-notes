@@ -114,7 +114,6 @@ function App() {
 		setStateModified(true);
 
 		setInputState({
-			...inputState,
 			key: DEFAULT_KEY,
 			scale: DEFAULT_SCALE,
 			numberOfNotes: DEFAULT_NUMBER_OF_NOTES,
@@ -124,7 +123,6 @@ function App() {
 
 		setSelectedPanelsToShow(DEFAULT_PANELS_TO_SHOW);
 		setControlState({
-			...controlState,
 			tempo: DEFAULT_TEMPO,
 			volume: DEFAULT_VOLUME,
 			noteMode: DEFAULT_NOTES_MODE,
@@ -132,7 +130,7 @@ function App() {
 			instrument: DEFAULT_INSTRUMENT,
 			tieTogether: false,
 		});
-	}, [setCurrentIndex, setInputState, inputState]);
+	}, [setInputState, setControlState, setSelectedPanelsToShow, setCurrentIndex, setStateModified]);
 
 	useEffect(() => {
 		async function loadInitialState() {
@@ -189,7 +187,9 @@ function App() {
 	const generatedNotes = useMemo(() => {
 		if (!inputState || loadedFromUrl) return null;
 		return generateRandomNotes(inputState);
-	}, [inputState, loadedFromUrl]);
+	}, [inputState, triggerRegenerate, loadedFromUrl]);
+
+	const newColour = useMemo(() => randomRGBA(), [generatedNotes]);
 
 	useEffect(() => {
 		if (!generatedNotes) return;
@@ -197,8 +197,8 @@ function App() {
 		setNotesInScale(generatedNotes.notesInScale);
 		setRandomNotes(generatedNotes.randomNotes);
 		setCurrentIndex(0);
-		setCurrentColour(randomRGBA());
-	}, [generatedNotes]);
+		setCurrentColour(newColour);
+	}, [generatedNotes, newColour]);
 
 	useEffect(() => {
 		if (!inputState) return;
