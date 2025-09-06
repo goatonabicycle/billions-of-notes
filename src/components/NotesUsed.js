@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Modal from "./Modal.js";
 import Select from "./Select";
 import Button from "./Button.js";
@@ -28,13 +28,7 @@ const NotesUsed = ({
 		setIsModalOpen(false);
 	};
 
-	const getGridColumns = (total) => {
-		if (total % 4 === 0) return 4;
-		if (total % 3 === 0) return 3;
-		return 3;
-	};
-
-	const groupNotes = () => {
+	const { groupedNotes, originalIndexMap } = useMemo(() => {
 		const groupedNotes = [];
 		const originalIndexMap = [];
 
@@ -48,11 +42,14 @@ const NotesUsed = ({
 		});
 
 		return { groupedNotes, originalIndexMap };
-	};
+	}, [randomNotes, tieTogether]);
 
-	const { groupedNotes, originalIndexMap } = groupNotes();
 	const totalNotes = randomNotes.length;
-	const columns = getGridColumns(totalNotes);
+	const columns = useMemo(() => {
+		if (totalNotes % 4 === 0) return 4;
+		if (totalNotes % 3 === 0) return 3;
+		return 3;
+	}, [totalNotes]);
 
 	return (
 		<div className="w-full" data-intro="These are the generated notes. This is what you're hearing right now and what the output is. All the buttons and controls exist to influence these notes" data-step="4">
@@ -157,4 +154,12 @@ const NotesUsed = ({
 	);
 };
 
-export default NotesUsed;
+export default React.memo(NotesUsed, (prevProps, nextProps) => {
+	return (
+		prevProps.randomNotes === nextProps.randomNotes &&
+		prevProps.currentIndex === nextProps.currentIndex &&
+		prevProps.notesInScale === nextProps.notesInScale &&
+		prevProps.selectedOctaves === nextProps.selectedOctaves &&
+		prevProps.tieTogether === nextProps.tieTogether
+	);
+});
