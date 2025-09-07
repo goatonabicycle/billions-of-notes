@@ -27,14 +27,14 @@ const Fretboard = ({
 	const [modalStringIndex, setModalStringIndex] = useState(null);
 	const [hasTuningChanged, setHasTuningChanged] = useState(false);
 
-	function formatNote(note) {
+	const formatNote = useCallback((note) => {
 		if (!note) return '';
 		const { pc, oct } = Note.get(note);
 		if (noteMode === 'sharp') {
 			return (pc + (oct || '')).replace(/b/g, '#');
 		}
 		return Note.enharmonic(pc).replace(/#/g, 'b') + (oct || '');
-	}
+	}, [noteMode]);
 
 	const updateCurrentPosition = (newPosition) => {
 		setCurrentPosition(newPosition);
@@ -74,40 +74,48 @@ const Fretboard = ({
 		setHasTuningChanged(hasTuningChanged);
 	}, [selectedTuning, initialTuning]);
 
+	const notePositionsMap = useMemo(() => {
+		const map = new Map();
+		flatFretboard.forEach(pos => {
+			const formatted = formatNote(pos.note);
+			if (!map.has(formatted)) {
+				map.set(formatted, []);
+			}
+			map.get(formatted).push(pos);
+		});
+		return map;
+	}, [flatFretboard, formatNote]);
+
 	useEffect(() => {
 		const currentNote = notesToPlay[playbackIndex];
 		if (!currentNote) return;
 
 		const formattedCurrentNote = formatNote(currentNote);
+		const positions = notePositionsMap.get(formattedCurrentNote);
+		if (!positions || positions.length === 0) return;
+
 		const { startFret, endFret } = getPreferredFretRange();
 		let minDistance = Number.POSITIVE_INFINITY;
-		let closestNote;
+		let closestNote = null;
 
-		for (const note of flatFretboard) {
-			const formattedNote = formatNote(note.note);
-			if (
-				formattedNote === formattedCurrentNote &&
-				note.fret >= startFret &&
-				note.fret <= endFret
-			) {
-				const distance = Math.abs(note.stringIndex - currentPosition.stringIndex) +
-					Math.abs(note.fret - currentPosition.fret);
+		for (const pos of positions) {
+			if (pos.fret >= startFret && pos.fret <= endFret) {
+				const distance = Math.abs(pos.stringIndex - currentPosition.stringIndex) +
+					Math.abs(pos.fret - currentPosition.fret);
 				if (distance < minDistance) {
 					minDistance = distance;
-					closestNote = note;
+					closestNote = pos;
 				}
 			}
 		}
 
 		if (!closestNote) {
-			for (const note of flatFretboard) {
-				if (formatNote(note.note) === formattedCurrentNote) {
-					const distance = Math.abs(note.stringIndex - currentPosition.stringIndex) +
-						Math.abs(note.fret - currentPosition.fret);
-					if (distance < minDistance) {
-						minDistance = distance;
-						closestNote = note;
-					}
+			for (const pos of positions) {
+				const distance = Math.abs(pos.stringIndex - currentPosition.stringIndex) +
+					Math.abs(pos.fret - currentPosition.fret);
+				if (distance < minDistance) {
+					minDistance = distance;
+					closestNote = pos;
 				}
 			}
 		}
@@ -119,7 +127,7 @@ const Fretboard = ({
 				fret: closestNote.fret,
 			});
 		}
-	}, [notesToPlay, playbackIndex, getPreferredFretRange, flatFretboard, currentPosition]);
+	}, [notesToPlay, playbackIndex, getPreferredFretRange, notePositionsMap, currentPosition]);
 
 	const { startFret, endFret } = getPreferredFretRange();
 	const preferredRangeStyle = {
@@ -139,7 +147,7 @@ const Fretboard = ({
 		return [12, 24].includes(fretNumber);
 	};
 
-	function renderNote(note) {
+	const renderNote = useCallback((note) => {
 		if (!note) return note;
 		const { pc, oct } = Note.get(note);
 		const pitch = noteMode === 'sharp' ? pc.replace(/b/g, '#') : Note.enharmonic(pc).replace(/#/g, 'b');
@@ -149,7 +157,7 @@ const Fretboard = ({
 				{oct && <span className={`${smallOctaveNumbers ? 'text-[0.8em]' : ''}`}>{oct}</span>}
 			</>
 		);
-	}
+	}, [noteMode, smallOctaveNumbers]);
 
 	return (
 		<div className="flex flex-col items-center overflow-hidden pb-8 ">
@@ -340,4 +348,4 @@ const Fretboard = ({
 	);
 };
 
-export default Fretboard;
+export default React.memo(Fretboard);
