@@ -81,23 +81,33 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
 		}
 	}, []);
 
-	const animate = useCallback(() => {
-		const canvas = canvasRef.current;
-		const ctx = canvas.getContext("2d");
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		if (linePath.length > 0) {
-			drawLine(linePath, ctx);
-			drawSecondaryLines(linePath, ctx);
-			drawAnimationDot(linePath[activeNote], ctx);
-		}
-
-		requestAnimationFrame(animate);
-	}, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot]);
-
 	useEffect(() => {
+		let animationFrameId;
+		
+		const animate = () => {
+			const canvas = canvasRef.current;
+			if (!canvas) return;
+			
+			const ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			if (linePath.length > 0) {
+				drawLine(linePath, ctx);
+				drawSecondaryLines(linePath, ctx);
+				drawAnimationDot(linePath[activeNote], ctx);
+			}
+
+			animationFrameId = requestAnimationFrame(animate);
+		};
+		
 		animate();
-	}, [animate]);
+		
+		return () => {
+			if (animationFrameId) {
+				cancelAnimationFrame(animationFrameId);
+			}
+		};
+	}, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot]);
 
 	return (
 		<div onClick={onClick} className="line-container">
