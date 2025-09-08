@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import * as Tone from "tone";
 
-const ClickFirst = ({ onClick }) => {
+const ClickFirst = React.memo(({ onClick }) => {
 	const [isVisible, setIsVisible] = useState(true);
 
 	const handleClick = () => {
@@ -41,7 +41,7 @@ const ClickFirst = ({ onClick }) => {
 			</div>
 		</div>
 	);
-};
+});
 
 const Loop = ({
 	notes,
@@ -58,14 +58,14 @@ const Loop = ({
 	const instrumentRef = useRef(null);
 	const partRef = useRef(null);
 
-	const envelopeSettings = {
+	const envelopeSettings = useMemo(() => ({
 		attack: 0.01,
 		decay: 0.1,
 		sustain: 1,
 		release: 10.10
-	};
+	}), []);
 
-	const createInstrument = (type) => {
+	const createInstrument = useCallback((type) => {
 		const options = { envelope: envelopeSettings };
 
 		switch (type) {
@@ -80,20 +80,11 @@ const Loop = ({
 				const SynthClass = Tone[type];
 				return new SynthClass(options).toDestination();
 		}
-	};
+	}, [envelopeSettings]);
 
-	const setupInstrument = async () => {
-		if (instrumentRef.current) {
-			instrumentRef.current.triggerRelease("+0");
-			instrumentRef.current.dispose();
-		}
 
-		instrumentRef.current = createInstrument(instrument);
-		const volumeValue = volume === 0 ? Number.NEGATIVE_INFINITY : Tone.gainToDb(volume / 100);
-		instrumentRef.current.volume.value = volumeValue;
-	};
 
-	const setupLoop = () => {
+	const setupLoop = useCallback(() => {
 		if (partRef.current) {
 			partRef.current.dispose();
 		}
@@ -122,7 +113,7 @@ const Loop = ({
 		part.loop = true;
 		part.loopEnd = notes.length * beatDuration;
 		partRef.current = part;
-	};
+	}, [bpm, notePlayLength, notes, tieTogether, setCurrentIndex]);
 
 	const handleOverlayClick = async () => {
 		await Tone.start();
@@ -169,7 +160,7 @@ const Loop = ({
 		};
 
 		setup();
-	}, [instrument, volume, toneStarted]);
+	}, [instrument, volume, toneStarted, createInstrument, isPlaying, setupLoop]);
 
 	useEffect(() => {
 		if (!toneStarted || !notes?.length) return;
@@ -208,7 +199,7 @@ const Loop = ({
 				instrumentRef.current.triggerRelease("+0");
 			}
 		};
-	}, [notes, bpm, isPlaying, tieTogether, toneStarted]);
+	}, [notes, bpm, isPlaying, tieTogether, toneStarted, setupLoop, notePlayLength, setCurrentIndex]);
 
 	if (!toneStarted) {
 		return <ClickFirst onClick={handleOverlayClick} />;
