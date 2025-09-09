@@ -21,6 +21,7 @@ export default function ScaleFretboard() {
 	const { id } = useParams();
 	const [isInitialLoading, setIsInitialLoading] = useState(false);
 	const [isSharing, setIsSharing] = useState(false);
+	const [shareUrl, setShareUrl] = useState('');
 
 	const [inputState, _setInputState] = useStorage("fret-inputState", {
 		key: DEFAULT_KEY,
@@ -119,6 +120,57 @@ export default function ScaleFretboard() {
 		}
 	}, [id, KEYS, scales, loadSharedState]);
 
+	const saveAndShare = async () => {
+		setIsSharing(true);
+		const stateToSave = {
+			key: inputState.key,
+			scale: inputState.scale,
+			notation: inputState.notation,
+			octaves: inputState.octaves,
+		};
+		const stateHash = btoa(JSON.stringify(stateToSave));
+
+		try {
+			const { data: existingState } = await supabase
+				.from('fretboard_states')
+				.select('id')
+				.eq('state_hash', stateHash)
+				.single();
+
+			if (existingState) {
+				const shareableUrl = `${window.location.origin}/fret/${existingState.id}`;
+				setShareUrl(shareableUrl);
+				navigator.clipboard.writeText(shareableUrl);
+				setTimeout(() => setShareUrl(''), 3000);
+				setIsSharing(false);
+				return;
+			}
+
+			const { data, error } = await supabase
+				.from('fretboard_states')
+				.insert([{
+					...stateToSave,
+					state_hash: stateHash
+				}])
+				.select()
+				.single();
+
+			if (error) {
+				console.error('Error saving state:', error);
+				setIsSharing(false);
+				return;
+			}
+
+			const shareableUrl = `${window.location.origin}/fret/${data.id}`;
+			setShareUrl(shareableUrl);
+			navigator.clipboard.writeText(shareableUrl);
+			setTimeout(() => setShareUrl(''), 3000);
+		} catch (error) {
+			console.error('Error sharing:', error);
+		} finally {
+			setIsSharing(false);
+		}
+	};
 
 	const handleInputChange = useCallback(
 		(event) => {
@@ -202,6 +254,19 @@ export default function ScaleFretboard() {
 								/>
 							</div>
 						</div>
+
+						<button
+							onClick={saveAndShare}
+							disabled={isSharing}
+							className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 disabled:opacity-50 disabled:cursor-not-allowed"
+						>
+							{isSharing ? 'Sharing...' : 'Share'}
+						</button>
+						{shareUrl && (
+							<div className="text-sm text-gray-200">
+								URL copied to clipboard!
+							</div>
+						)}
 
 					</div>
 				</div>
