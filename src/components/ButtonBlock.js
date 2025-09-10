@@ -49,9 +49,9 @@ const ButtonBlock = ({
 
 	const handleShareClick = useCallback(
 		() => {
-			// Functionality coming soon
+			saveAndShare();
 		},
-		[]
+		[saveAndShare]
 	);
 
 
@@ -116,10 +116,10 @@ const ButtonBlock = ({
 			/>
 			<Button
 				onClick={handleShareClick}
-				text="Share"
+				text={shareButtonText}
 				icon={ShareIcon}
-				disabled={true}
-				tooltip="Share functionality coming soon"
+				disabled={isGeneratingLink}
+				tooltip="Copy a shareable link to clipboard"
 			/>
 			<Button
 				onClick={handleSaveMIDIClick}
