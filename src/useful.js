@@ -1,7 +1,7 @@
 export const DEFAULT_KEY = "C";
 export const DEFAULT_SCALE = "major";
 export const DEFAULT_TEMPO = 220;
-export const DEFAULT_NUMBER_OF_NOTES = 8;
+export const DEFAULT_NUMBER_OF_NOTES = 16;
 export const DEFAULT_INSTRUMENT = "DuoSynth";
 export const DEFAULT_OCTAVES = [3, 4];
 export const DEFAULT_POSITION = 2;
