@@ -82,7 +82,7 @@ const TabbedControls = ({
 				</div>
 
 				<div className={activeTab === "tools" ? "block" : "hidden"}>
-					<div className="space-y-6 p-6" data-intro="Here you can access other tools and apps in the Billions of Notes suite" data-step="8">
+					<div className="space-y-6 p-6" data-intro="Here you can access other tools and things that you might find useful" data-step="8">
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<a
 								href="/fret"
@@ -112,11 +112,10 @@ const TabbedControls = ({
 								<label className="text-sm text-primary-300">Animations</label>
 								<button
 									onClick={() => setAnimationsEnabled(!animationsEnabled)}
-									className={`px-4 py-2 text-xs font-medium rounded transition-all duration-200 ${
-										animationsEnabled
-											? 'bg-primary-500 text-white border-2 border-primary-400'
-											: 'bg-background-dark text-primary-400 border-2 border-primary-500/50'
-									}`}
+									className={`px-4 py-2 text-xs font-medium rounded transition-all duration-200 ${animationsEnabled
+										? 'bg-primary-500 text-white border-2 border-primary-400'
+										: 'bg-background-dark text-primary-400 border-2 border-primary-500/50'
+										}`}
 								>
 									{animationsEnabled ? '✨ Enabled' : '💤 Disabled'}
 								</button>
@@ -137,13 +136,13 @@ const TabbedControls = ({
 				</div>
 
 				<div className={activeTab === "help" ? "block" : "hidden"}>
-					<div className="space-y-6 p-6" data-intro="Get help, access developer tools, and view the source code" data-step="10">
-						<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+					<div className="space-y-4 p-4" data-intro="Get help, access developer tools, and view the source code" data-step="10">
+						<div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
 							<button
 								onClick={() => {
 									const intro = introJs();
 
-									intro.onbeforechange(function(targetElement) {
+									intro.onbeforechange(function (targetElement) {
 										const step = targetElement?.getAttribute('data-step');
 
 										if (step === '5' || step === '6' || step === '7') {
@@ -160,51 +159,75 @@ const TabbedControls = ({
 										}
 									});
 
-									intro.onafterchange(function() {
+									intro.onafterchange(function () {
 										setTimeout(() => intro.refresh(), 150);
 									});
 
 									setActiveTab('settings');
 									setTimeout(() => intro.start(), 300);
 								}}
-								className="group flex flex-col items-center justify-center p-6 bg-background-dark border-2 border-primary-500 text-center transition-all duration-200 hover:bg-primary-900 hover:border-yellow-500"
+								className="group flex flex-col items-center justify-center p-3 bg-background-dark border-2 border-primary-500 text-center transition-all duration-200 hover:bg-primary-900 hover:border-yellow-500"
 							>
-								<div className="text-2xl mb-2 group-hover:text-yellow-500 transition-colors">📖</div>
-								<div className="text-sm font-bold text-primary-400 group-hover:text-yellow-500 transition-colors uppercase tracking-wider">Tutorial</div>
-								<div className="text-xs text-primary-300/70 mt-1">Interactive guide</div>
+								<div className="text-xl mb-1 group-hover:text-yellow-500 transition-colors">📖</div>
+								<div className="text-xs font-bold text-primary-400 group-hover:text-yellow-500 transition-colors uppercase tracking-wider">Tutorial</div>
 							</button>
 
 							<button
 								onClick={() => setDebugEnabled(!debugEnabled)}
-								className={`group flex flex-col items-center justify-center p-6 text-center transition-all duration-200 border-2 ${
-									debugEnabled
-										? 'bg-primary-500 border-primary-400 text-white'
-										: 'bg-background-dark border-primary-500 hover:bg-primary-900 hover:border-yellow-500'
-								}`}
+								className={`group flex flex-col items-center justify-center p-3 text-center transition-all duration-200 border-2 ${debugEnabled
+									? 'bg-primary-500 border-primary-400 text-white'
+									: 'bg-background-dark border-primary-500 hover:bg-primary-900 hover:border-yellow-500'
+									}`}
 							>
-								<div className={`text-2xl mb-2 transition-colors ${
-									debugEnabled ? 'text-white' : 'text-primary-400 group-hover:text-yellow-500'
-								}`}>
+								<div className={`text-xl mb-1 transition-colors ${debugEnabled ? 'text-white' : 'text-primary-400 group-hover:text-yellow-500'
+									}`}>
 									{debugEnabled ? '🐛' : '💤'}
 								</div>
-								<div className={`text-sm font-bold transition-colors uppercase tracking-wider ${
-									debugEnabled ? 'text-white' : 'text-primary-400 group-hover:text-yellow-500'
-								}`}>
+								<div className={`text-xs font-bold transition-colors uppercase tracking-wider ${debugEnabled ? 'text-white' : 'text-primary-400 group-hover:text-yellow-500'
+									}`}>
 									Debug {debugEnabled ? 'On' : 'Off'}
 								</div>
-								<div className="text-xs text-primary-300/70 mt-1">Developer tools</div>
 							</button>
 
 							<a
 								href="https://github.com/goatonabicycle/billions-of-notes"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group flex flex-col items-center justify-center p-6 bg-background-dark border-2 border-primary-500 text-center transition-all duration-200 hover:bg-primary-900 hover:border-yellow-500"
+								className="group flex flex-col items-center justify-center p-3 bg-background-dark border-2 border-primary-500 text-center transition-all duration-200 hover:bg-primary-900 hover:border-yellow-500"
 							>
-								<div className="text-2xl mb-2 group-hover:text-yellow-500 transition-colors">🧑‍💻</div>
-								<div className="text-sm font-bold text-primary-400 group-hover:text-yellow-500 transition-colors uppercase tracking-wider">Source Code</div>
-								<div className="text-xs text-primary-300/70 mt-1">View on GitHub</div>
+								<div className="text-xl mb-1 group-hover:text-yellow-500 transition-colors">🧑‍💻</div>
+								<div className="text-xs font-bold text-primary-400 group-hover:text-yellow-500 transition-colors uppercase tracking-wider">Source Code</div>
 							</a>
+
+							<a
+								href="https://github.com/goatonabicycle/billions-of-notes/issues/new"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="group flex flex-col items-center justify-center p-3 bg-background-dark border-2 border-primary-500 text-center transition-all duration-200 hover:bg-primary-900 hover:border-yellow-500"
+							>
+								<div className="text-xl mb-1 group-hover:text-yellow-500 transition-colors">💡</div>
+								<div className="text-xs font-bold text-primary-400 group-hover:text-yellow-500 transition-colors uppercase tracking-wider">Share Ideas</div>
+							</a>
+						</div>
+
+						<div className="border-t border-primary-500/30 pt-3">
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+								<div className="p-2 bg-background-dark border border-primary-500/30 rounded">
+									<div className="font-bold text-primary-400 mb-1">About</div>
+									<div className="text-primary-300/80">Random music note generator - no AI wrapping, no crypto, just randomness</div>
+								</div>
+
+								<div className="p-2 bg-background-dark border border-primary-500/30 rounded">
+									<div className="font-bold text-primary-400 mb-1">Shortcuts</div>
+									<div className="text-primary-300/80">p=Pause r=Reset n=New s=Save</div>
+								</div>
+							</div>
+
+							<div className="flex justify-center mt-3">
+								<a href='https://ko-fi.com/B0B1LV8D9' target='_blank'>
+									<img height='24' style={{ border: "0px", height: "24px" }} src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>

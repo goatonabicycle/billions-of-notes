@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import introJs from "intro.js";
 
-import ExplainButton from "./ExplainButton";
 import LineRenderer from "./LineRenderer";
 import Title from "./Title";
 
@@ -101,9 +100,6 @@ const TitleArea = memo(
 							/>
 						</div>
 
-						<div className="text-center pt-4 border-t border-primary-500">
-							<ExplainButton />
-						</div>
 					</div>
 				</div>
 			</div>
