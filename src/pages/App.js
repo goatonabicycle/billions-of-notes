@@ -314,6 +314,8 @@ function App() {
 						setAnimationsEnabled={_setAnimationsEnabled}
 						debugEnabled={debugEnabled}
 						setDebugEnabled={_setDebugEnabled}
+						setTriggerRegenerate={setTriggerRegenerate}
+						triggerRegenerate={triggerRegenerate}
 					/>
 				</div>
 			</div>

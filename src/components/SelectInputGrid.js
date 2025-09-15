@@ -15,6 +15,7 @@ const SelectInputGrid = memo(({
 	inputOctaves,
 	setInputState,
 	handleInputChange,
+	onNotesChanged,
 }) => {
 	const keyOptions = useMemo(() => mapToSelectOptions(KEYS), [KEYS]);
 	const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
@@ -47,6 +48,7 @@ const SelectInputGrid = memo(({
 					handleInputChange={handleInputChange}
 					notesInScale={notesInScale}
 					tooltip={"The scale/mode of the generated sequence"}
+					onNotesChanged={onNotesChanged}
 				/>
 
 				<Select

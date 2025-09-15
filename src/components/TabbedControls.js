@@ -36,8 +36,14 @@ const TabbedControls = ({
 	setAnimationsEnabled,
 	debugEnabled,
 	setDebugEnabled,
+	setTriggerRegenerate,
+	triggerRegenerate,
 }) => {
 	const { tooltipsEnabled, setTooltipsEnabled } = useTooltipStore();
+
+	const handleNotesChanged = () => {
+		setTriggerRegenerate(!triggerRegenerate);
+	};
 	const tabs = [
 		{ id: "settings", label: "Settings" },
 		{ id: "tools", label: "Tools" },
@@ -73,6 +79,7 @@ const TabbedControls = ({
 								inputOctaves={inputState.octaves}
 								setInputState={setInputState}
 								handleInputChange={handleInputChange}
+								onNotesChanged={handleNotesChanged}
 							/>
 						</div>
 						<SelectControlsGrid
