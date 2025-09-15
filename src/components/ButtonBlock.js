@@ -127,12 +127,6 @@ const ButtonBlock = ({
 				text="Save MIDI"
 				tooltip="Download the current sequence as a MIDI file"
 			/>
-			<Button
-				icon={Guitar}
-				text="Fretboard"
-				onClick={() => window.open(getFretboardUrl(), '_blank')}
-				tooltip="View these notes on a guitar fretboard"
-			/>
 		</div>
 	);
 };

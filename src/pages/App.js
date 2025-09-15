@@ -312,6 +312,8 @@ function App() {
 						setActiveTab={setActiveTab}
 						animationsEnabled={animationsEnabled}
 						setAnimationsEnabled={_setAnimationsEnabled}
+						debugEnabled={debugEnabled}
+						setDebugEnabled={_setDebugEnabled}
 					/>
 				</div>
 			</div>
