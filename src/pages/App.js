@@ -310,6 +310,8 @@ function App() {
 						handleControlChange={handleControlChange}
 						activeTab={activeTab}
 						setActiveTab={setActiveTab}
+						animationsEnabled={animationsEnabled}
+						setAnimationsEnabled={_setAnimationsEnabled}
 					/>
 				</div>
 			</div>

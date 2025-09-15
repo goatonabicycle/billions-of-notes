@@ -29,9 +29,12 @@ const TabbedControls = ({
 	handleControlChange,
 	activeTab,
 	setActiveTab,
+	animationsEnabled,
+	setAnimationsEnabled,
 }) => {
 	const tabs = [
 		{ id: "settings", label: "Settings" },
+		{ id: "visuals", label: "Visuals" },
 	];
 
 	return (
@@ -70,6 +73,37 @@ const TabbedControls = ({
 							controlState={controlState}
 							handleControlChange={handleControlChange}
 						/>
+					</div>
+				)}
+
+				{activeTab === "visuals" && (
+					<div className="space-y-6 p-6">
+						<div className="space-y-4">
+							<div className="flex items-center justify-between">
+								<label className="text-sm text-primary-300">Animations</label>
+								<button
+									onClick={() => setAnimationsEnabled(!animationsEnabled)}
+									className={`px-4 py-2 text-xs font-medium rounded transition-all duration-200 ${
+										animationsEnabled
+											? 'bg-primary-500 text-white border-2 border-primary-400'
+											: 'bg-background-dark text-primary-400 border-2 border-primary-500/50'
+									}`}
+								>
+									{animationsEnabled ? '✨ Enabled' : '💤 Disabled'}
+								</button>
+							</div>
+
+							<div className="flex items-center justify-between">
+								<label className="text-sm text-primary-300">Theme</label>
+								<select
+									className="px-4 py-2 text-xs bg-background-dark text-primary-400 border-2 border-primary-500/50 rounded cursor-not-allowed opacity-50"
+									disabled
+								>
+									<option>Retro Blue</option>
+									<option>Coming Soon...</option>
+								</select>
+							</div>
+						</div>
 					</div>
 				)}
 

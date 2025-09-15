@@ -101,14 +101,10 @@ const TitleArea = memo(
 							/>
 						</div>
 
-						<nav className="grid grid-cols-1 sm:grid-cols-6 text-xs pt-4 gap-4 border-t border-primary-500 place-items-center sm:place-items-center" data-intro="Here are some useful links if you're stuck or want more info on things" data-step="2">
+						<nav className="grid grid-cols-1 sm:grid-cols-5 text-xs pt-4 gap-4 border-t border-primary-500 place-items-center sm:place-items-center" data-intro="Here are some useful links if you're stuck or want more info on things" data-step="2">
 							<LinkButton href="/what-scale" external>Scale❔</LinkButton>
 							<LinkButton href="https://github.com/goatonabicycle/billions-of-notes" external>Code🧑‍💻</LinkButton>
 							<ExplainButton />
-							<LinkButton onClick={() => setAnimationsEnabled(!animationsEnabled)}>
-								{animationsEnabled ? "Move" : "Move"}
-								<span className="text-base">{animationsEnabled ? "✨" : "💤"}</span>
-							</LinkButton>
 							<LinkButton onClick={() => setDebugEnabled(!debugEnabled)}>
 								{animationsEnabled ? "Debug" : "debug"}
 								<span className="text-base">{debugEnabled ? "🐛" : "💤"}</span>
