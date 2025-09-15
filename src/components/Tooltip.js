@@ -1,7 +1,10 @@
 import React from 'react';
+import useTooltipStore from '../stores/tooltipStore';
 
 const Tooltip = ({ text, children }) => {
-  if (!text) return children;
+  const { tooltipsEnabled } = useTooltipStore();
+
+  if (!text || !tooltipsEnabled) return children;
 
   return (
     <div className="relative group/tooltip">

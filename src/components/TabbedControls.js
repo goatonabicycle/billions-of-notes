@@ -2,6 +2,8 @@ import React from "react";
 import SelectInputGrid from "./SelectInputGrid";
 import SelectControlsGrid from "./SelectControlsGrid";
 import introJs from "intro.js";
+import useTooltipStore from "../stores/tooltipStore";
+import Tooltip from "./Tooltip";
 
 const TabButton = ({ label, isActive, onClick }) => (
 	<button
@@ -35,6 +37,7 @@ const TabbedControls = ({
 	debugEnabled,
 	setDebugEnabled,
 }) => {
+	const { tooltipsEnabled, setTooltipsEnabled } = useTooltipStore();
 	const tabs = [
 		{ id: "settings", label: "Settings" },
 		{ id: "tools", label: "Tools" },
@@ -109,7 +112,9 @@ const TabbedControls = ({
 					<div className="space-y-6 p-6" data-intro="Control the visual experience - animations, themes, and UI preferences" data-step="9">
 						<div className="space-y-4">
 							<div className="flex items-center justify-between">
-								<label className="text-sm text-primary-300">Animations</label>
+								<Tooltip text="Control animated visual effects like moving backgrounds and transitions">
+									<label className="text-sm text-primary-300">Animations</label>
+								</Tooltip>
 								<button
 									onClick={() => setAnimationsEnabled(!animationsEnabled)}
 									className={`px-4 py-2 text-xs font-medium rounded transition-all duration-200 ${animationsEnabled
@@ -122,7 +127,24 @@ const TabbedControls = ({
 							</div>
 
 							<div className="flex items-center justify-between">
-								<label className="text-sm text-primary-300">Theme</label>
+								<Tooltip text="Show or hide helpful text that appears when hovering over controls">
+									<label className="text-sm text-primary-300">Tooltips</label>
+								</Tooltip>
+								<button
+									onClick={() => setTooltipsEnabled(!tooltipsEnabled)}
+									className={`px-4 py-2 text-xs font-medium rounded transition-all duration-200 ${tooltipsEnabled
+										? 'bg-primary-500 text-white border-2 border-primary-400'
+										: 'bg-background-dark text-primary-400 border-2 border-primary-500/50'
+										}`}
+								>
+									{tooltipsEnabled ? '💬 Enabled' : '🔇 Disabled'}
+								</button>
+							</div>
+
+							<div className="flex items-center justify-between">
+								<Tooltip text="Choose different color schemes and visual styles (more themes coming soon)">
+									<label className="text-sm text-primary-300">Theme</label>
+								</Tooltip>
 								<select
 									className="px-4 py-2 text-xs bg-background-dark text-primary-400 border-2 border-primary-500/50 rounded cursor-not-allowed opacity-50"
 									disabled
