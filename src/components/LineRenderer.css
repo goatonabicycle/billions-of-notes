@@ -1,3 +1,18 @@
 .line-container {
-	@apply text-center p-2.5 cursor-pointer;
+	@apply cursor-pointer w-full h-full flex items-center justify-center;
+	min-height: 250px;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.line-canvas {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	transition: all 0.6s ease;
+}
+
+.line-canvas:hover {
+	transform: scale(1.1);
 }

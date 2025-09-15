@@ -97,6 +97,7 @@ const TitleArea = memo(
 								notes={randomNotes}
 								tempo={selectedTempo}
 								activeNote={currentIndex}
+								animationsEnabled={animationsEnabled}
 							/>
 						</div>
 

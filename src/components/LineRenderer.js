@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useRef, useMemo, useCallback, useState } from "react";
 import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
 const DOT_RADIUS = 5;
 const EDGE_DOT_RADIUS = 0;
 const ANIMATION_DOT_COLOUR = "white";
-const LINE_COLOUR = "white";
+const LINE_COLOUR = "#666666";
 const SECONDARY_LINE_COLOUR = "rgba(255, 255, 255, 0.2)";
+const TRAIL_LENGTH = 4;
 
 const getNoteNumber = (note) => {
 	if (note === "") return null;
@@ -15,8 +16,9 @@ const getNoteNumber = (note) => {
 	return octave * 12 + KEYS.indexOf(noteName);
 };
 
-const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
+const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = true }) => {
 	const canvasRef = useRef(null);
+	const [trail, setTrail] = useState([]);
 
 	const linePath = useMemo(() => {
 		const noteNumbers = notes.map(getNoteNumber);
@@ -33,8 +35,8 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
 			y:
 				noteNumber !== null
 					? ((noteNumber - minNote) / noteRange) *
-							(canvas.height - 2 * DOT_RADIUS) +
-						DOT_RADIUS
+					(canvas.height - 2 * DOT_RADIUS) +
+					DOT_RADIUS
 					: null,
 		}));
 	}, [notes]);
@@ -81,33 +83,81 @@ const LineRenderer = ({ notes, onClick, activeNote, colour }) => {
 		}
 	}, []);
 
+	const drawTrail = useCallback((ctx) => {
+		if (!animationsEnabled || trail.length < 2) return;
+
+		ctx.lineWidth = 2;
+		ctx.lineCap = 'round';
+		ctx.strokeStyle = 'white';
+
+		ctx.beginPath();
+		for (let i = 1; i < trail.length; i++) {
+			if (i === 1) {
+				ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+			}
+			ctx.lineTo(trail[i].x, trail[i].y);
+		}
+		ctx.stroke();
+	}, [trail, animationsEnabled]);
+
+	useEffect(() => {
+		if (!animationsEnabled) return;
+
+		const currentPoint = linePath[activeNote];
+		if (currentPoint && currentPoint.y !== null) {
+			setTrail(prev => {
+				const newTrail = [...prev, { x: currentPoint.x, y: currentPoint.y }];
+				return newTrail.slice(-TRAIL_LENGTH);
+			});
+		}
+	}, [activeNote, linePath, animationsEnabled]);
+
 	useEffect(() => {
 		let animationFrameId;
-		
+
 		const animate = () => {
 			const canvas = canvasRef.current;
 			if (!canvas) return;
-			
+
 			const ctx = canvas.getContext("2d");
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			if (linePath.length > 0) {
-				drawLine(linePath, ctx);
 				drawSecondaryLines(linePath, ctx);
+				drawLine(linePath, ctx);
+				drawTrail(ctx);
 				drawAnimationDot(linePath[activeNote], ctx);
 			}
 
 			animationFrameId = requestAnimationFrame(animate);
 		};
-		
+
 		animate();
-		
+
 		return () => {
 			if (animationFrameId) {
 				cancelAnimationFrame(animationFrameId);
 			}
 		};
-	}, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot]);
+	}, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot, drawTrail]);
+
+	// Fix canvas resolution
+	useEffect(() => {
+		const canvas = canvasRef.current;
+		if (!canvas) return;
+
+		const rect = canvas.getBoundingClientRect();
+		const dpr = window.devicePixelRatio || 1;
+
+		canvas.width = rect.width * dpr;
+		canvas.height = rect.height * dpr;
+
+		const ctx = canvas.getContext('2d');
+		ctx.scale(dpr, dpr);
+
+		canvas.style.width = rect.width + 'px';
+		canvas.style.height = rect.height + 'px';
+	}, []);
 
 	return (
 		<div onClick={onClick} className="line-container">
