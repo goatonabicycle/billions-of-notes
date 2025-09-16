@@ -241,12 +241,14 @@ const Fretboard = ({
 				</div>
 
 				<div
-					className="absolute top-4 bottom-8 z-10 border-2 border-primary-500/50
-                     shadow-glow"
+					className="absolute top-4 bottom-8 z-10 border-2 border-primary-400/70
+                     shadow-glow rounded-sm text-primary-400"
 					style={{
 						left: "calc((100% / var(--number-of-frets)) * var(--preferred-start))",
 						width:
 							"calc((100% / var(--number-of-frets)) * var(--preferred-range))",
+						boxShadow: "0 0 8px currentColor, 0 0 16px currentColor, inset 0 0 8px currentColor",
+						opacity: 0.8
 					}}
 				/>
 
