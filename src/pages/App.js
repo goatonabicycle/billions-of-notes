@@ -97,7 +97,7 @@ function App() {
 		"selectedPanelsToShow",
 		DEFAULT_PANELS_TO_SHOW,
 	);
-	const setSelectedPanelsToShow = useCallback(_setSelectedPanelsToShow, []);
+	const setSelectedPanelsToShow = useCallback(_setSelectedPanelsToShow, [_setSelectedPanelsToShow]);
 
 	const [currentColour, setCurrentColour] = useState("");
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -149,7 +149,7 @@ function App() {
 		}
 
 		loadInitialState();
-	}, [id]);
+	}, [id, setInputState, setControlState, setSelectedPanelsToShow]);
 
 	const saveAndShare = async () => {
 		setIsGeneratingLink(true);
@@ -187,9 +187,7 @@ function App() {
 	const generatedNotes = useMemo(() => {
 		if (!inputState || loadedFromUrl) return null;
 		return generateRandomNotes(inputState);
-	}, [inputState, triggerRegenerate, loadedFromUrl]);
-
-	const newColour = useMemo(() => randomRGBA(), [generatedNotes]);
+	}, [inputState, loadedFromUrl]);
 
 	useEffect(() => {
 		if (!generatedNotes) return;
@@ -197,8 +195,8 @@ function App() {
 		setNotesInScale(generatedNotes.notesInScale);
 		setRandomNotes(generatedNotes.randomNotes);
 		setCurrentIndex(0);
-		setCurrentColour(newColour);
-	}, [generatedNotes, newColour]);
+		setCurrentColour(randomRGBA());
+	}, [generatedNotes]);
 
 	useEffect(() => {
 		if (!inputState) return;
