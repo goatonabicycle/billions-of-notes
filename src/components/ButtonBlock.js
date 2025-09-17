@@ -91,39 +91,39 @@ const ButtonBlock = ({
 			data-step="3"
 		>
 			<Button
-				icon={NewNotesIcon}
+				icon={<NewNotesIcon />}
 				onClick={handleNewNotesClick}
 				text="New"
 				tooltip="Generate a new sequence of random notes"
 			/>
 			<Button
 				text={isPlaying ? "Pause" : "Play"}
-				icon={isPlaying ? PauseIcon : PlayIcon}
+				icon={isPlaying ? <PauseIcon /> : <PlayIcon />}
 				onClick={handlePlayPauseClick}
 				tooltip={isPlaying ? "Pause playback" : "Play the current sequence"}
 			/>
 			<Button
 				onClick={handleResetClick}
-				icon={ResetIcon}
+				icon={<ResetIcon />}
 				text="Reset"
 				tooltip="Reset all settings to default values"
 			/>
 			<Button
 				onClick={handleReverseClick}
-				icon={ReverseIcon}
+				icon={<ReverseIcon />}
 				text="Reverse"
 				tooltip="Reverse the current sequence of notes"
 			/>
 			<Button
 				onClick={handleShareClick}
 				text={shareButtonText}
-				icon={ShareIcon}
+				icon={<ShareIcon />}
 				disabled={isGeneratingLink}
 				tooltip="Copy a shareable link to clipboard"
 			/>
 			<Button
 				onClick={handleSaveMIDIClick}
-				icon={SaveIcon}
+				icon={<SaveIcon />}
 				text="Save MIDI"
 				tooltip="Download the current sequence as a MIDI file"
 			/>

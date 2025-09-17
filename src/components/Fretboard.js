@@ -319,7 +319,7 @@ const Fretboard = ({
 										}
 									}}
 								>
-									{j === 0 && ChangeTuningIcon}
+									{j === 0 && <ChangeTuningIcon />}
 									<span className={`${isCurrentNote ? "text-[1.1em] font-black" : "text-[0.8em]"} transition-all duration-100`}>
 										{renderNote(note.note)}
 									</span>
