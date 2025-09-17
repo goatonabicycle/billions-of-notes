@@ -19,27 +19,31 @@ const getNoteNumber = (note) => {
 const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = true }) => {
 	const canvasRef = useRef(null);
 	const [trail, setTrail] = useState([]);
+	const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
 
 	const linePath = useMemo(() => {
+		if (canvasSize.width === 0 || canvasSize.height === 0) return [];
+
 		const noteNumbers = notes.map(getNoteNumber);
 		const validNoteNumbers = noteNumbers.filter((note) => note !== null);
 
+		if (validNoteNumbers.length === 0) return [];
+
 		const minNote = Math.min(...validNoteNumbers);
 		const maxNote = Math.max(...validNoteNumbers);
-		const noteRange = maxNote - minNote;
-		const canvas = canvasRef.current;
+		const noteRange = maxNote - minNote || 1; // Avoid division by zero
 
 		return noteNumbers.map((noteNumber, i) => ({
 			x:
-				(i / (notes.length - 1)) * (canvas.width - 2 * DOT_RADIUS) + DOT_RADIUS,
+				(i / Math.max(notes.length - 1, 1)) * (canvasSize.width - 2 * DOT_RADIUS) + DOT_RADIUS,
 			y:
 				noteNumber !== null
 					? ((noteNumber - minNote) / noteRange) *
-					(canvas.height - 2 * DOT_RADIUS) +
+					(canvasSize.height - 2 * DOT_RADIUS) +
 					DOT_RADIUS
 					: null,
 		}));
-	}, [notes]);
+	}, [notes, canvasSize]);
 
 	const drawLine = useCallback(
 		(linePath, ctx) => {
@@ -112,36 +116,25 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 		}
 	}, [activeNote, linePath, animationsEnabled]);
 
-	useEffect(() => {
-		let animationFrameId;
+	const draw = useCallback(() => {
+		const canvas = canvasRef.current;
+		if (!canvas) return;
 
-		const animate = () => {
-			const canvas = canvasRef.current;
-			if (!canvas) return;
+		const ctx = canvas.getContext("2d");
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-			const ctx = canvas.getContext("2d");
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-			if (linePath.length > 0) {
-				drawSecondaryLines(linePath, ctx);
-				drawLine(linePath, ctx);
-				drawTrail(ctx);
-				drawAnimationDot(linePath[activeNote], ctx);
-			}
-
-			animationFrameId = requestAnimationFrame(animate);
-		};
-
-		animate();
-
-		return () => {
-			if (animationFrameId) {
-				cancelAnimationFrame(animationFrameId);
-			}
-		};
+		if (linePath.length > 0) {
+			drawSecondaryLines(linePath, ctx);
+			drawLine(linePath, ctx);
+			drawTrail(ctx);
+			drawAnimationDot(linePath[activeNote], ctx);
+		}
 	}, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot, drawTrail]);
 
-	// Fix canvas resolution
+	useEffect(() => {
+		draw();
+	}, [draw]);
+
 	useEffect(() => {
 		const canvas = canvasRef.current;
 		if (!canvas) return;
@@ -157,6 +150,8 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 
 		canvas.style.width = rect.width + 'px';
 		canvas.style.height = rect.height + 'px';
+
+		setCanvasSize({ width: canvas.width, height: canvas.height });
 	}, []);
 
 	return (
