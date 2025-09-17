@@ -51,7 +51,7 @@ const Fretboard = ({
 		const octave = stringOctave + Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
 		const rawNote = `${KEYS[noteIndex]}${octave}`;
 		return formatNote(rawNote);
-	}, [noteMode]);
+	}, [formatNote]);
 
 	const fretboard = useMemo(() => {
 		return strings.map(({ note, octave }, stringIndex) =>
@@ -61,7 +61,7 @@ const Fretboard = ({
 				fret,
 			})),
 		);
-	}, [strings, getNote, numberOfFrets, noteMode]);
+	}, [strings, getNote, numberOfFrets]);
 
 	const flatFretboard = useMemo(() => fretboard.flat(), [fretboard]);
 
@@ -130,22 +130,18 @@ const Fretboard = ({
 	}, [notesToPlay, playbackIndex, getPreferredFretRange, notePositionsMap, currentPosition]);
 
 	const { startFret, endFret } = getPreferredFretRange();
-	const preferredRangeStyle = {
-		left: `calc((100% / ${numberOfFrets + 1}) * ${startFret})`,
-		width: `calc((100% / ${numberOfFrets + 1}) * ${endFret - startFret + 1})`,
-	};
 
-	const shouldShowFretMarker = (fretNumber) => {
+	const shouldShowFretMarker = useCallback((fretNumber) => {
 		const singleDotFrets = [3, 5, 7, 9, 15, 17, 19, 21];
 		const doubleDotFrets = [12, 24];
 		return (
 			singleDotFrets.includes(fretNumber) || doubleDotFrets.includes(fretNumber)
 		);
-	};
+	}, []);
 
-	const isDoubleDotFret = (fretNumber) => {
+	const isDoubleDotFret = useCallback((fretNumber) => {
 		return [12, 24].includes(fretNumber);
-	};
+	}, []);
 
 	const renderNote = useCallback((note) => {
 		if (!note) return note;
@@ -215,11 +211,8 @@ const Fretboard = ({
 				className="relative text-[calc(4px+2vmin)] flex flex-col w-full gap-2"
 				style={{
 					"--number-of-frets": numberOfFrets + 1,
-					"--preferred-start": getPreferredFretRange().startFret,
-					"--preferred-range":
-						getPreferredFretRange().endFret -
-						getPreferredFretRange().startFret +
-						1,
+					"--preferred-start": startFret,
+					"--preferred-range": endFret - startFret + 1,
 				}}
 			>
 				<div className="flex justify-between w-full h-4">
@@ -255,15 +248,14 @@ const Fretboard = ({
 				{fretboard.map((string, stringIndex) => (
 					<div key={stringIndex} className="flex justify-between relative">
 						{string.map((note, j) => {
+							const formattedNote = note.note;
 							const isCurrentNote =
-								note.note === notesToPlay[playbackIndex] &&
+								formattedNote === notesToPlay[playbackIndex] &&
 								note.stringIndex === currentPosition.stringIndex &&
 								note.fret === currentPosition.fret;
 
-							const isScaleNote = scaleNotes.includes(formatNote(note.note).slice(0, -1));
-							const isNoteToPlay = notesToPlay.some(playNote =>
-								formatNote(playNote) === formatNote(note.note)
-							);
+							const isScaleNote = scaleNotes.includes(formattedNote.slice(0, -1));
+							const isNoteToPlay = notesToPlay.includes(formattedNote);
 
 							const baseClasses = `
                 flex items-center justify-center 
