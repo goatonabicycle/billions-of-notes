@@ -187,7 +187,7 @@ function App() {
 	const generatedNotes = useMemo(() => {
 		if (!inputState || loadedFromUrl) return null;
 		return generateRandomNotes(inputState);
-	}, [inputState, loadedFromUrl]);
+	}, [inputState, loadedFromUrl, triggerRegenerate]);
 
 	useEffect(() => {
 		if (!generatedNotes) return;

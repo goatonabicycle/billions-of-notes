@@ -38,7 +38,10 @@ const RainbowText = ({ text, tempo }) => {
 				<span
 					key={index}
 					style={{
-						animation: `textGlow ${colorCycleDuration}s linear infinite`,
+						animationName: 'textGlow',
+						animationDuration: `${colorCycleDuration}s`,
+						animationTimingFunction: 'linear',
+						animationIterationCount: 'infinite',
 						animationDelay: `${index * (colorCycleDuration / text.length)}s`,
 					}}
 					className="inline-block font-black tracking-widest text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl"

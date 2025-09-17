@@ -8,8 +8,7 @@ import {
 	ResetIcon,
 	ReverseIcon,
 	SaveIcon,
-	ShareIcon,
-	Guitar
+	ShareIcon
 } from "./Icons";
 
 const ButtonBlock = ({
@@ -72,16 +71,6 @@ const ButtonBlock = ({
 			setRandomNotes([...newRandomNotes]);
 		},
 		[randomNotes, setRandomNotes]
-	);
-
-	const getFretboardUrl = useCallback(
-		() => {
-			const params = new URLSearchParams();
-			params.set('key', selectedKey);
-			params.set('scale', selectedScale);
-			return `/fret?${params.toString()}`;
-		},
-		[selectedKey, selectedScale]
 	);
 
 	return (

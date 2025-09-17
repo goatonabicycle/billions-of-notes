@@ -253,7 +253,7 @@ const TabbedControls = ({
 							</div>
 
 							<div className="flex justify-center mt-3">
-								<a href='https://ko-fi.com/B0B1LV8D9' target='_blank'>
+								<a href='https://ko-fi.com/B0B1LV8D9' target='_blank' rel='noreferrer'>
 									<img height='24' style={{ border: "0px", height: "24px" }} src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
 								</a>
 							</div>

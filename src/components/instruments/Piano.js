@@ -9,7 +9,7 @@ const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 		const matches = note.match(/([A-G][b#]?)(\d+)/);
 		if (!matches) return note;
 
-		const [_, notePart, octave] = matches;
+		const [, notePart, octave] = matches;
 		const sharpNote = FLAT_TO_SHARP[notePart] || notePart;
 
 		return sharpNote + octave;

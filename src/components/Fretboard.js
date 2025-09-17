@@ -3,7 +3,7 @@ import { KEYS, OCTAVES } from "../useful";
 import { ChangeTuningIcon } from "./Icons";
 import Modal from "./Modal.js";
 import Select from "./Select";
-import { Scale, Note, Chord } from 'tonal';
+import { Note } from 'tonal';
 
 const Fretboard = ({
 	notesToPlay,
@@ -127,7 +127,7 @@ const Fretboard = ({
 				fret: closestNote.fret,
 			});
 		}
-	}, [notesToPlay, playbackIndex, getPreferredFretRange, notePositionsMap, currentPosition]);
+	}, [notesToPlay, playbackIndex, getPreferredFretRange, notePositionsMap, currentPosition, formatNote]);
 
 	const { startFret, endFret } = getPreferredFretRange();
 

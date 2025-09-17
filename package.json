@@ -53,6 +53,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.25.2",
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@babel/preset-env": "^7.25.4",
 		"@babel/preset-react": "^7.24.7",
 		"@biomejs/biome": "1.9.4",

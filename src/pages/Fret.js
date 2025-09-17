@@ -118,7 +118,7 @@ export default function ScaleFretboard() {
 
 			handleInitialState();
 		}
-	}, [id, KEYS, scales, loadSharedState]);
+	}, [id, loadSharedState]);
 
 	const saveAndShare = async () => {
 		setIsSharing(true);
@@ -188,10 +188,10 @@ export default function ScaleFretboard() {
 			const updated = { ...prevState, octaves: newOctaves };
 			return updated;
 		});
-	}, [setInputState, inputState]);
+	}, [setInputState]);
 
-	const keyOptions = useMemo(() => mapToSelectOptions(KEYS), [KEYS]);
-	const scaleOptions = useMemo(() => mapToSelectOptions(scales), [scales]);
+	const keyOptions = useMemo(() => mapToSelectOptions(KEYS), []);
+	const scaleOptions = useMemo(() => mapToSelectOptions(scales), []);
 
 	const scale = Scale.get(`${inputState.key} ${inputState.scale}`);
 	const notesInScale = scale.notes.map((note) => {

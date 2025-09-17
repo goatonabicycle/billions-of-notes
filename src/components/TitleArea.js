@@ -1,33 +1,7 @@
 import React, { memo } from "react";
-import introJs from "intro.js";
 
 import LineRenderer from "./LineRenderer";
 import Title from "./Title";
-
-const LinkButton = memo(({ href, onClick, children, external }) => {
-	if (href) {
-		return (
-			<a
-				href={href}
-				target={external ? "_blank" : undefined}
-				rel={external ? "noreferrer" : undefined}
-				className="text-primary-100 hover:text-primary-400 transition-colors duration-300"
-			>
-				{children}
-			</a>
-		);
-	}
-
-	return (
-		<button
-			onClick={onClick}
-			type="button"
-			className="text-primary-100 hover:text-primary-400 transition-colors duration-300"
-		>
-			{children}
-		</button>
-	);
-});
 
 const keyframes = `
   @keyframes gridMove {
