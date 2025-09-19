@@ -59,8 +59,8 @@ const Piano = ({ notesToPlay, playbackIndex, scaleNotes }) => {
 			<div className="piano-container">
 				<ReactPiano
 					noteRange={noteRange}
-					playNote={() => { }}
-					stopNote={() => { }}
+					playNote={() => {}}
+					stopNote={() => {}}
 					activeNotes={[activeNote]}
 					renderNoteLabel={renderNoteLabel}
 				/>

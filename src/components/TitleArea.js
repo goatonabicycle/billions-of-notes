@@ -40,7 +40,9 @@ const TitleArea = memo(
 					className={`relative overflow-hidden bg-background-light ${!animationsEnabled ? "border border-primary-500/20" : "border-4"} ${animationsEnabled ? "shadow-glow-title" : ""}`}
 					style={{
 						borderStyle: "solid",
-						animation: animationsEnabled ? "borderGlow 3s linear infinite" : "none",
+						animation: animationsEnabled
+							? "borderGlow 3s linear infinite"
+							: "none",
 					}}
 				>
 					<div
@@ -52,14 +54,19 @@ const TitleArea = memo(
               linear-gradient(rgba(59, 130, 246, 0.8) 1px, transparent 1px)
             `,
 							backgroundSize: "40px 40px",
-							animation: animationsEnabled ? `gridMove ${gridAnimationDuration}s linear infinite` : "none",
+							animation: animationsEnabled
+								? `gridMove ${gridAnimationDuration}s linear infinite`
+								: "none",
 							opacity: 0.3,
 						}}
 					/>
 
 					<div className="relative z-10 flex flex-col items-center p-4">
 						<div className="w-full text-center">
-							<Title selectedTempo={selectedTempo} animationsEnabled={animationsEnabled} />
+							<Title
+								selectedTempo={selectedTempo}
+								animationsEnabled={animationsEnabled}
+							/>
 						</div>
 
 						<div className="w-full min-h-[200px] flex justify-center items-center">
@@ -74,12 +81,11 @@ const TitleArea = memo(
 								animationsEnabled={animationsEnabled}
 							/>
 						</div>
-
 					</div>
 				</div>
 			</div>
 		);
-	}
+	},
 );
 
 export default TitleArea;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { Note } from "tonal";
 import { KEYS, OCTAVES } from "../useful";
 import { ChangeTuningIcon } from "./Icons";
 import Modal from "./Modal.js";
 import Select from "./Select";
-import { Note } from 'tonal';
 
 const Fretboard = ({
 	notesToPlay,
@@ -16,7 +16,7 @@ const Fretboard = ({
 	setSelectedTuning,
 	initialTuning,
 	numberOfFrets,
-	noteMode = 'sharp', // TODO: Make this a setting once I have a nice UI. 
+	noteMode = "sharp", // TODO: Make this a setting once I have a nice UI.
 	smallOctaveNumbers = false,
 }) => {
 	const [currentPosition, setCurrentPosition] = useState({
@@ -27,14 +27,17 @@ const Fretboard = ({
 	const [modalStringIndex, setModalStringIndex] = useState(null);
 	const [hasTuningChanged, setHasTuningChanged] = useState(false);
 
-	const formatNote = useCallback((note) => {
-		if (!note) return '';
-		const { pc, oct } = Note.get(note);
-		if (noteMode === 'sharp') {
-			return (pc + (oct || '')).replace(/b/g, '#');
-		}
-		return Note.enharmonic(pc).replace(/#/g, 'b') + (oct || '');
-	}, [noteMode]);
+	const formatNote = useCallback(
+		(note) => {
+			if (!note) return "";
+			const { pc, oct } = Note.get(note);
+			if (noteMode === "sharp") {
+				return (pc + (oct || "")).replace(/b/g, "#");
+			}
+			return Note.enharmonic(pc).replace(/#/g, "b") + (oct || "");
+		},
+		[noteMode],
+	);
 
 	const updateCurrentPosition = (newPosition) => {
 		setCurrentPosition(newPosition);
@@ -46,12 +49,17 @@ const Fretboard = ({
 		return { startFret, endFret };
 	}, [preferredPosition, fingerRange]);
 
-	const getNote = useCallback((stringNote, stringOctave, fret) => {
-		const noteIndex = (KEYS.indexOf(stringNote) + fret) % KEYS.length;
-		const octave = stringOctave + Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
-		const rawNote = `${KEYS[noteIndex]}${octave}`;
-		return formatNote(rawNote);
-	}, [formatNote]);
+	const getNote = useCallback(
+		(stringNote, stringOctave, fret) => {
+			const noteIndex = (KEYS.indexOf(stringNote) + fret) % KEYS.length;
+			const octave =
+				stringOctave +
+				Math.floor((KEYS.indexOf(stringNote) + fret) / KEYS.length);
+			const rawNote = `${KEYS[noteIndex]}${octave}`;
+			return formatNote(rawNote);
+		},
+		[formatNote],
+	);
 
 	const fretboard = useMemo(() => {
 		return strings.map(({ note, octave }, stringIndex) =>
@@ -76,7 +84,7 @@ const Fretboard = ({
 
 	const notePositionsMap = useMemo(() => {
 		const map = new Map();
-		flatFretboard.forEach(pos => {
+		flatFretboard.forEach((pos) => {
 			const formatted = formatNote(pos.note);
 			if (!map.has(formatted)) {
 				map.set(formatted, []);
@@ -100,7 +108,8 @@ const Fretboard = ({
 
 		for (const pos of positions) {
 			if (pos.fret >= startFret && pos.fret <= endFret) {
-				const distance = Math.abs(pos.stringIndex - currentPosition.stringIndex) +
+				const distance =
+					Math.abs(pos.stringIndex - currentPosition.stringIndex) +
 					Math.abs(pos.fret - currentPosition.fret);
 				if (distance < minDistance) {
 					minDistance = distance;
@@ -111,7 +120,8 @@ const Fretboard = ({
 
 		if (!closestNote) {
 			for (const pos of positions) {
-				const distance = Math.abs(pos.stringIndex - currentPosition.stringIndex) +
+				const distance =
+					Math.abs(pos.stringIndex - currentPosition.stringIndex) +
 					Math.abs(pos.fret - currentPosition.fret);
 				if (distance < minDistance) {
 					minDistance = distance;
@@ -120,14 +130,24 @@ const Fretboard = ({
 			}
 		}
 
-		if (closestNote && (closestNote.stringIndex !== currentPosition.stringIndex ||
-			closestNote.fret !== currentPosition.fret)) {
+		if (
+			closestNote &&
+			(closestNote.stringIndex !== currentPosition.stringIndex ||
+				closestNote.fret !== currentPosition.fret)
+		) {
 			updateCurrentPosition({
 				stringIndex: closestNote.stringIndex,
 				fret: closestNote.fret,
 			});
 		}
-	}, [notesToPlay, playbackIndex, getPreferredFretRange, notePositionsMap, currentPosition, formatNote]);
+	}, [
+		notesToPlay,
+		playbackIndex,
+		getPreferredFretRange,
+		notePositionsMap,
+		currentPosition,
+		formatNote,
+	]);
 
 	const { startFret, endFret } = getPreferredFretRange();
 
@@ -143,17 +163,27 @@ const Fretboard = ({
 		return [12, 24].includes(fretNumber);
 	}, []);
 
-	const renderNote = useCallback((note) => {
-		if (!note) return note;
-		const { pc, oct } = Note.get(note);
-		const pitch = noteMode === 'sharp' ? pc.replace(/b/g, '#') : Note.enharmonic(pc).replace(/#/g, 'b');
-		return (
-			<>
-				{pitch}
-				{oct && <span className={`${smallOctaveNumbers ? 'text-[0.8em]' : ''}`}>{oct}</span>}
-			</>
-		);
-	}, [noteMode, smallOctaveNumbers]);
+	const renderNote = useCallback(
+		(note) => {
+			if (!note) return note;
+			const { pc, oct } = Note.get(note);
+			const pitch =
+				noteMode === "sharp"
+					? pc.replace(/b/g, "#")
+					: Note.enharmonic(pc).replace(/#/g, "b");
+			return (
+				<>
+					{pitch}
+					{oct && (
+						<span className={`${smallOctaveNumbers ? "text-[0.8em]" : ""}`}>
+							{oct}
+						</span>
+					)}
+				</>
+			);
+		},
+		[noteMode, smallOctaveNumbers],
+	);
 
 	return (
 		<div className="flex flex-col items-center overflow-hidden pb-8 ">
@@ -240,8 +270,9 @@ const Fretboard = ({
 						left: "calc((100% / var(--number-of-frets)) * var(--preferred-start))",
 						width:
 							"calc((100% / var(--number-of-frets)) * var(--preferred-range))",
-						boxShadow: "0 0 8px currentColor, 0 0 16px currentColor, inset 0 0 8px currentColor",
-						opacity: 0.8
+						boxShadow:
+							"0 0 8px currentColor, 0 0 16px currentColor, inset 0 0 8px currentColor",
+						opacity: 0.8,
 					}}
 				/>
 
@@ -254,7 +285,9 @@ const Fretboard = ({
 								note.stringIndex === currentPosition.stringIndex &&
 								note.fret === currentPosition.fret;
 
-							const isScaleNote = scaleNotes.includes(formattedNote.slice(0, -1));
+							const isScaleNote = scaleNotes.includes(
+								formattedNote.slice(0, -1),
+							);
 							const isNoteToPlay = notesToPlay.includes(formattedNote);
 
 							const baseClasses = `
@@ -312,7 +345,9 @@ const Fretboard = ({
 									}}
 								>
 									{j === 0 && <ChangeTuningIcon />}
-									<span className={`${isCurrentNote ? "text-[1.1em] font-black" : "text-[0.8em]"} transition-all duration-100`}>
+									<span
+										className={`${isCurrentNote ? "text-[1.1em] font-black" : "text-[0.8em]"} transition-all duration-100`}
+									>
 										{renderNote(note.note)}
 									</span>
 								</div>

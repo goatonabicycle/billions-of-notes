@@ -1,46 +1,46 @@
 .notes-grid {
-  @apply flex flex-col w-full flex-grow font-bold bg-background-grid overflow-hidden;
-  font-size: calc(1px + 1.5vmin);
+	@apply flex flex-col w-full flex-grow font-bold bg-background-grid overflow-hidden;
+	font-size: calc(1px + 1.5vmin);
 }
 
 .note-row {
-  @apply flex w-full flex-grow;
+	@apply flex w-full flex-grow;
 }
 
 .note-cell {
-  @apply border-t border-b border-border text-center flex-1 overflow-hidden flex justify-center items-center;
+	@apply border-t border-b border-border text-center flex-1 overflow-hidden flex justify-center items-center;
 }
 
 .note-label {
-  @apply text-text-muted font-normal flex border-r border-border-strong min-w-[40px];
+	@apply text-text-muted font-normal flex border-r border-border-strong min-w-[40px];
 }
 
 @media (max-width: 600px) {
-  .note-label {
-    @apply text-base;
-  }
+	.note-label {
+		@apply text-base;
+	}
 }
 
 .note-present {
-  @apply bg-surface text-white text-base;
+	@apply bg-surface text-white text-base;
 }
 
 .active-note {
-  @apply bg-surface-active;
+	@apply bg-surface-active;
 }
 
 .active-row .active-note {
-  @apply bg-primary-500;
+	@apply bg-primary-500;
 }
 
 .active-row {
-  @apply bg-surface-hover;
+	@apply bg-surface-hover;
 }
 
 .note-in-scale {
-  @apply font-black bg-surface text-white;
+	@apply font-black bg-surface text-white;
 }
 
 .filling-note-row .note-cell {
-  @apply bg-primary-500;
+	@apply bg-primary-500;
 }

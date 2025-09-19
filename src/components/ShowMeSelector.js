@@ -2,7 +2,11 @@ import React from "react";
 import Checkbox from "./Checkbox";
 import Tooltip from "./Tooltip";
 
-const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow, tooltip }) => {
+const ShowMeSelector = ({
+	selectedPanelsToShow,
+	setSelectedPanelsToShow,
+	tooltip,
+}) => {
 	const panels = ["Guitar", "Piano Roll", "Piano", "Bass Guitar", "Ukelele"];
 
 	const handleChange = (event) => {
@@ -10,8 +14,8 @@ const ShowMeSelector = ({ selectedPanelsToShow, setSelectedPanelsToShow, tooltip
 		if (event.target.checked) {
 			setSelectedPanelsToShow((prevPanels) => [...prevPanels, value]);
 		} else {
-			setSelectedPanelsToShow(
-				(prevPanels) => prevPanels.filter((panel) => panel !== value),
+			setSelectedPanelsToShow((prevPanels) =>
+				prevPanels.filter((panel) => panel !== value),
 			);
 		}
 	};

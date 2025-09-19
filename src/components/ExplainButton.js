@@ -1,6 +1,6 @@
 import React, { useState, memo } from "react";
-import Modal from "./Modal";
 import KofiButton from "./KofiButton";
+import Modal from "./Modal";
 
 const ModalContent = memo(() => (
 	<div className="w-[400px] max-h-[80vh] overflow-y-auto space-y-6 text-primary-100 text-center">
@@ -16,9 +16,7 @@ const ModalContent = memo(() => (
 			</div>
 
 			<div>
-				<div className="text-lg font-bold text-primary-300 mb-2">
-					AI notes?
-				</div>
+				<div className="text-lg font-bold text-primary-300 mb-2">AI notes?</div>
 				<div className="text-sm opacity-90">Nope!</div>
 			</div>
 
@@ -84,13 +82,21 @@ const ModalContent = memo(() => (
 					Can I help?
 				</div>
 				<div className="text-sm opacity-90 space-y-1 flex justify-center">
-					<a href='https://ko-fi.com/B0B1LV8D9' target='_blank'>
-						<img height='36' style={{ border: "0px", height: "36px" }} src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+					<a
+						href="https://ko-fi.com/B0B1LV8D9"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<img
+							height="36"
+							style={{ border: "0px", height: "36px" }}
+							src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
+							border="0"
+							alt="Buy Me a Coffee at ko-fi.com"
+						/>
 					</a>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 ));

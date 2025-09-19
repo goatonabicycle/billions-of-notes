@@ -1,9 +1,9 @@
+@import url("https://fonts.cdnfonts.com/css/jetbrains-mono-2");
+@import "intro.js/minified/introjs.min.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.cdnfonts.com/css/jetbrains-mono-2");
-@import "intro.js/minified/introjs.min.css";
 
 body {
 	@apply m-0 font-mono antialiased bg-background text-text;
@@ -15,7 +15,8 @@ body {
 	background-image: radial-gradient(
 			theme("colors.animation-dots.primary") 1px,
 			transparent 0
-		), radial-gradient(theme("colors.animation-dots.secondary") 1px, transparent 0);
+		),
+		radial-gradient(theme("colors.animation-dots.secondary") 1px, transparent 0);
 	@apply animate-slide;
 }
 

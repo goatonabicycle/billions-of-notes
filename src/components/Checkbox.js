@@ -13,7 +13,9 @@ const Checkbox = ({
 }) => {
 	return (
 		<Tooltip text={tooltip}>
-			<label className={`flex items-center gap-1.5 cursor-pointer group ${className}`}>
+			<label
+				className={`flex items-center gap-1.5 cursor-pointer group ${className}`}
+			>
 				<div className="relative">
 					<input
 						type="checkbox"
@@ -26,8 +28,9 @@ const Checkbox = ({
 					/>
 					{/* Custom checkmark */}
 					<div
-						className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 ${checked ? "opacity-100" : "opacity-0"
-							}`}
+						className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 ${
+							checked ? "opacity-100" : "opacity-0"
+						}`}
 					>
 						<svg
 							role="graphics-symbol img"

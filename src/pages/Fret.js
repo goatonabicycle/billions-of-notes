@@ -1,19 +1,19 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react';
-import { Scale, Note } from 'tonal';
-import { useParams } from 'react-router-dom';
-import Guitar from '../components/instruments/Guitar';
-import OctaveSelector from '../components/OctaveSelector';
-import ScaleSelector from '../components/ScaleSelector';
-import Select from '../components/Select';
-import { supabase } from '../supabaseClient';
+import React, { useCallback, useMemo, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Note, Scale } from "tonal";
+import OctaveSelector from "../components/OctaveSelector";
+import ScaleSelector from "../components/ScaleSelector";
+import Select from "../components/Select";
+import Guitar from "../components/instruments/Guitar";
+import { useStorage } from "../hooks/useLocalStorage";
+import { supabase } from "../supabaseClient";
 import {
 	DEFAULT_KEY,
 	DEFAULT_SCALE,
+	FLAT_TO_SHARP,
 	KEYS,
 	mapToSelectOptions,
-	FLAT_TO_SHARP
-} from '../useful';
-import { useStorage } from "../hooks/useLocalStorage";
+} from "../useful";
 
 const scales = Scale.names();
 
@@ -21,7 +21,7 @@ export default function ScaleFretboard() {
 	const { id } = useParams();
 	const [isInitialLoading, setIsInitialLoading] = useState(false);
 	const [isSharing, setIsSharing] = useState(false);
-	const [shareUrl, setShareUrl] = useState('');
+	const [shareUrl, setShareUrl] = useState("");
 
 	const [inputState, _setInputState] = useStorage("fret-inputState", {
 		key: DEFAULT_KEY,
@@ -31,27 +31,30 @@ export default function ScaleFretboard() {
 	});
 	const setInputState = useCallback(_setInputState, [_setInputState]);
 
-	const loadSharedState = useCallback(async (stateId) => {
-		const { data, error } = await supabase
-			.from('fretboard_states')
-			.select('*')
-			.eq('id', stateId)
-			.single();
+	const loadSharedState = useCallback(
+		async (stateId) => {
+			const { data, error } = await supabase
+				.from("fretboard_states")
+				.select("*")
+				.eq("id", stateId)
+				.single();
 
-		if (error) {
-			console.error('Error loading state:', error);
-			return;
-		}
+			if (error) {
+				console.error("Error loading state:", error);
+				return;
+			}
 
-		if (data) {
-			setInputState({
-				key: data.key,
-				scale: data.scale,
-				notation: data.notation,
-				octaves: data.octaves,
-			});
-		}
-	}, [setInputState]);
+			if (data) {
+				setInputState({
+					key: data.key,
+					scale: data.scale,
+					notation: data.notation,
+					octaves: data.octaves,
+				});
+			}
+		},
+		[setInputState],
+	);
 
 	useEffect(() => {
 		if (id) {
@@ -61,8 +64,8 @@ export default function ScaleFretboard() {
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
-		const keyParam = params.get('key');
-		const scaleParam = params.get('scale');
+		const keyParam = params.get("key");
+		const scaleParam = params.get("scale");
 
 		if (keyParam && scaleParam && !id) {
 			setIsInitialLoading(true);
@@ -71,7 +74,7 @@ export default function ScaleFretboard() {
 			const isValidScale = scales.includes(scaleParam);
 
 			if (!isValidKey || !isValidScale) {
-				console.error('Invalid key or scale parameters');
+				console.error("Invalid key or scale parameters");
 				setIsInitialLoading(false);
 				return;
 			}
@@ -87,31 +90,31 @@ export default function ScaleFretboard() {
 				const stateHash = btoa(JSON.stringify(stateToSave));
 
 				const { data: existingState } = await supabase
-					.from('fretboard_states')
-					.select('id')
-					.eq('state_hash', stateHash)
+					.from("fretboard_states")
+					.select("id")
+					.eq("state_hash", stateHash)
 					.single();
 
 				if (existingState) {
-					window.history.replaceState({}, '', `/fret/${existingState.id}`);
+					window.history.replaceState({}, "", `/fret/${existingState.id}`);
 					loadSharedState(existingState.id);
 					setIsInitialLoading(false);
 					return;
 				}
 
 				const { data, error } = await supabase
-					.from('fretboard_states')
+					.from("fretboard_states")
 					.insert([{ ...stateToSave, state_hash: stateHash }])
 					.select()
 					.single();
 
 				if (error) {
-					console.error('Error saving state:', error);
+					console.error("Error saving state:", error);
 					setIsInitialLoading(false);
 					return;
 				}
 
-				window.history.replaceState({}, '', `/fret/${data.id}`);
+				window.history.replaceState({}, "", `/fret/${data.id}`);
 				loadSharedState(data.id);
 				setIsInitialLoading(false);
 			};
@@ -132,31 +135,33 @@ export default function ScaleFretboard() {
 
 		try {
 			const { data: existingState } = await supabase
-				.from('fretboard_states')
-				.select('id')
-				.eq('state_hash', stateHash)
+				.from("fretboard_states")
+				.select("id")
+				.eq("state_hash", stateHash)
 				.single();
 
 			if (existingState) {
 				const shareableUrl = `${window.location.origin}/fret/${existingState.id}`;
 				setShareUrl(shareableUrl);
 				navigator.clipboard.writeText(shareableUrl);
-				setTimeout(() => setShareUrl(''), 3000);
+				setTimeout(() => setShareUrl(""), 3000);
 				setIsSharing(false);
 				return;
 			}
 
 			const { data, error } = await supabase
-				.from('fretboard_states')
-				.insert([{
-					...stateToSave,
-					state_hash: stateHash
-				}])
+				.from("fretboard_states")
+				.insert([
+					{
+						...stateToSave,
+						state_hash: stateHash,
+					},
+				])
 				.select()
 				.single();
 
 			if (error) {
-				console.error('Error saving state:', error);
+				console.error("Error saving state:", error);
 				setIsSharing(false);
 				return;
 			}
@@ -164,9 +169,9 @@ export default function ScaleFretboard() {
 			const shareableUrl = `${window.location.origin}/fret/${data.id}`;
 			setShareUrl(shareableUrl);
 			navigator.clipboard.writeText(shareableUrl);
-			setTimeout(() => setShareUrl(''), 3000);
+			setTimeout(() => setShareUrl(""), 3000);
 		} catch (error) {
-			console.error('Error sharing:', error);
+			console.error("Error sharing:", error);
 		} finally {
 			setIsSharing(false);
 		}
@@ -183,12 +188,15 @@ export default function ScaleFretboard() {
 		[setInputState],
 	);
 
-	const handleOctaveChange = useCallback((newOctaves) => {
-		setInputState(prevState => {
-			const updated = { ...prevState, octaves: newOctaves };
-			return updated;
-		});
-	}, [setInputState]);
+	const handleOctaveChange = useCallback(
+		(newOctaves) => {
+			setInputState((prevState) => {
+				const updated = { ...prevState, octaves: newOctaves };
+				return updated;
+			});
+		},
+		[setInputState],
+	);
 
 	const keyOptions = useMemo(() => mapToSelectOptions(KEYS), []);
 	const scaleOptions = useMemo(() => mapToSelectOptions(scales), []);
@@ -199,11 +207,11 @@ export default function ScaleFretboard() {
 		return (FLAT_TO_SHARP[pc] || pc) + (oct || "");
 	});
 
-	const visibleNotes = inputState?.octaves?.flatMap(octave =>
-		notesInScale.map(note => {
+	const visibleNotes = inputState?.octaves?.flatMap((octave) =>
+		notesInScale.map((note) => {
 			const { pc } = Note.get(note);
 			return pc + octave;
-		})
+		}),
 	);
 
 	return (
@@ -214,7 +222,12 @@ export default function ScaleFretboard() {
 				</div>
 			)}
 
-			<a href="/" className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300">Back home</a>
+			<a
+				href="/"
+				className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300"
+			>
+				Back home
+			</a>
 			<div className="flex justify-center items-center gap-2">
 				<div className="text-xl text-primary-300 uppercase">
 					Just a fretboard
@@ -260,20 +273,26 @@ export default function ScaleFretboard() {
 							disabled={isSharing}
 							className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 disabled:opacity-50 disabled:cursor-not-allowed"
 						>
-							{isSharing ? 'Sharing...' : 'Share'}
+							{isSharing ? "Sharing..." : "Share"}
 						</button>
 						{shareUrl && (
 							<div className="text-sm text-gray-200">
 								URL copied to clipboard!
 							</div>
 						)}
-
 					</div>
 				</div>
 			</div>
 
 			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 rounded-lg overflow-hidden">
-				{!isInitialLoading && <Guitar notesToPlay={visibleNotes} playbackIndex={0} scaleNotes={notesInScale} smallOctaveNumbers={true} />}
+				{!isInitialLoading && (
+					<Guitar
+						notesToPlay={visibleNotes}
+						playbackIndex={0}
+						scaleNotes={notesInScale}
+						smallOctaveNumbers={true}
+					/>
+				)}
 			</div>
 		</div>
 	);

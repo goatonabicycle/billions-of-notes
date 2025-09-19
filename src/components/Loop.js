@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+	useEffect,
+	useRef,
+	useState,
+	useCallback,
+	useMemo,
+} from "react";
 import * as Tone from "tone";
 
 const ClickFirst = React.memo(({ onClick }) => {
@@ -23,7 +29,8 @@ const ClickFirst = React.memo(({ onClick }) => {
 				<div
 					className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary-500/20 to-transparent"
 					style={{
-						backgroundImage: "linear-gradient(0deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px)",
+						backgroundImage:
+							"linear-gradient(0deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px)",
 						backgroundSize: "20px 20px",
 					}}
 				/>
@@ -58,31 +65,36 @@ const Loop = ({
 	const instrumentRef = useRef(null);
 	const partRef = useRef(null);
 
-	const envelopeSettings = useMemo(() => ({
-		attack: 0.01,
-		decay: 0.1,
-		sustain: 1,
-		release: 10.10
-	}), []);
+	const envelopeSettings = useMemo(
+		() => ({
+			attack: 0.01,
+			decay: 0.1,
+			sustain: 1,
+			release: 10.1,
+		}),
+		[],
+	);
 
-	const createInstrument = useCallback((type) => {
-		const options = { envelope: envelopeSettings };
+	const createInstrument = useCallback(
+		(type) => {
+			const options = { envelope: envelopeSettings };
 
-		switch (type) {
-			case "DuoSynth":
-				return new Tone.DuoSynth({
-					voice0: { envelope: envelopeSettings },
-					voice1: { envelope: envelopeSettings },
-				}).toDestination();
-			case "PolySynth":
-				return new Tone.PolySynth(Tone.Synth, options).toDestination();
-			default:
-				const SynthClass = Tone[type];
-				return new SynthClass(options).toDestination();
-		}
-	}, [envelopeSettings]);
-
-
+			switch (type) {
+				case "DuoSynth":
+					return new Tone.DuoSynth({
+						voice0: { envelope: envelopeSettings },
+						voice1: { envelope: envelopeSettings },
+					}).toDestination();
+				case "PolySynth":
+					return new Tone.PolySynth(Tone.Synth, options).toDestination();
+				default: {
+					const SynthClass = Tone[type];
+					return new SynthClass(options).toDestination();
+				}
+			}
+		},
+		[envelopeSettings],
+	);
 
 	const setupLoop = useCallback(() => {
 		if (partRef.current) {
@@ -92,23 +104,26 @@ const Loop = ({
 		const beatDuration = 60 / bpm;
 		const fixedDuration = beatDuration * (notePlayLength / 10);
 
-		const part = new Tone.Part((time, { note, index }) => {
-			Tone.Draw.schedule(() => {
-				setCurrentIndex(index);
-			}, time);
+		const part = new Tone.Part(
+			(time, { note, index }) => {
+				Tone.Draw.schedule(() => {
+					setCurrentIndex(index);
+				}, time);
 
-			if (!note) return;
+				if (!note) return;
 
-			const shouldTie = tieTogether && index > 0 && note === notes[index - 1];
+				const shouldTie = tieTogether && index > 0 && note === notes[index - 1];
 
-			if (!shouldTie) {
-				instrumentRef.current.triggerAttackRelease(note, fixedDuration, time);
-			}
-		}, notes.map((note, index) => ({
-			time: index * beatDuration,
-			note,
-			index
-		})));
+				if (!shouldTie) {
+					instrumentRef.current.triggerAttackRelease(note, fixedDuration, time);
+				}
+			},
+			notes.map((note, index) => ({
+				time: index * beatDuration,
+				note,
+				index,
+			})),
+		);
 
 		part.loop = true;
 		part.loopEnd = notes.length * beatDuration;
@@ -143,7 +158,8 @@ const Loop = ({
 
 		const setup = async () => {
 			const newInstrument = createInstrument(instrument);
-			const volumeValue = volume === 0 ? Number.NEGATIVE_INFINITY : Tone.gainToDb(volume / 100);
+			const volumeValue =
+				volume === 0 ? Number.NEGATIVE_INFINITY : Tone.gainToDb(volume / 100);
 			newInstrument.volume.value = volumeValue;
 
 			if (instrumentRef.current) {
@@ -199,7 +215,16 @@ const Loop = ({
 				instrumentRef.current.triggerRelease("+0");
 			}
 		};
-	}, [notes, bpm, isPlaying, tieTogether, toneStarted, setupLoop, notePlayLength, setCurrentIndex]);
+	}, [
+		notes,
+		bpm,
+		isPlaying,
+		tieTogether,
+		toneStarted,
+		setupLoop,
+		notePlayLength,
+		setCurrentIndex,
+	]);
 
 	if (!toneStarted) {
 		return <ClickFirst onClick={handleOverlayClick} />;

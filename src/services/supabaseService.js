@@ -1,21 +1,21 @@
-import { supabase } from '../supabaseClient';
+import { supabase } from "../supabaseClient";
 
 export async function loadSharedState(stateId) {
 	try {
 		const { data, error } = await supabase
-			.from('app_states')
-			.select('*')
-			.eq('id', stateId)
+			.from("app_states")
+			.select("*")
+			.eq("id", stateId)
 			.single();
 
 		if (error) {
-			console.error('Error loading state:', error);
+			console.error("Error loading state:", error);
 			return null;
 		}
 
 		return data;
 	} catch (error) {
-		console.error('Error in loadSharedState:', error);
+		console.error("Error in loadSharedState:", error);
 		return null;
 	}
 }
@@ -23,19 +23,19 @@ export async function loadSharedState(stateId) {
 export async function loadKeptState(stateId) {
 	try {
 		const { data, error } = await supabase
-			.from('app_states')
-			.select('*')
-			.eq('id', stateId)
+			.from("app_states")
+			.select("*")
+			.eq("id", stateId)
 			.single();
 
 		if (error) {
-			console.error('Error loading kept state:', error);
+			console.error("Error loading kept state:", error);
 			return null;
 		}
 
 		return data;
 	} catch (error) {
-		console.error('Error in loadKeptState:', error);
+		console.error("Error in loadKeptState:", error);
 		return null;
 	}
 }
@@ -47,19 +47,19 @@ export function generateStateHash(stateToSave, randomNotes) {
 async function findExistingState(stateHash) {
 	try {
 		const { data: existingState, error } = await supabase
-			.from('app_states')
-			.select('id')
-			.eq('state_hash', stateHash)
+			.from("app_states")
+			.select("id")
+			.eq("state_hash", stateHash)
 			.single();
 
-		if (error && error.code !== 'PGRST116') {
-			console.error('Error searching for state:', error);
+		if (error && error.code !== "PGRST116") {
+			console.error("Error searching for state:", error);
 			throw error;
 		}
 
 		return existingState?.id || null;
 	} catch (error) {
-		console.error('Error in findExistingState:', error);
+		console.error("Error in findExistingState:", error);
 		return null;
 	}
 }
@@ -67,24 +67,29 @@ async function findExistingState(stateHash) {
 async function createNewState(stateToSave, stateHash) {
 	try {
 		const { data: newState, error } = await supabase
-			.from('app_states')
+			.from("app_states")
 			.insert([{ ...stateToSave, state_hash: stateHash }])
 			.select()
 			.single();
 
 		if (error) {
-			console.error('Error saving state:', error);
+			console.error("Error saving state:", error);
 			throw error;
 		}
 
 		return newState.id;
 	} catch (error) {
-		console.error('Error in createNewState:', error);
+		console.error("Error in createNewState:", error);
 		return null;
 	}
 }
 
-export async function saveState({ inputState, controlState, randomNotes, selectedPanelsToShow }) {
+export async function saveState({
+	inputState,
+	controlState,
+	randomNotes,
+	selectedPanelsToShow,
+}) {
 	try {
 		const stateToSave = {
 			key: inputState.key,
@@ -100,7 +105,7 @@ export async function saveState({ inputState, controlState, randomNotes, selecte
 			tie_together: controlState.tieTogether,
 			random_notes: randomNotes,
 			panels_to_show: selectedPanelsToShow,
-			created_at: new Date().toISOString()
+			created_at: new Date().toISOString(),
 		};
 
 		const stateHash = generateStateHash(stateToSave, randomNotes);
@@ -113,7 +118,7 @@ export async function saveState({ inputState, controlState, randomNotes, selecte
 
 		return stateId;
 	} catch (error) {
-		console.error('Error in saveState:', error);
+		console.error("Error in saveState:", error);
 		return null;
 	}
 }
@@ -137,9 +142,9 @@ export function parseStateData(data) {
 			noteMode: data.note_mode,
 			noteLength: Number(data.note_length),
 			tieTogether: data.tie_together === true,
-			instrument: data.instrument
+			instrument: data.instrument,
 		},
 		randomNotes: data.random_notes,
-		panelsToShow: data.panels_to_show
+		panelsToShow: data.panels_to_show,
 	};
 }

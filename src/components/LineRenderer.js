@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useMemo, useCallback, useState } from "react";
+import React, {
+	useEffect,
+	useRef,
+	useMemo,
+	useCallback,
+	useState,
+} from "react";
 import "./LineRenderer.css";
 import { KEYS } from "../useful";
 
@@ -16,7 +22,13 @@ const getNoteNumber = (note) => {
 	return octave * 12 + KEYS.indexOf(noteName);
 };
 
-const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = true }) => {
+const LineRenderer = ({
+	notes,
+	onClick,
+	activeNote,
+	colour,
+	animationsEnabled = true,
+}) => {
 	const canvasRef = useRef(null);
 	const [trail, setTrail] = useState([]);
 	const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
@@ -35,12 +47,14 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 
 		return noteNumbers.map((noteNumber, i) => ({
 			x:
-				(i / Math.max(notes.length - 1, 1)) * (canvasSize.width - 2 * DOT_RADIUS) + DOT_RADIUS,
+				(i / Math.max(notes.length - 1, 1)) *
+					(canvasSize.width - 2 * DOT_RADIUS) +
+				DOT_RADIUS,
 			y:
 				noteNumber !== null
 					? ((noteNumber - minNote) / noteRange) *
-					(canvasSize.height - 2 * DOT_RADIUS) +
-					DOT_RADIUS
+							(canvasSize.height - 2 * DOT_RADIUS) +
+						DOT_RADIUS
 					: null,
 		}));
 	}, [notes, canvasSize]);
@@ -70,12 +84,12 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 	const drawSecondaryLines = useCallback((linePath, ctx) => {
 		ctx.strokeStyle = SECONDARY_LINE_COLOUR;
 		const validPoints = linePath.filter((point) => point.y !== null);
-		validPoints.slice(1).forEach((point) => {
+		for (const point of validPoints.slice(1)) {
 			ctx.beginPath();
 			ctx.moveTo(validPoints[0].x, validPoints[0].y);
 			ctx.lineTo(point.x, point.y);
 			ctx.stroke();
-		});
+		}
 	}, []);
 
 	const drawAnimationDot = useCallback((dotPosition, ctx) => {
@@ -87,29 +101,32 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 		}
 	}, []);
 
-	const drawTrail = useCallback((ctx) => {
-		if (!animationsEnabled || trail.length < 2) return;
+	const drawTrail = useCallback(
+		(ctx) => {
+			if (!animationsEnabled || trail.length < 2) return;
 
-		ctx.lineWidth = 2;
-		ctx.lineCap = 'round';
-		ctx.strokeStyle = 'white';
+			ctx.lineWidth = 2;
+			ctx.lineCap = "round";
+			ctx.strokeStyle = "white";
 
-		ctx.beginPath();
-		for (let i = 1; i < trail.length; i++) {
-			if (i === 1) {
-				ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+			ctx.beginPath();
+			for (let i = 1; i < trail.length; i++) {
+				if (i === 1) {
+					ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+				}
+				ctx.lineTo(trail[i].x, trail[i].y);
 			}
-			ctx.lineTo(trail[i].x, trail[i].y);
-		}
-		ctx.stroke();
-	}, [trail, animationsEnabled]);
+			ctx.stroke();
+		},
+		[trail, animationsEnabled],
+	);
 
 	useEffect(() => {
 		if (!animationsEnabled) return;
 
 		const currentPoint = linePath[activeNote];
 		if (currentPoint && currentPoint.y !== null) {
-			setTrail(prev => {
+			setTrail((prev) => {
 				const newTrail = [...prev, { x: currentPoint.x, y: currentPoint.y }];
 				return newTrail.slice(-TRAIL_LENGTH);
 			});
@@ -129,7 +146,14 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 			drawTrail(ctx);
 			drawAnimationDot(linePath[activeNote], ctx);
 		}
-	}, [linePath, activeNote, drawLine, drawSecondaryLines, drawAnimationDot, drawTrail]);
+	}, [
+		linePath,
+		activeNote,
+		drawLine,
+		drawSecondaryLines,
+		drawAnimationDot,
+		drawTrail,
+	]);
 
 	useEffect(() => {
 		draw();
@@ -145,11 +169,11 @@ const LineRenderer = ({ notes, onClick, activeNote, colour, animationsEnabled = 
 		canvas.width = rect.width * dpr;
 		canvas.height = rect.height * dpr;
 
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext("2d");
 		ctx.scale(dpr, dpr);
 
-		canvas.style.width = rect.width + 'px';
-		canvas.style.height = rect.height + 'px';
+		canvas.style.width = `${rect.width}px`;
+		canvas.style.height = `${rect.height}px`;
 
 		setCanvasSize({ width: canvas.width, height: canvas.height });
 	}, []);

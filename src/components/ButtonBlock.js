@@ -8,7 +8,7 @@ import {
 	ResetIcon,
 	ReverseIcon,
 	SaveIcon,
-	ShareIcon
+	ShareIcon,
 } from "./Icons";
 
 const ButtonBlock = ({
@@ -33,45 +33,43 @@ const ButtonBlock = ({
 }) => {
 	const handleNewNotesClick = useCallback(
 		() => setTriggerRegenerate(!triggerRegenerate),
-		[triggerRegenerate, setTriggerRegenerate]
+		[triggerRegenerate, setTriggerRegenerate],
 	);
 
 	const handlePlayPauseClick = useCallback(
 		() => setIsPlaying(!isPlaying),
-		[isPlaying, setIsPlaying]
+		[isPlaying, setIsPlaying],
 	);
 
-	const handleResetClick = useCallback(
-		() => resetInputs(),
-		[resetInputs]
-	);
+	const handleResetClick = useCallback(() => resetInputs(), [resetInputs]);
 
-	const handleShareClick = useCallback(
-		() => {
-			saveAndShare();
-		},
-		[saveAndShare]
-	);
-
+	const handleShareClick = useCallback(() => {
+		saveAndShare();
+	}, [saveAndShare]);
 
 	const handleSaveMIDIClick = useCallback(
-		() => SaveToMidi(
+		() =>
+			SaveToMidi(
+				randomNotes,
+				selectedTempo,
+				selectedKey,
+				selectedScale,
+				selectedNumberOfNotes,
+			),
+		[
 			randomNotes,
 			selectedTempo,
+			SaveToMidi,
 			selectedKey,
 			selectedScale,
-			selectedNumberOfNotes
-		),
-		[randomNotes, selectedTempo, SaveToMidi, selectedKey, selectedScale, selectedNumberOfNotes]
+			selectedNumberOfNotes,
+		],
 	);
 
-	const handleReverseClick = useCallback(
-		() => {
-			const newRandomNotes = randomNotes.reverse();
-			setRandomNotes([...newRandomNotes]);
-		},
-		[randomNotes, setRandomNotes]
-	);
+	const handleReverseClick = useCallback(() => {
+		const newRandomNotes = randomNotes.reverse();
+		setRandomNotes([...newRandomNotes]);
+	}, [randomNotes, setRandomNotes]);
 
 	return (
 		<div

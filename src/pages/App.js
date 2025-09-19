@@ -2,14 +2,23 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Scale } from "tonal";
 
-import { useStorage } from "../hooks/useLocalStorage";
 import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
-import { useInputStateWithTracking, useControlStateWithTracking } from "../hooks/useStateWithTracking";
+import { useStorage } from "../hooks/useLocalStorage";
+import {
+	useControlStateWithTracking,
+	useInputStateWithTracking,
+} from "../hooks/useStateWithTracking";
+import {
+	generateRandomNotes,
+	validateEmptyNotes,
+} from "../services/notesGenerator";
 import * as supabaseService from "../services/supabaseService";
-import { generateRandomNotes, validateEmptyNotes } from "../services/notesGenerator";
 
 import {
+	DEFAULT_ANIMATIONS_ENABLED,
+	DEFAULT_DEBUG_ENABLED,
 	DEFAULT_EMPTY_NOTES,
+	DEFAULT_INSTRUMENT,
 	DEFAULT_KEY,
 	DEFAULT_NOTES_MODE,
 	DEFAULT_NOTE_LENGTH,
@@ -19,31 +28,34 @@ import {
 	DEFAULT_SCALE,
 	DEFAULT_TEMPO,
 	DEFAULT_VOLUME,
-	DEFAULT_INSTRUMENT,
 	KEYS,
 	randomRGBA,
-	DEFAULT_ANIMATIONS_ENABLED,
-	DEFAULT_DEBUG_ENABLED
 } from "../useful";
 
 import ButtonBlock from "../components/ButtonBlock";
+import Debug from "../components/Debug";
 import Loop from "../components/Loop";
 import MessageBoxes from "../components/MessageBoxes";
 import NotesUsed from "../components/NotesUsed";
 import SaveToMidi from "../components/SaveToMidi";
-import TabbedControls from "../components/TabbedControls";
-import ShowMePanels from "../components/ShowMePanels";
-import TitleArea from "../components/TitleArea";
 import SharedStateIndicator from "../components/SharedStateIndicator";
-import Debug from "../components/Debug";
+import ShowMePanels from "../components/ShowMePanels";
+import TabbedControls from "../components/TabbedControls";
+import TitleArea from "../components/TitleArea";
 
 function App() {
 	const scales = useMemo(() => Scale.names(), []);
 	const { id } = useParams();
 	const [stateModified, setStateModified] = useState(false);
 
-	const [debugEnabled, _setDebugEnabled] = useStorage("debugEnabled", DEFAULT_DEBUG_ENABLED);
-	const [animationsEnabled, _setAnimationsEnabled] = useStorage("animationsEnabled", DEFAULT_ANIMATIONS_ENABLED);
+	const [debugEnabled, _setDebugEnabled] = useStorage(
+		"debugEnabled",
+		DEFAULT_DEBUG_ENABLED,
+	);
+	const [animationsEnabled, _setAnimationsEnabled] = useStorage(
+		"animationsEnabled",
+		DEFAULT_ANIMATIONS_ENABLED,
+	);
 	const [isGeneratingLink, setIsGeneratingLink] = useState(false);
 
 	const [inputState, setInputState] = useInputStateWithTracking(
@@ -54,7 +66,7 @@ function App() {
 			emptyNotes: DEFAULT_EMPTY_NOTES,
 			octaves: DEFAULT_OCTAVES,
 		},
-		setStateModified
+		setStateModified,
 	);
 
 	const [controlState, setControlState] = useControlStateWithTracking(
@@ -66,7 +78,7 @@ function App() {
 			instrument: DEFAULT_INSTRUMENT,
 			tieTogether: false,
 		},
-		setStateModified
+		setStateModified,
 	);
 
 	const handleInputChange = useCallback(
@@ -97,7 +109,9 @@ function App() {
 		"selectedPanelsToShow",
 		DEFAULT_PANELS_TO_SHOW,
 	);
-	const setSelectedPanelsToShow = useCallback(_setSelectedPanelsToShow, [_setSelectedPanelsToShow]);
+	const setSelectedPanelsToShow = useCallback(_setSelectedPanelsToShow, [
+		_setSelectedPanelsToShow,
+	]);
 
 	const [currentColour, setCurrentColour] = useState("");
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -130,7 +144,13 @@ function App() {
 			instrument: DEFAULT_INSTRUMENT,
 			tieTogether: false,
 		});
-	}, [setInputState, setControlState, setSelectedPanelsToShow, setCurrentIndex, setStateModified]);
+	}, [
+		setInputState,
+		setControlState,
+		setSelectedPanelsToShow,
+		setCurrentIndex,
+		setStateModified,
+	]);
 
 	useEffect(() => {
 		async function loadInitialState() {
@@ -159,11 +179,11 @@ function App() {
 				inputState,
 				controlState,
 				randomNotes,
-				selectedPanelsToShow
+				selectedPanelsToShow,
 			});
 
 			if (!stateId) {
-				throw new Error('Failed to save state');
+				throw new Error("Failed to save state");
 			}
 
 			const shareableUrl = `${window.location.origin}/${stateId}`;
@@ -172,9 +192,8 @@ function App() {
 			setTimeout(() => setShareButtonText("Share notes"), 2000);
 
 			setStateModified(false);
-
 		} catch (error) {
-			console.error('Error in saveAndShare:', error);
+			console.error("Error in saveAndShare:", error);
 			setShareButtonText("Error saving state");
 			setTimeout(() => setShareButtonText("Share notes"), 2000);
 		} finally {
@@ -182,11 +201,10 @@ function App() {
 		}
 	};
 
-
-
 	const generatedNotes = useMemo(() => {
 		if (!inputState || loadedFromUrl) return null;
 		return generateRandomNotes(inputState);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inputState, loadedFromUrl, triggerRegenerate]);
 
 	useEffect(() => {
@@ -202,7 +220,7 @@ function App() {
 		if (!inputState) return;
 		const validatedEmptyNotes = validateEmptyNotes(
 			inputState.numberOfNotes,
-			inputState.emptyNotes
+			inputState.emptyNotes,
 		);
 		if (Number.parseInt(inputState.emptyNotes) !== validatedEmptyNotes) {
 			setInputState({
@@ -217,11 +235,11 @@ function App() {
 		setTriggerRegenerate,
 		resetInputs,
 		randomNotes,
-		tempo: controlState.tempo
+		tempo: controlState.tempo,
 	});
 
 	useEffect(() => {
-		document.body.classList.toggle('animations-enabled', animationsEnabled);
+		document.body.classList.toggle("animations-enabled", animationsEnabled);
 	}, [animationsEnabled]);
 
 	if (!inputState) return null;
@@ -231,7 +249,6 @@ function App() {
 		<div className="App">
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 p-4">
 				<div className="lg:col-span-4">
-
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}
@@ -271,10 +288,7 @@ function App() {
 						setActiveTab={setActiveTab}
 					/>
 
-					<SharedStateIndicator
-						stateId={id}
-						isModified={stateModified}
-					/>
+					<SharedStateIndicator stateId={id} isModified={stateModified} />
 
 					{/* This would be cool as an animated line moving left to right as the notes play */}
 					<div className="w-full h-px bg-gradient-to-r from-primary-500 to-secondary-500" />
@@ -340,7 +354,6 @@ function App() {
 				/>
 			)}
 
-
 			{debugEnabled && (
 				<Debug
 					isPlaying={isPlaying}
@@ -353,8 +366,6 @@ function App() {
 					currentIndex={currentIndex}
 				/>
 			)}
-
-
 		</div>
 	);
 }

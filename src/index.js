@@ -5,8 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./index.css";
 import App from "./pages/App";
-import WhatScale from "./pages/WhatScale";
 import Fret from "./pages/Fret";
+import WhatScale from "./pages/WhatScale";
 
 function AppRoutes() {
 	return (

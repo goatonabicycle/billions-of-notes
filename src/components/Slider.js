@@ -28,20 +28,28 @@ const Slider = ({
 		const inputValue = e.target.value;
 		setLocalValue(inputValue);
 
-		const numericValue = parseFloat(inputValue);
-		if (!Number.isNaN(numericValue) && numericValue >= min && numericValue <= max) {
+		const numericValue = Number.parseFloat(inputValue);
+		if (
+			!Number.isNaN(numericValue) &&
+			numericValue >= min &&
+			numericValue <= max
+		) {
 			onChange({
 				target: {
 					name: name,
-					value: numericValue
-				}
+					value: numericValue,
+				},
 			});
 		}
 	};
 
 	const handleInputBlur = () => {
-		const numericValue = parseFloat(localValue);
-		if (Number.isNaN(numericValue) || numericValue < min || numericValue > max) {
+		const numericValue = Number.parseFloat(localValue);
+		if (
+			Number.isNaN(numericValue) ||
+			numericValue < min ||
+			numericValue > max
+		) {
 			setLocalValue(value);
 		}
 	};
@@ -50,7 +58,10 @@ const Slider = ({
 		<Tooltip text={tooltip}>
 			<div className="w-full md:w-36">
 				<div className="flex items-center gap-2">
-					<label htmlFor={id} className="block text-xs text-primary-300 uppercase mb-1">
+					<label
+						htmlFor={id}
+						className="block text-xs text-primary-300 uppercase mb-1"
+					>
 						{label}
 					</label>
 					<input

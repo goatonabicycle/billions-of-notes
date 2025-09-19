@@ -1,56 +1,56 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 const useScaleNotesStore = create((set, get) => ({
-  activeNoteIndexes: {},
+	activeNoteIndexes: {},
 
-  initializeScale: (scaleName, noteCount) => {
-    set((state) => ({
-      activeNoteIndexes: {
-        ...state.activeNoteIndexes,
-        [scaleName]: Array.from({ length: noteCount }, (_, i) => i)
-      }
-    }));
-  },
+	initializeScale: (scaleName, noteCount) => {
+		set((state) => ({
+			activeNoteIndexes: {
+				...state.activeNoteIndexes,
+				[scaleName]: Array.from({ length: noteCount }, (_, i) => i),
+			},
+		}));
+	},
 
-  toggleNoteIndex: (scaleName, noteIndex) => {
-    const { activeNoteIndexes } = get();
-    const currentIndexes = activeNoteIndexes[scaleName] || [];
+	toggleNoteIndex: (scaleName, noteIndex) => {
+		const { activeNoteIndexes } = get();
+		const currentIndexes = activeNoteIndexes[scaleName] || [];
 
-    if (currentIndexes.length === 1 && currentIndexes.includes(noteIndex)) {
-      return;
-    }
+		if (currentIndexes.length === 1 && currentIndexes.includes(noteIndex)) {
+			return;
+		}
 
-    const newIndexes = currentIndexes.includes(noteIndex)
-      ? currentIndexes.filter(i => i !== noteIndex)
-      : [...currentIndexes, noteIndex].sort((a, b) => a - b);
+		const newIndexes = currentIndexes.includes(noteIndex)
+			? currentIndexes.filter((i) => i !== noteIndex)
+			: [...currentIndexes, noteIndex].sort((a, b) => a - b);
 
-    set((state) => ({
-      activeNoteIndexes: {
-        ...state.activeNoteIndexes,
-        [scaleName]: newIndexes
-      }
-    }));
-  },
+		set((state) => ({
+			activeNoteIndexes: {
+				...state.activeNoteIndexes,
+				[scaleName]: newIndexes,
+			},
+		}));
+	},
 
-  getActiveIndexes: (scaleName, totalNotes) => {
-    const { activeNoteIndexes } = get();
-    const indexes = activeNoteIndexes[scaleName];
+	getActiveIndexes: (scaleName, totalNotes) => {
+		const { activeNoteIndexes } = get();
+		const indexes = activeNoteIndexes[scaleName];
 
-    if (!indexes) {
-      return Array.from({ length: totalNotes }, (_, i) => i);
-    }
+		if (!indexes) {
+			return Array.from({ length: totalNotes }, (_, i) => i);
+		}
 
-    return indexes;
-  },
+		return indexes;
+	},
 
-  resetScale: (scaleName, noteCount) => {
-    set((state) => ({
-      activeNoteIndexes: {
-        ...state.activeNoteIndexes,
-        [scaleName]: Array.from({ length: noteCount }, (_, i) => i)
-      }
-    }));
-  }
+	resetScale: (scaleName, noteCount) => {
+		set((state) => ({
+			activeNoteIndexes: {
+				...state.activeNoteIndexes,
+				[scaleName]: Array.from({ length: noteCount }, (_, i) => i),
+			},
+		}));
+	},
 }));
 
 export default useScaleNotesStore;

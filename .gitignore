@@ -29,3 +29,6 @@ yarn-error.log*
 .vercel
 
 auth.json
+
+# Claude AI session files
+CLAUDE.md

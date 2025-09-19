@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import SaveToMidi from '../components/SaveToMidi';
+import { useEffect } from "react";
+import SaveToMidi from "../components/SaveToMidi";
 
-export function useKeyboardShortcuts({ 
-	setIsPlaying, 
-	setTriggerRegenerate, 
-	resetInputs, 
-	randomNotes, 
-	tempo 
+export function useKeyboardShortcuts({
+	setIsPlaying,
+	setTriggerRegenerate,
+	resetInputs,
+	randomNotes,
+	tempo,
 }) {
 	useEffect(() => {
 		const handleKeyPress = (event) => {
@@ -39,9 +39,9 @@ export function useKeyboardShortcuts({
 
 export function getKeyboardShortcuts() {
 	return [
-		{ key: 'P', description: 'Play/Pause' },
-		{ key: 'N', description: 'Generate new notes' },
-		{ key: 'R', description: 'Reset all inputs' },
-		{ key: 'S', description: 'Save as MIDI' }
+		{ key: "P", description: "Play/Pause" },
+		{ key: "N", description: "Generate new notes" },
+		{ key: "R", description: "Reset all inputs" },
+		{ key: "S", description: "Save as MIDI" },
 	];
 }

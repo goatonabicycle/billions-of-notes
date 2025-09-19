@@ -1,19 +1,21 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from "@supabase/supabase-js";
 
-let supabaseUrl
-let supabaseAnonKey
+let supabaseUrl;
+let supabaseAnonKey;
 
 try {
-  const auth = require('./auth.json')
-  supabaseUrl = auth.supabase_url
-  supabaseAnonKey = auth.supabase_key
+	const auth = require("./auth.json");
+	supabaseUrl = auth.supabase_url;
+	supabaseAnonKey = auth.supabase_key;
 } catch (e) {
-  supabaseUrl = process.env.REACT_APP_SUPABASE_URL
-  supabaseAnonKey = process.env.REACT_APP_SUPABASE_KEY
+	supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+	supabaseAnonKey = process.env.REACT_APP_SUPABASE_KEY;
 }
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Supabase credentials not found in either auth.json or environment variables')
+	console.error(
+		"Supabase credentials not found in either auth.json or environment variables",
+	);
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);

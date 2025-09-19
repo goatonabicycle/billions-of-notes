@@ -38,10 +38,10 @@ const RainbowText = ({ text, tempo }) => {
 				<span
 					key={index}
 					style={{
-						animationName: 'textGlow',
+						animationName: "textGlow",
 						animationDuration: `${colorCycleDuration}s`,
-						animationTimingFunction: 'linear',
-						animationIterationCount: 'infinite',
+						animationTimingFunction: "linear",
+						animationIterationCount: "infinite",
 						animationDelay: `${index * (colorCycleDuration / text.length)}s`,
 					}}
 					className="inline-block font-black tracking-widest text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl"
@@ -63,8 +63,11 @@ const Title = memo(({ selectedTempo, animationsEnabled }) => {
 						fontFamily: "Russo One, system-ui, -apple-system, sans-serif",
 					}}
 				>
-
-					<div className="flex flex-wrap justify-center gap-4" data-intro="Welcome to Billions of Notes!" data-step="1">
+					<div
+						className="flex flex-wrap justify-center gap-4"
+						data-intro="Welcome to Billions of Notes!"
+						data-step="1"
+					>
 						{animationsEnabled && (
 							<>
 								<RainbowText text="BILLIONS" tempo={selectedTempo} />

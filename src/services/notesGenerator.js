@@ -1,6 +1,6 @@
 import { Note, Scale } from "tonal";
-import { FLAT_TO_SHARP, getRandomItem, shuffleArray } from "../useful";
 import useScaleNotesStore from "../stores/scaleNotesStore";
+import { FLAT_TO_SHARP, getRandomItem, shuffleArray } from "../useful";
 
 function getRandomNotes(notesInScale, total, empty, octaves) {
 	let numberOfNotesToUse = total - empty;
@@ -36,9 +36,14 @@ export function generateRandomNotes(inputState) {
 	const allNotesInScale = getNotesInScale(inputState.key, inputState.scale);
 
 	const { getActiveIndexes } = useScaleNotesStore.getState();
-	const activeIndexes = getActiveIndexes(inputState.scale, allNotesInScale.length);
+	const activeIndexes = getActiveIndexes(
+		inputState.scale,
+		allNotesInScale.length,
+	);
 
-	const activeNotesInScale = activeIndexes.map(index => allNotesInScale[index]);
+	const activeNotesInScale = activeIndexes.map(
+		(index) => allNotesInScale[index],
+	);
 
 	const totalNotes = Number.parseInt(inputState.numberOfNotes);
 	const emptyNotes = Number.parseInt(inputState.emptyNotes);
@@ -47,12 +52,12 @@ export function generateRandomNotes(inputState) {
 		activeNotesInScale,
 		totalNotes,
 		emptyNotes,
-		inputState.octaves
+		inputState.octaves,
 	);
 
 	return {
 		notesInScale: allNotesInScale,
-		randomNotes
+		randomNotes,
 	};
 }
 

@@ -10,7 +10,13 @@ import {
 import Fretboard from "../Fretboard";
 import Slider from "../Slider";
 
-const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode, smallOctaveNumbers = false }) => {
+const Guitar = ({
+	notesToPlay,
+	playbackIndex,
+	scaleNotes,
+	noteMode,
+	smallOctaveNumbers = false,
+}) => {
 	const [selectedPosition, setSelectedPosition] = useStorage(
 		"selectedPosition",
 		DEFAULT_POSITION,
@@ -21,10 +27,8 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode, smallOctaveN
 		DEFAULT_FINGER_RANGE,
 	);
 
-	const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] = useStorage(
-		"selectedGuitarStrings",
-		DEFAULT_NUMBER_OF_GUITAR_STRINGS
-	);
+	const [selectedNumberOfGuitarStrings, setSelectedNumberOfGuitarStrings] =
+		useStorage("selectedGuitarStrings", DEFAULT_NUMBER_OF_GUITAR_STRINGS);
 
 	const [numberOfGuitarFrets, setNumberOfGuitarFrets] = useStorage(
 		"numberOfGuitarFrets",
@@ -47,7 +51,8 @@ const Guitar = ({ notesToPlay, playbackIndex, scaleNotes, noteMode, smallOctaveN
 	);
 
 	const handleNumberOfGuitarStringsChange = useCallback(
-		(e) => setSelectedNumberOfGuitarStrings(Number.parseInt(e.target.value, 10)),
+		(e) =>
+			setSelectedNumberOfGuitarStrings(Number.parseInt(e.target.value, 10)),
 		[setSelectedNumberOfGuitarStrings],
 	);
 
