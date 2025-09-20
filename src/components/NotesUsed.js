@@ -69,18 +69,14 @@ const NotesUsed = ({
 					const isEmpty = !item.note;
 
 					return (
-						<div
-							key={i}
-							className={`relative ${isCurrentNote ? "group/active" : "group"}`}
+						<button
+							type="button"
+							key={`note-group-${originalIndexMap[i]}`}
+							className={`relative ${isCurrentNote ? "group/active" : "group"} w-full`}
 							onClick={() => {
 								setSelectedNoteForEditing(originalIndexMap[i]);
 								setIsModalOpen(true);
 							}}
-							onKeyUp={() => {
-								setSelectedNoteForEditing(originalIndexMap[i]);
-								setIsModalOpen(true);
-							}}
-							role="button"
 							tabIndex={0}
 						>
 							<div
@@ -120,7 +116,7 @@ const NotesUsed = ({
                   transition-all duration-0`}
 								/>
 							</div>
-						</div>
+						</button>
 					);
 				})}
 			</div>

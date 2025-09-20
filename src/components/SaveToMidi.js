@@ -6,7 +6,7 @@ const SaveToMidi = (notes, tempo, key, scale, numberOfNotes) => {
 	track.addEvent(new MidiWriter.ProgramChangeEvent({ instrument: 1 }));
 	track.setTempo(tempo);
 
-	notes.forEach((note) => {
+	for (const note of notes) {
 		const pitch = note.replace(/[0-9]/g, "");
 		let octave = note.replace(/\D/g, "");
 		octave = Number.parseInt(octave) - 1; // subtract 1 to match FLStudio's middle C (Big assumptions that this will mostly be used in FLStudio, oof)
@@ -19,7 +19,7 @@ const SaveToMidi = (notes, tempo, key, scale, numberOfNotes) => {
 				velocity: 100,
 			}),
 		);
-	});
+	}
 
 	const write = new MidiWriter.Writer(track);
 	const link = document.createElement("a");

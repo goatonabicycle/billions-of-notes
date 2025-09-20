@@ -277,7 +277,7 @@ const Fretboard = ({
 				/>
 
 				{fretboard.map((string, stringIndex) => (
-					<div key={stringIndex} className="flex justify-between relative">
+					<div key={`string-${stringIndex}`} className="flex justify-between relative">
 						{string.map((note, j) => {
 							const formattedNote = note.note;
 							const isCurrentNote =
@@ -335,7 +335,7 @@ const Fretboard = ({
 
 							return (
 								<div
-									key={j}
+									key={`fret-${stringIndex}-${j}`}
 									className={classes}
 									onClick={() => {
 										if (j === 0) {
@@ -359,7 +359,7 @@ const Fretboard = ({
 				<div className="flex justify-between w-full mt-2 pt-2 border-t border-zinc-800">
 					{Array.from({ length: numberOfFrets + 1 }, (_, i) => (
 						<div
-							key={i}
+							key={`fret-number-${i}`}
 							className="flex justify-center w-full text-[0.6em] text-primary-300"
 						>
 							{i}

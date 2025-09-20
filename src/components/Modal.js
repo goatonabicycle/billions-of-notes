@@ -15,13 +15,12 @@ const Modal = ({ isOpen, onClose, children }) => {
 	};
 
 	return (
-		<div
+		<dialog
 			className="fixed inset-0 bg-black/75 backdrop-blur-sm
-                 flex justify-center items-center z-[9999]"
+                 flex justify-center items-center z-[9999] m-0 p-0 w-full h-full max-w-full max-h-full"
 			onClick={onClose}
 			onKeyDown={handleBackdropKeyDown}
-			role="dialog"
-			aria-modal="true"
+			open
 		>
 			<div
 				className="bg-primary-950/90 p-6 rounded-lg border border-primary-400/50
@@ -32,7 +31,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 			>
 				{children}
 			</div>
-		</div>
+		</dialog>
 	);
 };
 

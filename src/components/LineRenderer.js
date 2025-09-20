@@ -178,8 +178,20 @@ const LineRenderer = ({
 		setCanvasSize({ width: canvas.width, height: canvas.height });
 	}, []);
 
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter" || e.key === " ") {
+			onClick();
+		}
+	};
+
 	return (
-		<div onClick={onClick} className="line-container">
+		<div
+			onClick={onClick}
+			onKeyDown={handleKeyDown}
+			role="button"
+			tabIndex={0}
+			className="line-container"
+		>
 			<canvas ref={canvasRef} className="line-canvas" />
 		</div>
 	);

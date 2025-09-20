@@ -8,7 +8,7 @@ const NotesInScale = ({ notesInScale }) => {
 			</div>
 			<div className="flex flex-wrap justify-center items-center gap-1">
 				{notesInScale.map((note, i) => (
-					<div key={i} className="relative group">
+					<div key={`note-${note}-${i}`} className="relative group">
 						<div
 							className="absolute inset-0 rounded bg-gradient-to-r from-primary-600/20 to-secondary-600/20 
                           group-hover:from-primary-600/40 group-hover:to-secondary-600/40

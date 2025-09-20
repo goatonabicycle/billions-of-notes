@@ -219,11 +219,8 @@ const Loop = ({
 		notes,
 		bpm,
 		isPlaying,
-		tieTogether,
 		toneStarted,
 		setupLoop,
-		notePlayLength,
-		setCurrentIndex,
 	]);
 
 	if (!toneStarted) {
