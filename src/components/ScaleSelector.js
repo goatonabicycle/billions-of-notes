@@ -10,6 +10,7 @@ const ScaleSelector = ({
 	notesInScale,
 	tooltip,
 	onNotesChanged,
+	makeNotesRemovable,
 }) => {
 	const { getActiveIndexes, toggleNoteIndex, initializeScale } =
 		useScaleNotesStore();
@@ -23,6 +24,7 @@ const ScaleSelector = ({
 	const activeIndexes = getActiveIndexes(inputScale, notesInScale.length);
 
 	const handleNoteClick = (noteIndex) => {
+		if (makeNotesRemovable === false) return;
 		toggleNoteIndex(inputScale, noteIndex);
 		if (onNotesChanged) {
 			onNotesChanged();

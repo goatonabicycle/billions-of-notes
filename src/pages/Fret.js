@@ -215,7 +215,7 @@ export default function ScaleFretboard() {
 	);
 
 	return (
-		<div className="flex flex-col h-screen gap-6 p-6 pt-6">
+		<div className="flex flex-col h-screen gap-6">
 			{isInitialLoading && (
 				<div className="absolute inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
 					<span className="text-primary-300">Loading...</span>
@@ -224,16 +224,16 @@ export default function ScaleFretboard() {
 
 			<a
 				href="/"
-				className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300"
+				className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300 pt-6 pl-6"
 			>
 				Back home
 			</a>
-			<div className="flex justify-center items-center gap-2">
-				<h1 className="text-xl text-primary-300 uppercase">Just a fretboard</h1>
+			<div className="flex justify-center ">
+				<h1 className="text-primary-300 uppercase">Fretboard</h1>
 			</div>
-			<div className="flex gap-4 justify-center">
-				<div className="bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-6 rounded-lg">
-					<div className="flex flex-wrap gap-6">
+			<div className="flex justify-center">
+				<div className="bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-4 rounded-lg">
+					<div className="flex flex-wrap gap-4">
 						<div>
 							<Select
 								id="key"
@@ -252,6 +252,7 @@ export default function ScaleFretboard() {
 							handleInputChange={handleInputChange}
 							notesInScale={notesInScale}
 							disabled={isInitialLoading || isSharing}
+							makeNotesRemovable={false}
 						/>
 
 						<div>
@@ -283,7 +284,7 @@ export default function ScaleFretboard() {
 				</div>
 			</div>
 
-			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 rounded-lg overflow-hidden">
+			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border-primary-500/20 rounded-lg overflow-hidden">
 				{!isInitialLoading && (
 					<Guitar
 						notesToPlay={visibleNotes}
