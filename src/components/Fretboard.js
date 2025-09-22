@@ -84,13 +84,13 @@ const Fretboard = ({
 
 	const notePositionsMap = useMemo(() => {
 		const map = new Map();
-		flatFretboard.forEach((pos) => {
+		for (const pos of flatFretboard) {
 			const formatted = formatNote(pos.note);
 			if (!map.has(formatted)) {
 				map.set(formatted, []);
 			}
 			map.get(formatted).push(pos);
-		});
+		}
 		return map;
 	}, [flatFretboard, formatNote]);
 
@@ -277,7 +277,10 @@ const Fretboard = ({
 				/>
 
 				{fretboard.map((string, stringIndex) => (
-					<div key={`string-${stringIndex}`} className="flex justify-between relative">
+					<div
+						key={`string-${stringIndex}`}
+						className="flex justify-between relative"
+					>
 						{string.map((note, j) => {
 							const formattedNote = note.note;
 							const isCurrentNote =
