@@ -31,10 +31,12 @@ export default function WhatScale() {
 
 	const getFretboardUrl = (scaleName) => {
 		const params = new URLSearchParams();
-		const key = notes.split(",")[0].trim();
+		const spaceIndex = scaleName.indexOf(" ");
+		const key = scaleName.substring(0, spaceIndex);
+		const scale = scaleName.substring(spaceIndex + 1);
 
-		params.set("key", key.toUpperCase());
-		params.set("scale", scaleName.replace(`${key} `, "").trim().toLowerCase());
+		params.set("key", key);
+		params.set("scale", scale.toLowerCase());
 		return `/fret?${params.toString()}`;
 	};
 
