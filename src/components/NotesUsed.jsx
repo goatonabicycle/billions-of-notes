@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
-import Button from "./Button.js";
+import Button from "./Button";
 import { PauseIcon } from "./Icons";
-import Modal from "./Modal.js";
+import Modal from "./Modal";
 import Select from "./Select";
 
 const NotesUsed = ({

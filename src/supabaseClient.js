@@ -1,20 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 
-let supabaseUrl;
-let supabaseAnonKey;
-
-try {
-	const auth = require("./auth.json");
-	supabaseUrl = auth.supabase_url;
-	supabaseAnonKey = auth.supabase_key;
-} catch (e) {
-	supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-	supabaseAnonKey = process.env.REACT_APP_SUPABASE_KEY;
-}
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
 	console.error(
-		"Supabase credentials not found in either auth.json or environment variables",
+		"Supabase credentials not found. Set VITE_SUPABASE_URL and VITE_SUPABASE_KEY in .env",
 	);
 }
 

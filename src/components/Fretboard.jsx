@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Note } from "tonal";
 import { KEYS, OCTAVES } from "../useful";
 import { ChangeTuningIcon } from "./Icons";
-import Modal from "./Modal.js";
+import Modal from "./Modal";
 import Select from "./Select";
 
 const Fretboard = ({
