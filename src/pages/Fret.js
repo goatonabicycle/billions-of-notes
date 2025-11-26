@@ -19,9 +19,33 @@ const scales = Scale.names();
 
 export default function ScaleFretboard() {
 	const { id } = useParams();
-	const [isInitialLoading, setIsInitialLoading] = useState(false);
 	const [isSharing, setIsSharing] = useState(false);
 	const [shareUrl, setShareUrl] = useState("");
+
+	// Check URL params for initial state override
+	const getUrlState = () => {
+		const params = new URLSearchParams(window.location.search);
+		const keyParam = params.get("key");
+		const scaleParam = params.get("scale");
+
+		if (keyParam && scaleParam) {
+			const isValidKey = KEYS.includes(keyParam);
+			const isValidScale = scales.includes(scaleParam);
+
+			if (isValidKey && isValidScale) {
+				return {
+					key: keyParam,
+					scale: scaleParam,
+					notation: "sharp",
+					octaves: [1, 2, 3, 4, 5],
+				};
+			}
+		}
+		return null;
+	};
+
+	const [urlStateApplied, setUrlStateApplied] = useState(false);
+	const urlState = useMemo(() => getUrlState(), []);
 
 	const [inputState, _setInputState] = useStorage("fret-inputState", {
 		key: DEFAULT_KEY,
@@ -30,6 +54,14 @@ export default function ScaleFretboard() {
 		octaves: [1, 2, 3, 4, 5],
 	});
 	const setInputState = useCallback(_setInputState, [_setInputState]);
+
+	// Apply URL state on mount if present (overrides localStorage)
+	useEffect(() => {
+		if (urlState && !urlStateApplied && !id) {
+			setInputState(urlState);
+			setUrlStateApplied(true);
+		}
+	}, [urlState, urlStateApplied, id, setInputState]);
 
 	const loadSharedState = useCallback(
 		async (stateId) => {
@@ -62,20 +94,18 @@ export default function ScaleFretboard() {
 		}
 	}, [id, loadSharedState]);
 
+	// Optionally save URL params to Supabase and update URL to shareable format
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		const keyParam = params.get("key");
 		const scaleParam = params.get("scale");
 
 		if (keyParam && scaleParam && !id) {
-			setIsInitialLoading(true);
-
 			const isValidKey = KEYS.includes(keyParam);
 			const isValidScale = scales.includes(scaleParam);
 
 			if (!isValidKey || !isValidScale) {
 				console.error("Invalid key or scale parameters");
-				setIsInitialLoading(false);
 				return;
 			}
 
@@ -97,8 +127,6 @@ export default function ScaleFretboard() {
 
 				if (existingState) {
 					window.history.replaceState({}, "", `/fret/${existingState.id}`);
-					loadSharedState(existingState.id);
-					setIsInitialLoading(false);
 					return;
 				}
 
@@ -110,18 +138,15 @@ export default function ScaleFretboard() {
 
 				if (error) {
 					console.error("Error saving state:", error);
-					setIsInitialLoading(false);
 					return;
 				}
 
 				window.history.replaceState({}, "", `/fret/${data.id}`);
-				loadSharedState(data.id);
-				setIsInitialLoading(false);
 			};
 
 			handleInitialState();
 		}
-	}, [id, loadSharedState]);
+	}, [id]);
 
 	const saveAndShare = async () => {
 		setIsSharing(true);
@@ -216,12 +241,6 @@ export default function ScaleFretboard() {
 
 	return (
 		<div className="flex flex-col h-screen gap-6">
-			{isInitialLoading && (
-				<div className="absolute inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm">
-					<span className="text-primary-300">Loading...</span>
-				</div>
-			)}
-
 			<a
 				href="/"
 				className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300 pt-6 pl-6"
@@ -242,7 +261,6 @@ export default function ScaleFretboard() {
 								options={keyOptions}
 								onChange={handleInputChange}
 								selectedValue={inputState.key}
-								disabled={isInitialLoading}
 							/>
 						</div>
 
@@ -251,7 +269,7 @@ export default function ScaleFretboard() {
 							inputScale={inputState.scale}
 							handleInputChange={handleInputChange}
 							notesInScale={notesInScale}
-							disabled={isInitialLoading || isSharing}
+							disabled={isSharing}
 							makeNotesRemovable={false}
 						/>
 
@@ -262,7 +280,6 @@ export default function ScaleFretboard() {
 									setInputState={handleOctaveChange}
 									hideLabel={true}
 									isFretComponent={true}
-									disabled={isInitialLoading}
 								/>
 							</div>
 						</div>
@@ -285,14 +302,12 @@ export default function ScaleFretboard() {
 			</div>
 
 			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border-primary-500/20 rounded-lg overflow-hidden">
-				{!isInitialLoading && (
-					<Guitar
-						notesToPlay={visibleNotes}
-						playbackIndex={0}
-						scaleNotes={notesInScale}
-						smallOctaveNumbers={true}
-					/>
-				)}
+				<Guitar
+					notesToPlay={visibleNotes}
+					playbackIndex={0}
+					scaleNotes={notesInScale}
+					smallOctaveNumbers={true}
+				/>
 			</div>
 		</div>
 	);
