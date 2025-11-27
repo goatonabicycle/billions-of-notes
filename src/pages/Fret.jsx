@@ -301,7 +301,7 @@ export default function ScaleFretboard() {
 				</div>
 			</div>
 
-			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border-primary-500/20 rounded-lg overflow-hidden">
+			<div className="flex-grow bg-gray-900/80 backdrop-blur-sm border-primary-500/20 rounded-lg overflow-hidden" data-fretboard>
 				<Guitar
 					notesToPlay={visibleNotes}
 					playbackIndex={0}

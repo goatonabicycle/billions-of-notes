@@ -75,3 +75,58 @@ code {
 .introjs-arrow.left {
 	border-right-color: theme("colors.background.light");
 }
+
+/* Minimalist mode - raw HTML feel */
+.brutalist {
+	font-family: Times New Roman, serif;
+	background: white !important;
+	color: black;
+}
+
+/* Strip visual styling - exclude instrument panels */
+.brutalist *:not(.show-me-panels):not(.show-me-panels *):not([data-fretboard]):not([data-fretboard] *) {
+	box-shadow: none !important;
+	text-shadow: none !important;
+	border-radius: 0 !important;
+	animation: none !important;
+	background-image: none !important;
+	background-color: transparent !important;
+	color: black !important;
+	border-color: black !important;
+}
+
+/* Links - classic blue underlined */
+.brutalist a:not(.show-me-panels a):not([data-fretboard] a) {
+	color: blue !important;
+	text-decoration: underline !important;
+}
+
+.brutalist a:visited:not(.show-me-panels a):not([data-fretboard] a) {
+	color: purple !important;
+}
+
+/* Buttons - browser default style (exclude instrument panels) */
+.brutalist button:not(.show-me-panels button):not([data-fretboard] button) {
+	background-color: ButtonFace !important;
+	border: 2px outset ButtonBorder !important;
+	padding: 2px 6px !important;
+	font-family: inherit;
+}
+
+.brutalist button:active:not(.show-me-panels button):not([data-fretboard] button) {
+	border-style: inset !important;
+}
+
+/* Form inputs - browser defaults */
+.brutalist select:not(.show-me-panels select):not([data-fretboard] select),
+.brutalist input:not(.show-me-panels input):not([data-fretboard] input) {
+	background-color: Field !important;
+	border: 1px solid FieldText !important;
+	color: FieldText !important;
+}
+
+/* Active/playing note - light grey highlight (main app only, not instruments) */
+.brutalist .App [class*="shadow-glow"]:not(.show-me-panels *) {
+	background-color: #ddd !important;
+	outline: 2px solid black;
+}

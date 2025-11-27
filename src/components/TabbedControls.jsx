@@ -1,5 +1,6 @@
 import introJs from "intro.js";
 import React from "react";
+import useThemeStore from "../stores/themeStore";
 import useTooltipStore from "../stores/tooltipStore";
 import SelectControlsGrid from "./SelectControlsGrid";
 import SelectInputGrid from "./SelectInputGrid";
@@ -40,6 +41,7 @@ const TabbedControls = ({
 	triggerRegenerate,
 }) => {
 	const { tooltipsEnabled, setTooltipsEnabled } = useTooltipStore();
+	const { minimalistMode, toggleMinimalistMode } = useThemeStore();
 
 	const handleNotesChanged = () => {
 		setTriggerRegenerate(!triggerRegenerate);
@@ -189,22 +191,26 @@ const TabbedControls = ({
 							</div>
 
 							<div className="flex items-center justify-between">
-								<Tooltip text="Choose different color schemes and visual styles (more themes coming soon)">
+								<Tooltip text="Clean, distraction-free design with minimal styling">
 									<label
-										htmlFor="theme-select"
+										htmlFor="minimalist-toggle"
 										className="text-sm text-primary-300"
 									>
-										Theme
+										Minimalist Mode
 									</label>
 								</Tooltip>
-								<select
-									id="theme-select"
-									className="px-4 py-2 text-xs bg-background-dark text-primary-400 border-2 border-primary-500/50 rounded cursor-not-allowed opacity-50"
-									disabled
+								<button
+									id="minimalist-toggle"
+									type="button"
+									onClick={toggleMinimalistMode}
+									className={`px-4 py-2 text-xs font-medium rounded transition-all duration-200 ${
+										minimalistMode
+											? "bg-primary-500 text-white border-2 border-primary-400"
+											: "bg-background-dark text-primary-400 border-2 border-primary-500/50"
+									}`}
 								>
-									<option>Retro Blue</option>
-									<option>Coming Soon...</option>
-								</select>
+									{minimalistMode ? "Minimal" : "Styled"}
+								</button>
 							</div>
 						</div>
 					</div>
