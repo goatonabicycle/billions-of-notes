@@ -7,6 +7,7 @@ import "./index.css";
 import Landing from "./pages/Landing";
 import App from "./pages/App";
 import Fret from "./pages/Fret";
+import EarTraining from "./pages/EarTraining";
 import Metronome from "./pages/Metronome";
 import Songs from "./pages/Songs";
 import WhatScale from "./pages/WhatScale";
@@ -21,6 +22,7 @@ function AppRoutes() {
 			<Route path="/fret" element={<Fret />} />
 			<Route path="/fret/:id" element={<Fret />} />
 			<Route path="/metronome" element={<Metronome />} />
+			<Route path="/intervals" element={<EarTraining />} />
 			<Route path="/songs" element={<Songs />} />
 		</Routes>
 	);

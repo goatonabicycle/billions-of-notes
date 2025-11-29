@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { DEFAULT_TEMPO } from "../useful";
 
@@ -6,6 +6,8 @@ const navItems = [
 	{ path: "/riff", label: "Riff" },
 	{ path: "/fret", label: "Fretboard" },
 	{ path: "/what-scale", label: "Scale Finder" },
+	{ path: "/metronome", label: "Metronome" },
+	{ path: "/intervals", label: "Ear Training" },
 	{ path: "/songs", label: "Songs" },
 ];
 
@@ -48,6 +50,7 @@ const AnimatedTitle = ({ tempo }) => {
 export default function NavBar({ tempo }) {
 	const location = useLocation();
 	const effectiveTempo = tempo || DEFAULT_TEMPO;
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	return (
 		<nav className="w-full bg-gray-900/90 backdrop-blur-sm border-b border-primary-500/20">
@@ -59,7 +62,8 @@ export default function NavBar({ tempo }) {
 					<AnimatedTitle tempo={effectiveTempo} />
 				</Link>
 
-				<div className="flex items-center gap-1">
+				{/* Desktop nav */}
+				<div className="hidden md:flex items-center gap-1">
 					{navItems.map((item) => {
 						const isActive = location.pathname.startsWith(item.path);
 						return (
@@ -77,7 +81,50 @@ export default function NavBar({ tempo }) {
 						);
 					})}
 				</div>
+
+				{/* Mobile hamburger button */}
+				<button
+					type="button"
+					onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+					className="md:hidden p-2 text-primary-400 hover:text-primary-300 transition-colors"
+					aria-label="Toggle menu"
+				>
+					{mobileMenuOpen ? (
+						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					) : (
+						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					)}
+				</button>
 			</div>
+
+			{/* Mobile menu dropdown */}
+			{mobileMenuOpen && (
+				<div className="md:hidden border-t border-primary-500/20 bg-gray-900/95">
+					<div className="flex flex-col py-2">
+						{navItems.map((item) => {
+							const isActive = location.pathname.startsWith(item.path);
+							return (
+								<Link
+									key={item.path}
+									to={item.path}
+									onClick={() => setMobileMenuOpen(false)}
+									className={`px-4 py-2 text-sm font-medium transition-colors ${
+										isActive
+											? "bg-primary-500/20 text-primary-300"
+											: "text-primary-400/70 hover:text-primary-300 hover:bg-primary-500/10"
+									}`}
+								>
+									{item.label}
+								</Link>
+							);
+						})}
+					</div>
+				</div>
+			)}
 		</nav>
 	);
 }

@@ -63,10 +63,17 @@ const tools = [
 		href: "/metronome",
 	},
 	{
+		id: "intervals",
+		name: "Ear Training",
+		description: "Train your ear to recognize pitch differences between notes",
+		href: "/intervals",
+	},
+	{
 		id: "songs",
 		name: "Song Builder",
 		description: "Construct and share song ideas with sections, chords, and riffs",
 		href: "/songs",
+		wip: true,
 	},
 ];
 
@@ -75,8 +82,13 @@ function ToolCard({ tool }) {
 		<a
 			href={tool.href}
 			className="group block p-6 bg-gray-900/60 backdrop-blur-sm border border-primary-500/20 rounded-lg
-				transition-all duration-300 hover:border-primary-400/60 hover:bg-primary-900/20 hover:shadow-glow"
+				transition-all duration-300 hover:border-primary-400/60 hover:bg-primary-900/20 hover:shadow-glow relative"
 		>
+			{tool.wip && (
+				<span className="absolute top-2 right-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider bg-secondary-500/20 text-secondary-300 border border-secondary-500/30 rounded">
+					WIP
+				</span>
+			)}
 			<h2 className="text-xl font-bold text-primary-100 mb-2 group-hover:text-primary-50 transition-colors">
 				{tool.name}
 			</h2>
@@ -112,18 +124,10 @@ export default function Landing() {
 				{/* Coming Soon */}
 				<div className="mb-8">
 					<h3 className="text-xs text-primary-500 uppercase tracking-wider mb-3 text-center">Coming Soon</h3>
-					<div className="grid grid-cols-3 gap-3">
-						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60">
+					<div className="flex justify-center">
+						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60 max-w-[200px]">
 							<h4 className="text-sm font-medium text-primary-300 mb-1">Circle of Fifths</h4>
 							<p className="text-xs text-primary-500">Key relationships visualized</p>
-						</div>
-						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60">
-							<h4 className="text-sm font-medium text-primary-300 mb-1">Interval Trainer</h4>
-							<p className="text-xs text-primary-500">Train your ear</p>
-						</div>
-						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60">
-							<h4 className="text-sm font-medium text-primary-300 mb-1">Theory Demystifier</h4>
-							<p className="text-xs text-primary-500">Finally understand it all</p>
 						</div>
 					</div>
 				</div>
