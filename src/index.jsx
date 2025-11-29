@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 import App from "./pages/App";
 import Fret from "./pages/Fret";
+import Songs from "./pages/Songs";
 import WhatScale from "./pages/WhatScale";
 
 function AppRoutes() {
@@ -16,6 +17,7 @@ function AppRoutes() {
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/fret" element={<Fret />} />
 			<Route path="/fret/:id" element={<Fret />} />
+			<Route path="/songs" element={<Songs />} />
 		</Routes>
 	);
 }

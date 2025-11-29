@@ -131,6 +131,21 @@ const TabbedControls = ({
 									Identify musical scales
 								</div>
 							</a>
+
+							<a
+								href="/songs"
+								className="group flex flex-col items-center justify-center p-6 bg-background-dark border-2 border-primary-500 text-center transition-all duration-200 hover:bg-primary-900 hover:border-yellow-500"
+							>
+								<div className="text-2xl mb-2 group-hover:text-yellow-500 transition-colors">
+									🎵
+								</div>
+								<div className="text-sm font-bold text-primary-400 group-hover:text-yellow-500 transition-colors uppercase tracking-wider">
+									Songs
+								</div>
+								<div className="text-xs text-primary-300/70 mt-1">
+									Build and organize songs
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
