@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Note, Scale } from "tonal";
+import NavBar from "../components/NavBar";
 import OctaveSelector from "../components/OctaveSelector";
 import ScaleSelector from "../components/ScaleSelector";
 import Select from "../components/Select";
@@ -240,16 +241,9 @@ export default function ScaleFretboard() {
 	);
 
 	return (
-		<div className="flex flex-col h-screen gap-6">
-			<a
-				href="/"
-				className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300 pt-6 pl-6"
-			>
-				Back home
-			</a>
-			<div className="flex justify-center ">
-				<h1 className="text-primary-300 uppercase">Fretboard</h1>
-			</div>
+		<div className="flex flex-col h-screen">
+			<NavBar />
+			<div className="flex flex-col flex-grow gap-6 pt-4">
 			<div className="flex justify-center">
 				<div className="bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-4 rounded-lg">
 					<div className="flex flex-wrap gap-4">
@@ -308,6 +302,7 @@ export default function ScaleFretboard() {
 					scaleNotes={notesInScale}
 					smallOctaveNumbers={true}
 				/>
+			</div>
 			</div>
 		</div>
 	);

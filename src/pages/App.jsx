@@ -15,7 +15,6 @@ import {
 import * as supabaseService from "../services/supabaseService";
 
 import {
-	DEFAULT_ANIMATIONS_ENABLED,
 	DEFAULT_DEBUG_ENABLED,
 	DEFAULT_EMPTY_NOTES,
 	DEFAULT_INSTRUMENT,
@@ -36,6 +35,7 @@ import ButtonBlock from "../components/ButtonBlock";
 import Debug from "../components/Debug";
 import Loop from "../components/Loop";
 import MessageBoxes from "../components/MessageBoxes";
+import NavBar from "../components/NavBar";
 import NotesUsed from "../components/NotesUsed";
 import SaveToMidi from "../components/SaveToMidi";
 import SharedStateIndicator from "../components/SharedStateIndicator";
@@ -51,10 +51,6 @@ function App() {
 	const [debugEnabled, _setDebugEnabled] = useStorage(
 		"debugEnabled",
 		DEFAULT_DEBUG_ENABLED,
-	);
-	const [animationsEnabled, _setAnimationsEnabled] = useStorage(
-		"animationsEnabled",
-		DEFAULT_ANIMATIONS_ENABLED,
 	);
 	const [isGeneratingLink, setIsGeneratingLink] = useState(false);
 
@@ -238,30 +234,21 @@ function App() {
 		tempo: controlState.tempo,
 	});
 
-	useEffect(() => {
-		document.body.classList.toggle("animations-enabled", animationsEnabled);
-	}, [animationsEnabled]);
-
 	if (!inputState) return null;
 	if (!inputState.octaves) return null;
 
 	return (
-		<div className="App">
+		<div className="App flex flex-col min-h-screen">
+			<NavBar tempo={controlState.tempo} />
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 p-4">
 				<div className="lg:col-span-4">
 					<TitleArea
 						selectedTempo={controlState.tempo}
 						setTriggerRegenerate={setTriggerRegenerate}
 						triggerRegenerate={triggerRegenerate}
-						setTriggerNotesUpdate={setTriggerNotesUpdate}
-						triggerNotesUpdate={triggerNotesUpdate}
 						currentColour={currentColour}
 						randomNotes={randomNotes}
 						currentIndex={currentIndex}
-						animationsEnabled={animationsEnabled}
-						setAnimationsEnabled={_setAnimationsEnabled}
-						debugEnabled={debugEnabled}
-						setDebugEnabled={_setDebugEnabled}
 					/>
 				</div>
 
@@ -322,8 +309,6 @@ function App() {
 						handleControlChange={handleControlChange}
 						activeTab={activeTab}
 						setActiveTab={setActiveTab}
-						animationsEnabled={animationsEnabled}
-						setAnimationsEnabled={_setAnimationsEnabled}
 						debugEnabled={debugEnabled}
 						setDebugEnabled={_setDebugEnabled}
 						setTriggerRegenerate={setTriggerRegenerate}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Note, Scale } from "tonal";
+import NavBar from "../components/NavBar";
 import { FLAT_TO_SHARP } from "../useful";
 
 export default function WhatScale() {
@@ -69,7 +70,9 @@ export default function WhatScale() {
 	};
 
 	return (
-		<div className="flex flex-col h-screen gap-6 p-6 pt-6">
+		<div className="flex flex-col h-screen">
+			<NavBar />
+			<div className="flex flex-col flex-grow gap-6 p-6">
 			<div className="w-full bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 p-4 rounded-lg">
 				<h2 className="text-2xl font-semibold text-gray-200 mb-4">
 					What is this scale?
@@ -121,6 +124,7 @@ export default function WhatScale() {
 					</div>
 				</div>
 			)}
+			</div>
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { FiPlus, FiMusic } from "react-icons/fi";
+import NavBar from "../components/NavBar";
 import SongList from "../components/songs/SongList";
 import SongEditor from "../components/songs/SongEditor";
 import SectionList from "../components/songs/SectionList";
@@ -152,21 +153,10 @@ export default function Songs() {
 
 	return (
 		<div className="flex flex-col h-screen">
-			{/* Header */}
-			<div className="flex items-center justify-between px-4 pt-4 pb-2">
-				<div className="flex items-center gap-4">
-					<a
-						href="/"
-						className="text-xs text-primary-100 hover:text-primary-400 transition-colors duration-300"
-					>
-						Back home
-					</a>
-					<h1 className="text-primary-300 uppercase text-lg">Songs</h1>
-				</div>
-			</div>
+			<NavBar />
 
 			{/* Main content */}
-			<div className="flex-grow flex overflow-hidden px-4 pb-4 gap-4">
+			<div className="flex-grow flex overflow-hidden p-4 gap-4">
 				{/* Left sidebar - Song list */}
 				<div className="w-48 flex-shrink-0 bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 rounded-lg p-3 flex flex-col">
 					<div className="flex items-center justify-between mb-3">

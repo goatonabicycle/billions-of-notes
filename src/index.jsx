@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./index.css";
+import Landing from "./pages/Landing";
 import App from "./pages/App";
 import Fret from "./pages/Fret";
 import Songs from "./pages/Songs";
@@ -12,8 +13,9 @@ import WhatScale from "./pages/WhatScale";
 function AppRoutes() {
 	return (
 		<Routes>
-			<Route path="/" element={<App />} />
-			<Route path="/:id" element={<App />} />
+			<Route path="/" element={<Landing />} />
+			<Route path="/riff" element={<App />} />
+			<Route path="/riff/:id" element={<App />} />
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/fret" element={<Fret />} />
 			<Route path="/fret/:id" element={<Fret />} />

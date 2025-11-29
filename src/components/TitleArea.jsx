@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 
 import LineRenderer from "./LineRenderer";
-import Title from "./Title";
 
 const keyframes = `
   @keyframes gridMove {
@@ -25,10 +24,6 @@ const TitleArea = memo(
 		currentColour,
 		randomNotes,
 		currentIndex,
-		animationsEnabled,
-		setAnimationsEnabled,
-		debugEnabled,
-		setDebugEnabled,
 	}) => {
 		const gridAnimationDuration = Math.max(0.2, 240 / selectedTempo);
 
@@ -37,12 +32,10 @@ const TitleArea = memo(
 				<style>{keyframes}</style>
 
 				<div
-					className={`relative overflow-hidden bg-background-light ${!animationsEnabled ? "border border-primary-500/20" : "border-4"} ${animationsEnabled ? "shadow-glow-title" : ""}`}
+					className="relative overflow-hidden bg-background-light border-4 shadow-glow-title"
 					style={{
 						borderStyle: "solid",
-						animation: animationsEnabled
-							? "borderGlow 3s linear infinite"
-							: "none",
+						animation: "borderGlow 3s linear infinite",
 					}}
 				>
 					<div
@@ -54,21 +47,12 @@ const TitleArea = memo(
               linear-gradient(rgba(59, 130, 246, 0.8) 1px, transparent 1px)
             `,
 							backgroundSize: "40px 40px",
-							animation: animationsEnabled
-								? `gridMove ${gridAnimationDuration}s linear infinite`
-								: "none",
+							animation: `gridMove ${gridAnimationDuration}s linear infinite`,
 							opacity: 0.3,
 						}}
 					/>
 
 					<div className="relative z-10 flex flex-col items-center p-4">
-						<div className="w-full text-center">
-							<Title
-								selectedTempo={selectedTempo}
-								animationsEnabled={animationsEnabled}
-							/>
-						</div>
-
 						<div className="w-full min-h-[200px] flex justify-center items-center">
 							<LineRenderer
 								onClick={() => {
@@ -78,7 +62,6 @@ const TitleArea = memo(
 								notes={randomNotes}
 								tempo={selectedTempo}
 								activeNote={currentIndex}
-								animationsEnabled={animationsEnabled}
 							/>
 						</div>
 					</div>
