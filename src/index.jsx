@@ -7,6 +7,7 @@ import "./index.css";
 import Landing from "./pages/Landing";
 import App from "./pages/App";
 import Fret from "./pages/Fret";
+import Metronome from "./pages/Metronome";
 import Songs from "./pages/Songs";
 import WhatScale from "./pages/WhatScale";
 
@@ -19,6 +20,7 @@ function AppRoutes() {
 			<Route path="/what-scale" element={<WhatScale />} />
 			<Route path="/fret" element={<Fret />} />
 			<Route path="/fret/:id" element={<Fret />} />
+			<Route path="/metronome" element={<Metronome />} />
 			<Route path="/songs" element={<Songs />} />
 		</Routes>
 	);

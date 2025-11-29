@@ -57,6 +57,12 @@ const tools = [
 		href: "/what-scale",
 	},
 	{
+		id: "metronome",
+		name: "Metronome",
+		description: "Practice with precision timing, tap tempo, and subdivisions",
+		href: "/metronome",
+	},
+	{
 		id: "songs",
 		name: "Song Builder",
 		description: "Construct and share song ideas with sections, chords, and riffs",
@@ -106,14 +112,10 @@ export default function Landing() {
 				{/* Coming Soon */}
 				<div className="mb-8">
 					<h3 className="text-xs text-primary-500 uppercase tracking-wider mb-3 text-center">Coming Soon</h3>
-					<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+					<div className="grid grid-cols-3 gap-3">
 						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60">
 							<h4 className="text-sm font-medium text-primary-300 mb-1">Circle of Fifths</h4>
 							<p className="text-xs text-primary-500">Key relationships visualized</p>
-						</div>
-						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60">
-							<h4 className="text-sm font-medium text-primary-300 mb-1">Metronome</h4>
-							<p className="text-xs text-primary-500">Practice with precision</p>
 						</div>
 						<div className="p-3 bg-gray-900/40 border border-dashed border-primary-500/20 rounded-lg opacity-60">
 							<h4 className="text-sm font-medium text-primary-300 mb-1">Interval Trainer</h4>
