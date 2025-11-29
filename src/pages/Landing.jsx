@@ -84,7 +84,7 @@ function ToolCard({ tool }) {
 export default function Landing() {
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center p-8">
-			<AnimatedBackground showLabel={true} />
+			<AnimatedBackground showSelector={true} />
 			<div className="bg-gray-900/80 backdrop-blur-sm border border-primary-500/20 rounded-lg p-8 md:p-12 max-w-4xl w-full">
 				{/* Header */}
 				<div className="text-center mb-10">
@@ -92,7 +92,7 @@ export default function Landing() {
 						<AnimatedTitle tempo={DEFAULT_TEMPO} />
 					</h1>
 					<p className="text-primary-400/80 max-w-xl mx-auto">
-						Free tools for musicians. Break out of creative ruts, visualize scales, and sketch song ideas.
+						A tool for musicians. Get more comfortable with the fretboard. Break out of creative ruts, visualize scales, and sketch song ideas.
 					</p>
 				</div>
 
