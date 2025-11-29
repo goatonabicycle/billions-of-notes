@@ -119,6 +119,32 @@ function App() {
 	const [isPlaying, setIsPlaying] = useState(true);
 	const [loadedFromUrl, setLoadedFromUrl] = useState(false);
 
+	// Apply URL params on mount (e.g., from Scale Finder)
+	useEffect(() => {
+		if (id) return; // Don't override if loading from shared ID
+
+		const params = new URLSearchParams(window.location.search);
+		const keyParam = params.get("key");
+		const scaleParam = params.get("scale");
+
+		if (keyParam && scaleParam) {
+			const isValidKey = KEYS.includes(keyParam);
+			const isValidScale = scales.includes(scaleParam);
+
+			if (isValidKey && isValidScale) {
+				setInputState((prev) => ({
+					...prev,
+					key: keyParam,
+					scale: scaleParam,
+				}));
+				// Trigger regeneration with the new scale
+				setTriggerRegenerate((prev) => !prev);
+				// Clear URL params after applying
+				window.history.replaceState({}, "", "/riff");
+			}
+		}
+	}, [id, scales, setInputState]);
+
 	const resetInputs = useCallback(() => {
 		setCurrentIndex(0);
 		setStateModified(true);

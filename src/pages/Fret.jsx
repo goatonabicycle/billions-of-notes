@@ -23,8 +23,18 @@ export default function ScaleFretboard() {
 	const [isSharing, setIsSharing] = useState(false);
 	const [shareUrl, setShareUrl] = useState("");
 
-	// Check URL params for initial state override
-	const getUrlState = () => {
+	const [inputState, _setInputState] = useStorage("fret-inputState", {
+		key: DEFAULT_KEY,
+		scale: DEFAULT_SCALE,
+		notation: "sharp",
+		octaves: [1, 2, 3, 4, 5],
+	});
+	const setInputState = useCallback(_setInputState, [_setInputState]);
+
+	// Apply URL params on mount (overrides localStorage)
+	useEffect(() => {
+		if (id) return; // Don't override if loading from shared ID
+
 		const params = new URLSearchParams(window.location.search);
 		const keyParam = params.get("key");
 		const scaleParam = params.get("scale");
@@ -34,35 +44,16 @@ export default function ScaleFretboard() {
 			const isValidScale = scales.includes(scaleParam);
 
 			if (isValidKey && isValidScale) {
-				return {
+				setInputState((prev) => ({
+					...prev,
 					key: keyParam,
 					scale: scaleParam,
-					notation: "sharp",
-					octaves: [1, 2, 3, 4, 5],
-				};
+				}));
+				// Clear URL params after applying
+				window.history.replaceState({}, "", "/fret");
 			}
 		}
-		return null;
-	};
-
-	const [urlStateApplied, setUrlStateApplied] = useState(false);
-	const urlState = useMemo(() => getUrlState(), []);
-
-	const [inputState, _setInputState] = useStorage("fret-inputState", {
-		key: DEFAULT_KEY,
-		scale: DEFAULT_SCALE,
-		notation: "sharp",
-		octaves: [1, 2, 3, 4, 5],
-	});
-	const setInputState = useCallback(_setInputState, [_setInputState]);
-
-	// Apply URL state on mount if present (overrides localStorage)
-	useEffect(() => {
-		if (urlState && !urlStateApplied && !id) {
-			setInputState(urlState);
-			setUrlStateApplied(true);
-		}
-	}, [urlState, urlStateApplied, id, setInputState]);
+	}, [id, setInputState]);
 
 	const loadSharedState = useCallback(
 		async (stateId) => {
@@ -94,60 +85,6 @@ export default function ScaleFretboard() {
 			loadSharedState(id);
 		}
 	}, [id, loadSharedState]);
-
-	// Optionally save URL params to Supabase and update URL to shareable format
-	useEffect(() => {
-		const params = new URLSearchParams(window.location.search);
-		const keyParam = params.get("key");
-		const scaleParam = params.get("scale");
-
-		if (keyParam && scaleParam && !id) {
-			const isValidKey = KEYS.includes(keyParam);
-			const isValidScale = scales.includes(scaleParam);
-
-			if (!isValidKey || !isValidScale) {
-				console.error("Invalid key or scale parameters");
-				return;
-			}
-
-			const stateToSave = {
-				key: keyParam,
-				scale: scaleParam,
-				notation: "sharp",
-				octaves: [1, 2, 3, 4, 5],
-			};
-
-			const handleInitialState = async () => {
-				const stateHash = btoa(JSON.stringify(stateToSave));
-
-				const { data: existingState } = await supabase
-					.from("fretboard_states")
-					.select("id")
-					.eq("state_hash", stateHash)
-					.single();
-
-				if (existingState) {
-					window.history.replaceState({}, "", `/fret/${existingState.id}`);
-					return;
-				}
-
-				const { data, error } = await supabase
-					.from("fretboard_states")
-					.insert([{ ...stateToSave, state_hash: stateHash }])
-					.select()
-					.single();
-
-				if (error) {
-					console.error("Error saving state:", error);
-					return;
-				}
-
-				window.history.replaceState({}, "", `/fret/${data.id}`);
-			};
-
-			handleInitialState();
-		}
-	}, [id]);
 
 	const saveAndShare = async () => {
 		setIsSharing(true);
